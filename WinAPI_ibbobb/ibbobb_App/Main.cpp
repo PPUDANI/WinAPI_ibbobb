@@ -4,8 +4,6 @@
 void TestStart(HINSTANCE _Inst)
 {
     GameEngineWindow::MainWindow.Open("MainWindow", _Inst);
-    GameEngineWindow NewWin{};
-    NewWin.Open("MainWindow1", _Inst);
 }
 
 void TestEnd()
@@ -24,9 +22,5 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_ int       nCmdShow)
 {
     GameEngineWindow::MessageLoop(hInstance, TestStart, TestUpdate, TestEnd);
-    
-
-    
-
     return 0;
 }

@@ -2,6 +2,7 @@
 #include <GameEngineBase/GameEngineDebug.h>
 
 HINSTANCE GameEngineWindow::Instance = nullptr;
+GameEngineWindow GameEngineWindow::MainWindow;
 
 GameEngineWindow::GameEngineWindow()
 {
@@ -13,53 +14,48 @@ GameEngineWindow::~GameEngineWindow()
 
 }
 
-void GameEngineWindow::Open()
+void GameEngineWindow::Open(const std::string& _Title, HINSTANCE _hInstance)
 {
+    Instance = _hInstance;
+    Title = _Title;
+
+    if (nullptr == Instance)
+    {
+        MsgBoxAssert("hInstance없이 윈도우를 만들 수는 없습니다.");
+        return;
+    }
+
     MyRegisterClass();
     InitInstance();
 }
 
-void GameEngineWindow::MyRegisterClass()
+void GameEngineWindow::InitInstance()
 {
-    WNDCLASSEXW wcex;
-    wcex.cbSize = sizeof(WNDCLASSEX);
-    wcex.style = CS_HREDRAW | CS_VREDRAW;
-    // LRESULT(CALLBACK* WNDPROC)(HWND, unsigned int, unsigned int, unsigned int);
-    wcex.lpfnWndProc = WndProc;
-    wcex.cbClsExtra = 0;
-    wcex.cbWndExtra = 0;
-    wcex.hInstance = Instance;
-    wcex.hIcon = nullptr;
-    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-    wcex.lpszMenuName = nullptr;
-    wcex.lpszClassName = "szWindowClass";
-    wcex.hIconSm = nullptr;
+    hWnd = CreateWindowA("DefaultWindow", Title.c_str(), WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, Instance, nullptr);
 
-    //윈도우 형식을등록하는 함수
-    // 메뉴를 사용하지 않아.
-    RegisterClassExW(&wcex);
+    if (!hWnd)
+    {
+        MsgBoxAssert("윈도우 생성에 실패했습니다.");
+        return;
+    }
+
+    ShowWindow(hWnd, SW_SHOW);
+    UpdateWindow(hWnd);
 }
 
 LRESULT GameEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-    case WM_COMMAND:
-    {
-    case WM_PAINT: // 화면에 그린다.
+    case WM_PAINT:
     {
         PAINTSTRUCT ps;
-
-        // 윈도우 화면에 무언가를 그리기 위한 권한.
         HDC hdc = BeginPaint(hWnd, &ps);
-
-        // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-
         EndPaint(hWnd, &ps);
     }
     break;
-    case WM_DESTROY: // GetMessage() 함수에서 0을 리턴하게 만든다.
+    case WM_DESTROY:
         PostQuitMessage(0);
         break;
     default:
@@ -68,24 +64,69 @@ LRESULT GameEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
     return 0;
 }
 
-void GameEngineWindow::InitInstance()
+void GameEngineWindow::MyRegisterClass()
 {
-    // 윈도우를 만드는 함수
-    hWnd = CreateWindowA(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
-    if (!hWnd)
+    static bool Check = false;
+    
+    if (true == Check)
     {
-        MsgBoxAssert("윈도우 생성에 실패했습니다.");
         return;
     }
 
-    // API 구조는 개발자가 따로 기능을 만드는것이 아닌 Window가 개발자가 원하는 핸들을 제공하여
-    // 그 핸들을 용도에 맞게 사용는 것이다.
+    // WNDCLASSEXW : Wide Byte
+    // WNDCLASSEXA : Multi Byte
+    WNDCLASSEXA wcex;
 
-    // 윈도우 출력
-    ShowWindow(hWnd, nCmdShow);
-    // 윈도우 갱신
-    UpdateWindow(hWnd);
+    wcex.cbSize = sizeof(WNDCLASSEX);
+    wcex.style = CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc = WndProc;
+    wcex.cbClsExtra = 0;
+    wcex.cbWndExtra = 0;
+    wcex.hInstance = Instance;
+    wcex.hIcon = nullptr;
+    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex.lpszMenuName = nullptr;
+    wcex.lpszClassName = "DefaultWindow";
+    wcex.hIconSm = nullptr;
+
+    // RegisterClassExW(&wcex) : Wide Byte
+    // RegisterClassExA(&wcex) : Multi Byte
+    if (false == RegisterClassExA(&wcex))
+    {
+        MsgBoxAssert("윈도우 클래스 등록에 실패했습니다.");
+        return;
+    }
+
+    Check = true;
 }
+
+void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), void(*_Update)(), void(*_End)())
+{
+    if (nullptr != _Start)
+    {
+        _Start(_Inst);
+    }
+
+    MSG msg;
+
+    while (GetMessage(&msg, nullptr, 0, 0))
+    {
+        if (nullptr != _Update)
+        {
+            _Update();
+        }
+
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+
+    if (nullptr != _End)
+    {
+        _End();
+    }
+
+    return;
+}
+
 

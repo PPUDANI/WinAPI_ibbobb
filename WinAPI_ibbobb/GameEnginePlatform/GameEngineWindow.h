@@ -6,6 +6,8 @@
 class GameEngineWindow
 {
 public:
+	static GameEngineWindow MainWindow;
+
 	GameEngineWindow();
 	~GameEngineWindow();
 
@@ -14,10 +16,13 @@ public:
 	GameEngineWindow& operator=(const GameEngineWindow& _Other) = delete;
 	GameEngineWindow& operator=(GameEngineWindow&& _Other) noexcept = delete;
 
-	void Open();
+	static void MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), void(*_Update)(), void(*_End)());
+	void Open(const std::string& _Title, HINSTANCE hInstance);
+
 protected:
 
 private:
+
 	static HINSTANCE Instance;
 	std::string Title = "";
 	HWND hWnd = nullptr;

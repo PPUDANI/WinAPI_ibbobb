@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{364d959e-b5ea-4dd1-bd11-2b11876cd1ec}</ProjectGuid>
-    <RootNamespace>ibbobbContents</RootNamespace>
+    <ProjectGuid>{3f46a30c-e009-4863-8073-2c7b4d278be6}</ProjectGuid>
+    <RootNamespace>GameEngineBase</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -151,27 +151,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h">
+    <ClCompile Include="GameEngineDebug.cpp">
       <SubType>
       </SubType>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Player.cpp">
+    </ClCompile>
+    <ClCompile Include="GameEngineRamdom.cpp">
       <SubType>
       </SubType>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AR47JDKHomeWork\CPlusPlus\GameEngineBase\GameEngineBase.vcxproj">
-      <Project>{3f46a30c-e009-4863-8073-2c7b4d278be6}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEngineCore\GameEngineCore.vcxproj">
-      <Project>{6f277059-6cf1-44f3-8a16-687fe3e4e7c8}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\GameEnginePlatform\GameEnginePlatform.vcxproj">
-      <Project>{13c42c76-91f6-4555-9863-2ea29c384624}</Project>
-    </ProjectReference>
+    <ClInclude Include="GameEngineDebug.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineRamdom.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

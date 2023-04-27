@@ -128,5 +128,3 @@ void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), vo
 
     return;
 }
-
-

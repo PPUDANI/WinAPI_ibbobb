@@ -166,6 +166,9 @@
     <ProjectReference Include="..\..\..\AR47JDKHomeWork\CPlusPlus\GameEngineBase\GameEngineBase.vcxproj">
       <Project>{3f46a30c-e009-4863-8073-2c7b4d278be6}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
+      <Project>{3e1bdcbc-32c8-4bb8-80a9-b9bb111312b8}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngineCore\GameEngineCore.vcxproj">
       <Project>{6f277059-6cf1-44f3-8a16-687fe3e4e7c8}</Project>
     </ProjectReference>

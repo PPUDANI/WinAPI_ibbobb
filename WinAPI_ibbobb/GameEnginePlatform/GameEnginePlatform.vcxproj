@@ -163,8 +163,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AR47JDKHomeWork\CPlusPlus\GameEngineBase\GameEngineBase.vcxproj">
-      <Project>{3f46a30c-e009-4863-8073-2c7b4d278be6}</Project>
+    <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
+      <Project>{3e1bdcbc-32c8-4bb8-80a9-b9bb111312b8}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

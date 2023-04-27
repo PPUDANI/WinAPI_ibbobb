@@ -6,6 +6,7 @@
 class GameEngineWindow
 {
 public:
+
 	static GameEngineWindow MainWindow;
 
 	GameEngineWindow();
@@ -33,4 +34,3 @@ private:
 	void MyRegisterClass();
 	
 };
-

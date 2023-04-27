@@ -19,7 +19,8 @@ public:
 	{
 		std::string UpperString = _Value;
 
-		for (size_t i = 0; i < UpperString.size(); i++)
+		size_t StrSize = UpperString.size();
+		for (size_t i = 0; i < StrSize; i++)
 		{
 			UpperString[i] = toupper(UpperString[i]);
 		}

@@ -26,15 +26,18 @@ public:
 	{
 		std::string Upper = GameEngineString::ToUpperReturn(_Name);
 
+		// 같은 이름의 Level이 있는지 검사
 		if (AllLevel.end() != AllLevel.find(Upper))
 		{
 			MsgBoxAssert(Upper + "의 이름을 가진 GameEngineLevel은 이미 존재합니다.");
 			return;
 		}
 
+		// 같은 이름의 레벨이 없다면 레벨 생성
 		GameEngineLevel* NewLevel = new LevelType();
 		AllLevel.insert(std::make_pair(Upper, NewLevel));
 	}
+
 protected:
 
 private:

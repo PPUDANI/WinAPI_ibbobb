@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{3e1bdcbc-32c8-4bb8-80a9-b9bb111312b8}</ProjectGuid>
+    <ProjectGuid>{43e95582-82fc-46c5-a7ca-7d887cd0432b}</ProjectGuid>
     <RootNamespace>GameEngineBase</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -151,18 +151,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\AR47JDKHomeWork\CPlusPlus\GameEngineBase\GameEngineDebug.h" />
-    <ClInclude Include="GameEngineRandom.h">
+    <ClCompile Include="GameEngineDebug.cpp">
       <SubType>
       </SubType>
-    </ClInclude>
-    <ClInclude Include="GameEngineString.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\AR47JDKHomeWork\CPlusPlus\GameEngineBase\GameEngineDebug.cpp" />
+    </ClCompile>
     <ClCompile Include="GameEngineRandom.cpp">
       <SubType>
       </SubType>
@@ -171,6 +163,20 @@
       <SubType>
       </SubType>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameEngineDebug.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineRandom.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineString.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

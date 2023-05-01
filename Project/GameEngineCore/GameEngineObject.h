@@ -10,13 +10,13 @@ public:
 	GameEngineObject& operator=(const GameEngineObject& _Other) = delete;
 	GameEngineObject& operator=(GameEngineObject&& _Other) noexcept = delete;
 
-	virtual void Start() {};
+	virtual void Start() {}
 
-	virtual void Update() {};
+	virtual void Update() {}
 
-	virtual void Render() {};
+	virtual void Render() {}
 
-	virtual void Release() {};
+	virtual void Release() {}
 
 	void On()
 	{

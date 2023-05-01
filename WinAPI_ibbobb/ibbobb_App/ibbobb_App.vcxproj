@@ -26,7 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
-      <Project>{3e1bdcbc-32c8-4bb8-80a9-b9bb111312b8}</Project>
+      <Project>{43e95582-82fc-46c5-a7ca-7d887cd0432b}</Project>
     </ProjectReference>
     <ProjectReference Include="..\GameEngineCore\GameEngineCore.vcxproj">
       <Project>{6f277059-6cf1-44f3-8a16-687fe3e4e7c8}</Project>

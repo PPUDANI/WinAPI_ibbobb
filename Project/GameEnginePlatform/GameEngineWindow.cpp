@@ -3,6 +3,7 @@
 
 HINSTANCE GameEngineWindow::Instance = nullptr;
 GameEngineWindow GameEngineWindow::MainWindow;
+bool GameEngineWindow::IsWindowUpdate = true;
 
 GameEngineWindow::GameEngineWindow()
 {
@@ -58,7 +59,8 @@ LRESULT GameEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
     }
     break;
     case WM_DESTROY:
-        PostQuitMessage(0);
+        // PostQuitMessage(0);
+        IsWindowUpdate = false;
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
@@ -112,15 +114,18 @@ void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), vo
 
     MSG msg;
 
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (IsWindowUpdate)
     {
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+
         if (nullptr != _Update)
         {
             _Update();
         }
-
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
     }
 
     if (nullptr != _End)

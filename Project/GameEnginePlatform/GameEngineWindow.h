@@ -25,6 +25,10 @@ public:
 		return Hdc;
 	}
 
+	bool WindowLoopOff()
+	{
+		IsWindowUpdate = false;
+	}
 protected:
 
 private:
@@ -33,9 +37,8 @@ private:
 	std::string Title = "";
 	HWND hWnd = nullptr;
 	HDC Hdc = nullptr;
-
+	static bool IsWindowUpdate;
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	void InitInstance();
 	void MyRegisterClass();
-	
 };

@@ -15,7 +15,7 @@ void PlayLevel::Start()
 	CreateActor<Player>();
 }
 
-void PlayLevel::Update() 
+void PlayLevel::Update(float _Delta)
 {
 
 }

@@ -13,8 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level_3", "Level_3", "{CCC6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Document", "Document", "{F2F701C1-A1D6-4D71-84BE-89E1818490C8}"
 	ProjectSection(SolutionItems) = preProject
-		프로젝트 구성.txt = 프로젝트 구성.txt
 		DeltaTime.txt = DeltaTime.txt
+		프로젝트 구성.txt = 프로젝트 구성.txt
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngineCore", "GameEngineCore\GameEngineCore.vcxproj", "{6F277059-6CF1-44F3-8A16-687FE3E4E7C8}"

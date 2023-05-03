@@ -22,7 +22,7 @@ void ContentCore::Start()
 	GameEngineCore::ChangeLevel("PlayLevel");
 }
 
-void ContentCore::Update()
+void ContentCore::Update(float _Delta)
 {
 
 }

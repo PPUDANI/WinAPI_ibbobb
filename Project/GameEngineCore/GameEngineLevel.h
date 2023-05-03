@@ -32,7 +32,7 @@ private:
 	std::map<int, std::list<GameEngineActor*>> AllActors;
 
 	void ActorInit(GameEngineActor* _Actor);
-	void ActorUpdate();
+	void ActorUpdate(float _Delta);
 	void ActorRender();
 };
 

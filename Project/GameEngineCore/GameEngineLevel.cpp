@@ -27,7 +27,7 @@ void GameEngineLevel::ActorInit(GameEngineActor* _Actor)
 	_Actor->Start();
 }
 
-void GameEngineLevel::ActorUpdate()
+void GameEngineLevel::ActorUpdate(float _Delta)
 {
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
 	{
@@ -35,7 +35,7 @@ void GameEngineLevel::ActorUpdate()
 
 		for (GameEngineActor* _Actor : Group)
 		{
-			_Actor->Update();
+			_Actor->Update(_Delta);
 		}
 	}
 }

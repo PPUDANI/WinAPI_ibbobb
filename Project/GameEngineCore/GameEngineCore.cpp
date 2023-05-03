@@ -1,7 +1,11 @@
 #include "GameEngineCore.h"
+#include "GameEngineLevel.h"
+
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
-#include "GameEngineLevel.h"
+#include <GameEngineBase/GameEngineTime.h>
+
+
 std::string GameEngineCore::WindowTitle = "";
 std::map<std::string, class GameEngineLevel*> GameEngineCore::AllLevel;
 CoreProcess* GameEngineCore::Process = nullptr;
@@ -35,10 +39,13 @@ void GameEngineCore::CoreUpdate()
 	{
 		CurLevel = NextLevel;
 		NextLevel = nullptr;
+		GameEngineTime::MainTimer.Reset();
 	}
 
-	CurLevel->Update();
-	CurLevel->ActorUpdate();
+	GameEngineTime::MainTimer.Update();
+	float Delta = GameEngineTime::MainTimer.GetDeltaTime();
+	CurLevel->Update(Delta);
+	CurLevel->ActorUpdate(Delta);
 	CurLevel->Render();
 	CurLevel->ActorRender();
 }

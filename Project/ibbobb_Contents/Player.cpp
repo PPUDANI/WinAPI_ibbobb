@@ -1,6 +1,8 @@
 #include "Player.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineBase/GameEngineTime.h>
+#include <GameEngineCore/ResourceManager.h>
+#include <GameEngineBase/GameEnginePath.h>
 
 Player::Player()
 {
@@ -14,15 +16,22 @@ Player::~Player()
 
 void Player::Start()
 {
+
+	if (false == ResourceManager::GetInst().IsLoadTexture("Player_Idle.Bmp"))
+	{
+		GameEnginePath FilePath;
+
+		FilePath.GetCurrentPath();
+
+		ResourceManager::GetInst().TextureLoat("Player_Idle.Bmp");
+	}
 	SetPos({ 200, 200 });
 	SetScale({ 100, 100 });
 }
 
-void Player::Update()
+void Player::Update(float _Delta)
 {
-	GameEngineTime::MainTimer;
-	float Time = GameEngineTime::MainTimer.GetDeltaTime();
-	AddPos({ 0.001f, 0.0f });
+	AddPos({ 100.0f * _Delta, 0.0f });
 }
 
 void Player::Render()

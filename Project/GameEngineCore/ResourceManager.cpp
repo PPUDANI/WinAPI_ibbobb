@@ -1,21 +1,39 @@
 #include "ResourceManager.h"
+#include <GameEngineBase/GameEngineString.h>
+#include <GameEngineCore/GameEngineTexture.h>
 
 ResourceManager ResourceManager::Inst;
 
-GameEngineTexture* ResourceManager::FindTexture(const std::string& _Image)
+ResourceManager::ResourceManager() {}
+
+ResourceManager::~ResourceManager() {}
+
+GameEngineTexture* ResourceManager::FindTexture(const std::string& _Name)
 {
-	return nullptr;
+	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
+
+	std::map<std::string, GameEngineTexture*>::iterator FindIter = AllTexture.find(UpperName);
+
+	if (FindIter == AllTexture.end())
+	{
+		return nullptr;
+	}
+
+	return FindIter->second;
 }
+
 
 bool ResourceManager::IsLoadTexture(const std::string& _Image)
 {
 	return false;
 }
-
-ResourceManager::ResourceManager()
+void ResourceManager::TextureLoad(const std::string _Name, const std::string& _Path)
 {
-}
+	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
 
-ResourceManager::~ResourceManager()
-{
+	GameEngineTexture* LoadTexture = new GameEngineTexture();
+
+	LoadTexture->ResLoad(_Path);
+
+	AllTexture.insert(std::make_pair(UpperName, LoadTexture));
 }

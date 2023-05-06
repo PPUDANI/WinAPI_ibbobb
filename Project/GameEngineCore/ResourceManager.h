@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-
+#include <map>
+#include <GameEngineBase/GameEnginePath.h>
 class GameEngineTexture;
 class ResourceManager
 {
@@ -17,18 +18,17 @@ public:
 		return Inst;
 	}
 
-	void TextureLoat(const std::string _Path)
+	void TextureLoad(const std::string& _Path)
 	{
-
+		GameEnginePath LoadPath = _Path;
+		TextureLoad(LoadPath.GetFileName(), _Path);
 	}
 
-	void TextureLoat(const std::string _Name, const std::string& _Path)
-	{
-
-	}
+	void TextureLoad(const std::string _Name, const std::string& _Path);
 
 	GameEngineTexture* FindTexture(const std::string& _Image);
 	bool IsLoadTexture(const std::string& _Image);
+
 protected:
 
 private:
@@ -36,5 +36,7 @@ private:
 
 	ResourceManager();
 	~ResourceManager();
+
+	std::map<std::string, GameEngineTexture*> AllTexture;
 };
 

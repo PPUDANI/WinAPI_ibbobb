@@ -1,8 +1,9 @@
 #include "Player.h"
-#include <GameEnginePlatform/GameEngineWindow.h>
+
 #include <GameEngineBase/GameEngineTime.h>
-#include <GameEngineCore/ResourceManager.h>
 #include <GameEngineBase/GameEnginePath.h>
+#include <GameEnginePlatform/GameEngineWindow.h>
+#include <GameEngineCore/ResourceManager.h>
 #include <GameEngineCore/GameEngineTexture.h>
 
 #include <windows.h>
@@ -29,13 +30,25 @@ void Player::Start()
 		FilePath.MoveChiled("Resource\\Texture\\Image.Bmp");
 		ResourceManager::GetInst().TextureLoad(FilePath.GetStringPath());
 	}
+
 	SetPos({ 200, 200 });
-	SetScale({ 100, 100 });
+	SetScale({ 50, 0 });
+
+	//SetPos({ 200, 200 });
+	//SetScale({ 100, 100 });
+	
 }
 
 void Player::Update(float _Delta)
 {
-	AddPos({ 100.0f * _Delta, 0.0f });
+	//static float a = 0.0f;
+	//if (a < 100)
+	//{
+	//	AddPos({ 1.0f, 0.0f });
+
+	//	a++;
+	//}
+	
 }
 
 void Player::Render()
@@ -44,15 +57,27 @@ void Player::Render()
 	GameEngineTexture* FindTexture = ResourceManager::GetInst().FindTexture("Image.Bmp");
 	HDC ImageDC = FindTexture->GetImageDC();
 
-	BitBlt(WindowDC, 100, 100, 500, 500, ImageDC, 0, 0, SRCCOPY);
+	StretchBlt(WindowDC,
+		100,
+		100,
+		GetPos().iX() + GetScale().ihX(),
+		GetPos().iY() + GetScale().ihY(),
+		ImageDC, 0, 0, 1000, 1000, SRCCOPY);
 
-	Rectangle(WindowDC,
-		GetPos().iX() - GetScale().ihX(),
+	BitBlt(WindowDC,
+	    GetPos().iX() - GetScale().ihX(),
 		GetPos().iY() - GetScale().ihY(),
 		GetPos().iX() + GetScale().ihX(),
-		GetPos().iY() + GetScale().ihY()
-	);
-	
+		GetPos().iY() + GetScale().ihY(),
+		ImageDC, 0, 0, SRCCOPY);
+
+ //   Rectangle(WindowDC,
+	//	GetPos().iX() - GetScale().ihX(),
+	//	GetPos().iY() - GetScale().ihY(),
+	//	GetPos().iX() + GetScale().ihX(),
+	//	GetPos().iY() + GetScale().ihY()
+	//);
+
 }
 
 void Player::Release()

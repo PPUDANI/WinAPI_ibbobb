@@ -23,12 +23,12 @@ public:
 
 	inline int ihX() const
 	{
-		return static_cast<int>(X);
+		return static_cast<int>(X * 0.5f);
 	}
 
 	inline int ihY() const
 	{
-		return static_cast<int>(Y);
+		return static_cast<int>(Y * 0.5f);
 	}
 
 	float4& operator+= (const float4& _Other)

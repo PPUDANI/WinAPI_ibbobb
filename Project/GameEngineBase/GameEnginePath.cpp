@@ -13,7 +13,6 @@ GameEnginePath::GameEnginePath(const std::string& _Path)
 
 GameEnginePath::~GameEnginePath()
 {
-	Path = Path.parent_path();
 }
 
 std::string GameEnginePath::GetFileName()
@@ -29,8 +28,8 @@ void GameEnginePath::GetCurrentPath()
 void GameEnginePath::MoveChiled(const std::string& _ChildPath)
 {
 	std::filesystem::path CheckPath = Path;
-
 	CheckPath.append(_ChildPath);
+
 	if (false == std::filesystem::exists(CheckPath))
 	{
 		MsgBoxAssert("존재하지 않는 경로로 이동하려고 했습니다." + CheckPath.string());
@@ -50,6 +49,7 @@ void GameEnginePath::MoveParentToExistsChild(const std::string& _ChildPath)
 	{
 		std::filesystem::path CheckPath = Path;
 		CheckPath.append(_ChildPath);
+
 		if (false == std::filesystem::exists(CheckPath))
 		{
 			MoveParent();

@@ -6,7 +6,19 @@ ResourceManager ResourceManager::Inst;
 
 ResourceManager::ResourceManager() {}
 
-ResourceManager::~ResourceManager() {}
+ResourceManager::~ResourceManager() 
+{
+	for (const std::pair<std::string, GameEngineTexture*>& Pair : AllTexture)
+	{
+		GameEngineTexture* Texture = Pair.second;
+
+		if (nullptr != Texture)
+		{
+			delete Texture;
+			Texture = nullptr;
+		}
+	}
+}
 
 GameEngineTexture* ResourceManager::FindTexture(const std::string& _Name)
 {
@@ -23,10 +35,11 @@ GameEngineTexture* ResourceManager::FindTexture(const std::string& _Name)
 }
 
 
-bool ResourceManager::IsLoadTexture(const std::string& _Image)
+bool ResourceManager::IsLoadTexture(const std::string& _Name)
 {
-	return false;
+	return FindTexture(_Name) != nullptr;
 }
+
 void ResourceManager::TextureLoad(const std::string _Name, const std::string& _Path)
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_Name);

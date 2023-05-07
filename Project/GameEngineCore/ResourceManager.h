@@ -26,8 +26,8 @@ public:
 
 	void TextureLoad(const std::string _Name, const std::string& _Path);
 
-	GameEngineTexture* FindTexture(const std::string& _Image);
-	bool IsLoadTexture(const std::string& _Image);
+	GameEngineTexture* FindTexture(const std::string& _Name);
+	bool IsLoadTexture(const std::string& _Name);
 
 protected:
 

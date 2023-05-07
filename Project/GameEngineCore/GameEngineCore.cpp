@@ -78,6 +78,3 @@ void GameEngineCore::EngineStart(const std::string& _Title, HINSTANCE _Inst, Cor
 	WindowTitle = _Title;
 	GameEngineWindow::MessageLoop(_Inst, CoreStart, CoreUpdate, CoreEnd);
 }
-
-
-

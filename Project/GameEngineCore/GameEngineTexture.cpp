@@ -1,15 +1,14 @@
 #include "GameEngineTexture.h"
-#include <string>
 #include <GameEngineBase/GameEngineDebug.h>
+
 GameEngineTexture::GameEngineTexture()
 {
-
 }
 
 GameEngineTexture::~GameEngineTexture()
 {
-
 }
+
 void GameEngineTexture::ResLoad(const std::string& _Path)
 {
 	HANDLE ImageHandle = LoadImageA(nullptr, _Path.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
@@ -30,8 +29,7 @@ void GameEngineTexture::ResLoad(const std::string& _Path)
 
 void GameEngineTexture::ScaleCheck()
 {
-	GetObject(BitMap, sizeof(BITMAP), &info);
-
 	BITMAP OldInfo;
+	GetObject(BitMap, sizeof(BITMAP), &info);
 	GetObject(OldBitMap, sizeof(BITMAP), &OldInfo);
 }

@@ -47,7 +47,7 @@ void GameEngineWindow::InitInstance()
     UpdateWindow(hWnd);
 }
 
-LRESULT GameEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK GameEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
@@ -89,13 +89,11 @@ void GameEngineWindow::MyRegisterClass()
     wcex.hInstance = Instance;
     wcex.hIcon = nullptr;
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 2);
     wcex.lpszMenuName = nullptr;
     wcex.lpszClassName = "DefaultWindow";
     wcex.hIconSm = nullptr;
 
-    // RegisterClassExW(&wcex) : Wide Byte
-    // RegisterClassExA(&wcex) : Multi Byte
     if (false == RegisterClassExA(&wcex))
     {
         MsgBoxAssert("윈도우 클래스 등록에 실패했습니다.");
@@ -118,13 +116,14 @@ void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), vo
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
+            if (nullptr != _Update)
+            {
+                _Update();
+            }
+
             TranslateMessage(&msg);
             DispatchMessage(&msg);
-        }
-
-        if (nullptr != _Update)
-        {
-            _Update();
+            continue;
         }
     }
 

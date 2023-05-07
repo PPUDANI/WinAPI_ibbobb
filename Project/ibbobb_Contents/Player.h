@@ -1,11 +1,10 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
+#include <GameEngineCore/GameEngineActor.h>
+
 class Player : public GameEngineActor
 {
 public:
-	
-
 	Player();
 	~Player();
 

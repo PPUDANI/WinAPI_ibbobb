@@ -1,12 +1,12 @@
 #pragma once
 
-#include <windows.h>
-#include <string>
-#include <map>
-
 #include <GameEngineBase/GameEngineString.h>
 #include <GameEngineBase/GameEngineDebug.h>
 #include "GameEngineObject.h"
+
+#include <windows.h>
+#include <string>
+#include <map>
 
 class CoreProcess : public GameEngineObject
 {
@@ -16,8 +16,6 @@ class GameEngineLevel;
 class GameEngineCore
 {
 public:
-	GameEngineCore();
-	~GameEngineCore();
 
 	GameEngineCore(const GameEngineCore& _Other) = delete;
 	GameEngineCore(GameEngineCore&& _Other) noexcept = delete;
@@ -68,10 +66,11 @@ protected:
 
 private:
 	static std::string WindowTitle;
+	static std::map<std::string, GameEngineLevel*> AllLevel;
+
 	static CoreProcess* Process;
 	static GameEngineLevel* CurLevel;
 	static GameEngineLevel* NextLevel;
-	static std::map<std::string, GameEngineLevel*> AllLevel;
 
 	static void LevelInit(GameEngineLevel* _Level);
 	static void CoreStart(HINSTANCE _Inst);
@@ -79,5 +78,7 @@ private:
 	static void CoreEnd();
 	static void EngineStart(const std::string& _Title, HINSTANCE _Inst, CoreProcess* _Ptr);
 
+	GameEngineCore();
+	~GameEngineCore();
 };
 

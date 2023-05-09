@@ -1,10 +1,9 @@
 #include "GameEngineCore.h"
-#include "GameEngineLevel.h"
 
 #include <GameEngineBase/GameEngineDebug.h>
-#include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineBase/GameEngineTime.h>
-
+#include <GameEnginePlatform/GameEngineWindow.h>
+#include "GameEngineLevel.h"
 
 std::string GameEngineCore::WindowTitle = "";
 std::map<std::string, class GameEngineLevel*> GameEngineCore::AllLevel;
@@ -60,12 +59,12 @@ void GameEngineCore::CoreEnd()
 		Process = nullptr;
 	}
 
-	for (std::pair<std::string, GameEngineLevel*> _Pair : AllLevel)
+	for (std::pair<std::string, GameEngineLevel*> Pair : AllLevel)
 	{
-		if (nullptr != _Pair.second)
+		if (nullptr != Pair.second)
 		{
-			delete _Pair.second;
-			_Pair.second = nullptr;
+			delete Pair.second;
+			Pair.second = nullptr;
 		}
 	}
 }

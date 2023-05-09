@@ -1,12 +1,13 @@
 #pragma once
+#include <GameEngineBase/GameEnginePath.h>
+
 #include <string>
 #include <map>
-#include <GameEngineBase/GameEnginePath.h>
-class GameEngineTexture;
+
+class GameEngineWindowTexture;
 class ResourceManager
 {
 public:
-
 
 	ResourceManager(const ResourceManager& _Other) = delete;
 	ResourceManager(ResourceManager&& _Other) noexcept = delete;
@@ -18,15 +19,15 @@ public:
 		return Inst;
 	}
 
-	void TextureLoad(const std::string& _Path)
+	GameEngineWindowTexture* TextureLoad(const std::string& _Path)
 	{
 		GameEnginePath LoadPath = _Path;
-		TextureLoad(LoadPath.GetFileName(), _Path);
+		return TextureLoad(LoadPath.GetFileName(), _Path);
 	}
 
-	void TextureLoad(const std::string _Name, const std::string& _Path);
+	GameEngineWindowTexture* TextureLoad(const std::string _Name, const std::string& _Path);
 
-	GameEngineTexture* FindTexture(const std::string& _Name);
+	GameEngineWindowTexture* FindTexture(const std::string& _Name);
 	bool IsLoadTexture(const std::string& _Name);
 
 protected:
@@ -37,6 +38,6 @@ private:
 	ResourceManager();
 	~ResourceManager();
 
-	std::map<std::string, GameEngineTexture*> AllTexture;
+	std::map<std::string, GameEngineWindowTexture*> AllTexture;
 };
 

@@ -1,8 +1,9 @@
 #pragma once
-#include <map>
-#include <list>
 #include "GameEngineObject.h"
 #include "GameEngineActor.h"
+
+#include <list>
+#include <map>
 
 class GameEngineLevel : public GameEngineObject
 {

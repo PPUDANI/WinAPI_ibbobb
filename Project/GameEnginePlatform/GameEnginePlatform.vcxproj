@@ -155,12 +155,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GameEngineWindowTexture.h" />
     <ClInclude Include="GameEngineWindow.h">
       <SubType>
       </SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameEngineWindowTexture.cpp" />
     <ClCompile Include="GameEngineWindow.cpp">
       <SubType>
       </SubType>

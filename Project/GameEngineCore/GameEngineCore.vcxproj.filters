@@ -11,9 +11,6 @@
     <ClInclude Include="GameEngineObject.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineTexture.h">
-      <Filter>Resource</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Resource</Filter>
     </ClInclude>
@@ -28,9 +25,6 @@
     </ClCompile>
     <ClCompile Include="GameEngineObject.cpp">
       <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngineTexture.cpp">
-      <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Resource</Filter>

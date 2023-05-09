@@ -1,7 +1,7 @@
 #pragma once
-
 #include <string>
 #include <filesystem>
+
 class GameEnginePath
 {
 public:
@@ -19,7 +19,7 @@ public:
 	void GetCurrentPath();
 	void MoveParent();
 	void MoveParentToExistsChild(const std::string& _ChildPath);
-	void MoveChiled(const std::string& _ChildPAth);
+	void MoveChild(const std::string& _ChildPAth);
 
 	std::string GetStringPath()
 	{

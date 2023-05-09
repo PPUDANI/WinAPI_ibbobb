@@ -4,7 +4,7 @@
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/ResourceManager.h>
-#include <GameEngineCore/GameEngineTexture.h>
+#include <GameEnginePlatform/GameEngineWindowTexture.h>
 
 #include <windows.h>
 
@@ -27,7 +27,7 @@ void Player::Start()
 
 		FilePath.GetCurrentPath();
 		FilePath.MoveParentToExistsChild("Resource");
-		FilePath.MoveChiled("Resource\\Texture\\Image.Bmp");
+		FilePath.MoveChild("Resource\\Texture\\Image.Bmp");
 		ResourceManager::GetInst().TextureLoad(FilePath.GetStringPath());
 	}
 
@@ -54,15 +54,8 @@ void Player::Update(float _Delta)
 void Player::Render()
 {
 	HDC WindowDC = GameEngineWindow::MainWindow.GetHDC();
-	GameEngineTexture* FindTexture = ResourceManager::GetInst().FindTexture("Image.Bmp");
+	GameEngineWindowTexture* FindTexture = ResourceManager::GetInst().FindTexture("Image.Bmp");
 	HDC ImageDC = FindTexture->GetImageDC();
-
-	StretchBlt(WindowDC,
-		100,
-		100,
-		GetPos().iX() + GetScale().ihX(),
-		GetPos().iY() + GetScale().ihY(),
-		ImageDC, 0, 0, 1000, 1000, SRCCOPY);
 
 	BitBlt(WindowDC,
 	    GetPos().iX() - GetScale().ihX(),
@@ -70,13 +63,6 @@ void Player::Render()
 		GetPos().iX() + GetScale().ihX(),
 		GetPos().iY() + GetScale().ihY(),
 		ImageDC, 0, 0, SRCCOPY);
-
- //   Rectangle(WindowDC,
-	//	GetPos().iX() - GetScale().ihX(),
-	//	GetPos().iY() - GetScale().ihY(),
-	//	GetPos().iX() + GetScale().ihX(),
-	//	GetPos().iY() + GetScale().ihY()
-	//);
 
 }
 

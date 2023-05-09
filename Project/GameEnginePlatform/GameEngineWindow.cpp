@@ -1,5 +1,7 @@
 #include "GameEngineWindow.h"
+
 #include <GameEngineBase/GameEngineDebug.h>
+
 
 HINSTANCE GameEngineWindow::Instance = nullptr;
 GameEngineWindow GameEngineWindow::MainWindow;
@@ -12,7 +14,17 @@ GameEngineWindow::GameEngineWindow()
 
 GameEngineWindow::~GameEngineWindow()
 {
+    if (nullptr != BackBuffer)
+    {
+        delete BackBuffer;
+        BackBuffer = nullptr;
+    }
 
+    if (nullptr != WindowBuffer)
+    {
+        delete WindowBuffer;
+        WindowBuffer = nullptr;
+    }
 }
 
 void GameEngineWindow::Open(const std::string& _Title, HINSTANCE _hInstance)
@@ -30,6 +42,29 @@ void GameEngineWindow::Open(const std::string& _Title, HINSTANCE _hInstance)
     InitInstance();
 }
 
+void GameEngineWindow::SetPosAndScale(const float4& _Pos, const float4& _Scale)
+{
+    Scale = _Scale;
+
+    if (nullptr != BackBuffer)
+    {
+        delete BackBuffer;
+        BackBuffer = new GameEngineWindowTexture();
+        BackBuffer->ResCreate(Scale);
+    }
+
+    RECT Rc = { 0, 0, _Scale.iX(), _Scale.iY() };
+
+    AdjustWindowRect(&Rc, WS_OVERLAPPEDWINDOW, FALSE);
+
+    SetWindowPos(hWnd, nullptr, _Pos.iX(), _Pos.iY(), Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER);
+}
+
+void GameEngineWindow::DoubleBuffering()
+{
+    WindowBuffer->BitCopy(BackBuffer, Scale.Half(), BackBuffer->GetScale());
+}
+
 void GameEngineWindow::InitInstance()
 {
     hWnd = CreateWindowA("DefaultWindow", Title.c_str(), WS_OVERLAPPEDWINDOW,
@@ -42,6 +77,9 @@ void GameEngineWindow::InitInstance()
     }
 
     Hdc = ::GetDC(hWnd);
+
+    BackBuffer = new GameEngineWindowTexture();
+    BackBuffer->ResCreate(Hdc);
 
     ShowWindow(hWnd, SW_SHOW);
     UpdateWindow(hWnd);

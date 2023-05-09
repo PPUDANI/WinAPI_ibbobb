@@ -1,5 +1,6 @@
 #include "GameEnginePath.h"
 #include <GameEngineBase/GameEngineDebug.h>
+
 GameEnginePath::GameEnginePath()
 {
 
@@ -25,7 +26,7 @@ void GameEnginePath::GetCurrentPath()
 	Path = std::filesystem::current_path();
 }
 
-void GameEnginePath::MoveChiled(const std::string& _ChildPath)
+void GameEnginePath::MoveChild(const std::string& _ChildPath)
 {
 	std::filesystem::path CheckPath = Path;
 	CheckPath.append(_ChildPath);
@@ -62,7 +63,7 @@ void GameEnginePath::MoveParentToExistsChild(const std::string& _ChildPath)
 		if (Path.root_path() == Path)
 		{
 			MsgBoxAssert("루트 경로 까지의 검색 결과" + _ChildPath + "파일을 찾을 수 없습니다.");
-			break;
+			return;
 		}
 	}
 }

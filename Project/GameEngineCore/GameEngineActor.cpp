@@ -12,7 +12,7 @@ GameEngineActor::~GameEngineActor()
 
 }
 
-GameEngineRenderer* GameEngineActor::CreatreRenderer(const std::string& _ImageName)
+GameEngineRenderer* GameEngineActor::CreateRenderer(const std::string& _ImageName)
 {
 	GameEngineRenderer* NewRenderer = new GameEngineRenderer();
 	AllRenderer.push_back(NewRenderer);

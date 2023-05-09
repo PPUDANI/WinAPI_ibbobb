@@ -19,7 +19,15 @@ public:
 	GameEngineWindow& operator=(GameEngineWindow&& _Other) noexcept = delete;
 
 	static void MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), void(*_Update)(), void(*_End)());
+
+	static void WindowLoopOff()
+	{
+		IsWindowUpdate = false;
+	}
+
 	void Open(const std::string& _Title, HINSTANCE hInstance);
+	void SetPosAndScale(const float4& _Pos, const float4& _Scale);
+	void DoubleBuffering();
 
 	HDC GetHDC()
 	{
@@ -31,17 +39,14 @@ public:
 		return Scale;
 	}
 
+	GameEngineWindowTexture* GetWindowBuffer()
+	{
+		return WindowBuffer;
+	}
+
 	GameEngineWindowTexture* GetBackBuffer()
 	{
 		return  BackBuffer;
-	}
-
-	void SetPosAndScale(const float4& _Pos, const float4& _Scale);
-	void DoubleBuffering();
-
-	static void WindowLoopOff()
-	{
-		IsWindowUpdate = false;
 	}
 
 protected:

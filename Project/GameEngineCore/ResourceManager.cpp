@@ -4,7 +4,9 @@
 
 ResourceManager ResourceManager::Inst;
 
-ResourceManager::ResourceManager() {}
+ResourceManager::ResourceManager() 
+{
+}
 
 ResourceManager::~ResourceManager() 
 {
@@ -18,6 +20,11 @@ ResourceManager::~ResourceManager()
 			Texture = nullptr;
 		}
 	}
+}
+
+bool ResourceManager::IsLoadTexture(const std::string& _Name)
+{
+	return FindTexture(_Name) != nullptr;
 }
 
 GameEngineWindowTexture* ResourceManager::FindTexture(const std::string& _Name)
@@ -35,10 +42,7 @@ GameEngineWindowTexture* ResourceManager::FindTexture(const std::string& _Name)
 }
 
 
-bool ResourceManager::IsLoadTexture(const std::string& _Name)
-{
-	return FindTexture(_Name) != nullptr;
-}
+
 
 GameEngineWindowTexture* ResourceManager::TextureLoad(const std::string _Name, const std::string& _Path)
 {

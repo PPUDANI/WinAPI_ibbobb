@@ -78,8 +78,11 @@ void GameEngineWindow::InitInstance()
 
     Hdc = ::GetDC(hWnd);
 
+    WindowBuffer = new GameEngineWindowTexture();
+    WindowBuffer->ResCreate(Hdc);
+
     BackBuffer = new GameEngineWindowTexture();
-    BackBuffer->ResCreate(Hdc);
+    BackBuffer->ResCreate(WindowBuffer->GetScale());
 
     ShowWindow(hWnd, SW_SHOW);
     UpdateWindow(hWnd);
@@ -162,6 +165,11 @@ void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), vo
             TranslateMessage(&msg);
             DispatchMessage(&msg);
             continue;
+        }
+
+        if (nullptr != _Update)
+        {
+            _Update();
         }
     }
 

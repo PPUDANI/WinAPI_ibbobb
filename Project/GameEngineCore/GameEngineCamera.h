@@ -1,4 +1,9 @@
 #pragma once
+#include "GameEngineRenderer.h"
+
+#include <list>
+#include <map>
+
 class GameEngineCamera
 {
 public:
@@ -12,6 +17,6 @@ public:
 protected:
 
 private:
-
+	std::map<int, std::list<GameEngineRenderer*>> Renderers;
 };
 

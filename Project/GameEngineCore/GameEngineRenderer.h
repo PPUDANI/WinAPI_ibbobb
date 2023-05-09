@@ -1,5 +1,7 @@
 #pragma once
-class GameEngineRenderer
+#include "GameEngineObject.h"
+
+class GameEngineRenderer : public GameEngineObject
 {
 public:
 	GameEngineRenderer();
@@ -12,6 +14,6 @@ public:
 protected:
 
 private:
-
+	void Render();
 };
 

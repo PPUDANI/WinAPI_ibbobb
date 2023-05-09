@@ -21,10 +21,6 @@ GameEngineCore::~GameEngineCore()
 
 }
 
-void GameEngineCore::LevelInit(GameEngineLevel* _Level)
-{
-	_Level->Start();
-}
 
 void GameEngineCore::CoreStart(HINSTANCE _Inst)
 {
@@ -46,6 +42,7 @@ void GameEngineCore::CoreUpdate()
 	CurLevel->Update(Delta);
 	CurLevel->ActorUpdate(Delta);
 	CurLevel->Render();
+	GameEngineWindow::MainWindow.DoubleBuffering();
 	CurLevel->ActorRender();
 }
 
@@ -76,4 +73,9 @@ void GameEngineCore::EngineStart(const std::string& _Title, HINSTANCE _Inst, Cor
 	Process = _Ptr;
 	WindowTitle = _Title;
 	GameEngineWindow::MessageLoop(_Inst, CoreStart, CoreUpdate, CoreEnd);
+}
+
+void GameEngineCore::LevelInit(GameEngineLevel* _Level)
+{
+	_Level->Start();
 }

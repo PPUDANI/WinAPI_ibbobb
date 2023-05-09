@@ -1,4 +1,5 @@
 #include "GameEnginePath.h"
+
 #include <GameEngineBase/GameEngineDebug.h>
 
 GameEnginePath::GameEnginePath()

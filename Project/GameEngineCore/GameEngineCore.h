@@ -65,12 +65,12 @@ public:
 protected:
 
 private:
-	static std::string WindowTitle;
-	static std::map<std::string, GameEngineLevel*> AllLevel;
-
 	static CoreProcess* Process;
+	static std::string WindowTitle;
 	static GameEngineLevel* CurLevel;
 	static GameEngineLevel* NextLevel;
+
+	static std::map<std::string, GameEngineLevel*> AllLevel;
 
 	static void LevelInit(GameEngineLevel* _Level);
 	static void CoreStart(HINSTANCE _Inst);

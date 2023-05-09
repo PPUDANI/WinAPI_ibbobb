@@ -3,8 +3,8 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
-#include <GameEngineCore/ResourceManager.h>
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
+#include <GameEngineCore/ResourceManager.h>
 
 #include <windows.h>
 
@@ -26,13 +26,15 @@ void Player::Start()
 		GameEnginePath FilePath;
 
 		FilePath.GetCurrentPath();
-		FilePath.MoveParentToExistsChild("Resource");
-		FilePath.MoveChild("Resource\\Texture\\Image.Bmp");
+		FilePath.MoveParentToExistsChild("Resources");
+		FilePath.MoveChild("Resources\\Texture\\Image.Bmp");
 		ResourceManager::GetInst().TextureLoad(FilePath.GetStringPath());
 	}
 
+	CreateRenderer("Image.Bmp");
+
 	SetPos({ 200, 200 });
-	SetScale({ 50, 0 });
+	SetScale({ 100, 100 });
 
 	//SetPos({ 200, 200 });
 	//SetScale({ 100, 100 });
@@ -41,29 +43,14 @@ void Player::Start()
 
 void Player::Update(float _Delta)
 {
-	//static float a = 0.0f;
-	//if (a < 100)
-	//{
-	//	AddPos({ 1.0f, 0.0f });
-
-	//	a++;
-	//}
-	
+	AddPos({ 100.0f * _Delta, 0.0f });
 }
 
 void Player::Render()
 {
-	HDC WindowDC = GameEngineWindow::MainWindow.GetHDC();
+	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
 	GameEngineWindowTexture* FindTexture = ResourceManager::GetInst().FindTexture("Image.Bmp");
-	HDC ImageDC = FindTexture->GetImageDC();
-
-	BitBlt(WindowDC,
-	    GetPos().iX() - GetScale().ihX(),
-		GetPos().iY() - GetScale().ihY(),
-		GetPos().iX() + GetScale().ihX(),
-		GetPos().iY() + GetScale().ihY(),
-		ImageDC, 0, 0, SRCCOPY);
-
+	BackBuffer->TransCopy(FindTexture, GetPos(), { 100, 100 }, { 0, 0 }, FindTexture->GetScale());
 }
 
 void Player::Release()

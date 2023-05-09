@@ -9,3 +9,7 @@ GameEngineRenderer::~GameEngineRenderer()
 {
 
 }
+
+void GameEngineRenderer::Render()
+{
+}

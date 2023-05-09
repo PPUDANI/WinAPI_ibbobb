@@ -2,7 +2,7 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/ResourceManager.h>
 
-#pragma comment(lib, "MSimg32.lib")
+#pragma comment(lib, "msimg32.lib")
 
 BackGround::BackGround()
 {
@@ -26,8 +26,19 @@ void BackGround::Update(float _Delta)
 
 void BackGround::Render()
 {
-	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
 	GameEngineWindowTexture* FindTexture = ResourceManager::GetInst().FindTexture(FileName);
+
+	if (nullptr == FindTexture)
+	{
+		return;
+	}
+
+	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
+	float4 Scale = FindTexture->GetScale();
+
+	Scale *= 2.0f;
+
+	BackBuffer->TransCopy(FindTexture, GetPos(), Scale, { 0, 0 }, FindTexture->GetScale());
 }
 
 void BackGround::Release()
@@ -35,7 +46,7 @@ void BackGround::Release()
 
 }
 
-void BackGround::Inst(const std::string& _FileName)
+void BackGround::Init(const std::string& _FileName)
 {
 	FileName = _FileName;
 

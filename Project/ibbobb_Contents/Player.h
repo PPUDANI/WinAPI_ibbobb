@@ -1,5 +1,4 @@
 #pragma once
-#include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/GameEngineActor.h>
 
 class Player : public GameEngineActor

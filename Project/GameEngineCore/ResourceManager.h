@@ -26,7 +26,6 @@ public:
 	}
 
 	GameEngineWindowTexture* TextureLoad(const std::string _Name, const std::string& _Path);
-
 	GameEngineWindowTexture* FindTexture(const std::string& _Name);
 	bool IsLoadTexture(const std::string& _Name);
 

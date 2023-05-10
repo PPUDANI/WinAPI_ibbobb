@@ -28,6 +28,7 @@ public:
 	void Open(const std::string& _Title, HINSTANCE hInstance);
 	void SetPosAndScale(const float4& _Pos, const float4& _Scale);
 	void DoubleBuffering();
+	void ClearBackBuffer();
 
 	HDC GetHDC()
 	{

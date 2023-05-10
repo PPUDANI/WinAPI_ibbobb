@@ -1,7 +1,8 @@
 #include "BackGround.h"
+#include "ContentsEnum.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/ResourceManager.h>
-
+#include <GameEngineCore/GameEngineRenderer.h>
 #pragma comment(lib, "msimg32.lib")
 
 BackGround::BackGround()
@@ -26,19 +27,19 @@ void BackGround::Update(float _Delta)
 
 void BackGround::Render()
 {
-	GameEngineWindowTexture* FindTexture = ResourceManager::GetInst().FindTexture(FileName);
+	//GameEngineWindowTexture* FindTexture = ResourceManager::GetInst().FindTexture(FileName);
 
-	if (nullptr == FindTexture)
-	{
-		return;
-	}
+	//if (nullptr == FindTexture)
+	//{
+	//	return;
+	//}
 
-	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
-	float4 Scale = FindTexture->GetScale();
+	//GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
+	//float4 Scale = FindTexture->GetScale();
 
-	Scale *= 2.0f;
+	//Scale *= 2.0f;
 
-	BackBuffer->TransCopy(FindTexture, GetPos(), Scale, { 0, 0 }, FindTexture->GetScale());
+	//BackBuffer->TransCopy(FindTexture, GetPos(), Scale, { 0, 0 }, FindTexture->GetScale());
 }
 
 void BackGround::Release()
@@ -57,16 +58,17 @@ void BackGround::Init(const std::string& _FileName)
 		FilePath.GetCurrentPath();
 
 		FilePath.MoveParentToExistsChild("Resources");
-		FilePath.MoveChild("Resources\\Texture\\" + _FileName);
+		FilePath.MoveChild("Resources\\Texture\\Map\\" + _FileName);
 
-		GameEngineWindowTexture* Text = ResourceManager::GetInst().TextureLoad(FilePath.GetStringPath());
+		GameEngineWindowTexture* Texture = ResourceManager::GetInst().TextureLoad(FilePath.GetStringPath());
 
-		float4 Scale = Text->GetScale();
+		float4 Scale = Texture->GetScale();
 
-		Scale.X *= 5.0f;
-		Scale.Y *= 5.0f;
+		Scale.X *= 3.0f;
+		Scale.Y *= 3.0f;
 
-		SetScale(Scale);
+		GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);
+		Render->SetRenderScale(Scale);
 	}
 }
 

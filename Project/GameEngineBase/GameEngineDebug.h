@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <assert.h>
+#include <string>
 
 //// Ό³Έν :
 class GameEngineDebug
@@ -16,7 +17,7 @@ public:
 	GameEngineDebug& operator=(const GameEngineDebug& _Other) = delete;
 	GameEngineDebug& operator=(GameEngineDebug&& _Other) noexcept = delete;
 
-	static void LeckCheck();
+	static void LeakCheck();
 
 protected:
 

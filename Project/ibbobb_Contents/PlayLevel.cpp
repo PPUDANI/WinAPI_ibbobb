@@ -17,7 +17,10 @@ PlayLevel::~PlayLevel()
 void PlayLevel::Start() 
 {
 	BackGround* Back = CreateActor<BackGround>();
-	Back->Init("StageTest.Bmp");
+	Back->Init("Sky.Bmp");
+
+	BackGround* Map = CreateActor<BackGround>();
+	Map->Init("StageTest.Bmp");
 
 	CreateActor<Player>();
 }

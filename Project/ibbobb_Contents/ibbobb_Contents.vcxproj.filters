@@ -17,6 +17,9 @@
     <ClInclude Include="BackGround.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="ContentsEnum.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">

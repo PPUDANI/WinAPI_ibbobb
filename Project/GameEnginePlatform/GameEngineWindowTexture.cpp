@@ -3,6 +3,8 @@
 #include <GameEngineBase/GameEngineDebug.h>
 #include "GameEngineWindow.h"
 
+#pragma comment(lib, "msimg32.lib")
+
 GameEngineWindowTexture::GameEngineWindowTexture()
 {
 }
@@ -50,9 +52,6 @@ void GameEngineWindowTexture::ResCreate(const float4& _Scale)
 void GameEngineWindowTexture::ScaleCheck()
 {
 	GetObject(BitMap, sizeof(BITMAP), &Info);
-
-	BITMAP OldInfo;
-	GetObject(OldBitMap, sizeof(BITMAP), &OldInfo);
 }
 
 float4 GameEngineWindowTexture::GetScale()

@@ -60,6 +60,11 @@ void GameEngineWindow::SetPosAndScale(const float4& _Pos, const float4& _Scale)
     SetWindowPos(hWnd, nullptr, _Pos.iX(), _Pos.iY(), Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER);
 }
 
+void GameEngineWindow::ClearBackBuffer()
+{
+    Rectangle(BackBuffer->GetImageDC(), 0, 0, BackBuffer->GetScale().iX(), BackBuffer->GetScale().iY());
+
+}
 void GameEngineWindow::DoubleBuffering()
 {
     WindowBuffer->BitCopy(BackBuffer, Scale.Half(), BackBuffer->GetScale());

@@ -41,9 +41,6 @@ GameEngineWindowTexture* ResourceManager::FindTexture(const std::string& _Name)
 	return FindIter->second;
 }
 
-
-
-
 GameEngineWindowTexture* ResourceManager::TextureLoad(const std::string _Name, const std::string& _Path)
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_Name);

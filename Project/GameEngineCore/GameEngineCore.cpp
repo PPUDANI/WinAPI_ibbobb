@@ -39,11 +39,16 @@ void GameEngineCore::CoreUpdate()
 
 	GameEngineTime::MainTimer.Update();
 	float Delta = GameEngineTime::MainTimer.GetDeltaTime();
+
 	CurLevel->Update(Delta);
 	CurLevel->ActorUpdate(Delta);
-	CurLevel->Render();
-	GameEngineWindow::MainWindow.DoubleBuffering();
+
+	GameEngineWindow::MainWindow.ClearBackBuffer();
+
 	CurLevel->ActorRender();
+	CurLevel->Render();
+
+	GameEngineWindow::MainWindow.DoubleBuffering();
 }
 
 void GameEngineCore::CoreEnd()
@@ -68,7 +73,7 @@ void GameEngineCore::CoreEnd()
 
 void GameEngineCore::EngineStart(const std::string& _Title, HINSTANCE _Inst, CoreProcess* _Ptr)
 {
-	GameEngineDebug::LeckCheck();
+	GameEngineDebug::LeakCheck();
 
 	Process = _Ptr;
 	WindowTitle = _Title;

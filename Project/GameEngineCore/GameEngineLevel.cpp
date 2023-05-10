@@ -35,9 +35,10 @@ GameEngineLevel::~GameEngineLevel()
 	}
 }
 
-void GameEngineLevel::ActorInit(GameEngineActor* _Actor)
+void GameEngineLevel::ActorInit(GameEngineActor* _Actor, int _Order)
 {
 	_Actor->Level = this;
+	_Actor->SetOrder(_Order);
 	_Actor->Start();
 }
 
@@ -56,6 +57,7 @@ void GameEngineLevel::ActorUpdate(float _Delta)
 
 void GameEngineLevel::ActorRender()
 {
+	MainCamera->Render();
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
 	{
 		const std::list<GameEngineActor*>& Group = _Pair.second;

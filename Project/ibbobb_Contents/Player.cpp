@@ -3,7 +3,6 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
-#include <GameEnginePlatform/GameEngineWindowTexture.h>
 #include <GameEngineCore/ResourceManager.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
@@ -35,19 +34,14 @@ void Player::Start()
 		ResourceManager::GetInst().TextureLoad(FilePath.PlusFilePath("HPBar.bmp"));
 	}
 
+	GameEngineRenderer* Ptr = CreateRenderer("Test.Bmp", RenderOrder::Play);
+	Ptr->SetRenderScale({ 200, 200 });
+	Ptr->SetTexture("Test.Bmp");
 
-	{
-		GameEngineRenderer* Ptr = CreateRenderer("Test.Bmp", RenderOrder::Play);
-		Ptr->SetRenderScale({ 200, 200 });
-		Ptr->SetTexture("Test.Bmp");
-	}
-
-	{
-		GameEngineRenderer* Ptr = CreateRenderer("HPBar.bmp", RenderOrder::Play);
-		Ptr->SetRenderPos({ 0, -100 });
-		Ptr->SetRenderScale({ 200, 40 });
-		Ptr->SetTexture("HPBar.bmp");
-	}
+	GameEngineRenderer* HPBarPtr = CreateRenderer("HPBar.bmp", RenderOrder::Play);
+	HPBarPtr->SetRenderPos({ 0, -80 });
+	HPBarPtr->SetRenderScale({ 120, 20 });
+	HPBarPtr->SetTexture("HPBar.bmp");
 
 	float4 WinScale = GameEngineWindow::MainWindow.GetScale();
 

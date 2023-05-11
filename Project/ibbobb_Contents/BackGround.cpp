@@ -3,12 +3,12 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/ResourceManager.h>
 #include <GameEngineCore/GameEngineRenderer.h>
-#pragma comment(lib, "msimg32.lib")
 
 BackGround::BackGround()
 {
-
+	
 }
+
 
 BackGround::~BackGround()
 {
@@ -17,7 +17,7 @@ BackGround::~BackGround()
 
 void BackGround::Start()
 {
-	SetPos({ 640, 360 });
+	SetPos({ 0, 0 });
 }
 
 void BackGround::Update(float _Delta)
@@ -63,9 +63,10 @@ void BackGround::Init(const std::string& _FileName)
 		GameEngineWindowTexture* Texture = ResourceManager::GetInst().TextureLoad(FilePath.GetStringPath());
 
 		float4 Scale = Texture->GetScale();
-
+		
 		Scale.X *= 3.0f;
 		Scale.Y *= 3.0f;
+		SetPos({ GetPos().iX() + Scale.hX(), GetPos().iY() + Scale.hY() });
 
 		GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);
 		Render->SetRenderScale(Scale);

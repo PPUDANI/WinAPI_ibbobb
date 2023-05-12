@@ -12,6 +12,7 @@ class CoreProcess : public GameEngineObject
 {
 
 };
+
 class GameEngineLevel;
 class GameEngineCore
 {

@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
+#include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/ResourceManager.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
@@ -35,13 +36,13 @@ void Player::Start()
 	}
 
 	GameEngineRenderer* Ptr = CreateRenderer("Test.Bmp", RenderOrder::Play);
+	Ptr->SetRenderPos({ 0, 0 });
 	Ptr->SetRenderScale({ 200, 200 });
-	Ptr->SetTexture("Test.Bmp");
 
 	GameEngineRenderer* HPBarPtr = CreateRenderer("HPBar.bmp", RenderOrder::Play);
 	HPBarPtr->SetRenderPos({ 0, -80 });
 	HPBarPtr->SetRenderScale({ 120, 20 });
-	HPBarPtr->SetTexture("HPBar.bmp");
+
 
 	float4 WinScale = GameEngineWindow::MainWindow.GetScale();
 
@@ -55,22 +56,22 @@ void Player::Update(float _Delta)
 
 	float4 MovePos = float4::ZERO;
 
-	if (0 != GetAsyncKeyState('A'))
+	if (true == GameEngineInput::IsPress('A'))
 	{
 		MovePos = { -Speed * _Delta, 0.0f };
 	}
 
-	if (0 != GetAsyncKeyState('D'))
+	if (true == GameEngineInput::IsPress('D'))
 	{
 		MovePos = { Speed * _Delta, 0.0f };
 	}
 
-	if (0 != GetAsyncKeyState('W'))
+	if (true == GameEngineInput::IsPress('W'))
 	{
 		MovePos = { 0.0f, -Speed * _Delta };
 	}
 
-	if (0 != GetAsyncKeyState('S'))
+	if (true == GameEngineInput::IsPress('S'))
 	{
 		MovePos = { 0.0f, Speed * _Delta };
 	}

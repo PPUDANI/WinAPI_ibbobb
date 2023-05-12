@@ -3,7 +3,7 @@
 #include "GameEngineLevel.h"
 #include "GameEngineRenderer.h"
 #include "GameEngineCamera.h"
-
+#include <GameEngineBase/GameEngineDebug.h>
 GameEngineActor::GameEngineActor()
 {
 
@@ -25,8 +25,41 @@ GameEngineRenderer* GameEngineActor::CreateRenderer(const std::string& _ImageNam
 	GetLevel()->MainCamera->PushRenderer(NewRenderer, _Order);
 
 	NewRenderer->Master = this;
-	NewRenderer->SetTexture(_ImageName);
+	if (_ImageName != "")
+	{
+		NewRenderer->SetTexture(_ImageName);
+	}
 	AllRenderer.push_back(NewRenderer);
 
 	return NewRenderer;
+}
+
+void GameEngineActor::ActorRelease()
+{
+	std::list<GameEngineRenderer*>::iterator ObjectStartIter = AllRenderer.begin();
+	std::list<GameEngineRenderer*>::iterator ObjectEndIter = AllRenderer.end();
+
+	for (; ObjectStartIter != ObjectEndIter; )
+	{
+		GameEngineRenderer* Renderer = *ObjectStartIter;
+		if (false == Renderer->IsDeath())
+		{
+			++ObjectStartIter;
+			continue;
+		}
+
+
+		if (nullptr == Renderer)
+		{
+			MsgBoxAssert("nullptr인 액터가 레벨의 리스트에 들어가 있었습니다.");
+			continue;
+		}
+
+		delete Renderer;
+		Renderer = nullptr;
+
+		// [s] [a] [a]     [a] [e]
+		ObjectStartIter = AllRenderer.erase(ObjectStartIter);
+
+	}
 }

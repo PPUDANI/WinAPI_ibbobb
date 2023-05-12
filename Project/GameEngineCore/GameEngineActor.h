@@ -29,19 +29,20 @@ public:
 		Pos += _Pos;
 	}
 
-	void SetScale(const float4& _Scale)
-	{
-		Scale = _Scale;
-	}
-
 	float4 GetPos()
 	{
 		return Pos;
 	}
 
-	float4 GetScale()
+	template<typename EnumType>
+	GameEngineRenderer* CreateRenderer(EnumType _Order)
 	{
-		return Scale;
+		return CreateRenderer("", static_cast<int>(_Order));
+	}
+
+	GameEngineRenderer* CreateRenderer(int _Order = 0)
+	{
+		return CreateRenderer("", static_cast<int>(_Order));
 	}
 
 	template<typename EnumType>
@@ -63,10 +64,11 @@ private:
 	GameEngineLevel* Level;
 
 	float4 Pos = float4::ZERO;
-	float4 Scale = float4::ZERO;
 
 	std::list<GameEngineRenderer*> AllRenderer;
 
 	void PushMainCameraRenderer(GameEngineRenderer*);
+
+	void ActorRelease();
 };
 

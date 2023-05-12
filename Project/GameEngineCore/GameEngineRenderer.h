@@ -5,6 +5,7 @@
 
 // Ό³Έν :
 class GameEngineActor;
+class GameEngineWindowTexture;
 class GameEngineRenderer : public GameEngineObject
 {
 	friend class GameEngineCamera;
@@ -47,12 +48,14 @@ public:
 
 	void SetRenderScaleToTexture();
 
+	bool IsDeath() override;
+
 protected:
 
 private:
 	class GameEngineWindowTexture* Texture;
 	GameEngineActor* Master;
-	bool ScaleCheck;
+	bool ScaleCheck = false;
 
 
 	float4 RenderPos;

@@ -1,7 +1,9 @@
 #pragma once
 
+
 class GameEngineObject
 {
+	friend class GameEngineLevel;
 public:
 	GameEngineObject();
 	~GameEngineObject();
@@ -39,7 +41,7 @@ public:
 		return true == IsUpdateValue && false == IsDeathValue;
 	}
 
-	bool IsDeath()
+	virtual bool IsDeath() 
 	{
 		return IsDeathValue;
 	}
@@ -49,11 +51,27 @@ public:
 		Order = _Order;
 	}
 
+	float GetLiveTime()
+	{
+		return LiveTime;
+	}
+
+	void ResetLiveTime(float _DeltaTime)
+	{
+		LiveTime = 0.0f;
+	}
+
 protected:
 
 private:
+	float LiveTime = 0.0f;
 	int Order = 0;
 	bool IsUpdateValue = true;
 	bool IsDeathValue = false;
+
+	void AddLiveTime(float _DeltaTime)
+	{
+		LiveTime += _DeltaTime;
+	}
 };
 

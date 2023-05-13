@@ -20,7 +20,7 @@ PlayLevel::~PlayLevel()
 void PlayLevel::Start() 
 {
 	BackGround* Back = CreateActor<BackGround>();
-	Back->Init("Sky.Bmp");
+	Back->Init("NN.Bmp");
 
 	BackGround* Map = CreateActor<BackGround>();
 	Map->Init("StageTest.Bmp");
@@ -58,7 +58,6 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	// 0 0
 	// x y
 	GetMainCamera()->SetPos(LevelPlayer->GetPos() - WinScale.Half());
-
 }
 
 void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)

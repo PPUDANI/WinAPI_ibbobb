@@ -3,15 +3,13 @@
 #include <assert.h>
 #include <string>
 
-//// 설명 :
+// Debuging 용도 클래스
 class GameEngineDebug
 {
 public:
-	// constrcuter destructer
 	GameEngineDebug();
 	~GameEngineDebug();
 
-	// delete Function
 	GameEngineDebug(const GameEngineDebug& _Other) = delete;
 	GameEngineDebug(GameEngineDebug&& _Other) noexcept = delete;
 	GameEngineDebug& operator=(const GameEngineDebug& _Other) = delete;
@@ -25,6 +23,7 @@ private:
 
 };
 
+// 오류 메세지 출력 메크로 함수
 #define MsgBoxAssert(Text) \
 std::string Value = Text; \
 MessageBoxA(nullptr, Value.c_str(), "Error", MB_OK); assert(false);

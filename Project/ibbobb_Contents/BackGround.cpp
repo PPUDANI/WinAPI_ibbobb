@@ -64,8 +64,8 @@ void BackGround::Init(const std::string& _FileName)
 
 		float4 Scale = Texture->GetScale();
 		
-		Scale.X *= 3.0f;
-		Scale.Y *= 3.0f;
+		Scale.X *= 1.0f;
+		Scale.Y *= 1.0f;
 		SetPos({ GetPos().iX() + Scale.hX(), GetPos().iY() + Scale.hY() });
 
 		GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);

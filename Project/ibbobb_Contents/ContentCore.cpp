@@ -17,13 +17,13 @@ ContentCore::~ContentCore()
 
 void ContentCore::Start()
 {
-	GameEngineWindow::MainWindow.SetPosAndScale({ 100, 100 }, { 1280, 600 });
+	GameEngineWindow::MainWindow.SetPosAndScale({ 50, 50 }, { 1400, 800 });
 
 	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineCore::CreateLevel<PlayLevel>("PlayLevel");
 	GameEngineCore::CreateLevel<EndingLevel>("EndingLevel");
 
-	GameEngineCore::ChangeLevel("PlayLevel");
+	GameEngineCore::ChangeLevel("TitleLevel");
 }
 
 void ContentCore::Update(float _Delta)

@@ -4,6 +4,7 @@ class GameEngineMath
 {
 };
 
+// 윈도우 좌표 클래스
 class float4
 {
 public:
@@ -18,6 +19,7 @@ public:
 	float Z = 0.0f;
 	float W = 1.0f;
 
+	// 좌표값 반환 함수
 	inline int iX() const
 	{
 		return static_cast<int>(X);
@@ -53,7 +55,7 @@ public:
 		return { hX(), hY(), Z, W };
 	}
 
-
+	// float4의 operator함수 overroading
 	float4 operator+ (const float4& _Other)
 	{
 		float4 ReturnValue;

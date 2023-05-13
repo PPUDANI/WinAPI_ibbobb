@@ -14,13 +14,13 @@ public:
 	GameEngineTime& operator=(const GameEngineTime& _Other) = delete;
 	GameEngineTime& operator=(GameEngineTime&& _Other) noexcept = delete;
 
-	float GetDeltaTime()
+	float GetDeltaTime() // DeltaTime 반환 함수
 	{
 		return FloatDelta;
 	}
 
-	void Reset();
-	void Update();
+	void Reset(); // DeltaTime 초기화
+	void Update();  // DeltaTime Update
 
 protected:
 

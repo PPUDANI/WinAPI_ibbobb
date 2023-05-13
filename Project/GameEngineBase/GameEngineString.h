@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-// 설명 :
+// 게임 파일 및 레벨의 이름을 관리하기 위한 클래스
 class GameEngineString
 {
 public:
@@ -15,6 +15,7 @@ public:
 	GameEngineString& operator=(const GameEngineString& _Other) = delete;
 	GameEngineString& operator=(GameEngineString&& _Other) noexcept = delete;
 
+	// 모든 문자를 대문자로 반환하는 함수
 	static std::string ToUpperReturn(const std::string& _Value) 
 	{
 		std::string UpperString = _Value;

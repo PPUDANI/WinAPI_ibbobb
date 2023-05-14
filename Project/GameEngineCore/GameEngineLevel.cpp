@@ -66,7 +66,6 @@ void GameEngineLevel::ActorRender()
 {
 	MainCamera->Render();
 
-	// for문을 돌리고 있습니다.
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
 	{
 		const std::list<GameEngineActor*>& Group = _Pair.second;
@@ -87,12 +86,8 @@ void GameEngineLevel::ActorRelease()
 {
 	MainCamera->Release();
 
-	// 구조가 바뀔겁니다.
-
 	std::map<int, std::list<GameEngineActor*>>::iterator GroupStartIter = AllActors.begin();
 	std::map<int, std::list<GameEngineActor*>>::iterator GroupEndIter = AllActors.end();
-
-	// 눈꼽 만큼이라도 연산을 줄이려는 거죠.
 
 	for (; GroupStartIter != GroupEndIter; ++GroupStartIter)
 	{
@@ -120,10 +115,7 @@ void GameEngineLevel::ActorRelease()
 			delete Actor;
 			Actor = nullptr;
 
-			//                      i
-			// [s] [a] [a]     [a] [e]
 			ObjectStartIter = Group.erase(ObjectStartIter);
-
 		}
 	}
 }

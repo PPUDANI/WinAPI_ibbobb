@@ -23,7 +23,6 @@ void GameEngineCamera::Render()
 		std::list<GameEngineRenderer*>::iterator RenderStartIter = List.begin();
 		std::list<GameEngineRenderer*>::iterator RenderEndIter = List.end();
 
-
 		for (; RenderStartIter != RenderEndIter; ++RenderStartIter)
 		{
 			GameEngineRenderer* Render = *RenderStartIter;

@@ -46,5 +46,8 @@
     <Filter Include="Global">
       <UniqueIdentifier>{c24e4729-4c0c-443b-8b50-73ba2b0a6abc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TitleObject">
+      <UniqueIdentifier>{d6c07d50-61dc-43ce-993e-9d37b60d33c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

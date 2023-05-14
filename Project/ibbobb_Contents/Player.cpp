@@ -24,24 +24,19 @@ Player::~Player()
 void Player::Start()
 {
 
-	if (false == ResourceManager::GetInst().IsLoadTexture("Test.Bmp"))
+	if (false == ResourceManager::GetInst().IsLoadTexture("obb.bmp"))
 	{
 		GameEnginePath FilePath;
 
 		FilePath.GetCurrentPath();
 		FilePath.MoveParentToExistsChild("Resources");
 		FilePath.MoveChild("Resources\\Texture\\Character");
-		ResourceManager::GetInst().TextureLoad(FilePath.PlusFilePath("Test.bmp"));
-		ResourceManager::GetInst().TextureLoad(FilePath.PlusFilePath("HPBar.bmp"));
+		ResourceManager::GetInst().TextureLoad(FilePath.PlusFilePath("obb.bmp"));
 	}
 
-	GameEngineRenderer* Ptr = CreateRenderer("Test.Bmp", RenderOrder::Play);
+	GameEngineRenderer* Ptr = CreateRenderer("obb.bmp", RenderOrder::Play);
 	Ptr->SetRenderPos({ 0, 0 });
-	Ptr->SetRenderScale({ 200, 200 });
-
-	GameEngineRenderer* HPBarPtr = CreateRenderer("HPBar.bmp", RenderOrder::Play);
-	HPBarPtr->SetRenderPos({ 0, -80 });
-	HPBarPtr->SetRenderScale({ 120, 20 });
+	Ptr->SetRenderScale({ 100, 100 });
 
 
 	float4 WinScale = GameEngineWindow::MainWindow.GetScale();

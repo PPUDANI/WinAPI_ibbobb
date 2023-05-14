@@ -48,7 +48,6 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera)
 	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
 
 	BackBuffer->TransCopy(Texture, Master->GetPos() + RenderPos - _Camera->GetPos(), RenderScale, CopyPos, CopyScale);
-
 }
 
 bool GameEngineRenderer::IsDeath()

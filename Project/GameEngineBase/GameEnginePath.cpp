@@ -55,6 +55,11 @@ std::string GameEnginePath::PlusFilePath(const std::string _ChildPath)
 	return CheckPath.string();
 }
 
+bool GameEnginePath::IsDirectory()
+{
+	return std::filesystem::is_directory(Path);
+}
+
 void GameEnginePath::MoveParent()
 {
 	Path = Path.parent_path();

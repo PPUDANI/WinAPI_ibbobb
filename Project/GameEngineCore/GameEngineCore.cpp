@@ -47,23 +47,23 @@ void GameEngineCore::CoreUpdate()
 	}
 
 	GameEngineTime::MainTimer.Update();
-	float Delta = GameEngineTime::MainTimer.GetDeltaTime();
+	float DeltaTime = GameEngineTime::MainTimer.GetDeltaTime();
 
 	if (true == GameEngineWindow::IsFocus())
 	{
-		GameEngineInput::Update(Delta);
+		GameEngineInput::Update(DeltaTime);
 	}
 	else
 	{
 		GameEngineInput::Reset();
 	}
 
-	CurLevel->Update(Delta);
-	CurLevel->ActorUpdate(Delta);
+	CurLevel->Update(DeltaTime);
+	CurLevel->ActorUpdate(DeltaTime);
 
 	GameEngineWindow::MainWindow.ClearBackBuffer();
 
-	CurLevel->ActorRender();
+	CurLevel->ActorRender(DeltaTime);
 	CurLevel->Render();
 
 	GameEngineWindow::MainWindow.DoubleBuffering();

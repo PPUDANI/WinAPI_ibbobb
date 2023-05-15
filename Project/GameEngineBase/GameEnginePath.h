@@ -10,10 +10,10 @@ public:
 	GameEnginePath(const std::string& _Path);
 	~GameEnginePath();
 
-	GameEnginePath(const GameEnginePath& _Other) = delete;
-	GameEnginePath(GameEnginePath&& _Other) noexcept = delete;
-	GameEnginePath& operator=(const GameEnginePath& _Other) = delete;
-	GameEnginePath& operator=(GameEnginePath&& _Other) noexcept = delete;
+	//GameEnginePath(const GameEnginePath& _Other) = delete;
+	//GameEnginePath(GameEnginePath&& _Other) noexcept = delete;
+	//GameEnginePath& operator=(const GameEnginePath& _Other) = delete;
+	//GameEnginePath& operator=(GameEnginePath&& _Other) noexcept = delete;
 
 	std::string GetFileName(); // 파일 이름 반환 함수
 	std::string GetStringPath() // 파일 경로 반환 함수
@@ -27,7 +27,7 @@ public:
 	void MoveChild(const std::string& _ChildPAth); // 현재 Path에 자식 경로로 이동시키는 함수
 	std::string PlusFilePath(const std::string _ChildPath); // 현재 경로에 파일 이름 추가해주는 함수
 	
-
+	bool IsDirectory();
 protected:
 
 private:

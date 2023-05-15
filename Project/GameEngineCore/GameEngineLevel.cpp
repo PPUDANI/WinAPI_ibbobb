@@ -43,7 +43,7 @@ void GameEngineLevel::ActorInit(GameEngineActor* _Actor, int _Order)
 	_Actor->Start();
 }
 
-void GameEngineLevel::ActorUpdate(float _Delta)
+void GameEngineLevel::ActorUpdate(float _DeltaTime)
 {
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
 	{
@@ -56,15 +56,15 @@ void GameEngineLevel::ActorUpdate(float _Delta)
 				continue;
 			}
 
-			_Actor->AddLiveTime(_Delta);
-			_Actor->Update(_Delta);
+			_Actor->AddLiveTime(_DeltaTime);
+			_Actor->Update(_DeltaTime);
 		}
 	}
 }
 
-void GameEngineLevel::ActorRender()
+void GameEngineLevel::ActorRender(float _DeltaTime)
 {
-	MainCamera->Render();
+	MainCamera->Render(_DeltaTime);
 
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
 	{

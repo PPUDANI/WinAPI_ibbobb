@@ -1,10 +1,15 @@
 #include "GameEngineRenderer.h"
+
 #include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngineBase/GameEngineString.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
+
 #include "GameEngineCamera.h"
 #include "ResourceManager.h"
 #include "GameEngineActor.h"
+#include "GameEngineSprite.h"
+
 
 GameEngineRenderer::GameEngineRenderer()
 {
@@ -12,6 +17,24 @@ GameEngineRenderer::GameEngineRenderer()
 
 GameEngineRenderer::~GameEngineRenderer()
 {
+}
+
+void GameEngineRenderer::SetSprite(const std::string& _Name, size_t _Index)
+{
+	Sprite = ResourceManager::GetInst().FindSprite(_Name);
+
+	if (nullptr == Sprite)
+	{
+		MsgBoxAssert("존재하지 않는 스프라이트를 세팅하려고 했습니다." + _Name);
+	}
+
+	const GameEngineSprite::Sprite& SpriteInfo = Sprite->GetSprite(_Index);
+
+	Texture = SpriteInfo.BaseTexture;
+
+	SetCopyPos(SpriteInfo.RenderPos);
+	SetCopyScale(SpriteInfo.RenderScale);
+
 }
 
 void GameEngineRenderer::SetTexture(const std::string& _Name)
@@ -38,8 +61,39 @@ void GameEngineRenderer::SetRenderScaleToTexture()
 	ScaleCheck = false;
 }
 
-void GameEngineRenderer::Render(GameEngineCamera* _Camera)
+void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 {
+	if (nullptr != CurAnimation)
+	{
+
+		CurAnimation->CurInter -= _DeltaTime;
+		if (0.0f >= CurAnimation->CurInter)
+		{
+			++CurAnimation->CurFrame;
+			CurAnimation->CurInter = CurAnimation->Inter;
+
+			if (CurAnimation->CurFrame > CurAnimation->EndFrame)
+			{
+				if (true == CurAnimation->Loop)
+				{
+					CurAnimation->CurFrame = CurAnimation->StartFrame;
+				}
+				else
+				{
+					--CurAnimation->CurFrame;
+				}
+			}
+
+		}
+
+		Sprite = CurAnimation->Sprite;
+		const GameEngineSprite::Sprite& SpriteInfo = Sprite->GetSprite(CurAnimation->CurFrame);
+		Texture = SpriteInfo.BaseTexture;
+		SetCopyPos(SpriteInfo.RenderPos);
+		SetCopyScale(SpriteInfo.RenderScale);
+	}
+
+
 	if (nullptr == Texture)
 	{
 		MsgBoxAssert("이미지를 세팅하지 않은 랜더러 입니다.");
@@ -53,4 +107,91 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera)
 bool GameEngineRenderer::IsDeath()
 {
 	return true == GameEngineObject::IsDeath() || Master->IsDeath();
+}
+
+GameEngineRenderer::Animation* GameEngineRenderer::FindAnimation(const std::string& _AniamtionName)
+{
+	std::string UpperName = GameEngineString::ToUpperReturn(_AniamtionName);
+
+	std::map<std::string, Animation>::iterator FindIter = AllAnimation.find(UpperName);
+
+	if (FindIter == AllAnimation.end())
+	{
+		return nullptr;
+	}
+
+	return &FindIter->second;
+}
+
+void GameEngineRenderer::CreateAnimation(
+	const std::string& _AniamtionName,
+	const std::string& _SpriteName,
+	size_t _Start /*= -1*/, size_t _End /*= -1*/,
+	float _Inter /*= 0.1f*/,
+	bool _Loop /*= true*/)
+{
+	std::string UpperName = GameEngineString::ToUpperReturn(_AniamtionName);
+
+	if (nullptr != FindAnimation(UpperName))
+	{
+		MsgBoxAssert("이미 존재하는 애니메이션 네임입니다." + UpperName);
+		return;
+	}
+
+	GameEngineSprite* Sprite = ResourceManager::GetInst().FindSprite(_SpriteName);
+
+	if (nullptr == Sprite)
+	{
+		MsgBoxAssert("존재하지 않는 스프라이트로 애니메이션을 만들려고 했습니다." + _SpriteName);
+		return;
+	}
+
+	GameEngineRenderer::Animation& Animation = AllAnimation[UpperName];
+
+	Animation.Sprite = Sprite;
+	Animation.Inter = _Inter;
+
+	if (_Start != -1)
+	{
+		Animation.StartFrame = _Start;
+	}
+	else
+	{
+		Animation.StartFrame = 0;
+	}
+
+	if (_End != -1)
+	{
+		Animation.EndFrame = _End;
+	}
+	else
+	{
+		Animation.EndFrame = Animation.Sprite->GetSpriteCount() - 1;
+	}
+
+
+	Animation.Loop = _Loop;
+
+}
+
+
+void GameEngineRenderer::ChangeAnimation(const std::string& _AniamtionName, bool _ForceChange)
+{
+	Animation* ChangeAni = FindAnimation(_AniamtionName);
+
+	if (ChangeAni == CurAnimation && false == _ForceChange)
+	{
+		return;
+	}
+
+	CurAnimation = FindAnimation(_AniamtionName);
+
+	CurAnimation->CurInter = CurAnimation->Inter;
+	CurAnimation->CurFrame = CurAnimation->StartFrame;
+
+	if (nullptr == CurAnimation)
+	{
+		MsgBoxAssert("존재하지 않는 애니메이션으로 체인지 하려고 했습니다." + _AniamtionName);
+		return;
+	}
 }

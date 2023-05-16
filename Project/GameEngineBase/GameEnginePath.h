@@ -21,7 +21,7 @@ public:
 		return Path.string();
 	}
 
-	void GetCurrentPath(); // 현재 파일 경로를 Path에 저장하는  함수
+	void SetCurrentPath(); // 현재 파일 경로를 Path에 저장하는  함수
 	void MoveParent(); // 현재 Path에 부모 경로로 이동시키는 함수
 	void MoveParentToExistsChild(const std::string& _ChildPath); // 부모경로 끝까지 파일을 찾아주는 함수
 	void MoveChild(const std::string& _ChildPAth); // 현재 Path에 자식 경로로 이동시키는 함수
@@ -29,8 +29,8 @@ public:
 	
 	bool IsDirectory();
 protected:
-
-private:
 	std::filesystem::path Path;
+private:
+	
 };
 

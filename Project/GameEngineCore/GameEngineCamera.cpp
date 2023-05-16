@@ -63,9 +63,8 @@ void GameEngineCamera::Release()
 				MsgBoxAssert("nullptr인 랜더러가 레벨의 리스트에 들어가 있었습니다.");
 				continue;
 			}
-			// [s] [a] [a]     [a] [e]
-			ActorStartIter = Group.erase(ActorStartIter);
 
+			ActorStartIter = Group.erase(ActorStartIter);
 		}
 	}
 }

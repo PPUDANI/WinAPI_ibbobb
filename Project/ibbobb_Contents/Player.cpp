@@ -28,7 +28,7 @@ void Player::Start()
 	{
 		GameEnginePath FilePath;
 
-		FilePath.GetCurrentPath();
+		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("Resources");
 		FilePath.MoveChild("Resources\\Texture\\Character");
 		ResourceManager::GetInst().TextureLoad(FilePath.PlusFilePath("obb.bmp"));

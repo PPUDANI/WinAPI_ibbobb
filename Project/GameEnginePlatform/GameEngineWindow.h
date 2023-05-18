@@ -18,18 +18,20 @@ public:
 	GameEngineWindow& operator=(const GameEngineWindow& _Other) = delete;
 	GameEngineWindow& operator=(GameEngineWindow&& _Other) noexcept = delete;
 
-	static void MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), void(*_Update)(), void(*_End)());
-
-	static void WindowLoopOff()
-	{
-		IsWindowUpdate = false;
-	}
+	
 
 	void Open(const std::string& _Title, HINSTANCE hInstance);
 	void SetPosAndScale(const float4& _Pos, const float4& _Scale);
 	void DoubleBuffering();
 	void ClearBackBuffer();
 	float4 GetMousePos();
+
+	static void MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), void(*_Update)(), void(*_End)());
+
+	static void WindowLoopOff()
+	{
+		IsWindowUpdate = false;
+	}
 
 	HDC GetHDC()
 	{

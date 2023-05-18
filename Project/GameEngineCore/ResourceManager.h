@@ -25,15 +25,14 @@ public:
 		GameEnginePath LoadPath = _Path;
 		return TextureLoad(LoadPath.GetFileName(), _Path);
 	}
-
 	GameEngineWindowTexture* TextureLoad(const std::string _Name, const std::string& _Path);
-	GameEngineWindowTexture* FindTexture(const std::string& _Name);
-	bool IsLoadTexture(const std::string& _Name);
 
+
+	GameEngineWindowTexture* FindTexture(const std::string& _Name);
 	GameEngineSprite* FindSprite(const std::string& _Name);
 
 
-	GameEngineSprite* CreateSpruiteFolder(const std::string& _Path)
+	GameEngineSprite* CreateSpriteFolder(const std::string& _Path)
 	{
 		GameEnginePath FolderPath = _Path;
 		return CreateSpriteFolder(FolderPath.GetFileName(), _Path);
@@ -48,7 +47,7 @@ public:
 	}
 	GameEngineSprite* CreateSpriteSheet(const std::string& _SpriteName, const std::string& _TexturePath, int _XCount, int _YCount);
 
-
+	bool IsLoadTexture(const std::string& _Name);
 	void TextureFileLoad(const std::string& _FileName, const std::string& _Path);
 	void SpriteFileLoad(const std::string& _FileName, const std::string& _Path, int _XCount, int _YCount);
 

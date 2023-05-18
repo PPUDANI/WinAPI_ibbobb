@@ -54,9 +54,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	float4 WinScale = GameEngineWindow::MainWindow.GetScale();
-	//LevelPlayer->SetPos(WinScale.Half());
-	// 0 0
-	// x y
+
 	GetMainCamera()->SetPos(LevelPlayer->GetPos() - WinScale.Half());
 }
 

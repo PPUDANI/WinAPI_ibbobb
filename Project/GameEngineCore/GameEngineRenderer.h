@@ -2,6 +2,7 @@
 #include "GameEngineObject.h"
 #include <GameEngineBase/GameEngineMath.h>
 #include <string>
+#include <vector>
 #include <map>
 // Ό³Έν :
 class GameEngineSprite;
@@ -30,7 +31,6 @@ public:
 	{
 		RenderPos = _Value;
 	}
-
 
 	void SetRenderScale(const float4& _Value)
 	{
@@ -87,6 +87,7 @@ private:
 		size_t EndFrame = -1;
 		float CurInter = 0.0f;
 		float Inter = 0.1f;
+		std::vector<float> Inters;
 		bool Loop = true;
 	};
 public:

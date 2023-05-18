@@ -1,6 +1,20 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
+enum class PlayerState
+{
+	Idle,
+	Run,
+	Max
+};
+
+enum class PlayerDir
+{
+	Left,
+	Right,
+	Max
+};
+
 class Player : public GameEngineActor
 {
 public:
@@ -16,7 +30,16 @@ protected:
 private:
 	void Start() override;
 	void Update(float _Delta) override;
-	void Render() override;
-	void Release() override;
+
+	void IdleUpdate(float _Delta);
+	void RunUpdate(float _Delta);
+
+	void ChangeState(PlayerState _State);
+
+	PlayerState State = PlayerState::Max;
+	PlayerDir Dir = PlayerDir::Right;
+
+
+	GameEngineRenderer* MainRenderer = nullptr;
 };
 

@@ -28,6 +28,9 @@ public:
 	std::string PlusFilePath(const std::string _ChildPath); // 현재 경로에 파일 이름 추가해주는 함수
 	
 	bool IsDirectory();
+
+	static std::string GetParentString(const std::string& _ChildPath);
+
 protected:
 	std::filesystem::path Path;
 private:

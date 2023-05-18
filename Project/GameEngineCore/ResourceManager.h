@@ -32,6 +32,7 @@ public:
 
 	GameEngineSprite* FindSprite(const std::string& _Name);
 
+
 	GameEngineSprite* CreateSpruiteFolder(const std::string& _Path)
 	{
 		GameEnginePath FolderPath = _Path;
@@ -39,12 +40,18 @@ public:
 	}
 	GameEngineSprite* CreateSpriteFolder(const std::string& _SpriteName, const std::string& _Path);
 
+
 	GameEngineSprite* CreateSpriteSheet(const std::string& _TexturePath, int _XCount, int _YCount)
 	{
 		GameEnginePath Path = _TexturePath;
 		return CreateSpriteSheet(Path.GetFileName(), _TexturePath, _XCount, _YCount);
 	}
 	GameEngineSprite* CreateSpriteSheet(const std::string& _SpriteName, const std::string& _TexturePath, int _XCount, int _YCount);
+
+
+	void TextureFileLoad(const std::string& _FileName, const std::string& _Path);
+	void SpriteFileLoad(const std::string& _FileName, const std::string& _Path, int _XCount, int _YCount);
+
 
 
 protected:

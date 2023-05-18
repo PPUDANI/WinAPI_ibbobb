@@ -72,9 +72,10 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 		CurAnimation->CurInter -= _DeltaTime;
 		if (0.0f >= CurAnimation->CurInter)
 		{
-			++CurAnimation->CurFrame;
-			CurAnimation->CurInter = CurAnimation->Inter;
+			CurAnimation->CurInter
+				= CurAnimation->Inters[CurAnimation->CurFrame - CurAnimation->StartFrame];
 
+			++CurAnimation->CurFrame;
 			if (CurAnimation->CurFrame > CurAnimation->EndFrame)
 			{
 				if (true == CurAnimation->Loop)

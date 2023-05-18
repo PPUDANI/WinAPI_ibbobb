@@ -38,6 +38,9 @@
     <ClCompile Include="BackGround.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="Player_State.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">

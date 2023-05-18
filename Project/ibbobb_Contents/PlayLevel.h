@@ -22,5 +22,6 @@ private:
 	void Release() override;
 
 	class Player* LevelPlayer = nullptr;
+	
 };
 

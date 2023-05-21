@@ -92,7 +92,8 @@ private:
 public:
 	Animation* FindAnimation(const std::string& _AnimationName);
 
-	void CreateAnimation(const std::string& _AnimationName,
+	void CreateAnimation(
+		const std::string& _AnimationName,
 		const std::string& _SpriteName,
 		size_t _Start = -1, size_t _End = -1,
 		float _Inter = 0.1f,

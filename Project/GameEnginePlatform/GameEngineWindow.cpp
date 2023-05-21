@@ -68,6 +68,7 @@ void GameEngineWindow::ClearBackBuffer()
 
 void GameEngineWindow::DoubleBuffering()
 {
+    //WindowBuffer->TransCopy(BackBuffer, Scale.Half(), Scale, Scale.Half().Half(), Scale.Half());
     WindowBuffer->BitCopy(BackBuffer, Scale.Half(), BackBuffer->GetScale());
 }
 

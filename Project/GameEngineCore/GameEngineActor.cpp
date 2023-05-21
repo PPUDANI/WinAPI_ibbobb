@@ -58,8 +58,6 @@ void GameEngineActor::ActorRelease()
 		delete Renderer;
 		Renderer = nullptr;
 
-		// [s] [a] [a]     [a] [e]
 		ObjectStartIter = AllRenderer.erase(ObjectStartIter);
-
 	}
 }

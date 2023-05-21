@@ -60,11 +60,11 @@ void GameEngineCore::CoreUpdate()
 
 	CurLevel->Update(DeltaTime);
 	CurLevel->ActorUpdate(DeltaTime);
-
+	
 	GameEngineWindow::MainWindow.ClearBackBuffer();
 
-	CurLevel->ActorRender(DeltaTime);
 	CurLevel->Render();
+	CurLevel->ActorRender(DeltaTime);
 
 	GameEngineWindow::MainWindow.DoubleBuffering();
 	CurLevel->ActorRelease();

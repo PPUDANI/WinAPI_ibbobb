@@ -1,48 +1,46 @@
-#include "BackGround.h"
-#include "ContentsEnum.h"
-#include <GameEnginePlatform/GameEngineWindow.h>
+#include "Map.h"
+
 #include <GameEngineCore/ResourceManager.h>
+#include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/GameEngineRenderer.h>
+#include <GameEnginePlatform/GameEngineWindowTexture.h>
 
-BackGround::BackGround()
-{
-	
-}
+#include "ContentsEnum.h"
 
-
-BackGround::~BackGround()
+Map::Map()
 {
 
 }
 
-void BackGround::Start()
+Map::~Map()
+{
+
+}
+
+void Map::Start()
 {
 	SetPos({ 0, 0 });
 }
 
-void BackGround::Update(float _Delta)
+void Map::Update(float _Delta)
+{
+}
+
+void Map::Render()
 {
 
 }
 
-void BackGround::Render()
+void Map::Release()
 {
 
 }
 
-void BackGround::Release()
+void Map::Init(const std::string& _FileName, float _Ratio)
 {
-
-}
-
-void BackGround::Init(const std::string& _FileName, float _Ratio)
-{
-
 	if (false == ResourceManager::GetInst().IsLoadTexture(_FileName))
 	{
 		GameEnginePath FilePath;
-
-		FilePath.SetCurrentPath();
 
 		FilePath.MoveParentToExistsChild("Resources");
 		FilePath.MoveChild("Resources\\Texture\\Map\\" + _FileName);
@@ -52,11 +50,8 @@ void BackGround::Init(const std::string& _FileName, float _Ratio)
 		float4 Scale = Texture->GetScale();
 		Scale *= _Ratio;
 
-		SetPos({ GetPos().iX() + Scale.hX(), GetPos().iY() + Scale.hY() });
-
-		GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::BackGround);
+		SetPos({ GetPos().iX() - Scale.hX(), GetPos().iY() - Scale.hY() });
+		GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::Map);
 		Render->SetRenderScale(Scale);
 	}
-
 }
-

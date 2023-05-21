@@ -52,6 +52,7 @@ void GameEngineWindowTexture::ResCreate(const float4& _Scale)
 void GameEngineWindowTexture::ScaleCheck()
 {
 	GetObject(BitMap, sizeof(BITMAP), &Info);
+
 }
 
 float4 GameEngineWindowTexture::GetScale()

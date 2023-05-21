@@ -75,6 +75,7 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 				= CurAnimation->Inters[CurAnimation->CurFrame - CurAnimation->StartFrame];
 
 			++CurAnimation->CurFrame;
+
 			if (CurAnimation->CurFrame > CurAnimation->EndFrame)
 			{
 				if (true == CurAnimation->Loop)
@@ -99,7 +100,6 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _DeltaTime)
 			SetRenderScale(SpriteInfo.RenderScale * ScaleRatio);
 		}
 	}
-
 
 	if (nullptr == Texture)
 	{
@@ -200,7 +200,6 @@ void GameEngineRenderer::ChangeAnimation(const std::string& _AniamtionName, bool
 
 	CurAnimation->CurInter = CurAnimation->Inters[0];
 	CurAnimation->CurFrame = CurAnimation->StartFrame;
-
 	if (nullptr == CurAnimation)
 	{
 		MsgBoxAssert("존재하지 않는 애니메이션으로 체인지 하려고 했습니다." + _AniamtionName);

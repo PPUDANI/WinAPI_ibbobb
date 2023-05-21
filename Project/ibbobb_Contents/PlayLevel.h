@@ -11,9 +11,11 @@ public:
 	PlayLevel(PlayLevel&& _Other) noexcept = delete;
 	PlayLevel& operator=(const PlayLevel& _Other) = delete;
 	PlayLevel& operator=(PlayLevel&& _Other) noexcept = delete;
+
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
+
 
 private:
 	void Start() override;
@@ -21,6 +23,7 @@ private:
 	void Render() override;
 	void Release() override;
 
+	class BackGround* Back = nullptr;
 	class Player* LevelPlayer = nullptr;
 	
 };

@@ -6,7 +6,6 @@
 void Player::IdleUpdate(float _Delta)
 {
 
-	MainRenderer->ChangeAnimation("Right_Idle");
 	if (true == GameEngineInput::IsDown('W') ||
 		true == GameEngineInput::IsDown('A') ||
 		true == GameEngineInput::IsDown('S') ||
@@ -20,7 +19,7 @@ void Player::IdleUpdate(float _Delta)
 void Player::RunUpdate(float _Delta)
 {
 	float Speed = 300.0f;
-	MainRenderer->ChangeAnimation(SetAnimDir("Run"));
+	SetAnimDir("Run");
 	float4 MovePos = float4::ZERO;
 	if (true == GameEngineInput::IsPress('A'))
 	{
@@ -32,9 +31,17 @@ void Player::RunUpdate(float _Delta)
 		MovePos = { Speed * _Delta, 0.0f };
 		Dir = PlayerDir::Right;
 	}
+	else if (true == GameEngineInput::IsPress('W'))
+	{
+		MovePos = { 0.0f, -Speed * _Delta };
+	}
+	else if (true == GameEngineInput::IsPress('S'))
+	{
+		MovePos = { 0.0f, Speed * _Delta };
+	}
 	else
 	{
-		//MainRenderer->ChangeAnimation("Right_Idle");
+		SetAnimDir("Idle");
 	}
 
 	AddPos(MovePos);

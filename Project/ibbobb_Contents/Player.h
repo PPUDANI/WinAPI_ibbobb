@@ -18,6 +18,7 @@ enum class PlayerDir
 class Player : public GameEngineActor
 {
 public:
+	
 	Player();
 	~Player();
 
@@ -25,6 +26,8 @@ public:
 	Player(Player&& _Other) noexcept = delete;
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
+
+
 protected:
 
 private:
@@ -35,7 +38,7 @@ private:
 	void RunUpdate(float _Delta);
 
 	void ChangeState(PlayerState _State);
-	std::string SetAnimDir(const std::string);
+	void SetAnimDir(const std::string);
 	PlayerState State = PlayerState::Max;
 	PlayerDir Dir = PlayerDir::Right;
 

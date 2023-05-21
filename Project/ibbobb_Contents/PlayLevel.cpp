@@ -19,12 +19,12 @@ PlayLevel::~PlayLevel()
 
 void PlayLevel::Start() 
 {
-	BackGround* Back = CreateActor<BackGround>();
-	Back->Init("NN.Bmp");
+	Back = CreateActor<BackGround>();
+	Back->Init("NN.Bmp", 1.0f);
 
 	BackGround* Map = CreateActor<BackGround>();
-	Map->Init("StageTest.Bmp");
-
+	Map->Init("StageTest.Bmp", 2.0f);
+	
 	LevelPlayer = CreateActor<Player>();
 }
 
@@ -34,11 +34,13 @@ void PlayLevel::Update(float _Delta)
 	{
 		GameEngineCore::ChangeLevel("TitleLevel");
 	}
+
+	Back->SetPos(LevelPlayer->GetPos());
 }
 
 void PlayLevel::Render() 
 {
-
+	Back->SetPos(LevelPlayer->GetPos());
 }
 
 void PlayLevel::Release() 
@@ -52,10 +54,6 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}
-
-	float4 WinScale = GameEngineWindow::MainWindow.GetScale();
-
-	GetMainCamera()->SetPos(LevelPlayer->GetPos() - WinScale.Half());
 }
 
 void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)

@@ -6,6 +6,7 @@
 #include <map>
 
 class GameEngineCamera;
+class GameEngineCollision;
 class GameEngineLevel : public GameEngineObject
 {
 	friend class GameEngineActor;
@@ -53,6 +54,9 @@ private:
 	std::map<int, std::list<GameEngineActor*>> AllActors;
 
 	void ActorInit(GameEngineActor* _Actor, int _Order);
+	void ActorLevelEnd();
+	void ActorLevelStart();
+	
 	void ActorUpdate(float _DeltaTime);
 	void ActorRender(float _DeltaTime);
 	void ActorRelease();

@@ -50,8 +50,9 @@ public:
 	{
 		return CreateRenderer(_ImageName, static_cast<int>(_Order));
 	}
-
 	GameEngineRenderer* CreateRenderer(const std::string& _ImageName, int _Order);
+
+	GameEngineRenderer* CreateCollision(int _Order = 0);
 
 	GameEngineLevel* GetLevel()
 	{
@@ -60,14 +61,15 @@ public:
 
 protected:
 
+	virtual void LevelStart() {}
+	virtual void LevelEnd() {}
+
 private:
 	GameEngineLevel* Level;
 
 	float4 Pos = float4::ZERO;
 
 	std::list<GameEngineRenderer*> AllRenderer;
-
-	void PushMainCameraRenderer(GameEngineRenderer*);
 
 	void ActorRelease();
 };

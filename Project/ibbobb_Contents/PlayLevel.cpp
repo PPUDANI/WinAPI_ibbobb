@@ -20,7 +20,7 @@ PlayLevel::~PlayLevel()
 void PlayLevel::Start() 
 {
 	Back = CreateActor<BackGround>();
-	Back->Init("NN.Bmp", 1.0f);
+	Back->Init("dd.Bmp", 1.0f);
 
 	BackGround* Map = CreateActor<BackGround>();
 	Map->Init("StageTest.Bmp", 2.0f);
@@ -35,7 +35,7 @@ void PlayLevel::Update(float _Delta)
 		GameEngineCore::ChangeLevel("TitleLevel");
 	}
 
-	Back->SetPos(LevelPlayer->GetPos());
+	//Back->SetPos(LevelPlayer->GetPos());
 }
 
 void PlayLevel::Render() 

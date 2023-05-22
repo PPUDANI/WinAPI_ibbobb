@@ -13,7 +13,7 @@
 
 Player::Player()
 {
-	
+
 }
 
 Player::~Player()
@@ -28,29 +28,24 @@ void Player::Start()
 	FilePath.MoveParentToExistsChild("Resources");
 	FilePath.MoveChild("Resources\\Texture\\Characters\\");
 
-	ResourceManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("obb_RightIdle.bmp"), 1, 1);
-	ResourceManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("obb_LeftRun.bmp"), 10, 1);
-	ResourceManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("obb_RightRun.bmp"), 10, 1);
+	ResourceManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("obb_Right.bmp"), 7, 6);
+	ResourceManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("obb_Left.bmp"), 7, 6);
 
-	{
-		MainRenderer = CreateRenderer(RenderOrder::Play);
+	MainRenderer = CreateRenderer(RenderOrder::Play);
+	MainRenderer->CreateAnimation("Left_Idle", "obb_Left.bmp", 0, 0, 10.0f, true);
+	MainRenderer->CreateAnimation("Right_Idle", "obb_Right.bmp", 0, 0, 10.0f, true);
 
-		MainRenderer->CreateAnimation("Left_Idle", "obb_RightIdle.bmp", 0, 0, 0.1f, true);
-		MainRenderer->CreateAnimation("Right_Idle", "obb_RightIdle.bmp", 0, 0, 0.1f, true);
+	MainRenderer->CreateAnimation("Left_Run", "obb_Left.bmp", 13, 22, 0.1f, true);
+	MainRenderer->CreateAnimation("Right_Run", "obb_Right.bmp", 13, 22, 0.1f, true);
 
-		
-		
-		MainRenderer->CreateAnimation("Right_Run", "obb_RightRun.bmp", 0, 9, 0.1f, true);
-		MainRenderer->CreateAnimation("Left_Run", "obb_LeftRun.bmp", 0, 9, 0.1f, true);
-	}
+	MainRenderer->ChangeAnimation("Left_Idle");
 
-	MainRenderer->ChangeAnimation("Left_Run");
-	SetPos({700, 400});
-    MainRenderer->SetRenderScaleToTexture();
-	//MainRenderer->SetScaleRatio(2.0f);
+	MainRenderer->SetRenderScaleToTexture();
+	MainRenderer->SetScaleRatio(2.0f);
 
-    ChangeState(PlayerState::Idle);
+	ChangeState(PlayerState::Idle);
 	Dir = PlayerDir::Right;
+	SetPos({ 700, 400 });
 }
 
 void Player::Update(float _Delta)

@@ -1,5 +1,7 @@
 #include "GameEngineRenderer.h"
 
+#include <math.h>
+
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEngineString.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
@@ -9,6 +11,7 @@
 #include "ResourceManager.h"
 #include "GameEngineActor.h"
 #include "GameEngineSprite.h"
+
 
 
 GameEngineRenderer::GameEngineRenderer()

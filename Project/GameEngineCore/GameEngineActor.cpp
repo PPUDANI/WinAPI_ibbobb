@@ -61,3 +61,8 @@ void GameEngineActor::ActorRelease()
 		ObjectStartIter = AllRenderer.erase(ObjectStartIter);
 	}
 }
+
+GameEngineRenderer* GameEngineActor::CreateCollision(int _Order/* = 0*/)
+{
+	return nullptr;
+}

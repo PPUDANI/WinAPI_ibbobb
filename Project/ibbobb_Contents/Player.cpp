@@ -50,25 +50,45 @@ void Player::Start()
 
 void Player::Update(float _Delta)
 {
-	if (true == GameEngineInput::IsPress('I'))
+	// Zoom 기능 예시
+	// Zoom In
+	if (true == GameEngineInput::IsPress('N'))
 	{
-		float4 Scale;
+		float4 AddScale = GameEngineWindow::MainWindow.GetScale();
+		float ZoomSpeed = 5.0f;
 
-		Scale.X = 1400.0f / 200.0f;
-		Scale.Y = 800.0f / 200.0f;
-
-		GameEngineWindow::ZoomScale += Scale;
-	}
-
-	if (true == GameEngineInput::IsPress('O'))
-	{
-		if (GameEngineWindow::ZoomScale.X > 0 && GameEngineWindow::ZoomScale.Y > 0)
+		// 증감 비율 계산
+		if (AddScale.X > AddScale.Y)
 		{
-			float4 Scale;
-			Scale.X = 1400.0f / 200.0f;
-			Scale.Y = 800.0f / 200.0f;
+			AddScale /= AddScale.Y;
+		}
+		else
+		{
+			AddScale /= AddScale.X;
+		}
 
-			GameEngineWindow::ZoomScale -= Scale;
+		GameEngineWindow::ZoomScale += AddScale * ZoomSpeed;
+		int a = 0;
+	}
+	// Zoom Out
+	if (true == GameEngineInput::IsPress('M'))
+	{
+		float4 AddScale = GameEngineWindow::MainWindow.GetScale();
+		float ZoomSpeed = 5.0f;
+		// ZoomScale이 0보다 작으면 flaot4::ZERO로 변환
+		if (GameEngineWindow::ZoomScale.iX() > 0 && GameEngineWindow::ZoomScale.Y > 0)
+		{
+			// 증감 비율 계산 (0이 나오면 안되므로 )
+			if (AddScale.X > AddScale.Y)
+			{
+				AddScale /= AddScale.Y;
+			}
+			else
+			{
+				AddScale /= AddScale.X;
+			}
+
+			GameEngineWindow::ZoomScale -= AddScale * ZoomSpeed;
 		}
 		else
 		{

@@ -141,4 +141,14 @@ public:
 		Z *= _Value;
 		return *this;
 	}
+
+	float4 operator/=(const float _Value)
+	{
+		X /= _Value;
+		Y /= _Value;
+		Z /= _Value;
+
+		return  *this;
+	}
+
 };

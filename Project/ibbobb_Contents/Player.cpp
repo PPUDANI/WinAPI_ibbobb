@@ -41,7 +41,7 @@ void Player::Start()
 	MainRenderer->ChangeAnimation("Left_Idle");
 
 	MainRenderer->SetRenderScaleToTexture();
-	MainRenderer->SetScaleRatio(2.0f);
+	MainRenderer->SetScaleRatio(4.0f);
 
 	ChangeState(PlayerState::Idle);
 	Dir = PlayerDir::Right;
@@ -50,6 +50,32 @@ void Player::Start()
 
 void Player::Update(float _Delta)
 {
+	if (true == GameEngineInput::IsPress('I'))
+	{
+		float4 Scale;
+
+		Scale.X = 1400.0f / 200.0f;
+		Scale.Y = 800.0f / 200.0f;
+
+		GameEngineWindow::ZoomScale += Scale;
+	}
+
+	if (true == GameEngineInput::IsPress('O'))
+	{
+		if (GameEngineWindow::ZoomScale.X > 0 && GameEngineWindow::ZoomScale.Y > 0)
+		{
+			float4 Scale;
+			Scale.X = 1400.0f / 200.0f;
+			Scale.Y = 800.0f / 200.0f;
+
+			GameEngineWindow::ZoomScale -= Scale;
+		}
+		else
+		{
+			GameEngineWindow::ZoomScale = float4::ZERO;
+		}
+	}
+
 	switch (State)
 	{
 	case PlayerState::Idle:
@@ -59,6 +85,8 @@ void Player::Update(float _Delta)
 	default:
 		break;
 	}
+
+	
 
 }
 

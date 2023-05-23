@@ -2,7 +2,7 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
-
+#include <GameEnginePlatform/GameEngineWindow.h>
 void Player::IdleUpdate(float _Delta)
 {
 
@@ -43,6 +43,9 @@ void Player::RunUpdate(float _Delta)
 	{
 		SetAnimDir("Idle");
 	}
+
+
+
 
 	AddPos(MovePos);
 	GetLevel()->GetMainCamera()->AddPos(MovePos);

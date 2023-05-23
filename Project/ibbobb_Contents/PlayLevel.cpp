@@ -23,17 +23,17 @@ void PlayLevel::Start()
 	Back->Init("dd.Bmp", 1.0f);
 
 	BackGround* Map = CreateActor<BackGround>();
-	Map->Init("StageTest.Bmp", 2.0f);
+	Map->Init("EXMap.Bmp", 2.0f);
 	
 	LevelPlayer = CreateActor<Player>();
 }
 
 void PlayLevel::Update(float _Delta)
 {
-	if (true == GameEngineInput::IsDown('O'))
-	{
-		GameEngineCore::ChangeLevel("TitleLevel");
-	}
+	//if (true == GameEngineInput::IsDown('O'))
+	//{
+	//	GameEngineCore::ChangeLevel("TitleLevel");
+	//}
 
 	//Back->SetPos(LevelPlayer->GetPos());
 }

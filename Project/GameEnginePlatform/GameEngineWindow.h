@@ -9,6 +9,7 @@ class GameEngineWindow
 public:
 	
 	static GameEngineWindow MainWindow;
+	static float4 ZoomScale;
 
 	GameEngineWindow();
 	~GameEngineWindow();
@@ -68,6 +69,7 @@ private:
 	HWND hWnd = nullptr;
 	HDC Hdc = nullptr;
 
+	
 	std::string Title = "";
 	float4 Scale;
 

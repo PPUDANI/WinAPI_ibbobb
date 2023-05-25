@@ -35,13 +35,13 @@ void Player::Start()
 	MainRenderer->CreateAnimation("Left_Idle", "obb_Left.bmp", 0, 0, 10.0f, true);
 	MainRenderer->CreateAnimation("Right_Idle", "obb_Right.bmp", 0, 0, 10.0f, true);
 
-	MainRenderer->CreateAnimation("Left_Run", "obb_Left.bmp", 13, 22, 0.1f, true);
-	MainRenderer->CreateAnimation("Right_Run", "obb_Right.bmp", 13, 22, 0.1f, true);
+	MainRenderer->CreateAnimation("Left_Run", "obb_Left.bmp", 13, 22, 0.09f, true);
+	MainRenderer->CreateAnimation("Right_Run", "obb_Right.bmp", 13, 22, 0.09f, true);
 
 	MainRenderer->ChangeAnimation("Left_Idle");
 
 	MainRenderer->SetRenderScaleToTexture();
-	MainRenderer->SetScaleRatio(4.0f);
+	MainRenderer->SetScaleRatio(2.0f);
 
 	ChangeState(PlayerState::Idle);
 	Dir = PlayerDir::Right;
@@ -50,52 +50,6 @@ void Player::Start()
 
 void Player::Update(float _Delta)
 {
-	// Zoom 기능 예시
-	// Zoom In
-	if (true == GameEngineInput::IsPress('N'))
-	{
-		float4 AddScale = GameEngineWindow::MainWindow.GetScale();
-		float ZoomSpeed = 5.0f;
-
-		// 증감 비율 계산
-		if (AddScale.X > AddScale.Y)
-		{
-			AddScale /= AddScale.Y;
-		}
-		else
-		{
-			AddScale /= AddScale.X;
-		}
-
-		GameEngineWindow::ZoomScale += AddScale * ZoomSpeed;
-		int a = 0;
-	}
-	// Zoom Out
-	if (true == GameEngineInput::IsPress('M'))
-	{
-		float4 AddScale = GameEngineWindow::MainWindow.GetScale();
-		float ZoomSpeed = 5.0f;
-		// ZoomScale이 0보다 작으면 flaot4::ZERO로 변환
-		if (GameEngineWindow::ZoomScale.iX() > 0 && GameEngineWindow::ZoomScale.Y > 0)
-		{
-			// 증감 비율 계산 (0이 나오면 안되므로 )
-			if (AddScale.X > AddScale.Y)
-			{
-				AddScale /= AddScale.Y;
-			}
-			else
-			{
-				AddScale /= AddScale.X;
-			}
-
-			GameEngineWindow::ZoomScale -= AddScale * ZoomSpeed;
-		}
-		else
-		{
-			GameEngineWindow::ZoomScale = float4::ZERO;
-		}
-	}
-
 	switch (State)
 	{
 	case PlayerState::Idle:
@@ -105,9 +59,6 @@ void Player::Update(float _Delta)
 	default:
 		break;
 	}
-
-	
-
 }
 
 void Player::SetAnimDir(const std::string _State)

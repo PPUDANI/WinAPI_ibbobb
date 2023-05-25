@@ -7,7 +7,6 @@ HINSTANCE GameEngineWindow::Instance = nullptr;
 GameEngineWindow GameEngineWindow::MainWindow;
 bool GameEngineWindow::IsWindowUpdate = true;
 bool GameEngineWindow::IsFocusValue = false;
-float4 GameEngineWindow::ZoomScale = float4::ZERO;
 
 GameEngineWindow::GameEngineWindow()
 {
@@ -69,9 +68,7 @@ void GameEngineWindow::ClearBackBuffer()
 
 void GameEngineWindow::DoubleBuffering()
 {
-    WindowBuffer->TransCopy(BackBuffer, Scale.Half(), Scale, float4::ZERO + ZoomScale, BackBuffer->GetScale() - (ZoomScale * 2));
-    //WindowBuffer->BitCopy(BackBuffer, Scale.Half(), BackBuffer->GetScale());
-    //WindowBuffer->TransCopy(BackBuffer, Scale.Half(), Scale, Scale.Half(), Scale);
+    WindowBuffer->BitCopy(BackBuffer, Scale.Half(), BackBuffer->GetScale());
 }
 
 void GameEngineWindow::InitInstance()

@@ -23,8 +23,8 @@ void PlayLevel::Start()
 	Back->Init("dd.Bmp", 1.0f);
 
 	BackGround* Map = CreateActor<BackGround>();
-	Map->Init("EXMap.Bmp", 2.0f);
-	
+	Map->Init("EXMap.Bmp", 1.0f);
+	Map->AddPos({ 650.0f, -82.0f} );
 	LevelPlayer = CreateActor<Player>();
 }
 
@@ -35,7 +35,7 @@ void PlayLevel::Update(float _Delta)
 	//	GameEngineCore::ChangeLevel("TitleLevel");
 	//}
 
-	//Back->SetPos(LevelPlayer->GetPos());
+	Back->SetPos(LevelPlayer->GetPos());
 }
 
 void PlayLevel::Render() 

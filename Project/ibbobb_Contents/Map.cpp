@@ -19,7 +19,6 @@ Map::~Map()
 
 void Map::Start()
 {
-	SetPos({ 0, 0 });
 }
 
 void Map::Update(float _Delta)

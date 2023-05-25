@@ -9,7 +9,6 @@ class GameEngineWindow
 public:
 	
 	static GameEngineWindow MainWindow;
-	static float4 ZoomScale;
 
 	GameEngineWindow();
 	~GameEngineWindow();

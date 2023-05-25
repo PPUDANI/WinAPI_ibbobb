@@ -11,7 +11,7 @@ GameEngineCamera::~GameEngineCamera()
 
 }
 
-void GameEngineCamera::Render(float _DeltaTime)
+void GameEngineCamera::Render(float _Delta)
 {
 	std::map<int, std::list<GameEngineRenderer*>>::iterator GroupStartIter = Renderers.begin();
 	std::map<int, std::list<GameEngineRenderer*>>::iterator GroupEndIter = Renderers.end();
@@ -32,7 +32,7 @@ void GameEngineCamera::Render(float _DeltaTime)
 				continue;
 			}
 
-			Render->Render(this, _DeltaTime);
+			Render->Render(_Delta);
 		}
 	}
 }
@@ -77,6 +77,7 @@ void GameEngineCamera::PushRenderer(GameEngineRenderer* _Renderer, int _Order)
 		MsgBoxAssert("nullptr인 랜더러를 그룹에 속하게 하려고 했습니다.");
 	}
 
+	_Renderer->Camera = this;
 	Renderers[_Order].push_back(_Renderer);
 }
 

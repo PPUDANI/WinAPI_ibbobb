@@ -58,6 +58,21 @@ public:
 		return IsFocusValue;
 	}
 
+	float GetDoubleBufferingCopyScaleRatio() const
+	{
+		return CopyRatio;
+	}
+
+	void SetDoubleBufferingCopyScaleRatio(float _Ratio)
+	{
+		CopyRatio = _Ratio;
+	}
+
+	void AddDoubleBufferingCopyScaleRatio(float _Ratio)
+	{
+		CopyRatio += _Ratio;
+	}
+
 protected:
 
 private:
@@ -68,7 +83,7 @@ private:
 	HWND hWnd = nullptr;
 	HDC Hdc = nullptr;
 
-	
+	float CopyRatio = 1.0f;
 	std::string Title = "";
 	float4 Scale;
 

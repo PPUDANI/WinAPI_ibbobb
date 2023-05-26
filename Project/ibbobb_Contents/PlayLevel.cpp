@@ -20,15 +20,15 @@ PlayLevel::~PlayLevel()
 void PlayLevel::Start() 
 {
 	Back = CreateActor<BackGround>();
-	Back->Init("dd.Bmp", 1.0f);
+	Back->Init("dd.Bmp");
 
 	BackGround* Map = CreateActor<BackGround>();
-	Map->Init("EXMap.Bmp", 1.0f);
+	Map->Init("EXMap.Bmp");
 	Map->AddPos({ 650.0f, -82.0f} );
 	LevelPlayer = CreateActor<Player>();
 }
 
-void PlayLevel::Update(float _Delta)
+void PlayLevel::Update(float _DeltaTime)
 {
 	//if (true == GameEngineInput::IsDown('O'))
 	//{
@@ -38,7 +38,7 @@ void PlayLevel::Update(float _Delta)
 	Back->SetPos(LevelPlayer->GetPos());
 }
 
-void PlayLevel::Render() 
+void PlayLevel::Render(float _DeltaTime)
 {
 	Back->SetPos(LevelPlayer->GetPos());
 }

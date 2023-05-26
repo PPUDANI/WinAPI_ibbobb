@@ -17,9 +17,9 @@ public:
 
 	virtual void Start() {}
 
-	virtual void Update(float _Delta) {}
+	virtual void Update(float _DeltaTime) {}
 
-	virtual void Render() {}
+	virtual void Render(float _DeltaTime) {}
 
 	virtual void Release() {}
 

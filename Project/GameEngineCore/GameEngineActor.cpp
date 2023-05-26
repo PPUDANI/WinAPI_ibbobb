@@ -43,7 +43,6 @@ GameEngineRenderer* GameEngineActor::CreateRenderer(const std::string& _ImageNam
 	return NewRenderer;
 }
 
-
 GameEngineRenderer* GameEngineActor::CreateUIRenderer(const std::string& _ImageName, int _Order)
 {
 	GameEngineRenderer* NewRenderer = new GameEngineRenderer();
@@ -74,7 +73,6 @@ void GameEngineActor::ActorRelease()
 			++ObjectStartIter;
 			continue;
 		}
-
 
 		if (nullptr == Renderer)
 		{

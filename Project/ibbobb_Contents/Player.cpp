@@ -42,20 +42,37 @@ void Player::Start()
 
 	MainRenderer->SetRenderScaleToTexture();
 	MainRenderer->SetScaleRatio(2.0f);
+	
 
 	ChangeState(PlayerState::Idle);
 	Dir = PlayerDir::Right;
 	SetPos({ 700, 400 });
 }
 
-void Player::Update(float _Delta)
+void Player::Update(float _DeltaTime)
 {
+
+	if (true == GameEngineInput::IsPress('I'))
+	{
+		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(0.01f);
+	}
+
+	if (true == GameEngineInput::IsPress('O'))
+	{
+		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-0.01f);
+		float ZoomScale = GameEngineWindow::MainWindow.GetDoubleBufferingCopyScaleRatio();
+		if (1.0f > ZoomScale)
+		{
+			GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
+		}
+	}
+
 	switch (State)
 	{
 	case PlayerState::Idle:
-		return IdleUpdate(_Delta);
+		return IdleUpdate(_DeltaTime);
 	case PlayerState::Run:
-		return RunUpdate(_Delta);
+		return RunUpdate(_DeltaTime);
 	default:
 		break;
 	}

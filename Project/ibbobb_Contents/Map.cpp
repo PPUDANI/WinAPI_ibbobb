@@ -25,7 +25,7 @@ void Map::Update(float _Delta)
 {
 }
 
-void Map::Render()
+void Map::Render(float _DeltaTime)
 {
 
 }

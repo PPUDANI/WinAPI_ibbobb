@@ -2,7 +2,7 @@
 #include "BackGround.h"
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineCore.h>
-
+#include <GameEnginePlatform/GameEngineWindow.h>
 TitleLevel::TitleLevel()
 {
 
@@ -15,14 +15,15 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Start()
 {
-	//BackGround* TitleBack = CreateActor<BackGround>();
-	//TitleBack->Init("Title.bmp", 1.0f);
+	BackGround* TitleBack = CreateActor<BackGround>();
+	TitleBack->Init("Title.bmp");
 }
 
-void TitleLevel::Update(float _Delta)
+void TitleLevel::Update(float _DeltaTime)
 {
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
+		GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(2.0f);
 	}
 }

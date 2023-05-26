@@ -24,15 +24,15 @@ void ContentCore::Start()
 	GameEngineCore::CreateLevel<EndingLevel>("EndingLevel");
 
 	//GameEngineCore::ChangeLevel("TitleLevel");
-	GameEngineCore::ChangeLevel("PlayLevel");
+	GameEngineCore::ChangeLevel("TitleLevel");
 }
 
-void ContentCore::Update(float _Delta)
+void ContentCore::Update(float _DeltaTime)
 {
 
 }
 
-void ContentCore::Render()
+void ContentCore::Render(float _DeltaTime)
 {
 
 }

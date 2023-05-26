@@ -3,8 +3,11 @@
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
-#include "GameEngineLevel.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 #include <GameEnginePlatform/GameEngineInput.h>
+
+#include "GameEngineLevel.h"
+
 std::string GameEngineCore::WindowTitle = "";
 std::map<std::string, class GameEngineLevel*> GameEngineCore::AllLevel;
 CoreProcess* GameEngineCore::Process = nullptr;
@@ -26,6 +29,7 @@ void GameEngineCore::CoreStart(HINSTANCE _Inst)
 {
 	GameEngineWindow::MainWindow.Open(WindowTitle, _Inst);
 	GameEngineInput::InputInit();
+	//GameEngineSound::Init();
 	Process->Start();
 }
 
@@ -63,7 +67,7 @@ void GameEngineCore::CoreUpdate()
 	
 	GameEngineWindow::MainWindow.ClearBackBuffer();
 
-	CurLevel->Render();
+	CurLevel->Render(DeltaTime);
 	CurLevel->ActorRender(DeltaTime);
 
 	GameEngineWindow::MainWindow.DoubleBuffering();

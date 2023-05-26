@@ -93,7 +93,7 @@ void GameEngineLevel::ActorRender(float _DeltaTime)
 				continue;
 			}
 
-			_Actor->Render();
+			_Actor->Render(_DeltaTime);
 		}
 	}
 }

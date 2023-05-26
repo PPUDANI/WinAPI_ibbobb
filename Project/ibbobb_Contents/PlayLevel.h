@@ -19,8 +19,8 @@ protected:
 
 private:
 	void Start() override;
-	void Update(float _Delta) override;
-	void Render() override;
+	void Update(float _DeltaTime) override;
+	void Render(float _DeltaTime) override;
 	void Release() override;
 
 	class BackGround* Back = nullptr;

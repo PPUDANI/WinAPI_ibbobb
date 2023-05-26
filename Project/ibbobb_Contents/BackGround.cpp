@@ -25,7 +25,7 @@ void BackGround::Update(float _Delta)
 
 }
 
-void BackGround::Render()
+void BackGround::Render(float _DeltaTime)
 {
 
 }
@@ -35,7 +35,7 @@ void BackGround::Release()
 
 }
 
-void BackGround::Init(const std::string& _FileName, float _Ratio)
+void BackGround::Init(const std::string& _FileName)
 {
 
 	if (false == ResourceManager::GetInst().IsLoadTexture(_FileName))
@@ -50,7 +50,6 @@ void BackGround::Init(const std::string& _FileName, float _Ratio)
 		GameEngineWindowTexture* Texture = ResourceManager::GetInst().TextureLoad(FilePath.GetStringPath());
 
 		float4 Scale = Texture->GetScale();
-		Scale *= _Ratio;
 
 		SetPos({ GetPos().iX() + Scale.hX(), GetPos().iY() + Scale.hY() });
 

@@ -14,14 +14,14 @@ public:
 	BackGround& operator=(const BackGround& _Other) = delete;
 	BackGround& operator=(BackGround&& _Other) noexcept = delete;
 
-	void Init(const std::string& _FileName, float _Ratio);
+	void Init(const std::string& _FileName);
 
 protected:
 
 private:
 	void Start() override;
 	void Update(float _Delta) override;
-	void Render() override;
+	void Render(float _DeltaTime) override;
 	void Release() override;
 };
 

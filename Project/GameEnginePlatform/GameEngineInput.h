@@ -24,7 +24,7 @@ private:
 
 		bool KeyCheck()
 		{
-			return 0 != GetAsyncKeyState(Key); // 키가 눌렸을 시 true;
+			return 0 != GetAsyncKeyState(Key);
 		}
 
 		void Reset()
@@ -78,10 +78,10 @@ public:
 	static void Update(float _DeltaTime);
 	static void Reset();
 
-	static bool IsDown(int _Key); // 키다운 체크
-	static bool IsUp(int _Key); // 키업 체크
-	static bool IsPress(int _Key); // 키 누른상태 체크
-	static bool IsFree(int _Key); // 키가 눌리지 않음 체크
+	static bool IsDown(int _Key);
+	static bool IsUp(int _Key);
+	static bool IsPress(int _Key);
+	static bool IsFree(int _Key);
 
 protected:
 

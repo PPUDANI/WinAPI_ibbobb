@@ -1,9 +1,9 @@
 #pragma once
 #include "GameEngineRenderer.h"
-
-#include <list>
 #include <map>
+#include <list>
 
+// Ό³Έν :
 class GameEngineRenderer;
 class GameEngineCamera
 {
@@ -12,9 +12,11 @@ class GameEngineCamera
 	friend class GameEngineLevel;
 
 public:
+	// constrcuter destructer
 	GameEngineCamera();
 	~GameEngineCamera();
 
+	// delete Function
 	GameEngineCamera(const GameEngineCamera& _Other) = delete;
 	GameEngineCamera(GameEngineCamera&& _Other) noexcept = delete;
 	GameEngineCamera& operator=(const GameEngineCamera& _Other) = delete;
@@ -44,7 +46,8 @@ private:
 
 	void PushRenderer(GameEngineRenderer* _Renderer, int _Order);
 
-	void Render(float _DeltaTime);
-
 	void Release();
+
+	void Render(float _Delta);
 };
+

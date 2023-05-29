@@ -1,6 +1,6 @@
 #include "Map.h"
 
-#include <GameEngineCore/ResourceManager.h>
+#include <GameEngineCore/ResourcesManager.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
@@ -19,6 +19,11 @@ Map::~Map()
 
 void Map::Start()
 {
+	Renderer = CreateRenderer(RenderOrder::Map);
+	DebugRenderer = CreateRenderer(RenderOrder::Map);
+
+	Renderer->On();
+	DebugRenderer->Off();
 }
 
 void Map::Update(float _Delta)
@@ -35,22 +40,46 @@ void Map::Release()
 
 }
 
-void Map::Init(const std::string& _FileName, float _Ratio)
+void Map::Init(const std::string& _FileName, const std::string& _DebugFileName)
 {
-	if (false == ResourceManager::GetInst().IsLoadTexture(_FileName))
+	GameEnginePath FilePath;
+	FilePath.SetCurrentPath();
+	FilePath.MoveParentToExistsChild("Resources");
+	FilePath.MoveChild("Resources\\Texture\\Map\\");
+
+	GameEngineWindowTexture* Texture = nullptr;
+	if (false == ResourcesManager::GetInst().IsLoadTexture(_FileName))
 	{
-		GameEnginePath FilePath;
+		Texture = ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath(_FileName));
+	}
 
-		FilePath.MoveParentToExistsChild("Resources");
-		FilePath.MoveChild("Resources\\Texture\\Map\\" + _FileName);
+	float4 Scale = Texture->GetScale();
+	Renderer->SetTexture(_FileName);
+	Renderer->SetRenderScale(Scale);
 
-		GameEngineWindowTexture* Texture = ResourceManager::GetInst().TextureLoad(FilePath.GetStringPath());
+	if (false == ResourcesManager::GetInst().IsLoadTexture(_DebugFileName))
+	{
+		Texture = ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath(_DebugFileName));
+	}
 
-		float4 Scale = Texture->GetScale();
-		Scale *= _Ratio;
+	DebugRenderer->SetTexture(_DebugFileName);
+	Renderer->SetRenderScale(Scale);
 
-		SetPos({ GetPos().iX() - Scale.hX(), GetPos().iY() - Scale.hY() });
-		GameEngineRenderer* Render = CreateRenderer(_FileName, RenderOrder::Map);
-		Render->SetRenderScale(Scale);
+	SetPos({ Scale.hX(), Scale.hY() });
+}
+
+void Map::SwitchRender()
+{
+	SwitchRenderValue = !SwitchRenderValue;
+
+	if (SwitchRenderValue)
+	{
+		Renderer->On();
+		DebugRenderer->Off();
+	}
+	else
+	{
+		Renderer->Off();
+		DebugRenderer->On();
 	}
 }

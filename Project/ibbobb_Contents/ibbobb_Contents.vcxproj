@@ -168,7 +168,16 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GravityActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Map.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerEnum.h" />
+    <ClInclude Include="PlayerIbb.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -198,10 +207,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GravityActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Map.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PlayerIbb.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PlayerIbb_State.cpp" />
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>

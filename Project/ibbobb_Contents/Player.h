@@ -1,21 +1,8 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
+#include "GravityActor.h"
+#include "PlayerEnum.h"
 
-enum class PlayerState
-{
-	Idle,
-	Run,
-	Max
-};
-
-enum class PlayerDir
-{
-	Left,
-	Right,
-	Max
-};
-
-class Player : public GameEngineActor
+class Player : public GravityActor
 {
 public:
 	
@@ -36,13 +23,17 @@ private:
 
 	void IdleUpdate(float _Delta);
 	void RunUpdate(float _Delta);
-
+	void FallUpdate(float _DeltaTime);
+	void JumpUpdate(float _DeltaTime);
 	void ChangeState(PlayerState _State);
-	void SetAnimDir(const std::string);
+	void SetAnimation(const std::string);
+
 	PlayerState State = PlayerState::Max;
 	PlayerDir Dir = PlayerDir::Right;
 
+	float JumpForce = 1.0f;
 
+	float4 DownCheck = { 0.0f, 19.0f };
 	GameEngineRenderer* MainRenderer = nullptr;
 };
 

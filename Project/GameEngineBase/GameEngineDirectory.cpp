@@ -4,27 +4,32 @@
 
 GameEngineDirectory::GameEngineDirectory()
 {
-
 }
 
 GameEngineDirectory::~GameEngineDirectory()
 {
-
 }
 
-GameEngineDirectory::GameEngineDirectory(const std::string& _Path)
-	:GameEnginePath(_Path)
+GameEngineDirectory::GameEngineDirectory(const std::string& _path)
+	: GameEnginePath(_path)
 {
 	if (false == IsDirectory())
 	{
-		MsgBoxAssert("디렉토리 경로가 아닙니다." + _Path);
+		MsgBoxAssert("디렉토리 경로가 아닙니다." + _path);
 	}
+
+
 }
 
-std::vector<class GameEngineFile> GameEngineDirectory::GetAllFile(std::vector<std::string> _Ext)
+// 자신의 디렉토리의 파일만 넣습니다.
+// 
+std::vector<GameEngineFile> GameEngineDirectory::GetAllFile(std::vector<std::string> _Ext)
 {
+
 	std::filesystem::directory_iterator DirIter = std::filesystem::directory_iterator(Path);
+
 	std::vector<std::string> UpperFilter;
+	UpperFilter.resize(_Ext.size());
 
 	for (size_t i = 0; i < _Ext.size(); i++)
 	{
@@ -60,8 +65,11 @@ std::vector<class GameEngineFile> GameEngineDirectory::GetAllFile(std::vector<st
 			continue;
 		}
 
+
 		Result.push_back(GameEngineFile(Path.string()));
+
 	}
+
 
 	return Result;
 }

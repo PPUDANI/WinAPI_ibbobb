@@ -4,7 +4,7 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
 #include "GameEngineCamera.h"
-#include "ResourceManager.h"
+#include "ResourcesManager.h"
 #include "GameEngineActor.h"
 #include "GameEngineSprite.h"
 #include "GameEngineLevel.h"
@@ -20,7 +20,7 @@ GameEngineRenderer::~GameEngineRenderer()
 
 void GameEngineRenderer::SetSprite(const std::string& _Name, size_t _Index/* = 0*/)
 {
-	Sprite = ResourceManager::GetInst().FindSprite(_Name);
+	Sprite = ResourcesManager::GetInst().FindSprite(_Name);
 
 	if (nullptr == Sprite)
 	{
@@ -38,7 +38,7 @@ void GameEngineRenderer::SetSprite(const std::string& _Name, size_t _Index/* = 0
 
 void GameEngineRenderer::SetTexture(const std::string& _Name)
 {
-	Texture = ResourceManager::GetInst().FindTexture(_Name);
+	Texture = ResourcesManager::GetInst().FindTexture(_Name);
 
 	if (nullptr == Texture)
 	{
@@ -151,7 +151,7 @@ void GameEngineRenderer::CreateAnimation(
 		return;
 	}
 
-	GameEngineSprite* Sprite = ResourceManager::GetInst().FindSprite(_SpriteName);
+	GameEngineSprite* Sprite = ResourcesManager::GetInst().FindSprite(_SpriteName);
 
 	if (nullptr == Sprite)
 	{

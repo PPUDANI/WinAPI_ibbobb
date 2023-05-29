@@ -1,0 +1,58 @@
+#pragma once
+#include <GameEngineCore/GameEngineActor.h>
+
+class GravityActor : public GameEngineActor
+{
+public:
+	GravityActor();
+	~GravityActor();
+
+	GravityActor(const GravityActor& _Other) = delete;
+	GravityActor(GravityActor&& _Other) noexcept = delete;
+	GravityActor& operator=(const GravityActor& _Other) = delete;
+	GravityActor& operator=(GravityActor&& _Other) noexcept = delete;
+
+	inline void GravityOn()
+	{
+		GravityValue = true;
+	}
+
+	inline void GravityOff()
+	{
+		GravityValue = false;
+	}
+
+	void CameraFocus();
+	float4 ActorCameraPos();
+
+	void Gravity(float _DeltaTime);
+
+	void SetGroundTexture(const std::string& _GroundTextureName);
+	int GetGroundColor(unsigned int _DefaultColor, float4 _Pos = float4::ZERO);
+	
+	void SetGravityVector(float4 _GravityVector)
+	{
+		GravityVector = _GravityVector;
+	}
+
+	void SetGravityPower(float _GravityPower)
+	{
+		GravityPower = _GravityPower;
+	}
+
+	void GravityReset()
+	{
+		GravityVector = float4::ZERO;
+	}
+
+protected:
+
+private:
+	class GameEngineWindowTexture* GroundTexture = nullptr;
+
+	bool GravityValue = true;
+	float GravityPower = 1.0f;
+	float4 GravityVector = float4::ZERO;
+	
+};
+

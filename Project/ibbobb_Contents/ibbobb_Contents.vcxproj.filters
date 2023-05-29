@@ -23,6 +23,13 @@
     <ClInclude Include="Map.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="GravityActor.h" />
+    <ClInclude Include="PlayerIbb.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerEnum.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -45,6 +52,13 @@
       <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityActor.cpp" />
+    <ClCompile Include="PlayerIbb.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerIbb_State.cpp">
       <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>

@@ -11,7 +11,7 @@
     <ClInclude Include="GameEngineObject.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
+    <ClInclude Include="ResourcesManager.h">
       <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineCamera.h">
@@ -26,7 +26,9 @@
     <ClInclude Include="GameEngineCollision.h">
       <Filter>Object\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineActorSubObject.h" />
+    <ClInclude Include="GameEngineActorSubObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineCore.cpp" />
@@ -54,7 +56,9 @@
     <ClCompile Include="GameEngineCollision.cpp">
       <Filter>Object\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineActorSubObject.cpp" />
+    <ClCompile Include="GameEngineActorSubObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">

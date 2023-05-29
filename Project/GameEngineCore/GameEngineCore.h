@@ -1,23 +1,22 @@
 #pragma once
-
-#include <GameEngineBase/GameEngineString.h>
 #include <GameEngineBase/GameEngineDebug.h>
-#include "GameEngineObject.h"
-
-#include <windows.h>
+#include <GameEngineBase/GameEngineString.h>
+#include <Windows.h>
 #include <string>
 #include <map>
+#include "GameEngineObject.h"
 
 class CoreProcess : public GameEngineObject
 {
 
 };
 
+// 설명 :
 class GameEngineLevel;
 class GameEngineCore
 {
 public:
-
+	// delete Function
 	GameEngineCore(const GameEngineCore& _Other) = delete;
 	GameEngineCore(GameEngineCore&& _Other) noexcept = delete;
 	GameEngineCore& operator=(const GameEngineCore& _Other) = delete;
@@ -34,52 +33,64 @@ public:
 	{
 		std::string Upper = GameEngineString::ToUpperReturn(_Name);
 
-		// 같은 이름의 Level이 있는지 검사
+		// 이미 내부에 TitleLevel이 존재한다.
 		if (AllLevel.end() != AllLevel.find(Upper))
 		{
 			MsgBoxAssert(Upper + "의 이름을 가진 GameEngineLevel은 이미 존재합니다.");
 			return;
 		}
 
-		// 같은 이름의 레벨이 없다면 레벨 생성
 		GameEngineLevel* NewLevel = new LevelType();
 
 		LevelInit(NewLevel);
+
 		AllLevel.insert(std::make_pair(Upper, NewLevel));
+
+		//std::pair<std::map<std::string, class GameEngineLevel*>::iterator, bool> Pair 
+		//	= AllLevel.insert(std::make_pair(_Title, nullptr));
+
+		//if (false == Pair.second)
+		//{
+		//	MsgBoxAssert("이미 존재하는 이름의 레벨을 또 만들려고 했습니다" + _Title);
+		//	return;
+		//}
 	}
 
 	static void ChangeLevel(const std::string& _Name)
 	{
 		std::string Upper = GameEngineString::ToUpperReturn(_Name);
 
-		std::map<std::string, GameEngineLevel*>::iterator Finder = AllLevel.find(Upper);
+		std::map<std::string, GameEngineLevel*>::iterator Finditer = AllLevel.find(Upper);
 
-		if (AllLevel.end() == Finder)
+		// 이미 내부에 TitleLevel이 존재한다.
+		if (AllLevel.end() == Finditer)
 		{
 			MsgBoxAssert(Upper + "의 이름을 가진 GameEngineLevel은 존재하지 않습니다.");
 			return;
 		}
 
-		NextLevel = Finder->second;
+		NextLevel = Finditer->second;
 	}
+
 
 protected:
 
 private:
-	static CoreProcess* Process;
 	static std::string WindowTitle;
-	static GameEngineLevel* CurLevel;
-	static GameEngineLevel* NextLevel;
-
-	static std::map<std::string, GameEngineLevel*> AllLevel;
+	static CoreProcess* Process;
 
 	static void LevelInit(GameEngineLevel* _Level);
+
 	static void CoreStart(HINSTANCE _Inst);
 	static void CoreUpdate();
 	static void CoreEnd();
 	static void EngineStart(const std::string& _Title, HINSTANCE _Inst, CoreProcess* _Ptr);
 
+	static GameEngineLevel* CurLevel;
+	static GameEngineLevel* NextLevel;
+	static std::map<std::string, GameEngineLevel*> AllLevel;
+
+	// constrcuter destructer
 	GameEngineCore();
 	~GameEngineCore();
 };
-

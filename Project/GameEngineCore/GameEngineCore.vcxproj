@@ -191,7 +191,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
+    <ClInclude Include="ResourcesManager.h">
       <SubType>
       </SubType>
     </ClInclude>

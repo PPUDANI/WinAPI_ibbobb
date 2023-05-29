@@ -1,14 +1,13 @@
 #include "GameEnginePath.h"
-
-#include <GameEngineBase/GameEngineDebug.h>
+#include "GameEngineDebug.h"
 
 GameEnginePath::GameEnginePath()
 {
 	SetCurrentPath();
 }
 
-GameEnginePath::GameEnginePath(const std::string& _Path)
-	: Path(_Path)
+GameEnginePath::GameEnginePath(const std::string& _path)
+	: Path(_path)
 {
 
 }
@@ -16,7 +15,6 @@ GameEnginePath::GameEnginePath(const std::string& _Path)
 GameEnginePath::~GameEnginePath()
 {
 }
-
 
 std::string GameEnginePath::GetFileName()
 {
@@ -28,9 +26,42 @@ void GameEnginePath::SetCurrentPath()
 	Path = std::filesystem::current_path();
 }
 
+
+void GameEnginePath::MoveParent()
+{
+	Path = Path.parent_path();
+}
+
+void GameEnginePath::MoveParentToExistsChild(const std::string& _ChildPath)
+{
+	while (true)
+	{
+		std::filesystem::path CheckPath = Path;
+
+		CheckPath.append(_ChildPath);
+
+		if (false == std::filesystem::exists(CheckPath))
+		{
+			MoveParent();
+		}
+		else
+		{
+			break;
+		}
+
+		if (Path == Path.root_path())
+		{
+			MsgBoxAssert("루트 경로까지 샅샅히 뒤졌지만" + _ChildPath + "파일이나 폴더를 하위로 가지고 있는 경로를 찾지 못했습니다");
+		}
+	}
+
+
+}
+
 void GameEnginePath::MoveChild(const std::string& _ChildPath)
 {
 	std::filesystem::path CheckPath = Path;
+
 	CheckPath.append(_ChildPath);
 
 	if (false == std::filesystem::exists(CheckPath))
@@ -39,9 +70,10 @@ void GameEnginePath::MoveChild(const std::string& _ChildPath)
 	}
 
 	Path = CheckPath;
+	// Path.append(_ChildPath);
 }
 
-std::string GameEnginePath::PlusFilePath(const std::string _ChildPath)
+std::string GameEnginePath::PlusFilePath(const std::string& _ChildPath)
 {
 	std::filesystem::path CheckPath = Path;
 
@@ -58,35 +90,6 @@ std::string GameEnginePath::PlusFilePath(const std::string _ChildPath)
 bool GameEnginePath::IsDirectory()
 {
 	return std::filesystem::is_directory(Path);
-}
-
-void GameEnginePath::MoveParent()
-{
-	Path = Path.parent_path();
-}
-
-void GameEnginePath::MoveParentToExistsChild(const std::string& _ChildPath)
-{
-	while (true) 
-	{
-		std::filesystem::path CheckPath = Path;
-		CheckPath.append(_ChildPath);
-
-		if (false == std::filesystem::exists(CheckPath))
-		{
-			MoveParent();
-		}
-		else
-		{
-			break;
-		}
-
-		if (Path.root_path() == Path)
-		{
-			MsgBoxAssert("루트 경로 까지의 검색 결과" + _ChildPath + "파일을 찾을 수 없습니다.");
-			return;
-		}
-	}
 }
 
 std::string GameEnginePath::GetParentString(const std::string& _ChildPath)

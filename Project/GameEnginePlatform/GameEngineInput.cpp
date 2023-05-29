@@ -201,7 +201,6 @@ bool GameEngineInput::IsDown(int _Key)
 
 	return AllKeys[_Key].Down;
 }
-
 bool GameEngineInput::IsUp(int _Key)
 {
 	if (AllKeys.end() == AllKeys.find(_Key))
@@ -211,7 +210,6 @@ bool GameEngineInput::IsUp(int _Key)
 
 	return AllKeys[_Key].Up;
 }
-
 bool GameEngineInput::IsPress(int _Key)
 {
 	if (AllKeys.end() == AllKeys.find(_Key))
@@ -221,7 +219,6 @@ bool GameEngineInput::IsPress(int _Key)
 
 	return AllKeys[_Key].Press;
 }
-
 bool GameEngineInput::IsFree(int _Key)
 {
 	if (AllKeys.end() == AllKeys.find(_Key))

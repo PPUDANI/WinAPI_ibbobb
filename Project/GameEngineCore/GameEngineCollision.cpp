@@ -262,7 +262,7 @@ bool GameEngineCollision::CollisonCheck(GameEngineCollision* _Other
 	return CollisionFunction[static_cast<int>(_ThisType)][static_cast<int>(_OtherType)](this, _Other);
 }
 
-void GameEngineCollision::DebugRender() 
+void GameEngineCollision::DebugRender()
 {
 	CollisionData Data = GetCollisionData();
 

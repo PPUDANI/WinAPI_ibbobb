@@ -1,8 +1,6 @@
 #include "GameEngineLevel.h"
-
-#include <GameEngineBase/GameEngineDebug.h>
-
 #include "GameEngineCamera.h"
+#include <GameEngineBase/GameEngineDebug.h>
 #include "GameEngineCollision.h"
 
 bool GameEngineLevel::IsCollisionDebugRender = false;
@@ -33,7 +31,7 @@ GameEngineLevel::~GameEngineLevel()
 
 		for (GameEngineActor* _Actor : Group)
 		{
-			if(nullptr != _Actor)
+			if (nullptr != _Actor)
 			{
 				delete _Actor;
 				_Actor = nullptr;
@@ -42,6 +40,7 @@ GameEngineLevel::~GameEngineLevel()
 	}
 }
 
+
 void GameEngineLevel::ActorInit(GameEngineActor* _Actor, int _Order)
 {
 	_Actor->Level = this;
@@ -49,7 +48,7 @@ void GameEngineLevel::ActorInit(GameEngineActor* _Actor, int _Order)
 	_Actor->Start();
 }
 
-void GameEngineLevel::ActorUpdate(float _DeltaTime)
+void GameEngineLevel::ActorUpdate(float _Delta)
 {
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
 	{
@@ -62,26 +61,19 @@ void GameEngineLevel::ActorUpdate(float _DeltaTime)
 				continue;
 			}
 
-			_Actor->AddLiveTime(_DeltaTime);
-			_Actor->Update(_DeltaTime);
+			_Actor->AddLiveTime(_Delta);
+			_Actor->Update(_Delta);
 		}
 	}
 }
-
-void GameEngineLevel::ActorRender(float _DeltaTime)
+void GameEngineLevel::ActorRender(float _Delta)
 {
-	MainCamera->Render(_DeltaTime);
+	MainCamera->Render(_Delta);
 
-	for (const std::pair<int, std::list<GameEngineCollision*>>& Pair : AllCollision)
-	{
-		const std::list < GameEngineCollision*>& Group = Pair.second;
+	UICamera->Render(_Delta);
 
-		for (GameEngineCollision* Collision : Group)
-		{
-			Collision->DebugRender();
-		}
-	}
 
+	// for문을 돌리고 있습니다.
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
 	{
 		const std::list<GameEngineActor*>& Group = _Pair.second;
@@ -93,7 +85,22 @@ void GameEngineLevel::ActorRender(float _DeltaTime)
 				continue;
 			}
 
-			_Actor->Render(_DeltaTime);
+			_Actor->Render(_Delta);
+		}
+	}
+
+
+	if (true == IsCollisionDebugRender)
+	{
+		for (const std::pair<int, std::list<GameEngineCollision*>>& Pair : AllCollision)
+		{
+			const std::list < GameEngineCollision*>& Group = Pair.second;
+
+			for (GameEngineCollision* Collision : Group)
+			{
+				Collision->DebugRender();
+			}
+
 		}
 	}
 }
@@ -106,9 +113,12 @@ void GameEngineLevel::ActorRelease()
 		std::map<int, std::list<GameEngineCollision*>>::iterator GroupStartIter = AllCollision.begin();
 		std::map<int, std::list<GameEngineCollision*>>::iterator GroupEndIter = AllCollision.end();
 
+		// 눈꼽 만큼이라도 연산을 줄이려는 거죠.
+
 		for (; GroupStartIter != GroupEndIter; ++GroupStartIter)
 		{
 			std::list<GameEngineCollision*>& Group = GroupStartIter->second;
+
 			std::list<GameEngineCollision*>::iterator ObjectStartIter = Group.begin();
 			std::list<GameEngineCollision*>::iterator ObjectEndIter = Group.end();
 
@@ -122,17 +132,22 @@ void GameEngineLevel::ActorRelease()
 				}
 
 				ObjectStartIter = Group.erase(ObjectStartIter);
+
 			}
 		}
 	}
 
+	// 구조가 바뀔겁니다.
 	{
 		std::map<int, std::list<GameEngineActor*>>::iterator GroupStartIter = AllActors.begin();
 		std::map<int, std::list<GameEngineActor*>>::iterator GroupEndIter = AllActors.end();
 
+		// 눈꼽 만큼이라도 연산을 줄이려는 거죠.
+
 		for (; GroupStartIter != GroupEndIter; ++GroupStartIter)
 		{
 			std::list<GameEngineActor*>& Group = GroupStartIter->second;
+
 			std::list<GameEngineActor*>::iterator ObjectStartIter = Group.begin();
 			std::list<GameEngineActor*>::iterator ObjectEndIter = Group.end();
 
@@ -154,10 +169,15 @@ void GameEngineLevel::ActorRelease()
 
 				delete Actor;
 				Actor = nullptr;
+
+				//                      i
+				// [s] [a] [a]     [a] [e]
 				ObjectStartIter = Group.erase(ObjectStartIter);
+
 			}
 		}
 	}
+
 }
 
 void GameEngineLevel::ActorLevelEnd()
@@ -172,7 +192,6 @@ void GameEngineLevel::ActorLevelEnd()
 		}
 	}
 }
-
 void GameEngineLevel::ActorLevelStart() {
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
 	{

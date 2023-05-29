@@ -1,7 +1,7 @@
 #include "GameEngineSprite.h"
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEngineDirectory.h>
-#include "ResourceManager.h"
+#include "ResourcesManager.h"
 
 GameEngineSprite::GameEngineSprite()
 {
@@ -30,7 +30,7 @@ void GameEngineSprite::CreateSpriteSheet(GameEngineWindowTexture* _Texture, int 
 			AllSprite[Index].BaseTexture = _Texture;
 			AllSprite[Index].RenderPos.X = StartPos.X;
 			AllSprite[Index].RenderPos.Y = StartPos.Y;
-			
+
 			AllSprite[Index].RenderScale.X = ImageSize.X;
 			AllSprite[Index].RenderScale.Y = ImageSize.Y;
 
@@ -40,6 +40,8 @@ void GameEngineSprite::CreateSpriteSheet(GameEngineWindowTexture* _Texture, int 
 		StartPos.X = 0;
 		StartPos.Y += ImageSize.Y;
 	}
+
+
 }
 
 void GameEngineSprite::CreateSpriteFolder(const std::string& _Path)
@@ -52,7 +54,7 @@ void GameEngineSprite::CreateSpriteFolder(const std::string& _Path)
 
 	for (size_t i = 0; i < Files.size(); i++)
 	{
-		GameEngineWindowTexture* Texture = ResourceManager::GetInst().TextureLoad(Files[i].GetStringPath());
+		GameEngineWindowTexture* Texture = ResourcesManager::GetInst().TextureLoad(Files[i].GetStringPath());
 		AllSprite[i].BaseTexture = Texture;
 		AllSprite[i].RenderPos = float4::ZERO;
 		AllSprite[i].RenderScale = Texture->GetScale();

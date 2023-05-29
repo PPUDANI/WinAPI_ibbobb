@@ -25,6 +25,7 @@ private:
 	void RunUpdate(float _Delta);
 	void FallUpdate(float _DeltaTime);
 	void JumpUpdate(float _DeltaTime);
+
 	void ChangeState(PlayerState _State);
 	void SetAnimation(const std::string);
 
@@ -32,8 +33,8 @@ private:
 	PlayerDir Dir = PlayerDir::Right;
 
 	float JumpForce = 1.0f;
-
-	float4 DownCheck = { 0.0f, 19.0f };
+	float4 CurGravity = float4::DOWN;
+	float4 DownCheck = { 0.0f, 18.0f };
 	GameEngineRenderer* MainRenderer = nullptr;
 };
 

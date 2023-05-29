@@ -49,12 +49,12 @@ void Player::Start()
 		MainRenderer->CreateAnimation("Right_Jump", "obb_Right.bmp", 23, 23, 10.0f, true);
 
 		// Tumbling
-		MainRenderer->CreateAnimation("Left_Tumbling", "obb_Left.bmp", 24, 29, 0.1f, true);
-		MainRenderer->CreateAnimation("Right_Tumbling", "obb_Right.bmp", 24, 29, 0.1f, true);
+		MainRenderer->CreateAnimation("Left_Tumbling", "obb_Left.bmp", 24, 29, 0.05f, true);
+		MainRenderer->CreateAnimation("Right_Tumbling", "obb_Right.bmp", 24, 29, 0.05f, true);
 
 		// Fall
-		MainRenderer->CreateAnimation("Left_Fall", "obb_Left.bmp", 30, 31, 0.05f, true);
-		MainRenderer->CreateAnimation("Right_Fall", "obb_Right.bmp", 30, 31, 0.05f, true);
+		MainRenderer->CreateAnimation("Left_Fall", "obb_Left.bmp", 30, 31, 0.07f, true);
+		MainRenderer->CreateAnimation("Right_Fall", "obb_Right.bmp", 30, 31, 0.07f, true);
 
 		//
 	}
@@ -70,7 +70,7 @@ void Player::Start()
 	JumpForce = 1.5f;
 
 	SetPos({ 200.0f, 200.0f });
-	ChangeState(PlayerState::Idle);
+	ChangeState(PlayerState::Fall);
 	Dir = PlayerDir::Right;
 }
 

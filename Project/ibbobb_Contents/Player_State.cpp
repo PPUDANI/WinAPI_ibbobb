@@ -106,10 +106,7 @@ void Player::FallUpdate(float _DeltaTime)
 void Player::JumpUpdate(float _DeltaTime)
 {
 	float4 PastPos = GetPos();
-
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255), DownCheck + float4::UP);
-
-	
 
 	if (RGB(255, 255, 255) == Color)
 	{
@@ -128,35 +125,42 @@ void Player::JumpUpdate(float _DeltaTime)
 	float4 MovePos = float4::ZERO;
 	float4 CurPos = GetPos();
 
-	
-
-	if (true == GameEngineInput::IsPress('A'))
-	{
-		MovePos = { -Speed * _DeltaTime, 0.0f };
-		Dir = PlayerDir::Left;
-	}
-	else if (true == GameEngineInput::IsPress('D'))
-	{
-		MovePos = { Speed * _DeltaTime, 0.0f };
-		Dir = PlayerDir::Right;
-	}
-	AddPos(MovePos);
-
 	if (1.05f >= PastPos.Y - CurPos.Y)
 	{
 		SetAnimation("Tumbling");
+
+		if (true == GameEngineInput::IsPress('A'))
+		{
+			MovePos = { -Speed * _DeltaTime, 0.0f };
+		}
+		else if (true == GameEngineInput::IsPress('D'))
+		{
+			MovePos = { Speed * _DeltaTime, 0.0f };
+		}
 
 		if (true == MainRenderer->IsAnimationEnd())
 		{
 			ChangeState(PlayerState::Fall);
 			return;
 		}
-		
 	}
 	else
 	{
 		SetAnimation("Jump");
+
+		if (true == GameEngineInput::IsPress('A'))
+		{
+			MovePos = { -Speed * _DeltaTime, 0.0f };
+			Dir = PlayerDir::Left;
+		}
+		else if (true == GameEngineInput::IsPress('D'))
+		{
+			MovePos = { Speed * _DeltaTime, 0.0f };
+			Dir = PlayerDir::Right;
+		}
 	}
+
+	AddPos(MovePos);
 }
 
 void Player::ChangeState(PlayerState _State)

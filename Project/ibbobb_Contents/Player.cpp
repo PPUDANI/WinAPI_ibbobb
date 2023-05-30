@@ -65,7 +65,7 @@ void Player::Start()
 	SetGravityPower(2.5f);
 
 	// 점프력 설정
-	JumpForce = 1.5f;
+	JumpForce = 1.0f;
 
 	SetPos({ 200.0f, 200.0f });
 	ChangeState(PlayerState::Fall);

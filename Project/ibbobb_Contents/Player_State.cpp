@@ -132,7 +132,7 @@ void Player::JumpUpdate(float _DeltaTime)
 	float Speed = 300.0f;
 	float4 MovePos = float4::ZERO;
 	
-	if (1.1f >= PastPos.Y - GetPos().Y) 
+	if ((JumpForce / 2.0f) >= PastPos.Y - GetPos().Y)
 	{
 		// 점프 중 일정 속도보다 낮아질 시 Tumbling으로 상태 업데이트
 		//ChangeState(PlayerState::Tumbling);

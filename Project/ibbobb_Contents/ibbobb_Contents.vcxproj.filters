@@ -24,7 +24,7 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="GravityActor.h" />
-    <ClInclude Include="PlayerEnum.h">
+    <ClInclude Include="PlayerStateEnum.h">
       <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>

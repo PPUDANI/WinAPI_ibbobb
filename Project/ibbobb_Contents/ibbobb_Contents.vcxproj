@@ -176,7 +176,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayerEnum.h" />
+    <ClInclude Include="PlayerStateEnum.h" />
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>

@@ -9,7 +9,7 @@
 #include <GameEngineCore/GameEngineCamera.h>
 
 #include "ContentsEnum.h"
-#include "PlayerEnum.h"
+#include "PlayerStateEnum.h"
 
 #include <windows.h>
 
@@ -30,36 +30,35 @@ void Player::Start()
 	FilePath.MoveParentToExistsChild("Resources");
 	FilePath.MoveChild("Resources\\Texture\\Characters\\");
 
-	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("obb_Right.bmp"), 7, 6);
-	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("obb_Left.bmp"), 7, 6);
+	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("obb_UpRight.bmp"), 7, 6);
+	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("obb_UpLeft.bmp"), 7, 6);
 
 	MainRenderer = CreateRenderer(RenderOrder::Play);
 
+	// UP 방향 애니메이션
 	{
 		// Idle
-		MainRenderer->CreateAnimation("Left_Idle", "obb_Left.bmp", 0, 0, 10.0f, true);
-		MainRenderer->CreateAnimation("Right_Idle", "obb_Right.bmp", 0, 0, 10.0f, true);
+		MainRenderer->CreateAnimation("UpLeft_Idle", "obb_UpLeft.bmp", 0, 0, 10.0f, true);
+		MainRenderer->CreateAnimation("UpRight_Idle", "obb_UpRight.bmp", 0, 0, 10.0f, true);
 
 		// Run
-		MainRenderer->CreateAnimation("Left_Run", "obb_Left.bmp", 13, 22, 0.1f, true);
-		MainRenderer->CreateAnimation("Right_Run", "obb_Right.bmp", 13, 22, 0.1f, true);
+		MainRenderer->CreateAnimation("UpLeft_Run", "obb_UpLeft.bmp", 13, 22, 0.1f, true);
+		MainRenderer->CreateAnimation("UpRight_Run", "obb_UpRight.bmp", 13, 22, 0.1f, true);
 
 		// Jump
-		MainRenderer->CreateAnimation("Left_Jump", "obb_Left.bmp", 23, 23, 10.0f, true);
-		MainRenderer->CreateAnimation("Right_Jump", "obb_Right.bmp", 23, 23, 10.0f, true);
+		MainRenderer->CreateAnimation("UpLeft_Jump", "obb_UpLeft.bmp", 23, 23, 10.0f, true);
+		MainRenderer->CreateAnimation("UpRight_Jump", "obb_UpRight.bmp", 23, 23, 10.0f, true);
 
 		// Tumbling
-		MainRenderer->CreateAnimation("Left_Tumbling", "obb_Left.bmp", 24, 29, 0.04f, true);
-		MainRenderer->CreateAnimation("Right_Tumbling", "obb_Right.bmp", 24, 29, 0.04f, true);
+		MainRenderer->CreateAnimation("UpLeft_Tumbling", "obb_UpLeft.bmp", 24, 29, 0.04f, true);
+		MainRenderer->CreateAnimation("UpRight_Tumbling", "obb_UpRight.bmp", 24, 29, 0.04f, true);
 
 		// Fall
-		MainRenderer->CreateAnimation("Left_Fall", "obb_Left.bmp", 30, 31, 0.07f, true);
-		MainRenderer->CreateAnimation("Right_Fall", "obb_Right.bmp", 30, 31, 0.07f, true);
-
-		//
+		MainRenderer->CreateAnimation("UpLeft_Fall", "obb_UpLeft.bmp", 30, 31, 0.07f, true);
+		MainRenderer->CreateAnimation("UpRight_Fall", "obb_UpRight.bmp", 30, 31, 0.07f, true);
 	}
 
-	MainRenderer->ChangeAnimation("Left_Idle");
+	MainRenderer->ChangeAnimation("UpLeft_Idle");
 	MainRenderer->SetRenderScaleToTexture();
 	MainRenderer->SetScaleRatio(2.0f);
 
@@ -71,13 +70,13 @@ void Player::Start()
 
 	SetPos({ 200.0f, 200.0f });
 	ChangeState(PlayerState::Fall);
-	Dir = PlayerDir::Right;
+	Dir = PlayerDir::UpRight;
 }
 
 void Player::Update(float _DeltaTime)
 {
 	
-	
+	// 줌인 줌아웃 
 	if (true == GameEngineInput::IsPress('I'))
 	{
 		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(0.01f);
@@ -93,6 +92,7 @@ void Player::Update(float _DeltaTime)
 		}
 	}
 
+	// 상태에 따른 Update
 	switch (State)
 	{
 	case PlayerState::Idle:
@@ -110,7 +110,7 @@ void Player::Update(float _DeltaTime)
 	default:
 		break;
 	}
-
+	int a = MainRenderer->CurAnimation->CurFrame;
 	CameraFocus();
 }
 
@@ -120,11 +120,17 @@ void Player::SetAnimation(const std::string _State)
 
 	switch (Dir)
 	{
-	case PlayerDir::Left:
-		AnimationName = "Left_";
+	case PlayerDir::UpLeft:
+		AnimationName = "UpLeft_";
 		break;
-	case PlayerDir::Right:
-		AnimationName = "Right_";
+	case PlayerDir::UpRight:
+		AnimationName = "UpRight_";
+		break;
+	case PlayerDir::DownLeft:
+		AnimationName = "DownLeft_";
+		break;
+	case PlayerDir::DownRight:
+		AnimationName = "DownRight_";
 		break;
 	default:
 		break;

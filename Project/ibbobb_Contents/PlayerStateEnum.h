@@ -11,7 +11,9 @@ enum class PlayerState
 
 enum class PlayerDir
 {
-	Left,
-	Right,
+	UpLeft,
+	UpRight,
+	DownLeft,
+	DownRight,
 	Max
 };

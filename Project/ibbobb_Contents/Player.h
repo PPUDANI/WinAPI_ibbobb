@@ -1,6 +1,6 @@
 #pragma once
 #include "GravityActor.h"
-#include "PlayerEnum.h"
+#include "PlayerStateEnum.h"
 
 class Player : public GravityActor
 {
@@ -30,7 +30,7 @@ private:
 	void SetAnimation(const std::string);
 
 	PlayerState State = PlayerState::Max;
-	PlayerDir Dir = PlayerDir::Right;
+	PlayerDir Dir = PlayerDir::UpRight;
 
 	float JumpForce = 1.0f;
 	float4 CurGravity = float4::DOWN;

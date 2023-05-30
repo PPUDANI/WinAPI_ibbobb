@@ -5,7 +5,7 @@
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 
-#include "PlayerEnum.h"
+#include "PlayerStateEnum.h"
 
 void Player::IdleUpdate(float _DeltaTime)
 {
@@ -40,12 +40,12 @@ void Player::RunUpdate(float _DeltaTime)
 	if (true == GameEngineInput::IsPress('A'))
 	{
 		MovePos = { -Speed * _DeltaTime, 0.0f };
-		Dir = PlayerDir::Left;
+		Dir = PlayerDir::UpLeft;
 	}
 	else if (true == GameEngineInput::IsPress('D'))
 	{
 		MovePos = { Speed * _DeltaTime, 0.0f };
-		Dir = PlayerDir::Right;
+		Dir = PlayerDir::UpRight;
 	}
 	else
 	{
@@ -92,12 +92,12 @@ void Player::FallUpdate(float _DeltaTime)
 	if (true == GameEngineInput::IsPress('A'))
 	{
 		MovePos = { -Speed * _DeltaTime, 0.0f };
-		Dir = PlayerDir::Left;
+		Dir = PlayerDir::UpLeft;
 	}
 	else if (true == GameEngineInput::IsPress('D'))
 	{
 		MovePos = { Speed * _DeltaTime, 0.0f };
-		Dir = PlayerDir::Right;
+		Dir = PlayerDir::UpRight;
 	}
 
 	AddPos(MovePos);
@@ -132,6 +132,7 @@ void Player::JumpUpdate(float _DeltaTime)
 		if (true == GameEngineInput::IsPress('A'))
 		{
 			MovePos = { -Speed * _DeltaTime, 0.0f };
+			
 		}
 		else if (true == GameEngineInput::IsPress('D'))
 		{
@@ -147,16 +148,16 @@ void Player::JumpUpdate(float _DeltaTime)
 	else
 	{
 		SetAnimation("Jump");
-
+		
 		if (true == GameEngineInput::IsPress('A'))
 		{
 			MovePos = { -Speed * _DeltaTime, 0.0f };
-			Dir = PlayerDir::Left;
+			Dir = PlayerDir::UpLeft;
 		}
 		else if (true == GameEngineInput::IsPress('D'))
 		{
 			MovePos = { Speed * _DeltaTime, 0.0f };
-			Dir = PlayerDir::Right;
+			Dir = PlayerDir::UpRight;
 		}
 	}
 

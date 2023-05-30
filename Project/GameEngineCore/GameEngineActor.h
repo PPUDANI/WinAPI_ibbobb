@@ -92,11 +92,29 @@ public:
 		return Level;
 	}
 
+	bool IsLevelOver()
+	{
+		return IsOverValue;
+	}
+
+	void OverOn()
+	{
+		IsOverValue = true;
+	}
+
+	void OverOff()
+	{
+		IsOverValue = false;
+	}
+
 protected:
 	virtual void LevelStart() {}
 	virtual void LevelEnd() {}
 
 private:
+	// ture가 되는순간. 
+	bool IsOverValue = false;
+
 	GameEngineLevel* Level;
 
 	float4 Pos = float4::ZERO;

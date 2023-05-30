@@ -1,6 +1,23 @@
 #pragma once
 #include "GravityActor.h"
-#include "PlayerStateEnum.h"
+
+enum class PlayerState
+{
+	Idle,
+	Run,
+	Jump,
+	Fall,
+	Max
+};
+
+enum class PlayerDir
+{
+	UpLeft,
+	UpRight,
+	DownLeft,
+	DownRight,
+	Max
+};
 
 class Player : public GravityActor
 {
@@ -25,9 +42,8 @@ private:
 	void RunUpdate(float _Delta);
 	void FallUpdate(float _DeltaTime);
 	void JumpUpdate(float _DeltaTime);
-
 	void ChangeState(PlayerState _State);
-	void SetAnimation(const std::string);
+	void SetAnimation(const std::string _State, int _StartFrame = 0);
 
 	PlayerState State = PlayerState::Max;
 	PlayerDir Dir = PlayerDir::UpRight;

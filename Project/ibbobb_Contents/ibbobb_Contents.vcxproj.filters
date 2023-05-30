@@ -24,9 +24,6 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="GravityActor.h" />
-    <ClInclude Include="PlayerStateEnum.h">
-      <Filter>Global</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">

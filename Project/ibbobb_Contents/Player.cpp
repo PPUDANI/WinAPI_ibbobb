@@ -9,7 +9,6 @@
 #include <GameEngineCore/GameEngineCamera.h>
 
 #include "ContentsEnum.h"
-#include "PlayerStateEnum.h"
 
 #include <windows.h>
 
@@ -50,8 +49,8 @@ void Player::Start()
 		MainRenderer->CreateAnimation("UpRight_Jump", "obb_UpRight.bmp", 23, 23, 10.0f, true);
 
 		// Tumbling
-		MainRenderer->CreateAnimation("UpLeft_Tumbling", "obb_UpLeft.bmp", 24, 29, 0.04f, true);
-		MainRenderer->CreateAnimation("UpRight_Tumbling", "obb_UpRight.bmp", 24, 29, 0.04f, true);
+		MainRenderer->CreateAnimation("UpLeft_Tumbling", "obb_UpLeft.bmp", 24, 29, 0.05f, true);
+		MainRenderer->CreateAnimation("UpRight_Tumbling", "obb_UpRight.bmp", 24, 29, 0.05f, true);
 
 		// Fall
 		MainRenderer->CreateAnimation("UpLeft_Fall", "obb_UpLeft.bmp", 30, 31, 0.07f, true);
@@ -114,7 +113,7 @@ void Player::Update(float _DeltaTime)
 	CameraFocus();
 }
 
-void Player::SetAnimation(const std::string _State)
+void Player::SetAnimation(const std::string _State, int _StartFrame)
 {
 	std::string AnimationName;
 
@@ -138,5 +137,6 @@ void Player::SetAnimation(const std::string _State)
 
 	AnimationName += _State;
 
-	MainRenderer->ChangeAnimation(AnimationName);
+	MainRenderer->ChangeAnimation(AnimationName, _StartFrame);
+	
 }

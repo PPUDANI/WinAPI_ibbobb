@@ -105,10 +105,38 @@ void GameEngineLevel::ActorRender(float _Delta)
 	}
 }
 
-void GameEngineLevel::ActorRelease()
+void GameEngineLevel::CollisionOverRelease()
 {
-	MainCamera->Release();
+	{
+		std::map<int, std::list<GameEngineCollision*>>::iterator GroupStartIter = AllCollision.begin();
+		std::map<int, std::list<GameEngineCollision*>>::iterator GroupEndIter = AllCollision.end();
 
+		// 눈꼽 만큼이라도 연산을 줄이려는 거죠.
+
+		for (; GroupStartIter != GroupEndIter; ++GroupStartIter)
+		{
+			std::list<GameEngineCollision*>& Group = GroupStartIter->second;
+
+			std::list<GameEngineCollision*>::iterator ObjectStartIter = Group.begin();
+			std::list<GameEngineCollision*>::iterator ObjectEndIter = Group.end();
+
+			for (; ObjectStartIter != ObjectEndIter; )
+			{
+				GameEngineCollision* Object = *ObjectStartIter;
+				if (false == Object->GetActor()->IsLevelOver())
+				{
+					++ObjectStartIter;
+					continue;
+				}
+
+				ObjectStartIter = Group.erase(ObjectStartIter);
+			}
+		}
+	}
+}
+
+void GameEngineLevel::CollisionRelease()
+{
 	{
 		std::map<int, std::list<GameEngineCollision*>>::iterator GroupStartIter = AllCollision.begin();
 		std::map<int, std::list<GameEngineCollision*>>::iterator GroupEndIter = AllCollision.end();
@@ -136,6 +164,15 @@ void GameEngineLevel::ActorRelease()
 			}
 		}
 	}
+}
+
+
+void GameEngineLevel::ActorRelease()
+{
+	MainCamera->Release();
+
+	CollisionRelease();
+
 
 	// 구조가 바뀔겁니다.
 	{
@@ -192,7 +229,8 @@ void GameEngineLevel::ActorLevelEnd()
 		}
 	}
 }
-void GameEngineLevel::ActorLevelStart() {
+void GameEngineLevel::ActorLevelStart()
+{
 	for (const std::pair<int, std::list<GameEngineActor*>>& _Pair : AllActors)
 	{
 		const std::list<GameEngineActor*>& Group = _Pair.second;
@@ -202,4 +240,65 @@ void GameEngineLevel::ActorLevelStart() {
 			_Actor->LevelStart();
 		}
 	}
+}
+
+void GameEngineLevel::OverCheck(GameEngineLevel* _PrevLevel)
+{
+	if (nullptr == _PrevLevel)
+	{
+		return;
+	}
+
+	// 이런레벨에 존재하는 이 액터와 관련된 랜더러와
+	_PrevLevel->MainCamera->OverRelease();
+	// 이런레벨에 존재하는 이 액터와 관련된 충돌체도
+	_PrevLevel->CollisionOverRelease();
+
+	for (std::pair<const int, std::list<GameEngineActor*>>& _Pair : _PrevLevel->AllActors)
+	{
+		std::list<GameEngineActor*>& Group = _Pair.second;
+
+		std::list<GameEngineActor*>::iterator StartIter = Group.begin();
+		std::list<GameEngineActor*>::iterator EndIter = Group.end();
+
+		for (; StartIter != EndIter;)
+		{
+			GameEngineActor* Actor = *StartIter;
+
+			if (false == Actor->IsLevelOver())
+			{
+				++StartIter;
+				continue;
+			}
+
+			Actor->Level = this;
+
+			for (GameEngineRenderer* Render : Actor->AllRenderer)
+			{
+				if (Render->CameraTypeValue == CameraType::MAIN)
+				{
+					Render->MainCameraSetting();
+				}
+				else
+				{
+					Render->UICameraSetting();
+				}
+
+				Render->SetOrder(Render->GetOrder());
+			}
+
+			for (GameEngineCollision* Collision : Actor->AllCollision)
+			{
+				Collision->SetOrder(Collision->GetOrder());
+			}
+
+
+
+
+			AllActors[Actor->GetOrder()].push_back(Actor);
+
+			StartIter = Group.erase(StartIter);
+		}
+	}
+
 }

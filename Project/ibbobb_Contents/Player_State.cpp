@@ -5,7 +5,11 @@
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 
-#include "PlayerStateEnum.h"
+void Player::ChangeState(PlayerState _State)
+{
+	State = _State;
+}
+
 
 void Player::IdleUpdate(float _DeltaTime)
 {
@@ -29,6 +33,7 @@ void Player::IdleUpdate(float _DeltaTime)
 		return;
 	}
 }
+
 
 void Player::RunUpdate(float _DeltaTime)
 {
@@ -70,6 +75,7 @@ void Player::RunUpdate(float _DeltaTime)
 	AddPos(MovePos);
 }
 
+
 void Player::FallUpdate(float _DeltaTime)
 {
 	SetAnimation("Fall");
@@ -103,11 +109,12 @@ void Player::FallUpdate(float _DeltaTime)
 	AddPos(MovePos);
 }
 
+
 void Player::JumpUpdate(float _DeltaTime)
 {
 	float4 PastPos = GetPos();
+	PlayerDir PastDir = Dir;
 	unsigned int Color = GetGroundColor(RGB(255, 255, 255), DownCheck + float4::UP);
-
 	if (RGB(255, 255, 255) == Color)
 	{
 		Gravity(_DeltaTime);
@@ -121,34 +128,15 @@ void Player::JumpUpdate(float _DeltaTime)
 		return;
 	}
 
+	// 좌, 우 이동
 	float Speed = 300.0f;
 	float4 MovePos = float4::ZERO;
-	float4 CurPos = GetPos();
-
-	if (1.05f >= PastPos.Y - CurPos.Y)
+	
+	if (1.1f >= PastPos.Y - GetPos().Y) 
 	{
-		SetAnimation("Tumbling");
+		// 점프 중 일정 속도보다 낮아질 시 Tumbling으로 상태 업데이트
+		//ChangeState(PlayerState::Tumbling);
 
-		if (true == GameEngineInput::IsPress('A'))
-		{
-			MovePos = { -Speed * _DeltaTime, 0.0f };
-			
-		}
-		else if (true == GameEngineInput::IsPress('D'))
-		{
-			MovePos = { Speed * _DeltaTime, 0.0f };
-		}
-
-		if (true == MainRenderer->IsAnimationEnd())
-		{
-			ChangeState(PlayerState::Fall);
-			return;
-		}
-	}
-	else
-	{
-		SetAnimation("Jump");
-		
 		if (true == GameEngineInput::IsPress('A'))
 		{
 			MovePos = { -Speed * _DeltaTime, 0.0f };
@@ -159,12 +147,31 @@ void Player::JumpUpdate(float _DeltaTime)
 			MovePos = { Speed * _DeltaTime, 0.0f };
 			Dir = PlayerDir::UpRight;
 		}
+
+		int CurFrame = MainRenderer->GetCurFrame();
+		SetAnimation("Tumbling", CurFrame);
+
+		if (true == MainRenderer->IsAnimationEnd())
+		{
+			ChangeState(PlayerState::Fall);
+		}
+
+	}
+	else
+	{
+		if (true == GameEngineInput::IsPress('A'))
+		{
+			MovePos = { -Speed * _DeltaTime, 0.0f };
+			Dir = PlayerDir::UpLeft;
+		}
+		else if (true == GameEngineInput::IsPress('D'))
+		{
+			MovePos = { Speed * _DeltaTime, 0.0f };
+			Dir = PlayerDir::UpRight;
+		}
+
+		SetAnimation("Jump");
 	}
 
 	AddPos(MovePos);
-}
-
-void Player::ChangeState(PlayerState _State)
-{
-	State = _State;
 }

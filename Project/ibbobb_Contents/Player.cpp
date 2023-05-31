@@ -65,11 +65,11 @@ void Player::Start()
 	SetGravityPower(2.5f);
 
 	// 점프력 설정
-	JumpForce = 1.0f;
+	SetJumpForce(1.0f);
 
 	SetPos({ 200.0f, 200.0f });
 	ChangeState(PlayerState::Fall);
-	Dir = PlayerDir::UpRight;
+	CurDir = PlayerDir::UpRight;
 }
 
 void Player::Update(float _DeltaTime)
@@ -109,7 +109,6 @@ void Player::Update(float _DeltaTime)
 	default:
 		break;
 	}
-	int a = MainRenderer->CurAnimation->CurFrame;
 	CameraFocus();
 }
 
@@ -117,7 +116,7 @@ void Player::SetAnimation(const std::string _State, int _StartFrame)
 {
 	std::string AnimationName;
 
-	switch (Dir)
+	switch (CurDir)
 	{
 	case PlayerDir::UpLeft:
 		AnimationName = "UpLeft_";
@@ -138,5 +137,10 @@ void Player::SetAnimation(const std::string _State, int _StartFrame)
 	AnimationName += _State;
 
 	MainRenderer->ChangeAnimation(AnimationName, _StartFrame);
-	
+}
+
+
+void Player::ChangeState(PlayerState _State)
+{
+	State = _State;
 }

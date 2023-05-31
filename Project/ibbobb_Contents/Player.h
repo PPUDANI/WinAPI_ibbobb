@@ -36,17 +36,23 @@ protected:
 
 private:
 	void Start() override;
-	void Update(float _Delta) override;
+	void Update(float _DeltaTime) override;
 
-	void IdleUpdate(float _Delta);
-	void RunUpdate(float _Delta);
+	void IdleUpdate(float _DeltaTime);
+	void RunUpdate(float _DeltaTime);
 	void FallUpdate(float _DeltaTime);
 	void JumpUpdate(float _DeltaTime);
+
 	void ChangeState(PlayerState _State);
 	void SetAnimation(const std::string _State, int _StartFrame = 0);
 
+	void SetJumpForce(float _JumpForce)
+	{
+		JumpForce = _JumpForce;
+	}
+
 	PlayerState State = PlayerState::Max;
-	PlayerDir Dir = PlayerDir::UpRight;
+	PlayerDir CurDir = PlayerDir::UpRight;
 
 	float JumpForce = 1.0f;
 	float4 CurGravity = float4::DOWN;

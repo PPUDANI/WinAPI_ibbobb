@@ -51,10 +51,16 @@ private:
 		JumpForce = _JumpForce;
 	}
 
+	void SetSpeed(float _Speed)
+	{
+		Speed = _Speed;
+	}
+
 	PlayerState State = PlayerState::Max;
 	PlayerDir CurDir = PlayerDir::UpRight;
 
 	float JumpForce = 1.0f;
+	float Speed = 1.0f;
 	float4 CurGravity = float4::DOWN;
 
 	GameEngineRenderer* MainRenderer = nullptr;

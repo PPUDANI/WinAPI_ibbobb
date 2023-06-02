@@ -37,40 +37,49 @@ void Player::Start()
 
 	// UP 방향 애니메이션
 	{
-		// Idle
+		// Idle Animation
 		MainRenderer->CreateAnimation("UpLeft_Idle", "obb_UpLeft.bmp", 0, 0, 10.0f, true);
 		MainRenderer->CreateAnimation("UpRight_Idle", "obb_UpRight.bmp", 0, 0, 10.0f, true);
 
-		// Run
-		MainRenderer->CreateAnimation("UpLeft_Run", "obb_UpLeft.bmp", 13, 22, 0.1f, true);
-		MainRenderer->CreateAnimation("UpRight_Run", "obb_UpRight.bmp", 13, 22, 0.1f, true);
+		// Run Animation
+		MainRenderer->CreateAnimation("UpLeft_Run", "obb_UpLeft.bmp", 13, 22, 0.08f, true);
+		MainRenderer->CreateAnimation("UpRight_Run", "obb_UpRight.bmp", 13, 22, 0.08f, true);
 
-		// Jump
+		// Jump Animation
 		MainRenderer->CreateAnimation("UpLeft_Jump", "obb_UpLeft.bmp", 23, 23, 10.0f, true);
 		MainRenderer->CreateAnimation("UpRight_Jump", "obb_UpRight.bmp", 23, 23, 10.0f, true);
 
-		// Tumbling
-		MainRenderer->CreateAnimation("UpLeft_Tumbling", "obb_UpLeft.bmp", 24, 29, 0.05f, true);
-		MainRenderer->CreateAnimation("UpRight_Tumbling", "obb_UpRight.bmp", 24, 29, 0.05f, true);
+		// Tumbling Animation
+		MainRenderer->CreateAnimation("UpLeft_Tumbling", "obb_UpLeft.bmp", 24, 29, 0.06f, true);
+		MainRenderer->CreateAnimation("UpRight_Tumbling", "obb_UpRight.bmp", 24, 29, 0.06f, true);
 
-		// Fall
+		// Fall Animation
 		MainRenderer->CreateAnimation("UpLeft_Fall", "obb_UpLeft.bmp", 30, 31, 0.07f, true);
 		MainRenderer->CreateAnimation("UpRight_Fall", "obb_UpRight.bmp", 30, 31, 0.07f, true);
 	}
 
+	// 첫 상태 설정
+	ChangeState(PlayerState::Fall);
+
+	// 첫 방향 설정
+	CurDir = PlayerDir::UpRight;
+
+	// 첫 애니메이션 설정
 	MainRenderer->ChangeAnimation("UpLeft_Idle");
 	MainRenderer->SetRenderScaleToTexture();
 	MainRenderer->SetScaleRatio(2.0f);
 
-	// 중력값
+	// 중력값 설정
 	SetGravityPower(2.5f);
 
 	// 점프력 설정
 	SetJumpForce(1.2f);
 
+	// 속도 설정
+	SetSpeed(100.0f);
+
+	// 위치 설정
 	SetPos({ 800.0f, 200.0f });
-	ChangeState(PlayerState::Fall);
-	CurDir = PlayerDir::UpRight;
 }
 
 void Player::Update(float _DeltaTime)
@@ -117,28 +126,27 @@ void Player::Update(float _DeltaTime)
 
 void Player::Render(float _DeltaTime)
 {
-	CollisionData Data;
-	HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
+	//CollisionData Data;
+	//HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
+	//Data.Scale = { 5,5 };
+	//Data.Pos = ActorCameraPos() + MapLeftUpCheck;
+	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	//Data.Pos = ActorCameraPos() + MapRightUpCheck;
+	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	//Data.Pos = ActorCameraPos() + MapUpCenterCheck;
+	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-	/*Data.Scale = { 5,5 };
-	Data.Pos = ActorCameraPos() + MapLeftUpCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-	Data.Pos = ActorCameraPos() + MapRightUpCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-	Data.Pos = ActorCameraPos() + MapUpCenterCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	//Data.Pos = ActorCameraPos() + MapLeftDownCheck;
+	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	//Data.Pos = ActorCameraPos() + MapRightDownCheck;
+	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	//Data.Pos = ActorCameraPos() + MapDownCenterCheck;
+	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-	Data.Pos = ActorCameraPos() + MapLeftDownCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-	Data.Pos = ActorCameraPos() + MapRightDownCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-	Data.Pos = ActorCameraPos() + MapDownCenterCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-
-	Data.Pos = ActorCameraPos() + MapLeftCenterCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-	Data.Pos = ActorCameraPos() + MapRightCenterCheck;
-	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());*/
+	//Data.Pos = ActorCameraPos() + MapLeftCenterCheck;
+	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	//Data.Pos = ActorCameraPos() + MapRightCenterCheck;
+	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 }
 
 void Player::SetAnimation(const std::string _State, int _StartFrame)

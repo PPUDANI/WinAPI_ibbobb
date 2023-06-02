@@ -30,7 +30,7 @@ void Player::IdleUpdate(float _DeltaTime)
 void Player::RunUpdate(float _DeltaTime)
 {
 	// ÁÂ, ¿ì ÀÌµ¿
-	float Speed = 300.0f;
+	float RunSpeed = Speed * 3.0f;
 	float4 MovePos = float4::ZERO;
 	if (true == GameEngineInput::IsPress('A'))
 	{
@@ -40,7 +40,7 @@ void Player::RunUpdate(float _DeltaTime)
 
 		if (RGB(255, 255, 255) == LeftCenterColor)
 		{
-			MovePos = { -Speed * _DeltaTime, 0.0f };
+			MovePos = { -RunSpeed * _DeltaTime, 0.0f };
 		}
 	}
 	else if (true == GameEngineInput::IsPress('D'))
@@ -51,7 +51,7 @@ void Player::RunUpdate(float _DeltaTime)
 
 		if (RGB(255, 255, 255) == RightCenterColor)
 		{
-			MovePos = { Speed * _DeltaTime, 0.0f };
+			MovePos = { RunSpeed * _DeltaTime, 0.0f };
 		}
 	}
 	else
@@ -122,18 +122,18 @@ void Player::FallUpdate(float _DeltaTime)
 	}
 
 	// ÁÂ, ¿ì ÀÌµ¿
-	float Speed = 300.0f;
+	float SideMoveSpeed = Speed * 3.0f;
 	float4 MovePos = float4::ZERO;
 	if (true == GameEngineInput::IsPress('A'))
 	{
 		CurDir = PlayerDir::UpLeft;
 		
 		unsigned int LeftCenterColor = GetGroundColor(RGB(255, 255, 255), MapLeftCenterCheck);
-		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck + float4::LEFT * 2);
+		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck + float4::LEFT * 1);
 		if (RGB(255, 255, 255) == LeftCenterColor &&
 			RGB(255, 255, 255) == LeftDownColor)
 		{
-			MovePos = { -Speed * _DeltaTime, 0.0f };
+			MovePos = { -SideMoveSpeed * _DeltaTime, 0.0f };
 		}
 	}
 	else if (true == GameEngineInput::IsPress('D'))
@@ -141,11 +141,11 @@ void Player::FallUpdate(float _DeltaTime)
 		CurDir = PlayerDir::UpRight;
 
 		unsigned int RightCenterColor = GetGroundColor(RGB(255, 255, 255), MapRightCenterCheck);
-		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck + float4::RIGHT * 2);
+		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck + float4::RIGHT * 1);
 		if (RGB(255, 255, 255) == RightCenterColor &&
 			RGB(255, 255, 255) == RightDownColor)
 		{
-			MovePos = { Speed * _DeltaTime, 0.0f };
+			MovePos = { SideMoveSpeed * _DeltaTime, 0.0f };
 		}
 	}
 	AddPos(MovePos);
@@ -180,7 +180,7 @@ void Player::JumpUpdate(float _DeltaTime)
 	}
 
 	// ÁÂ, ¿ì ÀÌµ¿
-	float Speed = 300.0f;
+	float SideMoveSpeed = Speed * 3.0f;
 	float4 MovePos = float4::ZERO;
 	if (true == GameEngineInput::IsPress('A'))
 	{
@@ -191,7 +191,7 @@ void Player::JumpUpdate(float _DeltaTime)
 		if (RGB(255, 255, 255) == LeftCenterColor &&
 			RGB(255, 255, 255) == LeftDownColor)
 		{
-			MovePos = { -Speed * _DeltaTime, 0.0f };
+			MovePos = { -SideMoveSpeed * _DeltaTime, 0.0f };
 		}
 	}
 	else if (true == GameEngineInput::IsPress('D'))
@@ -203,7 +203,7 @@ void Player::JumpUpdate(float _DeltaTime)
 		if (RGB(255, 255, 255) == RightCenterColor &&
 			RGB(255, 255, 255) == RightDownColor)
 		{
-			MovePos = { Speed * _DeltaTime, 0.0f };
+			MovePos = { SideMoveSpeed * _DeltaTime, 0.0f };
 		}
 	}
 

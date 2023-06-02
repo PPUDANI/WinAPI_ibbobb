@@ -29,7 +29,6 @@ void PlayLevel::Start()
 	EXMap->Init("EXMap.bmp","EXMapCollision.bmp");
 	LevelPlayer = CreateActor<Player>(UpdateOrder::Player);
 	LevelPlayer->SetGroundTexture("EXMapCollision.bmp");
-	
 }
 
 void PlayLevel::Update(float _DeltaTime)

@@ -11,6 +11,7 @@ class GameEngineSoundPlayer
 	friend class GameEngineSound;
 
 public:
+	void SetLoop(int _Count);
 	void SetVolume(float _Volume);
 	void Stop();
 
@@ -64,7 +65,7 @@ public:
 	static void SoundLoad(const std::string& _Name, const std::string& _Path);
 
 	// 1번의 재생을 하고 끝나면 그냥 종료하고 나는 컨트롤할수 없다.
-	static GameEngineSoundPlayer SoundPlay(const std::string& _Name);
+	static GameEngineSoundPlayer SoundPlay(const std::string& _Name, int _Loop = 0);
 
 	static void Release();
 

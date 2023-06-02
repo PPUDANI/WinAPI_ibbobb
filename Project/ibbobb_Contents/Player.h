@@ -37,7 +37,7 @@ protected:
 private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
-
+	void Render(float _DeltaTime) override;
 	void IdleUpdate(float _DeltaTime);
 	void RunUpdate(float _DeltaTime);
 	void FallUpdate(float _DeltaTime);
@@ -56,7 +56,19 @@ private:
 
 	float JumpForce = 1.0f;
 	float4 CurGravity = float4::DOWN;
-	float4 DownCheck = { 0.0f, 18.0f };
+
 	GameEngineRenderer* MainRenderer = nullptr;
+
+	// ¸Ê Ãæµ¹ Ã¼Å©
+	float4 MapLeftUpCheck = { -17.0f, -18.0f };
+	float4 MapLeftCenterCheck = { -18.0f, 0.0f };
+	float4 MapLeftDownCheck = { -17.0f, 18.0f };
+
+	float4 MapRightUpCheck = { 17.0f, -18.0f };
+	float4 MapRightCenterCheck = { 18.0f, 0.0f };
+	float4 MapRightDownCheck = { 17.0f, 18.0f };
+
+	float4 MapUpCenterCheck = { 0.0f, -18.0f };
+	float4 MapDownCenterCheck = { 0.0f, 18.0f };
 };
 

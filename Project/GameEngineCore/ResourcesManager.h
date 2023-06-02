@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include <GameEngineBase/GameEnginePath.h>
+#include <GameEngineBase/GameEngineMath.h>
 
 // ¼³¸í : ¼±»ı´ÔÀÌ ¸¶Áö¸·À¸·Î ¾Ë·ÁÁÖ´Â ½Ì±ÛÅæ
 // ½Ì±ÛÅæÀÌ ¹¹Áö?
@@ -61,6 +62,8 @@ public:
 		GameEnginePath LoadPath = _Path;
 		return TextureLoad(LoadPath.GetFileName(), _Path);
 	}
+
+	GameEngineWindowTexture* TextureCreate(const std::string& _Name, float4 _Scale);
 
 	GameEngineWindowTexture* TextureLoad(const std::string& _Name, const std::string& _Path);
 

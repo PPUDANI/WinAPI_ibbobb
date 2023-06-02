@@ -12,6 +12,11 @@
 
 ////////////////////////////////////////////////// SoundPlayer
 
+void GameEngineSoundPlayer::SetLoop(int _Count)
+{
+	Control->setLoopCount(_Count);
+}
+
 void GameEngineSoundPlayer::SetVolume(float _Volume)
 {
 	Control->setVolume(_Volume * GameEngineSound::GlobalVolume);
@@ -126,7 +131,7 @@ void GameEngineSound::SoundLoad(const std::string& _Name, const std::string& _Pa
 	AllSound.insert(std::make_pair(UpperName, NewSound));
 }
 
-GameEngineSoundPlayer GameEngineSound::SoundPlay(const std::string& _Name)
+GameEngineSoundPlayer GameEngineSound::SoundPlay(const std::string& _Name, int _Loop)
 {
 	GameEngineSound* FindSoundPtr = FindSound(_Name);
 
@@ -139,6 +144,8 @@ GameEngineSoundPlayer GameEngineSound::SoundPlay(const std::string& _Name)
 	GameEngineSoundPlayer Player = FindSoundPtr->Play();
 
 	Player.SetVolume(1.0f);
+
+	Player.SetLoop(_Loop);
 
 	return Player;
 }

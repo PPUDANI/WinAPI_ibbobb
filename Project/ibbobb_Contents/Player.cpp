@@ -7,6 +7,7 @@
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
+#include <GameEngineCore/GameEngineCollision.h>
 
 #include "ContentsEnum.h"
 
@@ -65,9 +66,9 @@ void Player::Start()
 	SetGravityPower(2.5f);
 
 	// 점프력 설정
-	SetJumpForce(1.0f);
+	SetJumpForce(1.2f);
 
-	SetPos({ 200.0f, 200.0f });
+	SetPos({ 800.0f, 200.0f });
 	ChangeState(PlayerState::Fall);
 	CurDir = PlayerDir::UpRight;
 }
@@ -109,7 +110,35 @@ void Player::Update(float _DeltaTime)
 	default:
 		break;
 	}
+
+	//임시 카메라 위치
 	CameraFocus();
+}
+
+void Player::Render(float _DeltaTime)
+{
+	CollisionData Data;
+	HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
+
+	/*Data.Scale = { 5,5 };
+	Data.Pos = ActorCameraPos() + MapLeftUpCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	Data.Pos = ActorCameraPos() + MapRightUpCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	Data.Pos = ActorCameraPos() + MapUpCenterCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+
+	Data.Pos = ActorCameraPos() + MapLeftDownCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	Data.Pos = ActorCameraPos() + MapRightDownCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	Data.Pos = ActorCameraPos() + MapDownCenterCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+
+	Data.Pos = ActorCameraPos() + MapLeftCenterCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	Data.Pos = ActorCameraPos() + MapRightCenterCheck;
+	Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());*/
 }
 
 void Player::SetAnimation(const std::string _State, int _StartFrame)
@@ -135,7 +164,6 @@ void Player::SetAnimation(const std::string _State, int _StartFrame)
 	}
 
 	AnimationName += _State;
-
 	MainRenderer->ChangeAnimation(AnimationName, _StartFrame);
 }
 

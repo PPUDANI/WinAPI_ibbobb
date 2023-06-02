@@ -23,7 +23,8 @@ private:
 	void Render(float _DeltaTime) override;
 	void Release() override;
 
-	class BackGround* Back = nullptr;
+	class BackGround* UpBack = nullptr;
+	class BackGround* DownBack = nullptr;
 	class Player* LevelPlayer = nullptr;
 	class Map* EXMap = nullptr;
 };

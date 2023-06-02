@@ -1,10 +1,14 @@
 #include "PlayLevel.h"
 
+#include <GameEngineBase/GameEnginePath.h>
+#include <GameEngineCore/ResourcesManager.h>
+
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineCore.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/GameEngineCamera.h>
-
+#include <GameEngineCore/GameEngineRenderer.h>
+#include <GameEnginePlatform/GameEngineWindowTexture.h>
 #include "Player.h"
 #include "BackGround.h"
 #include "Map.h"
@@ -22,8 +26,11 @@ PlayLevel::~PlayLevel()
 
 void PlayLevel::Start() 
 {
-	Back = CreateActor<BackGround>(UpdateOrder::BackGround);
-	Back->Init("RedSky.bmp");
+	UpBack = CreateActor<BackGround>(UpdateOrder::BackGround);
+	UpBack->Init("RedSky.bmp");
+
+	/*DownBack = CreateActor<BackGround>(UpdateOrder::BackGround);
+	UpBack->Init("BlueSky.bmp");*/
 
 	EXMap = CreateActor<Map>();
 	EXMap->Init("EXMap.bmp","EXMapCollision.bmp");
@@ -38,12 +45,12 @@ void PlayLevel::Update(float _DeltaTime)
 		EXMap->SwitchRender();
 	}
 
-	Back->SetPos(LevelPlayer->GetPos());
+	UpBack->SetPos(LevelPlayer->GetPos());
 }
 
 void PlayLevel::Render(float _DeltaTime)
 {
-	Back->SetPos(LevelPlayer->GetPos());
+	UpBack->SetPos(LevelPlayer->GetPos());
 }
 
 void PlayLevel::Release() 

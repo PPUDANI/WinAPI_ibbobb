@@ -1,5 +1,6 @@
 #include "Player.h"
 
+#include <GameEngineBase/GameEngineRandom.h>
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
@@ -23,7 +24,15 @@ void Player::IdleUpdate(float _DeltaTime)
 		return;
 	}
 
-	SetAnimation("Idle");
+	int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 400);
+	if (RandomNumber == 1)
+	{
+		SetAnimation("Blink");
+	}
+	if (true == MainRenderer->IsAnimationEnd())
+	{
+		SetAnimation("Idle");
+	}
 }
 
 
@@ -57,6 +66,7 @@ void Player::RunUpdate(float _DeltaTime)
 	else
 	{
 		ChangeState(PlayerState::Idle);
+		SetAnimation("Idle");
 		return;
 	}
 
@@ -118,6 +128,7 @@ void Player::FallUpdate(float _DeltaTime)
 		AddPos(float4::UP);
 		GravityReset();
 		ChangeState(PlayerState::Idle);
+		SetAnimation("Idle");
 		return;
 	}
 

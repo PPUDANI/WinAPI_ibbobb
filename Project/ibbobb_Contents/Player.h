@@ -4,6 +4,7 @@
 enum class PlayerState
 {
 	Idle,
+	Blink,
 	Run,
 	Jump,
 	Fall,

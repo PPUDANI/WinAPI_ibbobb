@@ -41,6 +41,10 @@ void Player::Start()
 		MainRenderer->CreateAnimation("UpLeft_Idle", "obb_UpLeft.bmp", 0, 0, 10.0f, true);
 		MainRenderer->CreateAnimation("UpRight_Idle", "obb_UpRight.bmp", 0, 0, 10.0f, true);
 
+		// Blink Animation
+		MainRenderer->CreateAnimation("UpLeft_Blink", "obb_UpLeft.bmp", 0, 1, 0.07f, true);
+		MainRenderer->CreateAnimation("UpRight_Blink", "obb_UpRight.bmp", 0, 1, 0.07f, true);
+
 		// Run Animation
 		MainRenderer->CreateAnimation("UpLeft_Run", "obb_UpLeft.bmp", 13, 22, 0.08f, true);
 		MainRenderer->CreateAnimation("UpRight_Run", "obb_UpRight.bmp", 13, 22, 0.08f, true);

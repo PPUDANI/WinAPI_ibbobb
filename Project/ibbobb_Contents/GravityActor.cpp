@@ -30,8 +30,17 @@ void GravityActor::Gravity(float _DeltaTime)
 void GravityActor::CameraFocus()
 {
 	float4 WindowScale = GameEngineWindow::MainWindow.GetScale();
+
 	float4 Value = float4{ -WindowScale.hX(), -WindowScale.hY()};
-	GetLevel()->GetMainCamera()->SetPos(GetPos() + Value);
+
+	float4 PlayerPos = GetPos();
+
+	if (PlayerPos.X - WindowScale.hX() <= 0.0f)
+	{
+		PlayerPos.X = WindowScale.hX();
+	}
+
+	GetLevel()->GetMainCamera()->SetPos(PlayerPos + Value);
 }
 
 void GravityActor::SetGroundTexture(const std::string& _GroundTextureName)

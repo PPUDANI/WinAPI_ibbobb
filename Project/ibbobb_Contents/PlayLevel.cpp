@@ -29,9 +29,6 @@ void PlayLevel::Start()
 	UpBack = CreateActor<BackGround>(UpdateOrder::BackGround);
 	UpBack->Init("RedSky.bmp");
 
-	/*DownBack = CreateActor<BackGround>(UpdateOrder::BackGround);
-	UpBack->Init("BlueSky.bmp");*/
-
 	EXMap = CreateActor<Map>();
 	EXMap->Init("EXMap.bmp","EXMapCollision.bmp");
 	LevelPlayer = CreateActor<Player>(UpdateOrder::Player);
@@ -45,7 +42,6 @@ void PlayLevel::Update(float _DeltaTime)
 		EXMap->SwitchRender();
 	}
 
-	UpBack->SetPos(LevelPlayer->GetPos());
 }
 
 void PlayLevel::Render(float _DeltaTime)

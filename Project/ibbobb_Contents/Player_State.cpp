@@ -139,9 +139,12 @@ void Player::FallUpdate(float _DeltaTime)
 	{
 		CurDir = PlayerDir::UpLeft;
 		
+
+		unsigned int LeftUpColor = GetGroundColor(RGB(255, 255, 255), MapLeftUpCheck + float4::LEFT);
 		unsigned int LeftCenterColor = GetGroundColor(RGB(255, 255, 255), MapLeftCenterCheck);
-		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck + float4::LEFT * 1);
-		if (RGB(255, 255, 255) == LeftCenterColor &&
+		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck + float4::LEFT);
+		if (RGB(255, 255, 255) == LeftUpColor &&
+			RGB(255, 255, 255) == LeftCenterColor &&
 			RGB(255, 255, 255) == LeftDownColor)
 		{
 			MovePos = { -SideMoveSpeed * _DeltaTime, 0.0f };
@@ -151,9 +154,11 @@ void Player::FallUpdate(float _DeltaTime)
 	{
 		CurDir = PlayerDir::UpRight;
 
+		unsigned int RightUpColor = GetGroundColor(RGB(255, 255, 255), MapRightUpCheck + float4::RIGHT);
 		unsigned int RightCenterColor = GetGroundColor(RGB(255, 255, 255), MapRightCenterCheck);
-		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck + float4::RIGHT * 1);
-		if (RGB(255, 255, 255) == RightCenterColor &&
+		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck + float4::RIGHT);
+		if (RGB(255, 255, 255) == RightUpColor &&
+			RGB(255, 255, 255) == RightCenterColor &&
 			RGB(255, 255, 255) == RightDownColor)
 		{
 			MovePos = { SideMoveSpeed * _DeltaTime, 0.0f };
@@ -197,9 +202,12 @@ void Player::JumpUpdate(float _DeltaTime)
 	{
 		CurDir = PlayerDir::UpLeft;
 
+
+		unsigned int LeftUpColor = GetGroundColor(RGB(255, 255, 255), MapLeftUpCheck + float4::LEFT);
 		unsigned int LeftCenterColor = GetGroundColor(RGB(255, 255, 255), MapLeftCenterCheck);
-		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck);
-		if (RGB(255, 255, 255) == LeftCenterColor &&
+		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck + float4::LEFT);
+		if (RGB(255, 255, 255) == LeftUpColor &&
+			RGB(255, 255, 255) == LeftCenterColor &&
 			RGB(255, 255, 255) == LeftDownColor)
 		{
 			MovePos = { -SideMoveSpeed * _DeltaTime, 0.0f };
@@ -209,9 +217,11 @@ void Player::JumpUpdate(float _DeltaTime)
 	{
 		CurDir = PlayerDir::UpRight;
 
+		unsigned int RightUpColor = GetGroundColor(RGB(255, 255, 255), MapRightUpCheck + float4::RIGHT);
 		unsigned int RightCenterColor = GetGroundColor(RGB(255, 255, 255), MapRightCenterCheck);
-		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck);
-		if (RGB(255, 255, 255) == RightCenterColor &&
+		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck + float4::RIGHT);
+		if (RGB(255, 255, 255) == RightUpColor &&
+			RGB(255, 255, 255) == RightCenterColor &&
 			RGB(255, 255, 255) == RightDownColor)
 		{
 			MovePos = { SideMoveSpeed * _DeltaTime, 0.0f };

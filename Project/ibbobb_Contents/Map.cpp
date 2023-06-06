@@ -63,7 +63,7 @@ void Map::Init(const std::string& _FileName, const std::string& _DebugFileName)
 	}
 
 	DebugRenderer->SetTexture(_DebugFileName);
-	Renderer->SetRenderScale(Scale);
+	DebugRenderer->SetRenderScale(Scale);
 
 	SetPos({ Scale.hX(), Scale.hY() });
 }

@@ -35,10 +35,10 @@ void GravityActor::CameraFocus()
 
 	float4 PlayerPos = GetPos();
 
-	if (PlayerPos.X - WindowScale.hX() <= 0.0f)
-	{
-		PlayerPos.X = WindowScale.hX();
-	}
+	//if (PlayerPos.X - WindowScale.hX() <= 0.0f)
+	//{
+	//	PlayerPos.X = WindowScale.hX();
+	//}
 
 	GetLevel()->GetMainCamera()->SetPos(PlayerPos + Value);
 }

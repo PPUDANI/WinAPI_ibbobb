@@ -45,9 +45,12 @@ void Player::RunUpdate(float _DeltaTime)
 	{
 		CurDir = PlayerDir::UpLeft;
 
+		unsigned int LeftUpColor = GetGroundColor(RGB(255, 255, 255), MapLeftUpCheck);
 		unsigned int LeftCenterColor = GetGroundColor(RGB(255, 255, 255), MapLeftCenterCheck);
-
-		if (RGB(255, 255, 255) == LeftCenterColor)
+		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck);
+		if (RGB(255, 255, 255) == LeftUpColor &&
+			RGB(255, 255, 255) == LeftCenterColor &&
+			RGB(255, 255, 255) == LeftDownColor)
 		{
 			MovePos = { -RunSpeed * _DeltaTime, 0.0f };
 		}
@@ -56,9 +59,12 @@ void Player::RunUpdate(float _DeltaTime)
 	{
 		CurDir = PlayerDir::UpRight;
 
+		unsigned int RightUpColor = GetGroundColor(RGB(255, 255, 255), MapRightUpCheck);
 		unsigned int RightCenterColor = GetGroundColor(RGB(255, 255, 255), MapRightCenterCheck);
-
-		if (RGB(255, 255, 255) == RightCenterColor)
+		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck);
+		if (RGB(255, 255, 255) == RightUpColor &&
+			RGB(255, 255, 255) == RightCenterColor &&
+			RGB(255, 255, 255) == RightDownColor)
 		{
 			MovePos = { RunSpeed * _DeltaTime, 0.0f };
 		}
@@ -82,9 +88,9 @@ void Player::RunUpdate(float _DeltaTime)
 	}
 
 	// 공중, 바닥 체크
-	unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck + float4::DOWN);
+	unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck + float4::DOWN - float4::LEFT);
 	unsigned int DownCneterColor = GetGroundColor(RGB(255, 255, 255), MapDownCenterCheck + float4::DOWN);
-	unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck + float4::DOWN);
+	unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck + float4::DOWN - float4::RIGHT);
 
 	if (RGB(255, 255, 255) == LeftDownColor &&
 		RGB(255, 255, 255) == DownCneterColor &&
@@ -113,9 +119,9 @@ void Player::RunUpdate(float _DeltaTime)
 void Player::FallUpdate(float _DeltaTime)
 {
 	// 공중, 바닥 체크
-	unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck);
+	unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck - float4::LEFT);
 	unsigned int DownCneterColor = GetGroundColor(RGB(255, 255, 255), MapDownCenterCheck);
-	unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck);
+	unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck - float4::RIGHT);
 
 	if (RGB(255, 255, 255) == LeftDownColor &&
 		RGB(255, 255, 255) == DownCneterColor &&
@@ -140,9 +146,9 @@ void Player::FallUpdate(float _DeltaTime)
 		CurDir = PlayerDir::UpLeft;
 		
 
-		unsigned int LeftUpColor = GetGroundColor(RGB(255, 255, 255), MapLeftUpCheck + float4::LEFT);
+		unsigned int LeftUpColor = GetGroundColor(RGB(255, 255, 255), MapLeftUpCheck);
 		unsigned int LeftCenterColor = GetGroundColor(RGB(255, 255, 255), MapLeftCenterCheck);
-		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck + float4::LEFT);
+		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck);
 		if (RGB(255, 255, 255) == LeftUpColor &&
 			RGB(255, 255, 255) == LeftCenterColor &&
 			RGB(255, 255, 255) == LeftDownColor)
@@ -154,9 +160,9 @@ void Player::FallUpdate(float _DeltaTime)
 	{
 		CurDir = PlayerDir::UpRight;
 
-		unsigned int RightUpColor = GetGroundColor(RGB(255, 255, 255), MapRightUpCheck + float4::RIGHT);
+		unsigned int RightUpColor = GetGroundColor(RGB(255, 255, 255), MapRightUpCheck);
 		unsigned int RightCenterColor = GetGroundColor(RGB(255, 255, 255), MapRightCenterCheck);
-		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck + float4::RIGHT);
+		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck);
 		if (RGB(255, 255, 255) == RightUpColor &&
 			RGB(255, 255, 255) == RightCenterColor &&
 			RGB(255, 255, 255) == RightDownColor)
@@ -178,9 +184,9 @@ void Player::JumpUpdate(float _DeltaTime)
 	Gravity(_DeltaTime);
 
 	// 상단 충돌 체크
-	unsigned int LeftUpColor = GetGroundColor(RGB(255, 255, 255), MapLeftUpCheck);
+	unsigned int LeftUpColor = GetGroundColor(RGB(255, 255, 255), MapLeftUpCheck - float4::LEFT);
 	unsigned int UpCenterColor = GetGroundColor(RGB(255, 255, 255), MapUpCenterCheck);
-	unsigned int RightUpColor = GetGroundColor(RGB(255, 255, 255), MapRightUpCheck);
+	unsigned int RightUpColor = GetGroundColor(RGB(255, 255, 255), MapRightUpCheck - float4::RIGHT);
 
 	if (RGB(255, 255, 255) != LeftUpColor ||
 		RGB(255, 255, 255) != UpCenterColor ||
@@ -203,9 +209,9 @@ void Player::JumpUpdate(float _DeltaTime)
 		CurDir = PlayerDir::UpLeft;
 
 
-		unsigned int LeftUpColor = GetGroundColor(RGB(255, 255, 255), MapLeftUpCheck + float4::LEFT);
+		unsigned int LeftUpColor = GetGroundColor(RGB(255, 255, 255), MapLeftUpCheck);
 		unsigned int LeftCenterColor = GetGroundColor(RGB(255, 255, 255), MapLeftCenterCheck);
-		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck + float4::LEFT);
+		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck);
 		if (RGB(255, 255, 255) == LeftUpColor &&
 			RGB(255, 255, 255) == LeftCenterColor &&
 			RGB(255, 255, 255) == LeftDownColor)
@@ -217,9 +223,9 @@ void Player::JumpUpdate(float _DeltaTime)
 	{
 		CurDir = PlayerDir::UpRight;
 
-		unsigned int RightUpColor = GetGroundColor(RGB(255, 255, 255), MapRightUpCheck + float4::RIGHT);
+		unsigned int RightUpColor = GetGroundColor(RGB(255, 255, 255), MapRightUpCheck);
 		unsigned int RightCenterColor = GetGroundColor(RGB(255, 255, 255), MapRightCenterCheck);
-		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck + float4::RIGHT);
+		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck);
 		if (RGB(255, 255, 255) == RightUpColor &&
 			RGB(255, 255, 255) == RightCenterColor &&
 			RGB(255, 255, 255) == RightDownColor)

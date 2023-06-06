@@ -27,12 +27,24 @@ PlayLevel::~PlayLevel()
 void PlayLevel::Start() 
 {
 	UpBack = CreateActor<BackGround>(UpdateOrder::BackGround);
-	UpBack->Init("RedSky.bmp");
+	UpBack->Init("BlueSky.bmp");
+
+	//EXMap = CreateActor<Map>();
+	//EXMap->Init("Level1_Map.bmp","Level1_MapCollision.bmp");
+	//LevelPlayer = CreateActor<Player>(UpdateOrder::Player);
+	//LevelPlayer->SetGroundTexture("Level1_MapCollision.bmp");
+	
+	//EXMap = CreateActor<Map>();
+	//EXMap->Init("EXMap.bmp","EXMapCollision.bmp");
+	//LevelPlayer = CreateActor<Player>(UpdateOrder::Player);
+	//LevelPlayer->SetGroundTexture("EXMapCollision.bmp");
 
 	EXMap = CreateActor<Map>();
-	EXMap->Init("EXMap.bmp","EXMapCollision.bmp");
+	EXMap->Init("EXLevel.bmp","EXLevel_Collision.bmp");
 	LevelPlayer = CreateActor<Player>(UpdateOrder::Player);
-	LevelPlayer->SetGroundTexture("EXMapCollision.bmp");
+	LevelPlayer->SetGroundTexture("EXLevel_Collision.bmp");
+
+	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.5f);
 }
 
 void PlayLevel::Update(float _DeltaTime)

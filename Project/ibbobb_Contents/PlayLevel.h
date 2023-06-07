@@ -26,6 +26,7 @@ private:
 	class BackGround* UpBack = nullptr;
 	class BackGround* DownBack = nullptr;
 	class Player* LevelPlayer = nullptr;
+	class Monster* LevelMonster = nullptr;
 	class Map* EXMap = nullptr;
 };
 

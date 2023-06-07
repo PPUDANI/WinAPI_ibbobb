@@ -24,6 +24,9 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="GravityActor.h" />
+    <ClInclude Include="Monster.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -49,6 +52,9 @@
       <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="GravityActor.cpp" />
+    <ClCompile Include="Monster.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">

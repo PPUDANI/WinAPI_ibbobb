@@ -88,9 +88,9 @@ void Player::RunUpdate(float _DeltaTime)
 	}
 
 	// 공중, 바닥 체크
-	unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck + float4::DOWN - float4::LEFT);
+	unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck + float4::DOWN);
 	unsigned int DownCneterColor = GetGroundColor(RGB(255, 255, 255), MapDownCenterCheck + float4::DOWN);
-	unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck + float4::DOWN - float4::RIGHT);
+	unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck + float4::DOWN);
 
 	if (RGB(255, 255, 255) == LeftDownColor &&
 		RGB(255, 255, 255) == DownCneterColor &&

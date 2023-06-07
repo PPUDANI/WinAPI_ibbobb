@@ -33,7 +33,7 @@ void Player::Start()
 	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("obb_UpRight.bmp"), 7, 6);
 	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("obb_UpLeft.bmp"), 7, 6);
 
-	MainRenderer = CreateRenderer(RenderOrder::Play);
+	MainRenderer = CreateRenderer(RenderOrder::Player);
 
 	// UP 방향 애니메이션
 	{
@@ -85,19 +85,19 @@ void Player::Start()
 	SetSpeed(100.0f);
 
 	// 위치 설정
-	SetPos({ 500.0f, 400.0f });
+	SetPos({ 300.0f, 600.0f });
 }
 
 void Player::Update(float _DeltaTime)
 {
 	
 	// 줌인 줌아웃 
-	if (true == GameEngineInput::IsPress('I'))
+	if (true == GameEngineInput::IsPress('Z'))
 	{
 		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(0.005f);
 	}
 
-	if (true == GameEngineInput::IsPress('O'))
+	if (true == GameEngineInput::IsPress('X'))
 	{
 		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-0.005f);
 		float ZoomScale = GameEngineWindow::MainWindow.GetDoubleBufferingCopyScaleRatio();
@@ -107,6 +107,11 @@ void Player::Update(float _DeltaTime)
 		}
 	}
 
+	if (true == GameEngineInput::IsDown('O'))
+	{
+
+		CheckPosOn = !CheckPosOn;
+	}
 	// 상태에 따른 Update
 	switch (State)
 	{
@@ -132,27 +137,30 @@ void Player::Update(float _DeltaTime)
 
 void Player::Render(float _DeltaTime)
 {
-	//CollisionData Data;
-	//HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
-	//Data.Scale = { 5,5 };
-	//Data.Pos = ActorCameraPos() + MapLeftUpCheck;
-	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-	//Data.Pos = ActorCameraPos() + MapRightUpCheck;
-	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-	//Data.Pos = ActorCameraPos() + MapUpCenterCheck;
-	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	if (true == CheckPosOn)
+	{
+		CollisionData Data;
+		HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
+		Data.Scale = { 5,5 };
+		Data.Pos = ActorCameraPos() + MapLeftUpCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		Data.Pos = ActorCameraPos() + MapRightUpCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		Data.Pos = ActorCameraPos() + MapUpCenterCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-	//Data.Pos = ActorCameraPos() + MapLeftDownCheck;
-	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-	//Data.Pos = ActorCameraPos() + MapRightDownCheck;
-	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-	//Data.Pos = ActorCameraPos() + MapDownCenterCheck;
-	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		Data.Pos = ActorCameraPos() + MapLeftDownCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		Data.Pos = ActorCameraPos() + MapRightDownCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		Data.Pos = ActorCameraPos() + MapDownCenterCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-	//Data.Pos = ActorCameraPos() + MapLeftCenterCheck;
-	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-	//Data.Pos = ActorCameraPos() + MapRightCenterCheck;
-	//Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		Data.Pos = ActorCameraPos() + MapLeftCenterCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		Data.Pos = ActorCameraPos() + MapRightCenterCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+	}
 }
 
 void Player::SetAnimation(const std::string _State, int _StartFrame)

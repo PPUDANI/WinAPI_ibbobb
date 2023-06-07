@@ -65,7 +65,7 @@ private:
 	float JumpForce = 1.0f;
 	float Speed = 1.0f;
 	float4 CurGravity = float4::DOWN;
-
+	bool CheckPosOn = false;
 	GameEngineRenderer* MainRenderer = nullptr;
 
 	// ¸Ê Ãæµ¹ Ã¼Å©

@@ -9,9 +9,11 @@
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
-#include "Player.h"
+
 #include "BackGround.h"
 #include "Map.h"
+#include "Player.h"
+#include "Monster.h"
 #include "ContentsEnum.h"
 
 PlayLevel::PlayLevel()
@@ -26,7 +28,7 @@ PlayLevel::~PlayLevel()
 
 void PlayLevel::Start() 
 {
-	UpBack = CreateActor<BackGround>(UpdateOrder::BackGround);
+	UpBack = CreateActor<BackGround>(RenderOrder::BackGround);
 	UpBack->Init("BlueSky.bmp");
 
 	//EXMap = CreateActor<Map>();
@@ -44,7 +46,10 @@ void PlayLevel::Start()
 	LevelPlayer = CreateActor<Player>(UpdateOrder::Player);
 	LevelPlayer->SetGroundTexture("EXLevel_Collision.bmp");
 
-	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.5f);
+	LevelMonster = CreateActor<Monster>(UpdateOrder::Monster);
+	LevelMonster->SetGroundTexture("EXLevel_Collision.bmp");
+
+	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(2.0f);
 }
 
 void PlayLevel::Update(float _DeltaTime)

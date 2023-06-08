@@ -13,7 +13,7 @@
 #include "BackGround.h"
 #include "Map.h"
 #include "Player.h"
-#include "Monster.h"
+#include "RoadMonster.h"
 #include "ContentsEnum.h"
 
 PlayLevel::PlayLevel()
@@ -46,7 +46,7 @@ void PlayLevel::Start()
 	LevelPlayer = CreateActor<Player>(UpdateOrder::Player);
 	LevelPlayer->SetGroundTexture("EXLevel_Collision.bmp");
 
-	LevelMonster = CreateActor<Monster>(UpdateOrder::Monster);
+	LevelMonster = CreateActor<RoadMonster>(UpdateOrder::Monster);
 	LevelMonster->SetGroundTexture("EXLevel_Collision.bmp");
 
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(2.0f);

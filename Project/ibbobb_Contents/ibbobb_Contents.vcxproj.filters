@@ -27,6 +27,9 @@
     <ClInclude Include="Monster.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="RoadMonster.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -55,6 +58,9 @@
     <ClCompile Include="Monster.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="RoadMonster.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -65,6 +71,9 @@
     </Filter>
     <Filter Include="TitleObject">
       <UniqueIdentifier>{d6c07d50-61dc-43ce-993e-9d37b60d33c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents">
+      <UniqueIdentifier>{37df1d23-5b60-40bb-b28a-ce5d6c32017c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

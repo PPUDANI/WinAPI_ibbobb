@@ -23,7 +23,7 @@ void RoadMonster::Start()
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
 	FilePath.MoveParentToExistsChild("Resources");
-	FilePath.MoveChild("Resources\\Texture\\Characters\\");
+	FilePath.MoveChild("Resources\\Texture\\Monster\\");
 
 	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_RoadMonster.bmp"), 3, 4);
 	Renderer = CreateRenderer(RenderOrder::RoadMonster);

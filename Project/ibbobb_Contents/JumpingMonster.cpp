@@ -19,14 +19,14 @@ void JumpingMonster::Start()
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
 	FilePath.MoveParentToExistsChild("Resources");
-	FilePath.MoveChild("Resources\\Texture\\Characters\\");
+	FilePath.MoveChild("Resources\\Texture\\Monster\\");
 
-	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Up_JumpingMonster.bmp"), 3, 4);
+	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("JumpingMonster.bmp"), 3, 4);
 	Renderer = CreateRenderer(RenderOrder::JumpingMonster);
 
-	Renderer->CreateAnimation("Idle", "Up_JumpingMonster.bmp", 0, 0, 10.0f, true);
-	Renderer->CreateAnimation("Blink", "Up_JumpingMonster.bmp", 0, 1, 0.05f, true);
-	Renderer->CreateAnimation("Dead", "Up_JumpingMonster.bmp", 1, 11, 0.02f, true);
+	Renderer->CreateAnimation("Idle", "JumpingMonster.bmp", 0, 0, 10.0f, true);
+	Renderer->CreateAnimation("Blink", "JumpingMonster.bmp", 0, 1, 0.05f, true);
+	Renderer->CreateAnimation("Dead", "JumpingMonster.bmp", 1, 11, 0.02f, true);
 	Renderer->ChangeAnimation("Idle");
 
 	SetGravityPower(2.5f);

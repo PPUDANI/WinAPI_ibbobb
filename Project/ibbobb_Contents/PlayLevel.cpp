@@ -54,7 +54,7 @@ void PlayLevel::Start()
 	JumpingMonster0 = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 	JumpingMonster0->SetGroundTexture("EXLevel_Collision.bmp");
 
-	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.6f);
+	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(2.0f);
 }
 
 void PlayLevel::Update(float _DeltaTime)

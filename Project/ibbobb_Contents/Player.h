@@ -69,26 +69,26 @@ private:
 	GameEngineRenderer* MainRenderer = nullptr;
 
 	// ¸Ê Ãæµ¹ Ã¼Å©
-	//float4 MapLeftUpCheck = { -18.0f, -18.0f };
-	//float4 MapLeftCenterCheck = { -18.0f, 0.0f };
-	//float4 MapLeftDownCheck = { -18.0f, 18.0f };
-	//
-	//float4 MapRightUpCheck = { 18.0f, -18.0f };
-	//float4 MapRightCenterCheck = { 18.0f, 0.0f };
-	//float4 MapRightDownCheck = { 18.0f, 18.0f };
-	//
-	//float4 MapUpCenterCheck = { 0.0f, -18.0f };
-	//float4 MapDownCenterCheck = { 0.0f, 18.0f };
+	float4 MapLeftUpCheck = { -18.0f, -18.0f };
+	float4 MapLeftCenterCheck = { -18.0f, 0.0f };
+	float4 MapLeftDownCheck = { -18.0f, 18.0f };
+	
+	float4 MapRightUpCheck = { 18.0f, -18.0f };
+	float4 MapRightCenterCheck = { 18.0f, 0.0f };
+	float4 MapRightDownCheck = { 18.0f, 18.0f };
+	
+	float4 MapUpCenterCheck = { 0.0f, -18.0f };
+	float4 MapDownCenterCheck = { 0.0f, 18.0f };
 
-	float4 MapLeftUpCheck = { -9.0f, -9.0f };
-	float4 MapLeftCenterCheck = { -9.0f, 0.0f };
-	float4 MapLeftDownCheck = { -9.0f, 9.0f };
-	
-	float4 MapRightUpCheck = { 9.0f, -9.0f };
-	float4 MapRightCenterCheck = { 9.0f, 0.0f };
-	float4 MapRightDownCheck = { 9.0f, 9.0f };
-	
-	float4 MapUpCenterCheck = { 0.0f, -9.0f };
-	float4 MapDownCenterCheck = { 0.0f, 9.0f };
+	//float4 MapLeftUpCheck = { -9.0f, -9.0f };
+	//float4 MapLeftCenterCheck = { -9.0f, 0.0f };
+	//float4 MapLeftDownCheck = { -9.0f, 9.0f };
+	//
+	//float4 MapRightUpCheck = { 9.0f, -9.0f };
+	//float4 MapRightCenterCheck = { 9.0f, 0.0f };
+	//float4 MapRightDownCheck = { 9.0f, 9.0f };
+	//
+	//float4 MapUpCenterCheck = { 0.0f, -9.0f };
+	//float4 MapDownCenterCheck = { 0.0f, 9.0f };
 };
 

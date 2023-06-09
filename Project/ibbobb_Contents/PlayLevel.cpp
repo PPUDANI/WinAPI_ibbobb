@@ -14,6 +14,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "RoadMonster.h"
+#include "JumpingMonster.h"
 #include "ContentsEnum.h"
 
 PlayLevel::PlayLevel()
@@ -43,13 +44,17 @@ void PlayLevel::Start()
 
 	EXMap = CreateActor<Map>();
 	EXMap->Init("EXLevel.bmp","EXLevel_Collision.bmp");
+
 	LevelPlayer = CreateActor<Player>(UpdateOrder::Player);
 	LevelPlayer->SetGroundTexture("EXLevel_Collision.bmp");
 
-	LevelMonster = CreateActor<RoadMonster>(UpdateOrder::Monster);
-	LevelMonster->SetGroundTexture("EXLevel_Collision.bmp");
+	RoadMonster0 = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
+	RoadMonster0->SetGroundTexture("EXLevel_Collision.bmp");
 
-	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(2.0f);
+	JumpingMonster0 = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
+	JumpingMonster0->SetGroundTexture("EXLevel_Collision.bmp");
+
+	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.6f);
 }
 
 void PlayLevel::Update(float _DeltaTime)

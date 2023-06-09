@@ -24,11 +24,11 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="GravityActor.h" />
-    <ClInclude Include="Monster.h">
-      <Filter>Global</Filter>
-    </ClInclude>
     <ClInclude Include="RoadMonster.h">
-      <Filter>Global</Filter>
+      <Filter>Contents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpingMonster.h">
+      <Filter>Contents\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -55,11 +55,11 @@
       <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="GravityActor.cpp" />
-    <ClCompile Include="Monster.cpp">
-      <Filter>Global</Filter>
-    </ClCompile>
     <ClCompile Include="RoadMonster.cpp">
-      <Filter>Global</Filter>
+      <Filter>Contents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpingMonster.cpp">
+      <Filter>Contents\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +74,9 @@
     </Filter>
     <Filter Include="Contents">
       <UniqueIdentifier>{37df1d23-5b60-40bb-b28a-ce5d6c32017c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Monster">
+      <UniqueIdentifier>{a6575aa2-de71-44b8-97af-b905a301a971}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

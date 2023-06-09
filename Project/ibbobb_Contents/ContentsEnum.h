@@ -3,7 +3,8 @@
 enum class UpdateOrder
 {
 	Player,
-	Monster,
+	RoadMonster,
+	JumpingMonster,
 	BackGround,
 };
 
@@ -12,6 +13,7 @@ enum class RenderOrder
 	BackGround,
 	Map,
 	Player,
-	Monster,
+	RoadMonster,
+	JumpingMonster,
 	PlayUI,
 };

@@ -128,6 +128,40 @@ void Player::FallUpdate(float _DeltaTime)
 		RGB(255, 255, 255) == RightDownColor)
 	{
 		Gravity(_DeltaTime);
+
+		// 좌, 우 이동
+		float SideMoveSpeed = Speed * 3.0f;
+		float4 MovePos = float4::ZERO;
+		if (true == GameEngineInput::IsPress('A'))
+		{
+			CurDir = PlayerDir::UpLeft;
+
+
+			unsigned int LeftUpColor = GetGroundColor(RGB(255, 255, 255), MapLeftUpCheck);
+			unsigned int LeftCenterColor = GetGroundColor(RGB(255, 255, 255), MapLeftCenterCheck);
+			unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck);
+			if (RGB(255, 255, 255) == LeftUpColor &&
+				RGB(255, 255, 255) == LeftCenterColor &&
+				RGB(255, 255, 255) == LeftDownColor)
+			{
+				MovePos = { -SideMoveSpeed * _DeltaTime, 0.0f };
+			}
+		}
+		else if (true == GameEngineInput::IsPress('D'))
+		{
+			CurDir = PlayerDir::UpRight;
+
+			unsigned int RightUpColor = GetGroundColor(RGB(255, 255, 255), MapRightUpCheck);
+			unsigned int RightCenterColor = GetGroundColor(RGB(255, 255, 255), MapRightCenterCheck);
+			unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck);
+			if (RGB(255, 255, 255) == RightUpColor &&
+				RGB(255, 255, 255) == RightCenterColor &&
+				RGB(255, 255, 255) == RightDownColor)
+			{
+				MovePos = { SideMoveSpeed * _DeltaTime, 0.0f };
+			}
+		}
+		AddPos(MovePos);
 	}
 	else
 	{
@@ -137,40 +171,6 @@ void Player::FallUpdate(float _DeltaTime)
 		SetAnimation("Idle");
 		return;
 	}
-
-	// 좌, 우 이동
-	float SideMoveSpeed = Speed * 3.0f;
-	float4 MovePos = float4::ZERO;
-	if (true == GameEngineInput::IsPress('A'))
-	{
-		CurDir = PlayerDir::UpLeft;
-		
-
-		unsigned int LeftUpColor = GetGroundColor(RGB(255, 255, 255), MapLeftUpCheck);
-		unsigned int LeftCenterColor = GetGroundColor(RGB(255, 255, 255), MapLeftCenterCheck);
-		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck);
-		if (RGB(255, 255, 255) == LeftUpColor &&
-			RGB(255, 255, 255) == LeftCenterColor &&
-			RGB(255, 255, 255) == LeftDownColor)
-		{
-			MovePos = { -SideMoveSpeed * _DeltaTime, 0.0f };
-		}
-	}
-	else if (true == GameEngineInput::IsPress('D'))
-	{
-		CurDir = PlayerDir::UpRight;
-
-		unsigned int RightUpColor = GetGroundColor(RGB(255, 255, 255), MapRightUpCheck);
-		unsigned int RightCenterColor = GetGroundColor(RGB(255, 255, 255), MapRightCenterCheck);
-		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck);
-		if (RGB(255, 255, 255) == RightUpColor &&
-			RGB(255, 255, 255) == RightCenterColor &&
-			RGB(255, 255, 255) == RightDownColor)
-		{
-			MovePos = { SideMoveSpeed * _DeltaTime, 0.0f };
-		}
-	}
-	AddPos(MovePos);
 
 	SetAnimation("Fall");
 }
@@ -239,14 +239,29 @@ void Player::JumpUpdate(float _DeltaTime)
 	// 점프 중 일정 속도보다 낮아질 시 "Tumbling" 상태로 업데이트
 	if ((JumpForce / 2.0f) >= PastPos.Y - GetPos().Y)
 	{
-		int CurFrame = static_cast<int>(MainRenderer->GetCurFrame());
-		SetAnimation("Tumbling", CurFrame);
+		
 
-		// "Tumbling" 애니메이션이 끝나면 "Fall" 상태로 업데이트
-		if (true == MainRenderer->IsAnimationEnd())
+		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck - float4::LEFT);
+		unsigned int DownCenterColor = GetGroundColor(RGB(255, 255, 255), MapDownCenterCheck);
+		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck - float4::RIGHT);
+		if (RGB(255, 255, 255) == LeftDownColor &&
+			RGB(255, 255, 255) == DownCenterColor &&
+			RGB(255, 255, 255) == RightDownColor)
+		{
+			int CurFrame = static_cast<int>(MainRenderer->GetCurFrame());
+			SetAnimation("Tumbling", CurFrame);
+
+			// "Tumbling" 애니메이션이 끝나면 "Fall" 상태로 업데이트
+			if (true == MainRenderer->IsAnimationEnd())
+			{
+				ChangeState(PlayerState::Fall);
+			}
+		}
+		else
 		{
 			ChangeState(PlayerState::Fall);
 		}
+
 	}
 	else
 	{

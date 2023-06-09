@@ -46,20 +46,24 @@ void Player::Start()
 		MainRenderer->CreateAnimation("UpRight_Blink", "obb_UpRight.bmp", 0, 1, 0.07f, true);
 
 		// Run Animation
-		MainRenderer->CreateAnimation("UpLeft_Run", "obb_UpLeft.bmp", 13, 22, 0.08f, true);
-		MainRenderer->CreateAnimation("UpRight_Run", "obb_UpRight.bmp", 13, 22, 0.08f, true);
+		MainRenderer->CreateAnimation("UpLeft_Run", "obb_UpLeft.bmp", 12, 21, 0.08f, true);
+		MainRenderer->CreateAnimation("UpRight_Run", "obb_UpRight.bmp", 12, 21, 0.08f, true);
 
 		// Jump Animation
-		MainRenderer->CreateAnimation("UpLeft_Jump", "obb_UpLeft.bmp", 23, 23, 10.0f, true);
-		MainRenderer->CreateAnimation("UpRight_Jump", "obb_UpRight.bmp", 23, 23, 10.0f, true);
+		MainRenderer->CreateAnimation("UpLeft_Jump", "obb_UpLeft.bmp", 22, 22, 10.0f, true);
+		MainRenderer->CreateAnimation("UpRight_Jump", "obb_UpRight.bmp", 22, 22, 10.0f, true);
 
 		// Tumbling Animation
-		MainRenderer->CreateAnimation("UpLeft_Tumbling", "obb_UpLeft.bmp", 24, 29, 0.05f, true);
-		MainRenderer->CreateAnimation("UpRight_Tumbling", "obb_UpRight.bmp", 24, 29, 0.05f, true);
+		MainRenderer->CreateAnimation("UpLeft_Tumbling", "obb_UpLeft.bmp", 23, 28, 0.05f, true);
+		MainRenderer->CreateAnimation("UpRight_Tumbling", "obb_UpRight.bmp", 23, 28, 0.05f, true);
 
 		// Fall Animation
-		MainRenderer->CreateAnimation("UpLeft_Fall", "obb_UpLeft.bmp", 30, 31, 0.07f, true);
-		MainRenderer->CreateAnimation("UpRight_Fall", "obb_UpRight.bmp", 30, 31, 0.07f, true);
+		MainRenderer->CreateAnimation("UpLeft_Fall", "obb_UpLeft.bmp", 29, 30, 0.07f, true);
+		MainRenderer->CreateAnimation("UpRight_Fall", "obb_UpRight.bmp", 29, 30, 0.07f, true);
+
+		// Dead Animation
+		MainRenderer->CreateAnimation("UpLeft_Dead", "obb_UpLeft.bmp", 35, 41, 0.03f, true);
+		MainRenderer->CreateAnimation("UpRight_Dead", "obb_UpRight.bmp", 35, 41, 0.03f, true);
 	}
 
 	// 첫 상태 설정
@@ -68,21 +72,20 @@ void Player::Start()
 	// 첫 방향 설정
 	CurDir = PlayerDir::UpRight;
 
-	// 첫 애니메이션 설정
-	MainRenderer->ChangeAnimation("UpLeft_Idle");
-	MainRenderer->SetRenderScaleToTexture();
+	// 이건 무슨 함수?
+	//MainRenderer->SetRenderScaleToTexture();
 
-	Ratio = 1.0f;
+	Ratio = 2.0f;
 	MainRenderer->SetScaleRatio(Ratio);
 
 	// 중력값 설정
 	SetGravityPower(3.0f);
 
 	// 점프력 설정
-	SetJumpForce(1.0f);
+	SetJumpForce(1.2f);
 
 	// 속도 설정
-	SetSpeed(100.0f);
+	SetSpeed(80.0f);
 
 	// 위치 설정
 	SetPos({ 300.0f, 600.0f });
@@ -106,6 +109,11 @@ void Player::Update(float _DeltaTime)
 			GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
 		}
 	}
+
+	//if (true == MainRenderer->IsAnimationEnd())
+	//{
+	//	Death();
+	//}
 
 	if (true == GameEngineInput::IsDown('O'))
 	{

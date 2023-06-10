@@ -31,7 +31,7 @@ void JumpingMonster::Start()
 
 	SetGravityPower(2.5f);
 
-	SetJumpForce(1.0f);
+	SetJumpForce(1.4f);
 	
 	SetPos({ 400.0f, 600.0f });
 }

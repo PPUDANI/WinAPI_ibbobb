@@ -25,7 +25,11 @@ private:
 
 	class BackGround* UpBack = nullptr;
 	class BackGround* DownBack = nullptr;
+
 	class Player* LevelPlayer = nullptr;
+	class ibb* ibbPlayer = nullptr;
+	class obb* obbPlayer = nullptr;
+
 	class RoadMonster* RoadMonster0 = nullptr;
 	class JumpingMonster* JumpingMonster0 = nullptr;
 	class Map* EXMap = nullptr;

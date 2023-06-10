@@ -30,6 +30,12 @@
     <ClInclude Include="JumpingMonster.h">
       <Filter>Contents\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="ibb.h">
+      <Filter>Contents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="obb.h">
+      <Filter>Contents\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -61,6 +67,12 @@
     <ClCompile Include="JumpingMonster.cpp">
       <Filter>Contents\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="ibb.cpp">
+      <Filter>Contents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="obb.cpp">
+      <Filter>Contents\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -77,6 +89,9 @@
     </Filter>
     <Filter Include="Contents\Monster">
       <UniqueIdentifier>{a6575aa2-de71-44b8-97af-b905a301a971}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Player">
+      <UniqueIdentifier>{460bb9d0-94bc-4350-bf86-97db6af1054c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

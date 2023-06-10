@@ -10,14 +10,14 @@ void Player::IdleUpdate(float _DeltaTime)
 {
 	// Run 상태 확인
 	// Idle 상태로 바뀐 후 방향키를 누르고 있을 시 Run으로 바뀔수 있게 하기위해 IsPress로 키 체크
-	if (true == GameEngineInput::IsPress('A') || true == GameEngineInput::IsPress('D'))
+	if (true == GameEngineInput::IsPress(MoveLeftKey) || true == GameEngineInput::IsPress(MoveRightKey))
 	{
 		ChangeState(PlayerState::Run);
 		return;
 	}
 
 	// Jump 상태 체크
-	if (true == GameEngineInput::IsDown('W') || true == GameEngineInput::IsDown('S'))
+	if (true == GameEngineInput::IsDown(JumpKey))
 	{
 		SetGravityVector(-CurGravity * JumpForce);
 		ChangeState(PlayerState::Jump);
@@ -41,7 +41,7 @@ void Player::RunUpdate(float _DeltaTime)
 	// 좌, 우 이동
 	float RunSpeed = Speed * 3.0f;
 	float4 MovePos = float4::ZERO;
-	if (true == GameEngineInput::IsPress('A'))
+	if (true == GameEngineInput::IsPress(MoveLeftKey))
 	{
 		CurDir = PlayerDir::UpLeft;
 
@@ -55,7 +55,7 @@ void Player::RunUpdate(float _DeltaTime)
 			MovePos = { -RunSpeed * _DeltaTime, 0.0f };
 		}
 	}
-	else if (true == GameEngineInput::IsPress('D'))
+	else if (true == GameEngineInput::IsPress(MoveRightKey))
 	{
 		CurDir = PlayerDir::UpRight;
 
@@ -80,7 +80,7 @@ void Player::RunUpdate(float _DeltaTime)
 
 
 	// 이동중 점프
-	if (true == GameEngineInput::IsDown('W') || true == GameEngineInput::IsDown('S'))
+	if (true == GameEngineInput::IsDown(JumpKey))
 	{
 		SetGravityVector(-CurGravity * JumpForce);
 		ChangeState(PlayerState::Jump);
@@ -132,7 +132,7 @@ void Player::FallUpdate(float _DeltaTime)
 		// 좌, 우 이동
 		float SideMoveSpeed = Speed * 3.0f;
 		float4 MovePos = float4::ZERO;
-		if (true == GameEngineInput::IsPress('A'))
+		if (true == GameEngineInput::IsPress(MoveLeftKey))
 		{
 			CurDir = PlayerDir::UpLeft;
 
@@ -147,7 +147,7 @@ void Player::FallUpdate(float _DeltaTime)
 				MovePos = { -SideMoveSpeed * _DeltaTime, 0.0f };
 			}
 		}
-		else if (true == GameEngineInput::IsPress('D'))
+		else if (true == GameEngineInput::IsPress(MoveRightKey))
 		{
 			CurDir = PlayerDir::UpRight;
 
@@ -204,7 +204,7 @@ void Player::JumpUpdate(float _DeltaTime)
 	// 좌, 우 이동
 	float SideMoveSpeed = Speed * 3.0f;
 	float4 MovePos = float4::ZERO;
-	if (true == GameEngineInput::IsPress('A'))
+	if (true == GameEngineInput::IsPress(MoveLeftKey))
 	{
 		CurDir = PlayerDir::UpLeft;
 
@@ -219,7 +219,7 @@ void Player::JumpUpdate(float _DeltaTime)
 			MovePos = { -SideMoveSpeed * _DeltaTime, 0.0f };
 		}
 	}
-	else if (true == GameEngineInput::IsPress('D'))
+	else if (true == GameEngineInput::IsPress(MoveRightKey))
 	{
 		CurDir = PlayerDir::UpRight;
 

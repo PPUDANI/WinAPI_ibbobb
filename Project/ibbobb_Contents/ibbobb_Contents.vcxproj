@@ -172,11 +172,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ibb.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="JumpingMonster.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="Map.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="obb.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -214,11 +222,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ibb.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="JumpingMonster.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="Map.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="obb.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -13,6 +13,8 @@
 #include "BackGround.h"
 #include "Map.h"
 #include "Player.h"
+#include "ibb.h"
+#include "obb.h"
 #include "RoadMonster.h"
 #include "JumpingMonster.h"
 #include "ContentsEnum.h"
@@ -45,8 +47,14 @@ void PlayLevel::Start()
 	EXMap = CreateActor<Map>();
 	EXMap->Init("EXLevel.bmp","EXLevel_Collision.bmp");
 
-	LevelPlayer = CreateActor<Player>(UpdateOrder::Player);
-	LevelPlayer->SetGroundTexture("EXLevel_Collision.bmp");
+	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
+	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
+
+	ibbPlayer = CreateActor<ibb>(UpdateOrder::Player);
+	ibbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
+
+
+
 
 	RoadMonster0 = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
 	RoadMonster0->SetGroundTexture("EXLevel_Collision.bmp");
@@ -68,7 +76,7 @@ void PlayLevel::Update(float _DeltaTime)
 
 void PlayLevel::Render(float _DeltaTime)
 {
-	UpBack->SetPos(LevelPlayer->GetPos());
+	UpBack->SetPos(ibbPlayer->GetPos());
 }
 
 void PlayLevel::Release() 
@@ -78,7 +86,11 @@ void PlayLevel::Release()
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	if (nullptr == LevelPlayer)
+	if (nullptr == ibbPlayer)
+	{
+		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
+	}
+	if (nullptr == obbPlayer)
 	{
 		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
 	}

@@ -35,7 +35,18 @@ public:
 
 protected:
 
+	virtual void Init() {}
+
+	GameEngineRenderer* MainRenderer = nullptr;
+	float Ratio = 2.0f;
+	int MoveRightKey;
+	int MoveLeftKey;
+	int JumpKey;
+	
+	
 private:
+
+
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void Render(float _DeltaTime) override;
@@ -60,13 +71,13 @@ private:
 	PlayerState State = PlayerState::Max;
 	PlayerDir CurDir = PlayerDir::UpRight;
 
-	float Ratio = 2.0f;
-
+	
 	float JumpForce = 1.0f;
 	float Speed = 1.0f;
 	float4 CurGravity = float4::DOWN;
 	bool CheckPosOn = false;
-	GameEngineRenderer* MainRenderer = nullptr;
+
+
 
 	// ¸Ê Ãæµ¹ Ã¼Å©
 	float4 MapLeftUpCheck = { -18.0f, -18.0f };

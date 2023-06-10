@@ -23,50 +23,12 @@ Player::~Player()
 
 }
 
+
+
 void Player::Start()
 {
-	GameEnginePath FilePath;
-	FilePath.SetCurrentPath();
-	FilePath.MoveParentToExistsChild("Resources");
-	FilePath.MoveChild("Resources\\Texture\\Characters\\obb\\");
+	Init();
 
-	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_obb.bmp"), 7, 6);
-	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_obb.bmp"), 7, 6);
-
-	MainRenderer = CreateRenderer(RenderOrder::Player);
-
-	// UP 방향 애니메이션
-	{
-		// Idle Animation
-		MainRenderer->CreateAnimation("UpLeft_Idle", "Left_obb.bmp", 0, 0, 10.0f, true);
-		MainRenderer->CreateAnimation("UpRight_Idle", "Right_obb.bmp", 0, 0, 10.0f, true);
-
-		// Blink Animation
-		MainRenderer->CreateAnimation("UpLeft_Blink", "Left_obb.bmp", 0, 1, 0.07f, true);
-		MainRenderer->CreateAnimation("UpRight_Blink", "Right_obb.bmp", 0, 1, 0.07f, true);
-
-		// Run Animation
-		MainRenderer->CreateAnimation("UpLeft_Run", "Left_obb.bmp", 12, 21, 0.08f, true);
-		MainRenderer->CreateAnimation("UpRight_Run", "Right_obb.bmp", 12, 21, 0.08f, true);
-
-		// Jump Animation
-		MainRenderer->CreateAnimation("UpLeft_Jump", "Left_obb.bmp", 22, 22, 10.0f, true);
-		MainRenderer->CreateAnimation("UpRight_Jump", "Right_obb.bmp", 22, 22, 10.0f, true);
-
-		// Tumbling Animation
-		MainRenderer->CreateAnimation("UpLeft_Tumbling", "Left_obb.bmp", 23, 28, 0.05f, true);
-		MainRenderer->CreateAnimation("UpRight_Tumbling", "Right_obb.bmp", 23, 28, 0.05f, true);
-
-		// Fall Animation
-		MainRenderer->CreateAnimation("UpLeft_Fall", "Left_obb.bmp", 29, 30, 0.07f, true);
-		MainRenderer->CreateAnimation("UpRight_Fall", "Right_obb.bmp", 29, 30, 0.07f, true);
-
-		// Dead Animation
-		MainRenderer->CreateAnimation("UpLeft_Dead", "Left_obb.bmp", 35, 41, 0.03f, true);
-		MainRenderer->CreateAnimation("UpRight_Dead", "Right_obb.bmp", 35, 41, 0.03f, true);
-	}
-
-	// 첫 상태 설정
 	ChangeState(PlayerState::Fall);
 
 	// 첫 방향 설정
@@ -76,24 +38,19 @@ void Player::Start()
 	//MainRenderer->SetRenderScaleToTexture();
 
 	Ratio = 2.0f;
-	MainRenderer->SetScaleRatio(Ratio);
 
 	// 중력값 설정
-	SetGravityPower(3.0f);
+	SetGravityPower(5.0f);
 
 	// 점프력 설정
-	SetJumpForce(1.2f);
+	SetJumpForce(2.5f);
 
 	// 속도 설정
 	SetSpeed(80.0f);
-
-	// 위치 설정
-	SetPos({ 300.0f, 600.0f });
 }
 
 void Player::Update(float _DeltaTime)
 {
-	
 	// 줌인 줌아웃 
 	if (true == GameEngineInput::IsPress('Z'))
 	{

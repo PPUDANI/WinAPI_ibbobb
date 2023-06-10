@@ -12,7 +12,8 @@ enum class RenderOrder
 {
 	BackGround,
 	Map,
-	Player,
+	ibb,
+	obb,
 	RoadMonster,
 	JumpingMonster,
 	PlayUI,

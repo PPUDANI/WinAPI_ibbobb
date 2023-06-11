@@ -90,6 +90,8 @@ void Player::Update(float _DeltaTime)
 	case PlayerState::Dead:
 		DeadUpdate(_DeltaTime);
 		break;
+	case PlayerState::Crouch:
+		CrouchUpdate(_DeltaTime);
 	default:
 		break;
 	}

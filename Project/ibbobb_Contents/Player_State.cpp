@@ -32,17 +32,38 @@ void Player::IdleUpdate(float _DeltaTime)
 		return;
 	}
 
+	if (true == GameEngineInput::IsDown(CrouchKey))
+	{
+		ChangeState(PlayerState::Crouch);
+	}
+
 	int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 400);
 	if (RandomNumber == 1)
 	{
 		SetAnimation("Blink");
 	}
+
 	if (true == MainRenderer->IsAnimationEnd())
 	{
 		SetAnimation("Idle");
 	}
+
 }
 
+void Player::CrouchUpdate(float _DeltaTime)
+{
+	if (true == GameEngineInput::IsPress(CrouchKey))
+	{
+		SetAnimation("Crouch");
+	}
+	else
+	{
+		ChangeState(PlayerState::Idle);
+		SetAnimation("Idle");
+	}
+	
+
+}
 
 void Player::RunUpdate(float _DeltaTime)
 {
@@ -264,6 +285,7 @@ void Player::JumpUpdate(float _DeltaTime)
 		SetAnimation("Jump");
 	}
 }
+
 
 
 void Player::DeadUpdate(float _DeltaTime)

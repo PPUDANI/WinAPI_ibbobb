@@ -61,6 +61,10 @@ void obb::Init()
 	MainRenderer->CreateAnimation("UpLeft_Dead", "Left_obb.bmp", 35, 41, 0.03f, true);
 	MainRenderer->CreateAnimation("UpRight_Dead", "Right_obb.bmp", 35, 41, 0.03f, true);
 
+	// Crouch Animation
+	MainRenderer->CreateAnimation("UpLeft_Crouch", "Left_obb.bmp", 11, 11, 10.0f, true);
+	MainRenderer->CreateAnimation("UpRight_Crouch", "Right_obb.bmp", 11, 11, 10.0f, true);
+
 	MainRenderer->SetScaleRatio(Ratio);
 
 	SetPos({300, 600});
@@ -68,5 +72,6 @@ void obb::Init()
 	MoveRightKey = VK_RIGHT;
 	MoveLeftKey = VK_LEFT;
 	JumpKey = VK_UP;
+	CrouchKey = VK_DOWN;
 }
 

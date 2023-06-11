@@ -56,12 +56,17 @@ void ibb::Init()
 	MainRenderer->CreateAnimation("UpLeft_Dead", "Left_ibb.bmp", 35, 41, 0.03f, true);
 	MainRenderer->CreateAnimation("UpRight_Dead", "Right_ibb.bmp", 35, 41, 0.03f, true);
 
+	// Crouch Animation
+	MainRenderer->CreateAnimation("UpLeft_Crouch", "Left_ibb.bmp", 11, 11, 10.0f, true);
+	MainRenderer->CreateAnimation("UpRight_Crouch", "Right_ibb.bmp", 11, 11, 10.0f, true);
+
 	MainRenderer->SetScaleRatio(Ratio);
 	SetPos({ 500, 600 });
 
     MoveRightKey = 'D';
 	MoveLeftKey = 'A';
 	JumpKey = 'W';
+	CrouchKey = 'S';
 }
 
 

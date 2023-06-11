@@ -9,6 +9,7 @@ enum class PlayerState
 	Jump,
 	Fall,
 	Dead,
+	Crouch,
 	Max
 };
 
@@ -39,11 +40,13 @@ protected:
 	virtual void Init() {}
 
 	GameEngineRenderer* MainRenderer = nullptr;
+
 	float Ratio = 2.0f;
+
 	int MoveRightKey;
 	int MoveLeftKey;
 	int JumpKey;
-	
+	int CrouchKey;
 	
 private:
 
@@ -55,6 +58,8 @@ private:
 	void RunUpdate(float _DeltaTime);
 	void FallUpdate(float _DeltaTime);
 	void JumpUpdate(float _DeltaTime);
+	void CrouchUpdate(float _DeltaTime);
+
 	void DeadUpdate(float _DeltaTime);
 	void ChangeState(PlayerState _State);
 	void SetAnimation(const std::string _State, int _StartFrame = 0);

@@ -35,17 +35,17 @@ void Player::Start()
 
 	// 이건 무슨 함수?
 	//MainRenderer->SetRenderScaleToTexture();
-
+	
 	Ratio = 2.0f;
 
 	// 중력값 설정
-	SetGravityPower(3.0f);
+	SetGravityPower(1000.0f);
 
 	// 점프력 설정
-	SetJumpForce(1.0f);
+	SetJumpForce(500.0f);
 
 	// 속도 설정
-	SetSpeed(80.0f);
+	SetSpeed(200.0f);
 }
 
 void Player::Update(float _DeltaTime)

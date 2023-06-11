@@ -39,7 +39,6 @@ void Player::IdleUpdate(float _DeltaTime)
 void Player::RunUpdate(float _DeltaTime)
 {
 	// 좌, 우 이동
-	float RunSpeed = Speed * 3.0f;
 	float4 MovePos = float4::ZERO;
 	if (true == GameEngineInput::IsPress(MoveLeftKey))
 	{
@@ -52,7 +51,7 @@ void Player::RunUpdate(float _DeltaTime)
 			RGB(255, 255, 255) == LeftCenterColor &&
 			RGB(255, 255, 255) == LeftDownColor)
 		{
-			MovePos = { -RunSpeed * _DeltaTime, 0.0f };
+			MovePos = { -Speed * _DeltaTime, 0.0f };
 		}
 	}
 	else if (true == GameEngineInput::IsPress(MoveRightKey))
@@ -66,7 +65,7 @@ void Player::RunUpdate(float _DeltaTime)
 			RGB(255, 255, 255) == RightCenterColor &&
 			RGB(255, 255, 255) == RightDownColor)
 		{
-			MovePos = { RunSpeed * _DeltaTime, 0.0f };
+			MovePos = { Speed * _DeltaTime, 0.0f };
 		}
 	}
 	else
@@ -130,7 +129,6 @@ void Player::FallUpdate(float _DeltaTime)
 		Gravity(_DeltaTime);
 
 		// 좌, 우 이동
-		float SideMoveSpeed = Speed * 3.0f;
 		float4 MovePos = float4::ZERO;
 		if (true == GameEngineInput::IsPress(MoveLeftKey))
 		{
@@ -144,7 +142,7 @@ void Player::FallUpdate(float _DeltaTime)
 				RGB(255, 255, 255) == LeftCenterColor &&
 				RGB(255, 255, 255) == LeftDownColor)
 			{
-				MovePos = { -SideMoveSpeed * _DeltaTime, 0.0f };
+				MovePos = { -Speed * _DeltaTime, 0.0f };
 			}
 		}
 		else if (true == GameEngineInput::IsPress(MoveRightKey))
@@ -158,7 +156,7 @@ void Player::FallUpdate(float _DeltaTime)
 				RGB(255, 255, 255) == RightCenterColor &&
 				RGB(255, 255, 255) == RightDownColor)
 			{
-				MovePos = { SideMoveSpeed * _DeltaTime, 0.0f };
+				MovePos = { Speed * _DeltaTime, 0.0f };
 			}
 		}
 		AddPos(MovePos);
@@ -202,7 +200,6 @@ void Player::JumpUpdate(float _DeltaTime)
 	}
 
 	// 좌, 우 이동
-	float SideMoveSpeed = Speed * 3.0f;
 	float4 MovePos = float4::ZERO;
 	if (true == GameEngineInput::IsPress(MoveLeftKey))
 	{
@@ -216,7 +213,7 @@ void Player::JumpUpdate(float _DeltaTime)
 			RGB(255, 255, 255) == LeftCenterColor &&
 			RGB(255, 255, 255) == LeftDownColor)
 		{
-			MovePos = { -SideMoveSpeed * _DeltaTime, 0.0f };
+			MovePos = { -Speed * _DeltaTime, 0.0f };
 		}
 	}
 	else if (true == GameEngineInput::IsPress(MoveRightKey))
@@ -230,16 +227,15 @@ void Player::JumpUpdate(float _DeltaTime)
 			RGB(255, 255, 255) == RightCenterColor &&
 			RGB(255, 255, 255) == RightDownColor)
 		{
-			MovePos = { SideMoveSpeed * _DeltaTime, 0.0f };
+			MovePos = { Speed * _DeltaTime, 0.0f };
 		}
 	}
 
 	AddPos(MovePos);
 
 	// 점프 중 일정 속도보다 낮아질 시 "Tumbling" 상태로 업데이트
-	if ((JumpForce / 2.0f) >= PastPos.Y - GetPos().Y)
+	if (0.1f >= PastPos.Y - GetPos().Y)
 	{
-		
 
 		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck - float4::LEFT);
 		unsigned int DownCenterColor = GetGroundColor(RGB(255, 255, 255), MapDownCenterCheck);

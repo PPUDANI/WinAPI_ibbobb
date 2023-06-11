@@ -24,7 +24,7 @@ void GravityActor::Gravity(float _DeltaTime)
 
 	GravityVector += float4::DOWN * GravityPower * _DeltaTime;
 
-	AddPos(GravityVector);
+	AddPos(GravityVector * _DeltaTime);
 }
 
 void GravityActor::CameraFocus()

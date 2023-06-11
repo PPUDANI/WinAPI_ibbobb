@@ -30,17 +30,22 @@ public:
 	void SetGroundTexture(const std::string& _GroundTextureName);
 	int GetGroundColor(unsigned int _DefaultColor, float4 _Pos = float4::ZERO);
 	
-	void SetGravityVector(float4 _GravityVector)
+	inline void SetGravityVector(float4 _GravityVector)
 	{
 		GravityVector = _GravityVector;
 	}
 
-	void SetGravityPower(float _GravityPower)
+	inline float4 GetGravityVector() const
+	{
+		return GravityVector;
+	}
+
+	inline void SetGravityPower(float _GravityPower)
 	{
 		GravityPower = _GravityPower;
 	}
 
-	void GravityReset()
+	inline void GravityReset()
 	{
 		GravityVector = float4::ZERO;
 	}

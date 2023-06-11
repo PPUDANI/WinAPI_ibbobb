@@ -63,7 +63,7 @@ void PlayLevel::Start()
 	JumpingMonster0->SetGroundTexture("EXLevel_Collision.bmp");
 
 	//GetMainCamera()->SetPos({-50, 300});
-	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(2.0f);
+	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
 }
 
 void PlayLevel::Update(float _DeltaTime)

@@ -8,6 +8,7 @@ enum class PlayerState
 	Run,
 	Jump,
 	Fall,
+	Dead,
 	Max
 };
 
@@ -54,7 +55,7 @@ private:
 	void RunUpdate(float _DeltaTime);
 	void FallUpdate(float _DeltaTime);
 	void JumpUpdate(float _DeltaTime);
-
+	void DeadUpdate(float _DeltaTime);
 	void ChangeState(PlayerState _State);
 	void SetAnimation(const std::string _State, int _StartFrame = 0);
 
@@ -82,14 +83,14 @@ private:
 	// ¸Ê Ãæµ¹ Ã¼Å©
 	float4 MapLeftUpCheck = { -18.0f, -18.0f };
 	float4 MapLeftCenterCheck = { -18.0f, 0.0f };
-	float4 MapLeftDownCheck = { -18.0f, 18.0f };
+	float4 MapLeftDownCheck = { -18.0f, 17.0f };
 	
 	float4 MapRightUpCheck = { 18.0f, -18.0f };
 	float4 MapRightCenterCheck = { 18.0f, 0.0f };
-	float4 MapRightDownCheck = { 18.0f, 18.0f };
+	float4 MapRightDownCheck = { 18.0f, 17.0f };
 	
 	float4 MapUpCenterCheck = { 0.0f, -18.0f };
-	float4 MapDownCenterCheck = { 0.0f, 18.0f };
+	float4 MapDownCenterCheck = { 0.0f, 17.0f };
 
 	//float4 MapLeftUpCheck = { -9.0f, -9.0f };
 	//float4 MapLeftCenterCheck = { -9.0f, 0.0f };

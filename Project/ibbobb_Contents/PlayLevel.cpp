@@ -29,7 +29,7 @@ PlayLevel::~PlayLevel()
 
 }
 
-void PlayLevel::Start() 
+void PlayLevel::Start()
 {
 	UpBack = CreateActor<BackGround>(RenderOrder::BackGround);
 	UpBack->Init("BlueSky.bmp");
@@ -38,14 +38,14 @@ void PlayLevel::Start()
 	//EXMap->Init("Level1_Map.bmp","Level1_MapCollision.bmp");
 	//LevelPlayer = CreateActor<Player>(UpdateOrder::Player);
 	//LevelPlayer->SetGroundTexture("Level1_MapCollision.bmp");
-	
+
 	//EXMap = CreateActor<Map>();
 	//EXMap->Init("EXMap.bmp","EXMapCollision.bmp");
 	//LevelPlayer = CreateActor<Player>(UpdateOrder::Player);
 	//LevelPlayer->SetGroundTexture("EXMapCollision.bmp");
 
 	EXMap = CreateActor<Map>();
-	EXMap->Init("EXLevel.bmp","EXLevel_Collision.bmp");
+	EXMap->Init("EXLevel.bmp", "EXLevel_Collision.bmp");
 
 	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
 	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
@@ -62,6 +62,7 @@ void PlayLevel::Start()
 	JumpingMonster0 = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 	JumpingMonster0->SetGroundTexture("EXLevel_Collision.bmp");
 
+	//GetMainCamera()->SetPos({-50, 300});
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(2.0f);
 }
 
@@ -76,7 +77,7 @@ void PlayLevel::Update(float _DeltaTime)
 
 void PlayLevel::Render(float _DeltaTime)
 {
-	UpBack->SetPos(ibbPlayer->GetPos());
+	//UpBack->SetPos(obbPlayer->GetPos());
 }
 
 void PlayLevel::Release() 
@@ -86,14 +87,14 @@ void PlayLevel::Release()
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	if (nullptr == ibbPlayer)
-	{
-		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
-	}
-	if (nullptr == obbPlayer)
-	{
-		MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
-	}
+	//if (nullptr == ibbPlayer)
+	//{
+	//	MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
+	//}
+	//if (nullptr == obbPlayer)
+	//{
+	//	MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
+	//}
 }
 
 void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)

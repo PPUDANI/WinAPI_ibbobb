@@ -30,7 +30,6 @@ void Player::Start()
 	Init();
 
 	ChangeState(PlayerState::Fall);
-
 	// 첫 방향 설정
 	CurDir = PlayerDir::UpRight;
 
@@ -40,10 +39,10 @@ void Player::Start()
 	Ratio = 2.0f;
 
 	// 중력값 설정
-	SetGravityPower(5.0f);
+	SetGravityPower(3.0f);
 
 	// 점프력 설정
-	SetJumpForce(2.5f);
+	SetJumpForce(1.0f);
 
 	// 속도 설정
 	SetSpeed(80.0f);
@@ -67,10 +66,6 @@ void Player::Update(float _DeltaTime)
 		}
 	}
 
-	//if (true == MainRenderer->IsAnimationEnd())
-	//{
-	//	Death();
-	//}
 
 	if (true == GameEngineInput::IsDown('O'))
 	{
@@ -92,6 +87,9 @@ void Player::Update(float _DeltaTime)
 	case PlayerState::Fall:
 		FallUpdate(_DeltaTime);
 		break;
+	case PlayerState::Dead:
+		DeadUpdate(_DeltaTime);
+		break;
 	default:
 		break;
 	}
@@ -106,7 +104,7 @@ void Player::Render(float _DeltaTime)
 	{
 		CollisionData Data;
 		HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
-		Data.Scale = { 5,5 };
+		Data.Scale = { 3,3 };
 		Data.Pos = ActorCameraPos() + MapLeftUpCheck;
 		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 		Data.Pos = ActorCameraPos() + MapRightUpCheck;

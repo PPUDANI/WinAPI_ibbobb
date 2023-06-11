@@ -268,3 +268,12 @@ void Player::JumpUpdate(float _DeltaTime)
 		SetAnimation("Jump");
 	}
 }
+
+void Player::DeadUpdate(float _DeltaTime)
+{
+	SetAnimation("Dead");
+	if (true == MainRenderer->IsAnimationEnd())
+	{
+		Death();
+	}
+}

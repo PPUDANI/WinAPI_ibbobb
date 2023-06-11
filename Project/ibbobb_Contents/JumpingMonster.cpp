@@ -29,9 +29,9 @@ void JumpingMonster::Start()
 	Renderer->CreateAnimation("Dead", "JumpingMonster.bmp", 1, 11, 0.02f, true);
 	Renderer->ChangeAnimation("Idle");
 
-	SetGravityPower(2.5f);
+	SetGravityPower(3.0f);
 
-	SetJumpForce(1.4f);
+	SetJumpForce(1.0f);
 	
 	SetPos({ 400.0f, 600.0f });
 }

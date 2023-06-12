@@ -74,7 +74,7 @@ void Player::RunUpdate(float _DeltaTime)
 		{
 			CurDir = PlayerDir::Left;
 			
-			// 좌측 벽 체크
+			// 좌측 충돌 체크
 			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck);
 			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);
 			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck);
@@ -87,7 +87,7 @@ void Player::RunUpdate(float _DeltaTime)
 		{
 			CurDir = PlayerDir::Right;
 
-			// 우측 벽 체크
+			// 우측 충돌 체크
 			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck);
 			unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
 			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck);
@@ -114,7 +114,7 @@ void Player::RunUpdate(float _DeltaTime)
 		return;
 	}
 	
-	// 바닥 체크
+	// 바닥 충돌 체크
 	{
 		unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::DOWN);
 		unsigned int MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck + float4::DOWN);
@@ -132,7 +132,7 @@ void Player::RunUpdate(float _DeltaTime)
 
 void Player::FallUpdate(float _DeltaTime)
 {
-	// 바닥 체크
+	// 바닥 충돌 체크
 	{
 		unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::DOWN - float4::LEFT);
 		unsigned int MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck + float4::DOWN);
@@ -157,7 +157,7 @@ void Player::FallUpdate(float _DeltaTime)
 		{
 			CurDir = PlayerDir::Left;
 
-			// 좌측 벽 체크
+			// 좌측 충돌 체크
 			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck);
 			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);
 			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck);
@@ -170,7 +170,7 @@ void Player::FallUpdate(float _DeltaTime)
 		{
 			CurDir = PlayerDir::Right;
 
-			// 우측 벽 체크
+			// 우측 충돌 체크
 			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck);
 			unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
 			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck);
@@ -202,7 +202,7 @@ void Player::FallUpdate(float _DeltaTime)
 
 void Player::JumpUpdate(float _DeltaTime)
 {
-	// 천장 체크
+	// 상단 충돌 체크
 	unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck - float4::LEFT);
 	unsigned int MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck);
 	unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck - float4::RIGHT);
@@ -233,7 +233,7 @@ void Player::JumpUpdate(float _DeltaTime)
 		{
 			CurDir = PlayerDir::Left;
 
-			// 좌측 벽 체크
+			// 좌측 충돌 체크
 			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck);
 			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);
 			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck);
@@ -246,7 +246,7 @@ void Player::JumpUpdate(float _DeltaTime)
 		{
 			CurDir = PlayerDir::Right;
 
-			// 우측 벽 체크
+			// 우측 충돌 체크
 			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck);
 			unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
 			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck);

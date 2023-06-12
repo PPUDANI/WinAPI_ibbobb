@@ -29,11 +29,11 @@ void JumpingMonster::Start()
 	Renderer->CreateAnimation("Dead", "JumpingMonster.bmp", 1, 11, 0.02f, true);
 	Renderer->ChangeAnimation("Idle");
 
-	SetGravityPower(3.0f);
+	SetGravityPower(1100.0f);
 
-	SetJumpForce(1.0f);
+	SetJumpForce(500.0f);
 	
-	SetPos({ 400.0f, 600.0f });
+	SetPos({ 700.0f, 600.0f });
 }
 
 void JumpingMonster::Update(float _DeltaTime)

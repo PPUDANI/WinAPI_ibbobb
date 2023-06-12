@@ -35,8 +35,8 @@ void RoadMonster::Start()
 	Renderer->CreateAnimation("Left_Dead", "Left_RoadMonster.bmp", 1, 11, 0.02f, true);
 
 	Renderer->ChangeAnimation("Left_Idle");
-
-	SetPos({ 500.0f, 600.0f });
+	SetGravityPower(1000.0f);
+	SetPos({ 600.0f, 600.0f });
 }
 
 void RoadMonster::Update(float _DeltaTime)

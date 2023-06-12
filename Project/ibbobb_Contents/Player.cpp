@@ -29,9 +29,11 @@ void Player::Start()
 {
 	Init();
 
+	SetAnimation("Fall");
 	ChangeState(PlayerState::Fall);
+
 	// 첫 방향 설정
-	CurDir = PlayerDir::UpRight;
+	CurDir = PlayerDir::Right;
 
 	// 이건 무슨 함수?
 	//MainRenderer->SetRenderScaleToTexture();
@@ -39,7 +41,7 @@ void Player::Start()
 	Ratio = 2.0f;
 
 	// 중력값 설정
-	SetGravityPower(1000.0f);
+	SetGravityPower(1100.0f);
 
 	// 점프력 설정
 	SetJumpForce(500.0f);
@@ -111,19 +113,19 @@ void Player::Render(float _DeltaTime)
 		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 		Data.Pos = ActorCameraPos() + MapRightUpCheck;
 		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-		Data.Pos = ActorCameraPos() + MapUpCenterCheck;
+		Data.Pos = ActorCameraPos() + MapMiddleUpCheck;
 		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
 		Data.Pos = ActorCameraPos() + MapLeftDownCheck;
 		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 		Data.Pos = ActorCameraPos() + MapRightDownCheck;
 		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-		Data.Pos = ActorCameraPos() + MapDownCenterCheck;
+		Data.Pos = ActorCameraPos() + MapMiddleDownCheck;
 		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-		Data.Pos = ActorCameraPos() + MapLeftCenterCheck;
+		Data.Pos = ActorCameraPos() + MapLeftMiddleCheck;
 		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-		Data.Pos = ActorCameraPos() + MapRightCenterCheck;
+		Data.Pos = ActorCameraPos() + MapRightMiddleCheck;
 		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 	}
 }
@@ -134,17 +136,17 @@ void Player::SetAnimation(const std::string _State, int _StartFrame)
 
 	switch (CurDir)
 	{
-	case PlayerDir::UpLeft:
-		AnimationName = "UpLeft_";
+	case PlayerDir::Left:
+		AnimationName = "Left_";
 		break;
-	case PlayerDir::UpRight:
-		AnimationName = "UpRight_";
+	case PlayerDir::Right:
+		AnimationName = "Right_";
 		break;
-	case PlayerDir::DownLeft:
-		AnimationName = "DownLeft_";
+	case PlayerDir::ReverseLeft:
+		AnimationName = "ReverseLeft_";
 		break;
-	case PlayerDir::DownRight:
-		AnimationName = "DownRight_";
+	case PlayerDir::ReverseRight:
+		AnimationName = "ReverseRight_";
 		break;
 	default:
 		break;

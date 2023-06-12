@@ -6,38 +6,32 @@
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 
-#include "Player.h"
-
-#include <GameEngineBase/GameEngineRandom.h>
-#include <GameEnginePlatform/GameEngineInput.h>
-#include <GameEngineCore/GameEngineLevel.h>
-#include <GameEngineCore/GameEngineCamera.h>
-#include <GameEnginePlatform/GameEngineWindow.h>
-
 void Player::IdleUpdate(float _DeltaTime)
 {
-	// Run 상태 확인
-	// Idle 상태로 바뀐 후 방향키를 누르고 있을 시 Run으로 바뀔수 있게 하기위해 IsPress로 키 체크
+	// Couch
+	if (true == GameEngineInput::IsDown(CrouchKey))
+	{
+		ChangeState(PlayerState::Crouch);
+		return;
+	}
+
+	// Run
 	if (true == GameEngineInput::IsPress(MoveLeftKey) || true == GameEngineInput::IsPress(MoveRightKey))
 	{
 		ChangeState(PlayerState::Run);
 		return;
 	}
 
-	// Jump 상태 체크
-	if (true == GameEngineInput::IsDown(JumpKey))
+	// Jump
+	if (true == GameEngineInput::IsPress(JumpKey))
 	{
 		SetGravityVector(-CurGravity * JumpForce);
 		ChangeState(PlayerState::Jump);
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown(CrouchKey))
-	{
-		ChangeState(PlayerState::Crouch);
-	}
-
-	int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 400);
+	// Blink
+	int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 500);
 	if (RandomNumber == 1)
 	{
 		SetAnimation("Blink");
@@ -48,6 +42,12 @@ void Player::IdleUpdate(float _DeltaTime)
 		SetAnimation("Idle");
 	}
 
+	unsigned int MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
+	while (MiddleDownColor == RGB(255, 0, 0))
+	{
+		MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
+		AddPos(float4::UP);
+	}
 }
 
 void Player::CrouchUpdate(float _DeltaTime)
@@ -55,47 +55,7 @@ void Player::CrouchUpdate(float _DeltaTime)
 	if (true == GameEngineInput::IsPress(CrouchKey))
 	{
 		SetAnimation("Crouch");
-	}
-	else
-	{
-		ChangeState(PlayerState::Idle);
-		SetAnimation("Idle");
-	}
-	
-
-}
-
-void Player::RunUpdate(float _DeltaTime)
-{
-	// 좌, 우 이동
-	float4 MovePos = float4::ZERO;
-	if (true == GameEngineInput::IsPress(MoveLeftKey))
-	{
-		CurDir = PlayerDir::UpLeft;
-
-		unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck);
-		unsigned int LeftCenterColor = GetGroundColor(RGB(255, 0, 0), MapLeftCenterCheck);
-		unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck);
-		if (RGB(255, 0, 0) != LeftUpColor &&
-			RGB(255, 0, 0) != LeftCenterColor &&
-			RGB(255, 0, 0) != LeftDownColor)
-		{
-			MovePos = { -Speed * _DeltaTime, 0.0f };
-		}
-	}
-	else if (true == GameEngineInput::IsPress(MoveRightKey))
-	{
-		CurDir = PlayerDir::UpRight;
-
-		unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck);
-		unsigned int RightCenterColor = GetGroundColor(RGB(255, 0, 0), MapRightCenterCheck);
-		unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck);
-		if (RGB(255, 0, 0) != RightUpColor &&
-			RGB(255, 0, 0) != RightCenterColor &&
-			RGB(255, 0, 0) != RightDownColor)
-		{
-			MovePos = { Speed * _DeltaTime, 0.0f };
-		}
+		return;
 	}
 	else
 	{
@@ -103,187 +63,194 @@ void Player::RunUpdate(float _DeltaTime)
 		SetAnimation("Idle");
 		return;
 	}
+}
 
-	AddPos(MovePos);
 
+void Player::RunUpdate(float _DeltaTime)
+{
+	// 좌, 우 이동
+	{
+		float4 MovePos = float4::ZERO;
+		if (true == GameEngineInput::IsPress(MoveLeftKey))
+		{
+			CurDir = PlayerDir::Left;
+			
+			// 좌측 벽 체크
+			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck);
+			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);
+			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck);
+			if (LeftUpColor != RGB(255, 0, 0) && LeftMiddleColor != RGB(255, 0, 0) && LeftDownColor != RGB(255, 0, 0))
+			{
+				MovePos = { -Speed * _DeltaTime, 0.0f };
+			}
+		}
+		else if (true == GameEngineInput::IsPress(MoveRightKey))
+		{
+			CurDir = PlayerDir::Right;
 
-	// 이동중 점프
+			// 우측 벽 체크
+			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck);
+			unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
+			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck);
+			if (RightUpColor != RGB(255, 0, 0) && RightMiddleColor != RGB(255, 0, 0) && RightDownColor != RGB(255, 0, 0))
+			{
+				MovePos = { Speed * _DeltaTime, 0.0f };
+			}
+
+		}
+		else
+		{
+			ChangeState(PlayerState::Idle);
+			SetAnimation("Idle");
+			return;
+		}
+		AddPos(MovePos);
+	}
+	
+	// Jump
 	if (true == GameEngineInput::IsDown(JumpKey))
 	{
 		SetGravityVector(-CurGravity * JumpForce);
 		ChangeState(PlayerState::Jump);
 		return;
 	}
-
-	// 공중, 바닥 체크
-	unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::DOWN * 2);
-	unsigned int DownCneterColor = GetGroundColor(RGB(255, 0, 0), MapDownCenterCheck + float4::DOWN * 2);
-	unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::DOWN * 2);
-
-	if (RGB(255, 0, 0) != LeftDownColor &&
-		RGB(255, 0, 0) != DownCneterColor &&
-		RGB(255, 0, 0) != RightDownColor)
+	
+	// 바닥 체크
 	{
-		ChangeState(PlayerState::Fall);
-		return;
+		unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::DOWN);
+		unsigned int MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck + float4::DOWN);
+		unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::DOWN);
+		if (LeftDownColor != RGB(255, 0, 0) && MiddleDownColor != RGB(255, 0, 0) && RightDownColor != RGB(255, 0, 0))
+		{
+			SetAnimation("Fall");
+			ChangeState(PlayerState::Fall);
+			return;
+		}
 	}
-
 	SetAnimation("Run");
 }
 
 
 void Player::FallUpdate(float _DeltaTime)
 {
-	// 공중, 바닥 체크
-	unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck - float4::LEFT * 3);
-	unsigned int DownCneterColor = GetGroundColor(RGB(255, 0, 0), MapDownCenterCheck);
-	unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck - float4::RIGHT * 3);
-
-	if (RGB(255, 0, 0) != LeftDownColor &&
-		RGB(255, 0, 0) != DownCneterColor &&
-		RGB(255, 0, 0) != RightDownColor)
+	// 바닥 체크
 	{
-		Gravity(_DeltaTime);
-	}
-	else
-	{
-		unsigned int DownCenterColor = GetGroundColor(RGB(255, 0, 0), MapDownCenterCheck + float4::UP);
-		while (DownCenterColor == RGB(255, 0, 0))
+		unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::DOWN - float4::LEFT);
+		unsigned int MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck + float4::DOWN);
+		unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::DOWN - float4::RIGHT);
+		if (LeftDownColor == RGB(255, 0, 0) || MiddleDownColor == RGB(255, 0, 0) || RightDownColor == RGB(255, 0, 0))
 		{
-			DownCenterColor = GetGroundColor(RGB(255, 0, 0), MapDownCenterCheck + float4::UP);
-			AddPos(float4::UP);
+			GravityReset();
+			ChangeState(PlayerState::Idle);
+			SetAnimation("Idle");
 		}
-		AddPos(float4::UP);
-		GravityReset();
-		ChangeState(PlayerState::Idle);
-		SetAnimation("Idle");
-		return;
+		else
+		{
+			Gravity(_DeltaTime);
+		}
 	}
 
 	// 좌, 우 이동
-	float4 MovePos = float4::ZERO;
-	if (true == GameEngineInput::IsPress(MoveLeftKey))
 	{
-		CurDir = PlayerDir::UpLeft;
-
-		unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck);
-		unsigned int LeftCenterColor = GetGroundColor(RGB(255, 0, 0), MapLeftCenterCheck);
-		unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck);
-		if (RGB(255, 0, 0) != LeftUpColor &&
-			RGB(255, 0, 0) != LeftCenterColor &&
-			RGB(255, 0, 0) != LeftDownColor)
+		float4 MovePos = float4::ZERO;
+		if (true == GameEngineInput::IsPress(MoveLeftKey))
 		{
-			MovePos = { -Speed * _DeltaTime, 0.0f };
+			CurDir = PlayerDir::Left;
+
+			// 좌측 벽 체크
+			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck);
+			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);
+			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck);
+			if (LeftUpColor != RGB(255, 0, 0) && LeftMiddleColor != RGB(255, 0, 0) && LeftDownColor != RGB(255, 0, 0))
+			{
+				MovePos = { -Speed * _DeltaTime, 0.0f };
+			}
 		}
+		else if (true == GameEngineInput::IsPress(MoveRightKey))
+		{
+			CurDir = PlayerDir::Right;
+
+			// 우측 벽 체크
+			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck);
+			unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
+			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck);
+			if (RightUpColor != RGB(255, 0, 0) && RightMiddleColor != RGB(255, 0, 0) && RightDownColor != RGB(255, 0, 0))
+			{
+				MovePos = { Speed * _DeltaTime, 0.0f };
+			}
+
+		}
+		AddPos(MovePos);
 	}
-	else if (true == GameEngineInput::IsPress(MoveRightKey))
+	
+	if (true == MainRenderer->IsAnimationEnd())
 	{
-		CurDir = PlayerDir::UpRight;
-
-		unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck);
-		unsigned int RightCenterColor = GetGroundColor(RGB(255, 0, 0), MapRightCenterCheck);
-		unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck);
-		if (RGB(255, 0, 0) != RightUpColor &&
-			RGB(255, 0, 0) != RightCenterColor &&
-			RGB(255, 0, 0) != RightDownColor)
-		{
-			MovePos = { Speed * _DeltaTime, 0.0f };
-		}
+		SetAnimation("Fall");
 	}
-	AddPos(MovePos);
-	SetAnimation("Fall");
+
 }
 
 
 void Player::JumpUpdate(float _DeltaTime)
 {
-	float4 PastPos = GetPos();
-	PlayerDir PastDir = CurDir;
-
-	Gravity(_DeltaTime);
-
-	// 상단 충돌 체크
-	unsigned int LeftUpColor = GetGroundColor(RGB(255, 255, 255), MapLeftUpCheck - float4::LEFT * 2);
-	unsigned int UpCenterColor = GetGroundColor(RGB(255, 255, 255), MapUpCenterCheck);
-	unsigned int RightUpColor = GetGroundColor(RGB(255, 255, 255), MapRightUpCheck - float4::RIGHT * 2);
-
-	if (RGB(255, 255, 255) != LeftUpColor ||
-		RGB(255, 255, 255) != UpCenterColor ||
-		RGB(255, 255, 255) != RightUpColor)
+	// 천장 체크
+	unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck - float4::LEFT);
+	unsigned int MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck);
+	unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck - float4::RIGHT);
+	if (LeftUpColor != RGB(255, 0, 0) && MiddleUpColor != RGB(255, 0, 0) && RightUpColor != RGB(255, 0, 0))
 	{
-		while (RGB(255, 255, 255) != UpCenterColor)
-		{
-			UpCenterColor = GetGroundColor(RGB(255, 255, 255), MapUpCenterCheck);
-			AddPos(float4::DOWN);
-		}
-		GravityReset();
-		ChangeState(PlayerState::Fall);
-	}
-
-	// 좌, 우 이동
-	// 좌, 우 이동
-	float4 MovePos = float4::ZERO;
-	if (true == GameEngineInput::IsPress(MoveLeftKey))
-	{
-		CurDir = PlayerDir::UpLeft;
-
-		unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck);
-		unsigned int LeftCenterColor = GetGroundColor(RGB(255, 0, 0), MapLeftCenterCheck);
-		unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck);
-		if (RGB(255, 0, 0) != LeftUpColor &&
-			RGB(255, 0, 0) != LeftCenterColor &&
-			RGB(255, 0, 0) != LeftDownColor)
-		{
-			MovePos = { -Speed * _DeltaTime, 0.0f };
-		}
-	}
-	else if (true == GameEngineInput::IsPress(MoveRightKey))
-	{
-		CurDir = PlayerDir::UpRight;
-
-		unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck);
-		unsigned int RightCenterColor = GetGroundColor(RGB(255, 0, 0), MapRightCenterCheck);
-		unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck);
-		if (RGB(255, 0, 0) != RightUpColor &&
-			RGB(255, 0, 0) != RightCenterColor &&
-			RGB(255, 0, 0) != RightDownColor)
-		{
-			MovePos = { Speed * _DeltaTime, 0.0f };
-		}
-	}
-	AddPos(MovePos);
-
-	// 점프 중 일정 속도보다 낮아질 시 "Tumbling" 상태로 업데이트
-
-	float GravityForce = GetGravityVector().Y;
-	if ( -100.0f< GravityForce)
-	{
-		unsigned int LeftDownColor = GetGroundColor(RGB(255, 255, 255), MapLeftDownCheck - float4::LEFT);
-		unsigned int DownCenterColor = GetGroundColor(RGB(255, 255, 255), MapDownCenterCheck);
-		unsigned int RightDownColor = GetGroundColor(RGB(255, 255, 255), MapRightDownCheck - float4::RIGHT);
-		if (RGB(255, 255, 255) == LeftDownColor &&
-			RGB(255, 255, 255) == DownCenterColor &&
-			RGB(255, 255, 255) == RightDownColor)
-		{
-			int CurFrame = static_cast<int>(MainRenderer->GetCurFrame());
-			SetAnimation("Tumbling", CurFrame);
-
-			// "Tumbling" 애니메이션이 끝나면 "Fall" 상태로 업데이트
-			if (true == MainRenderer->IsAnimationEnd())
-			{
-				ChangeState(PlayerState::Fall);
-			}
-		}
-		else
-		{
-			ChangeState(PlayerState::Fall);
-		}
-
+		Gravity(_DeltaTime);
 	}
 	else
 	{
-		SetAnimation("Jump");
+		GravityReset();
+		SetAnimation("Fall");
+		ChangeState(PlayerState::Fall);
+		return;
 	}
+
+	// 좌, 우 이동
+	{
+		float4 MovePos = float4::ZERO;
+		if (true == GameEngineInput::IsPress(MoveLeftKey))
+		{
+			CurDir = PlayerDir::Left;
+
+			// 좌측 벽 체크
+			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck);
+			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);
+			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck);
+			if (LeftUpColor != RGB(255, 0, 0) && LeftMiddleColor != RGB(255, 0, 0) && LeftDownColor != RGB(255, 0, 0))
+			{
+				MovePos = { -Speed * _DeltaTime, 0.0f };
+			}
+		}
+		else if (true == GameEngineInput::IsPress(MoveRightKey))
+		{
+			CurDir = PlayerDir::Right;
+
+			// 우측 벽 체크
+			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck);
+			unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
+			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck);
+			if (RightUpColor != RGB(255, 0, 0) && RightMiddleColor != RGB(255, 0, 0) && RightDownColor != RGB(255, 0, 0))
+			{
+				MovePos = { Speed * _DeltaTime, 0.0f };
+			}
+
+		}
+		AddPos(MovePos);
+	}
+
+	// 일정 높이 이상 도달 체크
+	if (-100.0f < GetGravityVector().Y)
+	{
+		SetAnimation("Tumbling");
+		ChangeState(PlayerState::Fall);
+		return;
+	}
+
+	SetAnimation("Jump");
 }
 
 

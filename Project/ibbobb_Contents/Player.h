@@ -15,10 +15,10 @@ enum class PlayerState
 
 enum class PlayerDir
 {
-	UpLeft,
-	UpRight,
-	DownLeft,
-	DownRight,
+	Left,
+	Right,
+	ReverseLeft,
+	ReverseRight,
 	Max
 };
 
@@ -75,7 +75,7 @@ private:
 	}
 
 	PlayerState State = PlayerState::Max;
-	PlayerDir CurDir = PlayerDir::UpRight;
+	PlayerDir CurDir = PlayerDir::Right;
 
 	
 	float JumpForce = 1.0f;
@@ -86,16 +86,16 @@ private:
 
 
 	// ¸Ê Ãæµ¹ Ã¼Å©
-	float4 MapLeftUpCheck = { -18.0f, -18.0f };
-	float4 MapLeftCenterCheck = { -18.0f, 0.0f };
-	float4 MapLeftDownCheck = { -18.0f, 17.0f };
+	float4 MapLeftUpCheck = { -19.0f, -17.0f };
+	float4 MapLeftMiddleCheck = { -19.0f, 0.0f };
+	float4 MapLeftDownCheck = { -19.0f, 18.0f };
 	
-	float4 MapRightUpCheck = { 18.0f, -18.0f };
-	float4 MapRightCenterCheck = { 18.0f, 0.0f };
-	float4 MapRightDownCheck = { 18.0f, 17.0f };
+	float4 MapRightUpCheck = { 20.0f, -17.0f };
+	float4 MapRightMiddleCheck = { 20.0f, 0.0f };
+	float4 MapRightDownCheck = { 20.0f, 18.0f };
 	
-	float4 MapUpCenterCheck = { 0.0f, -18.0f };
-	float4 MapDownCenterCheck = { 0.0f, 17.0f };
+	float4 MapMiddleUpCheck = { 0.0f, -17.0f };
+	float4 MapMiddleDownCheck = { 0.0f, 18.0f };
 
 	//float4 MapLeftUpCheck = { -9.0f, -9.0f };
 	//float4 MapLeftCenterCheck = { -9.0f, 0.0f };

@@ -45,7 +45,7 @@ bool TileMap::IsOver(int X, int Y)
 		return true;
 	}
 
-	if (TileX <= Y)
+	if (TileY <= Y)
 	{
 		return true;
 	}

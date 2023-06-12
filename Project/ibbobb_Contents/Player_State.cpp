@@ -8,6 +8,13 @@
 
 void Player::IdleUpdate(float _DeltaTime)
 {
+	unsigned int MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
+	while (MiddleDownColor == RGB(255, 0, 0))
+	{
+		MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
+		AddPos(float4::UP);
+	}
+
 	// Couch
 	if (true == GameEngineInput::IsDown(CrouchKey))
 	{
@@ -36,17 +43,9 @@ void Player::IdleUpdate(float _DeltaTime)
 	{
 		SetAnimation("Blink");
 	}
-
 	if (true == MainRenderer->IsAnimationEnd())
 	{
 		SetAnimation("Idle");
-	}
-
-	unsigned int MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
-	while (MiddleDownColor == RGB(255, 0, 0))
-	{
-		MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
-		AddPos(float4::UP);
 	}
 }
 
@@ -122,8 +121,8 @@ void Player::RunUpdate(float _DeltaTime)
 		unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::DOWN);
 		if (LeftDownColor != RGB(255, 0, 0) && MiddleDownColor != RGB(255, 0, 0) && RightDownColor != RGB(255, 0, 0))
 		{
-			SetAnimation("Fall");
 			ChangeState(PlayerState::Fall);
+			IsJump = false;
 			return;
 		}
 	}
@@ -141,8 +140,9 @@ void Player::FallUpdate(float _DeltaTime)
 		if (LeftDownColor == RGB(255, 0, 0) || MiddleDownColor == RGB(255, 0, 0) || RightDownColor == RGB(255, 0, 0))
 		{
 			GravityReset();
-			ChangeState(PlayerState::Idle);
 			SetAnimation("Idle");
+			ChangeState(PlayerState::Idle);
+			return;
 		}
 		else
 		{
@@ -182,12 +182,21 @@ void Player::FallUpdate(float _DeltaTime)
 		}
 		AddPos(MovePos);
 	}
-	
-	if (true == MainRenderer->IsAnimationEnd())
+
+	// 점프에서 Fall로 바뀐지 체크 (IsJump가 true면 점프에서 상태가 Fall로 바뀐것임.)
+	if (IsJump == true)
+	{
+		int CurFrame = static_cast<int>(MainRenderer->GetCurFrame());
+		SetAnimation("Tumbling", CurFrame);
+		if (true == MainRenderer->IsAnimationEnd())
+		{
+			IsJump = false;
+		}
+	}
+	else
 	{
 		SetAnimation("Fall");
 	}
-
 }
 
 
@@ -204,7 +213,15 @@ void Player::JumpUpdate(float _DeltaTime)
 	else
 	{
 		GravityReset();
-		SetAnimation("Fall");
+		ChangeState(PlayerState::Fall);
+		return;
+	}	
+
+	// 일정 높이 이상 도달 체크
+	if (-100.0f < GetGravityVector().Y)
+	{
+		IsJump = true;
+		SetAnimation("Tumbling");
 		ChangeState(PlayerState::Fall);
 		return;
 	}
@@ -240,14 +257,6 @@ void Player::JumpUpdate(float _DeltaTime)
 
 		}
 		AddPos(MovePos);
-	}
-
-	// 일정 높이 이상 도달 체크
-	if (-100.0f < GetGravityVector().Y)
-	{
-		SetAnimation("Tumbling");
-		ChangeState(PlayerState::Fall);
-		return;
 	}
 
 	SetAnimation("Jump");

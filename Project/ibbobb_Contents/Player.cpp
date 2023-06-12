@@ -29,7 +29,6 @@ void Player::Start()
 {
 	Init();
 
-	SetAnimation("Fall");
 	ChangeState(PlayerState::Fall);
 
 	// 첫 방향 설정

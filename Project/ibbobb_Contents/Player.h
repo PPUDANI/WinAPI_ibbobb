@@ -77,7 +77,7 @@ private:
 	PlayerState State = PlayerState::Max;
 	PlayerDir CurDir = PlayerDir::Right;
 
-	
+	bool IsJump = false;
 	float JumpForce = 1.0f;
 	float Speed = 1.0f;
 	float4 CurGravity = float4::DOWN;

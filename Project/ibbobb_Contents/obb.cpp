@@ -65,9 +65,16 @@ void obb::Init()
 	MainRenderer->CreateAnimation("Left_Crouch", "Left_obb.bmp", 11, 11, 10.0f, true);
 	MainRenderer->CreateAnimation("Right_Crouch", "Right_obb.bmp", 11, 11, 10.0f, true);
 
+	// 크기 설정
 	MainRenderer->SetScaleRatio(Ratio);
 
+	// 좌표 설정
 	SetPos({300, 600});
+
+	// 충돌체 설정
+	BodyCollision = CreateCollision(CollisionOrder::PlayerBody);
+	BodyCollision->SetCollisionScale({ 40, 40 });
+	BodyCollision->SetCollisionType(CollisionType::CirCle);
 
 	MoveRightKey = VK_RIGHT;
 	MoveLeftKey = VK_LEFT;

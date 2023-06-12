@@ -18,3 +18,10 @@ enum class RenderOrder
 	JumpingMonster,
 	PlayUI,
 };
+
+// ÇïÅ×ÀÌÄ¿ 
+enum class CollisionOrder
+{
+	PlayerBody,
+	MonsterBody,
+};

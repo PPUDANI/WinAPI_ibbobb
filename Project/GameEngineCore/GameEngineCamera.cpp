@@ -88,7 +88,6 @@ void GameEngineCamera::Release()
 	}
 }
 
-
 void GameEngineCamera::OverRelease()
 {
 

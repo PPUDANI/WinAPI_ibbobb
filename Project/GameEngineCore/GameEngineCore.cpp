@@ -37,10 +37,11 @@ void GameEngineCore::CoreUpdate()
 	{
 		if (nullptr != CurLevel)
 		{
-			NextLevel->OverCheck(CurLevel);
 			CurLevel->LevelEnd(NextLevel);
 			CurLevel->ActorLevelEnd();
 		}
+
+		NextLevel->OverCheck(CurLevel);
 
 		NextLevel->LevelStart(CurLevel);
 		NextLevel->ActorLevelStart();

@@ -1,26 +1,30 @@
 #pragma once
-#include <windows.h>
+#include <Windows.h>
 
+// 설명 :
 class GameEngineTime
 {
 public:
 	static GameEngineTime MainTimer;
 
+	// constrcuter destructer
 	GameEngineTime();
 	~GameEngineTime();
 
+	// delete Function
 	GameEngineTime(const GameEngineTime& _Other) = delete;
 	GameEngineTime(GameEngineTime&& _Other) noexcept = delete;
 	GameEngineTime& operator=(const GameEngineTime& _Other) = delete;
 	GameEngineTime& operator=(GameEngineTime&& _Other) noexcept = delete;
 
-	float GetDeltaTime() // DeltaTime 반환 함수
+	float GetDeltaTime()
 	{
 		return FloatDelta;
 	}
 
-	void Reset(); // DeltaTime 초기화
-	void Update();  // DeltaTime Update
+	void Reset();
+
+	void Update();
 
 protected:
 

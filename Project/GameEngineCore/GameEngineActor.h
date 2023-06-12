@@ -86,7 +86,6 @@ public:
 
 	GameEngineCollision* CreateCollision(int _Order = 0);
 
-
 	GameEngineLevel* GetLevel()
 	{
 		return Level;
@@ -121,8 +120,6 @@ private:
 
 	std::list<GameEngineRenderer*> AllRenderer;
 	std::list<GameEngineCollision*> AllCollision;
-
-
 
 	void ActorRelease();
 };

@@ -39,7 +39,11 @@ protected:
 
 	virtual void Init() {}
 
+	// 렌더러
 	GameEngineRenderer* MainRenderer = nullptr;
+
+	// 충돌체
+	GameEngineCollision* BodyCollision = nullptr;
 
 	float Ratio = 2.0f;
 
@@ -48,6 +52,8 @@ protected:
 	int JumpKey;
 	int CrouchKey;
 	
+	
+
 private:
 
 
@@ -83,8 +89,6 @@ private:
 	float4 CurGravity = float4::DOWN;
 	bool CheckPosOn = false;
 
-
-
 	// 맵 충돌 체크
 	float4 MapLeftUpCheck = { -19.0f, -17.0f };
 	float4 MapLeftMiddleCheck = { -19.0f, 0.0f };
@@ -97,15 +101,6 @@ private:
 	float4 MapMiddleUpCheck = { 0.0f, -17.0f };
 	float4 MapMiddleDownCheck = { 0.0f, 18.0f };
 
-	//float4 MapLeftUpCheck = { -9.0f, -9.0f };
-	//float4 MapLeftCenterCheck = { -9.0f, 0.0f };
-	//float4 MapLeftDownCheck = { -9.0f, 9.0f };
-	//
-	//float4 MapRightUpCheck = { 9.0f, -9.0f };
-	//float4 MapRightCenterCheck = { 9.0f, 0.0f };
-	//float4 MapRightDownCheck = { 9.0f, 9.0f };
-	//
-	//float4 MapUpCenterCheck = { 0.0f, -9.0f };
-	//float4 MapDownCenterCheck = { 0.0f, 9.0f };
+	
 };
 

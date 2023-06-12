@@ -199,7 +199,6 @@ void Player::FallUpdate(float _DeltaTime)
 	}
 }
 
-
 void Player::JumpUpdate(float _DeltaTime)
 {
 	// 상단 충돌 체크

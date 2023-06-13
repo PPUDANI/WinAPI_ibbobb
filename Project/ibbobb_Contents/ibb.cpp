@@ -31,41 +31,57 @@ void ibb::Init()
 
 	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_ibb.bmp"), 7, 6);
 	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_ibb.bmp"), 7, 6);
-
+	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_ibb_Reverse.bmp"), 7, 6);
+	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_ibb_Reverse.bmp"), 7, 6);
 	MainRenderer = CreateRenderer(RenderOrder::ibb);
 
 	// Idle Animation
 	MainRenderer->CreateAnimation("Left_Idle", "Left_ibb.bmp", 0, 0, 10.0f, true);
 	MainRenderer->CreateAnimation("Right_Idle", "Right_ibb.bmp", 0, 0, 10.0f, true);
+	MainRenderer->CreateAnimation("ReverseLeft_Idle", "Left_ibb_Reverse.bmp", 0, 0, 10.0f, true);
+	MainRenderer->CreateAnimation("ReverseRight_Idle", "Right_ibb_Reverse.bmp", 0, 0, 10.0f, true);
 
 	// Blink Animation
 	MainRenderer->CreateAnimation("Left_Blink", "Left_ibb.bmp", 0, 1, 0.07f, true);
 	MainRenderer->CreateAnimation("Right_Blink", "Right_ibb.bmp", 0, 1, 0.07f, true);
+	MainRenderer->CreateAnimation("ReverseLeft_Blink", "Left_ibb_Reverse.bmp", 0, 1, 0.07f, true);
+	MainRenderer->CreateAnimation("ReverseRight_Blink", "Right_ibb_Reverse.bmp", 0, 1, 0.07f, true);
 
 	// Crouch Animation
 	MainRenderer->CreateAnimation("Left_Crouch", "Left_ibb.bmp", 11, 11, 10.0f, true);
 	MainRenderer->CreateAnimation("Right_Crouch", "Right_ibb.bmp", 11, 11, 10.0f, true);
+	MainRenderer->CreateAnimation("ReverseLeft_Crouch", "Left_ibb_Reverse.bmp", 11, 11, 10.0f, true);
+	MainRenderer->CreateAnimation("ReverseRight_Crouch", "Right_ibb_Reverse.bmp", 11, 11, 10.0f, true);
 
 	// Run Animation
 	MainRenderer->CreateAnimation("Left_Run", "Left_ibb.bmp", 12, 21, 0.08f, true);
 	MainRenderer->CreateAnimation("Right_Run", "Right_ibb.bmp", 12, 21, 0.08f, true);
+	MainRenderer->CreateAnimation("ReverseLeft_Run", "Left_ibb_Reverse.bmp", 12, 21, 0.08f, true);
+	MainRenderer->CreateAnimation("ReverseRight_Run", "Right_ibb_Reverse.bmp", 12, 21, 0.08f, true);
 
 	// Jump Animation
 	MainRenderer->CreateAnimation("Left_Jump", "Left_ibb.bmp", 22, 22, 10.0f, true);
 	MainRenderer->CreateAnimation("Right_Jump", "Right_ibb.bmp", 22, 22, 10.0f, true);
+	MainRenderer->CreateAnimation("ReverseLeft_Jump", "Left_ibb_Reverse.bmp", 22, 22, 10.0f, true);
+	MainRenderer->CreateAnimation("ReverseRight_Jump", "Right_ibb_Reverse.bmp", 22, 22, 10.0f, true);
 
 	// Tumbling Animation
 	MainRenderer->CreateAnimation("Left_Tumbling", "Left_ibb.bmp", 23, 28, 0.05f, true);
 	MainRenderer->CreateAnimation("Right_Tumbling", "Right_ibb.bmp", 23, 28, 0.05f, true);
+	MainRenderer->CreateAnimation("ReverseLeft_Tumbling", "Left_ibb_Reverse.bmp", 23, 28, 0.05f, true);
+	MainRenderer->CreateAnimation("ReverseRight_Tumbling", "Right_ibb_Reverse.bmp", 23, 28, 0.05f, true);
 
 	// Fall Animation
 	MainRenderer->CreateAnimation("Left_Fall", "Left_ibb.bmp", 29, 30, 0.07f, true);
 	MainRenderer->CreateAnimation("Right_Fall", "Right_ibb.bmp", 29, 30, 0.07f, true);
+	MainRenderer->CreateAnimation("ReverseLeft_Fall", "Left_ibb_Reverse.bmp", 29, 30, 0.07f, true);
+	MainRenderer->CreateAnimation("ReverseRight_Fall", "Right_ibb_Reverse.bmp", 29, 30, 0.07f, true);
 
 	// Dead Animation
 	MainRenderer->CreateAnimation("Left_Dead", "Left_ibb.bmp", 39, 41, 0.04f, true);
 	MainRenderer->CreateAnimation("Right_Dead", "Right_ibb.bmp", 39, 41, 0.04f, true);
-
+	MainRenderer->CreateAnimation("ReverseLeft_Dead", "Left_ibb_Reverse.bmp", 39, 41, 0.04f, true);
+	MainRenderer->CreateAnimation("ReverseRight_Dead", "Right_ibb_Reverse.bmp", 39, 41, 0.04f, true);
 
 	MainRenderer->SetScaleRatio(Ratio);
 	

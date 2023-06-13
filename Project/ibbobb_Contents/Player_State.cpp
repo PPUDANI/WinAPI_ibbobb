@@ -149,6 +149,35 @@ void Player::RunUpdate(float _DeltaTime)
 
 void Player::FallUpdate(float _DeltaTime)
 {
+
+	{
+		unsigned int MidColor = GetGroundColor(RGB(0, 255, 255), float4::ZERO);
+		if (MidColor == RGB(0, 255, 255))
+		{
+			SetGravityPower(-1200);
+			if (CurDir == PlayerDir::Left)
+			{
+				CurDir = PlayerDir::ReverseLeft;
+			}
+			else if (CurDir == PlayerDir::Right)
+			{
+				CurDir = PlayerDir::ReverseRight;
+			}
+		}
+		else
+		{
+			SetGravityPower(1200);
+			if (CurDir == PlayerDir::ReverseLeft)
+			{
+				CurDir = PlayerDir::Left;
+			}
+			else if(CurDir == PlayerDir::ReverseRight)
+			{
+				CurDir = PlayerDir::Right;
+			}
+		}
+	}
+
 	// ¹Ù´Ú Ãæµ¹ Ã¼Å©
 	{
 		unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::DOWN - float4::LEFT);
@@ -166,6 +195,9 @@ void Player::FallUpdate(float _DeltaTime)
 			Gravity(_DeltaTime);
 		}
 	}
+
+
+
 
 	// ÁÂ, ¿ì ÀÌµ¿
 	{

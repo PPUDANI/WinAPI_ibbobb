@@ -51,11 +51,8 @@ protected:
 	int MoveLeftKey;
 	int JumpKey;
 	int CrouchKey;
-	
-	
 
 private:
-
 
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -100,7 +97,6 @@ private:
 	
 	float4 MapMiddleUpCheck = { 0.0f, -17.0f };
 	float4 MapMiddleDownCheck = { 0.0f, 18.0f };
-
 	
 };
 

@@ -32,7 +32,7 @@ PlayLevel::~PlayLevel()
 void PlayLevel::Start()
 {
 	UpBack = CreateActor<BackGround>(RenderOrder::BackGround);
-	UpBack->Init("BlueSky.bmp");
+	UpBack->Init("OrangeGreen.bmp");
 
 	//EXMap = CreateActor<Map>();
 	//EXMap->Init("Level1_Map.bmp","Level1_MapCollision.bmp");

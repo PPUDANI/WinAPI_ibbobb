@@ -45,6 +45,11 @@ public:
 		GravityPower = _GravityPower;
 	}
 
+	inline float GetGravityPower()
+	{
+		return GravityPower;
+	}
+
 	inline void GravityReset()
 	{
 		GravityVector = float4::ZERO;

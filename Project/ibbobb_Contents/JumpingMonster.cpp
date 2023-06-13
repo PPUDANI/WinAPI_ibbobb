@@ -55,7 +55,7 @@ void JumpingMonster::Update(float _DeltaTime)
 		SetGravityVector(float4::UP * JumpForce);
 	}
 
-	int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 400);
+	int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 500);
 	if (RandomNumber == 1)
 	{
 		Renderer->ChangeAnimation("Blink");

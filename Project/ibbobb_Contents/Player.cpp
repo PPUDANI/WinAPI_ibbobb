@@ -67,12 +67,12 @@ void Player::Update(float _DeltaTime)
 		}
 	}
 
-
 	if (true == GameEngineInput::IsDown('O'))
 	{
 
 		CheckPosOn = !CheckPosOn;
 	}
+
 	// 상태에 따른 Update
 	switch (State)
 	{
@@ -95,6 +95,16 @@ void Player::Update(float _DeltaTime)
 		CrouchUpdate(_DeltaTime);
 	default:
 		break;
+	}
+
+	std::vector<GameEngineCollision*> _Col;
+
+	if (true == BodyCollision->Collision(CollisionOrder::MonsterBody,
+		_Col,
+		CollisionType::CirCle,
+		CollisionType::CirCle))
+	{
+		ChangeState(PlayerState::Dead);
 	}
 
 	//임시 카메라 위치

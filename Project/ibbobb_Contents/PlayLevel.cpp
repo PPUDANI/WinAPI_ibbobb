@@ -74,7 +74,8 @@ void PlayLevel::Update(float _DeltaTime)
 
 void PlayLevel::Render(float _DeltaTime)
 {
-	//UpBack->SetPos(obbPlayer->GetPos());
+	float4 WindowScaleHlaf = { 750.0f, 450.0f };
+	UpBack->SetPos(GetMainCamera()->GetPos() + WindowScaleHlaf);
 }
 
 void PlayLevel::Release() 

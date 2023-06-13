@@ -41,6 +41,10 @@ void obb::Init()
 	MainRenderer->CreateAnimation("Left_Blink", "Left_obb.bmp", 0, 1, 0.07f, true);
 	MainRenderer->CreateAnimation("Right_Blink", "Right_obb.bmp", 0, 1, 0.07f, true);
 
+	// Crouch Animation
+	MainRenderer->CreateAnimation("Left_Crouch", "Left_obb.bmp", 11, 11, 10.0f, true);
+	MainRenderer->CreateAnimation("Right_Crouch", "Right_obb.bmp", 11, 11, 10.0f, true);
+
 	// Run Animation
 	MainRenderer->CreateAnimation("Left_Run", "Left_obb.bmp", 12, 21, 0.08f, true);
 	MainRenderer->CreateAnimation("Right_Run", "Right_obb.bmp", 12, 21, 0.08f, true);
@@ -58,12 +62,10 @@ void obb::Init()
 	MainRenderer->CreateAnimation("Right_Fall", "Right_obb.bmp", 29, 30, 0.07f, true);
 
 	// Dead Animation
-	MainRenderer->CreateAnimation("Left_Dead", "Left_obb.bmp", 35, 41, 0.03f, true);
-	MainRenderer->CreateAnimation("Right_Dead", "Right_obb.bmp", 35, 41, 0.03f, true);
+	MainRenderer->CreateAnimation("Left_Dead", "Left_obb.bmp", 39, 41, 0.03f, true);
+	MainRenderer->CreateAnimation("Right_Dead", "Right_obb.bmp", 39, 41, 0.03f, true);
 
-	// Crouch Animation
-	MainRenderer->CreateAnimation("Left_Crouch", "Left_obb.bmp", 11, 11, 10.0f, true);
-	MainRenderer->CreateAnimation("Right_Crouch", "Right_obb.bmp", 11, 11, 10.0f, true);
+
 
 	// 크기 설정
 	MainRenderer->SetScaleRatio(Ratio);

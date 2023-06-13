@@ -5,7 +5,9 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
-
+#include <GameEngineCore/GameEngineCollision.h>
+#include "ContentsEnum.h"
+#include <vector>
 void Player::IdleUpdate(float _DeltaTime)
 {
 	unsigned int MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
@@ -16,7 +18,7 @@ void Player::IdleUpdate(float _DeltaTime)
 	}
 
 	// Couch
-	if (true == GameEngineInput::IsDown(CrouchKey))
+	if (true == GameEngineInput::IsPress(CrouchKey))
 	{
 		ChangeState(PlayerState::Crouch);
 		return;
@@ -51,6 +53,15 @@ void Player::IdleUpdate(float _DeltaTime)
 
 void Player::CrouchUpdate(float _DeltaTime)
 {
+	if (true == GameEngineInput::IsPress(MoveLeftKey))
+	{
+		CurDir = PlayerDir::Left;
+	}
+	else if(true == GameEngineInput::IsPress(MoveRightKey))
+	{
+		CurDir = PlayerDir::Right;
+	}
+
 	if (true == GameEngineInput::IsPress(CrouchKey))
 	{
 		SetAnimation("Crouch");
@@ -67,6 +78,12 @@ void Player::CrouchUpdate(float _DeltaTime)
 
 void Player::RunUpdate(float _DeltaTime)
 {
+	if (true == GameEngineInput::IsPress(CrouchKey))
+	{
+		ChangeState(PlayerState::Idle);
+		SetAnimation("Crouch");
+		return;
+	}
 	// ÁÂ, ¿ì ÀÌµ¿
 	{
 		float4 MovePos = float4::ZERO;

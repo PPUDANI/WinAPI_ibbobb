@@ -17,6 +17,7 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
+	class GameEngineCollision* BodyCollision;
 	class GameEngineRenderer* Renderer;
 };
 

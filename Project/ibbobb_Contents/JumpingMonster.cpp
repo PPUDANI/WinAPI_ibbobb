@@ -5,6 +5,7 @@
 #include "ContentsEnum.h"
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineRandom.h>
+#include <GameEngineCore/GameEngineCollision.h>
 
 JumpingMonster::JumpingMonster()
 {
@@ -29,11 +30,15 @@ void JumpingMonster::Start()
 	Renderer->CreateAnimation("Dead", "JumpingMonster.bmp", 1, 11, 0.02f, true);
 	Renderer->ChangeAnimation("Idle");
 
+	BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
+	BodyCollision->SetCollisionScale({ 60, 60 });
+	BodyCollision->SetCollisionType(CollisionType::CirCle);
+
 	SetGravityPower(1100.0f);
 
 	SetJumpForce(500.0f);
 	
-	SetPos({ 700.0f, 600.0f });
+	SetPos({ 900.0f, 600.0f });
 }
 
 void JumpingMonster::Update(float _DeltaTime)

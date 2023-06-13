@@ -38,7 +38,7 @@ void JumpingMonster::Start()
 
 	SetJumpForce(500.0f);
 	
-	SetPos({ 900.0f, 600.0f });
+	
 }
 
 void JumpingMonster::Update(float _DeltaTime)

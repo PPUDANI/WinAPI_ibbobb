@@ -68,7 +68,7 @@ void ibb::Init()
 
 
 	MainRenderer->SetScaleRatio(Ratio);
-	SetPos({ 400, 600 });
+	
 
 	// 충돌체 설정
 	BodyCollision = CreateCollision(CollisionOrder::PlayerBody);

@@ -17,6 +17,7 @@ void TitleLevel::Start()
 {
 	BackGround* TitleBack = CreateActor<BackGround>();
 	TitleBack->Init("Title.bmp");
+	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
 }
 
 void TitleLevel::Update(float _DeltaTime)
@@ -24,6 +25,6 @@ void TitleLevel::Update(float _DeltaTime)
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
-		//GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(2.0f);
+		GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.6f);
 	}
 }

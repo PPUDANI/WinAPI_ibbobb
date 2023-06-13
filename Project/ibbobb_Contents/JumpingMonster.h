@@ -1,6 +1,13 @@
 #pragma once
 
 #include "GravityActor.h"
+
+enum class JumpingMonsterDir
+{
+	Default,
+	Reverse
+};
+
 class JumpingMonster : public GravityActor
 {
 public:

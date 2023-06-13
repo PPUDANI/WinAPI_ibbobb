@@ -65,13 +65,10 @@ void obb::Init()
 	MainRenderer->CreateAnimation("Left_Dead", "Left_obb.bmp", 39, 41, 0.03f, true);
 	MainRenderer->CreateAnimation("Right_Dead", "Right_obb.bmp", 39, 41, 0.03f, true);
 
-
-
 	// 크기 설정
 	MainRenderer->SetScaleRatio(Ratio);
 
-	// 좌표 설정
-	SetPos({300, 600});
+
 
 	// 충돌체 설정
 	BodyCollision = CreateCollision(CollisionOrder::PlayerBody);

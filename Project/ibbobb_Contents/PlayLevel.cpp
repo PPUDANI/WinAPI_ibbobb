@@ -47,20 +47,27 @@ void PlayLevel::Start()
 	EXMap = CreateActor<Map>();
 	EXMap->Init("EXLevel.bmp", "EXLevel_Collision.bmp");
 
-	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
-	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-
+	// ibb
 	ibbPlayer = CreateActor<ibb>(UpdateOrder::Player);
 	ibbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
+	ibbPlayer->SetPos({ 400, 600 });
 
+	// obb
+	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
+	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
+	obbPlayer->SetPos({ 500, 600 });
+
+	// Monster
 	RoadMonster0 = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
 	RoadMonster0->SetGroundTexture("EXLevel_Collision.bmp");
+	RoadMonster0->SetPos({ 700.0f, 787.0f }); //  709.0f
+	RoadMonster0->SetMovementDistance(200.0f);
 
 	JumpingMonster0 = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 	JumpingMonster0->SetGroundTexture("EXLevel_Collision.bmp");
-
+	JumpingMonster0->SetPos({ 1400.0f, 400.0f });
 	//GetMainCamera()->SetPos({-50, 300});
-	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(2.0f);
+
 }
 
 void PlayLevel::Update(float _DeltaTime)
@@ -68,6 +75,7 @@ void PlayLevel::Update(float _DeltaTime)
 	if (true == GameEngineInput::IsDown('O'))
 	{
 		EXMap->SwitchRender();
+		CollisionDebugRenderSwitch();
 	}
 
 }

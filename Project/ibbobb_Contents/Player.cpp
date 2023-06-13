@@ -142,23 +142,33 @@ void Player::Render(float _DeltaTime)
 void Player::SetAnimation(const std::string _State, int _StartFrame)
 {
 	std::string AnimationName;
-
-	switch (CurDir)
+	if (CurReverse == false)
 	{
-	case PlayerDir::Left:
-		AnimationName = "Left_";
-		break;
-	case PlayerDir::Right:
-		AnimationName = "Right_";
-		break;
-	case PlayerDir::ReverseLeft:
-		AnimationName = "ReverseLeft_";
-		break;
-	case PlayerDir::ReverseRight:
-		AnimationName = "ReverseRight_";
-		break;
-	default:
-		break;
+		switch (CurDir)
+		{
+		case PlayerDir::Left:
+			AnimationName = "Left_";
+			break;
+		case PlayerDir::Right:
+			AnimationName = "Right_";
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		switch (CurDir)
+		{
+		case PlayerDir::Left:
+			AnimationName = "ReverseLeft_";
+			break;
+		case PlayerDir::Right:
+			AnimationName = "ReverseRight_";
+			break;
+		default:
+			break;
+		}
 	}
 
 	AnimationName += _State;
@@ -169,4 +179,12 @@ void Player::SetAnimation(const std::string _State, int _StartFrame)
 void Player::ChangeState(PlayerState _State)
 {
 	State = _State;
+}
+
+
+void Player::ReverseDir()
+{
+	CurReverse = !CurReverse;
+
+	
 }

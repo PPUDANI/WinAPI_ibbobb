@@ -9,8 +9,7 @@ enum class PlayerState
 	Jump,
 	Fall,
 	Dead,
-	Crouch,
-	Max
+	Crouch
 };
 
 enum class PlayerDir
@@ -18,8 +17,7 @@ enum class PlayerDir
 	Left,
 	Right,
 	ReverseLeft,
-	ReverseRight,
-	Max
+	ReverseRight
 };
 
 class Player : public GravityActor
@@ -67,6 +65,9 @@ private:
 	void ChangeState(PlayerState _State);
 	void SetAnimation(const std::string _State, int _StartFrame = 0);
 
+	void ReverseDir();
+
+
 	void SetJumpForce(float _JumpForce)
 	{
 		JumpForce = _JumpForce;
@@ -77,8 +78,9 @@ private:
 		Speed = _Speed;
 	}
 
-	PlayerState State = PlayerState::Max;
+	PlayerState State;
 	PlayerDir CurDir = PlayerDir::Right;
+	bool CurReverse = false;
 
 	bool IsJump = false;
 	float JumpForce = 1.0f;

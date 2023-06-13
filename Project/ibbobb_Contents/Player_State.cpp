@@ -155,26 +155,12 @@ void Player::FallUpdate(float _DeltaTime)
 		if (MidColor == RGB(0, 255, 255))
 		{
 			SetGravityPower(-1200);
-			if (CurDir == PlayerDir::Left)
-			{
-				CurDir = PlayerDir::ReverseLeft;
-			}
-			else if (CurDir == PlayerDir::Right)
-			{
-				CurDir = PlayerDir::ReverseRight;
-			}
+
 		}
 		else
 		{
 			SetGravityPower(1200);
-			if (CurDir == PlayerDir::ReverseLeft)
-			{
-				CurDir = PlayerDir::Left;
-			}
-			else if(CurDir == PlayerDir::ReverseRight)
-			{
-				CurDir = PlayerDir::Right;
-			}
+
 		}
 	}
 

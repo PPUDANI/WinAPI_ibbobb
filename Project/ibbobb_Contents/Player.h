@@ -67,35 +67,29 @@ private:
 
 	void ReverseDir();
 
-
-	void SetJumpForce(float _JumpForce)
-	{
-		JumpForce = _JumpForce;
-	}
-
-	void SetSpeed(float _Speed)
-	{
-		Speed = _Speed;
-	}
-
 	PlayerState State;
 	PlayerDir CurDir = PlayerDir::Right;
-	bool CurReverse = false;
+	bool ReverseValue = false;
 
-	bool IsJump = false;
+	// 캐릭터 기본 물리값
+	bool FromJump = false;
 	float JumpForce = 1.0f;
 	float Speed = 1.0f;
+	float DefaultGravityPower = 1100.0f;
 	float4 CurGravity = float4::DOWN;
 	bool CheckPosOn = false;
 
+	// 워프의 기본 중력값
+	float HoleDefaultGravityValue = 0.0f;
+
 	// 맵 충돌 체크
-	float4 MapLeftUpCheck = { -19.0f, -17.0f };
-	float4 MapLeftMiddleCheck = { -19.0f, 0.0f };
-	float4 MapLeftDownCheck = { -19.0f, 18.0f };
+	float4 MapLeftUpCheck = { -18.0f, -17.0f };
+	float4 MapLeftMiddleCheck = { -18.0f, 0.0f };
+	float4 MapLeftDownCheck = { -18.0f, 18.0f };
 	
-	float4 MapRightUpCheck = { 20.0f, -17.0f };
-	float4 MapRightMiddleCheck = { 20.0f, 0.0f };
-	float4 MapRightDownCheck = { 20.0f, 18.0f };
+	float4 MapRightUpCheck = { 19.0f, -17.0f };
+	float4 MapRightMiddleCheck = { 19.0f, 0.0f };
+	float4 MapRightDownCheck = { 19.0f, 18.0f };
 	
 	float4 MapMiddleUpCheck = { 0.0f, -17.0f };
 	float4 MapMiddleDownCheck = { 0.0f, 18.0f };

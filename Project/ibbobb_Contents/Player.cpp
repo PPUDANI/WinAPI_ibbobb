@@ -1,17 +1,12 @@
 #include "Player.h"
 
-#include <GameEngineBase/GameEngineTime.h>
-#include <GameEngineBase/GameEnginePath.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEnginePlatform/GameEngineInput.h>
-#include <GameEngineCore/ResourcesManager.h>
-#include <GameEngineCore/GameEngineLevel.h>
-#include <GameEngineCore/GameEngineCamera.h>
+#include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
 
 #include "ContentsEnum.h"
 
-#include <windows.h>
 
 Player::Player()
 {
@@ -22,8 +17,6 @@ Player::~Player()
 {
 
 }
-
-
 
 void Player::Start()
 {
@@ -54,25 +47,9 @@ void Player::Start()
 
 void Player::Update(float _DeltaTime)
 {
-	// ÁÜÀÎ ÁÜ¾Æ¿ô 
-	if (true == GameEngineInput::IsPress('Z'))
-	{
-		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(0.005f);
-	}
-
-	if (true == GameEngineInput::IsPress('X'))
-	{
-		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-0.005f);
-		float ZoomScale = GameEngineWindow::MainWindow.GetDoubleBufferingCopyScaleRatio();
-		if (1.0f > ZoomScale)
-		{
-			GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
-		}
-	}
 
 	if (true == GameEngineInput::IsDown('O'))
 	{
-
 		CheckPosOn = !CheckPosOn;
 	}
 
@@ -188,5 +165,4 @@ void Player::ChangeState(PlayerState _State)
 void Player::ReverseDir()
 {
 	ReverseValue = !ReverseValue;
-
 }

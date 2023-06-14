@@ -1,9 +1,11 @@
 #include "ContentCore.h"
 
+#include <GameEnginePlatform/GameEngineWindow.h>
+
 #include "TitleLevel.h"
 #include "PlayLevel.h"
 #include "EndingLevel.h"
-#include <GameEnginePlatform/GameEngineWindow.h>
+
 ContentCore::ContentCore()
 {
 

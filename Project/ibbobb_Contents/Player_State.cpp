@@ -2,12 +2,11 @@
 
 #include <GameEngineBase/GameEngineRandom.h>
 #include <GameEnginePlatform/GameEngineInput.h>
-#include <GameEngineCore/GameEngineLevel.h>
-#include <GameEngineCore/GameEngineCamera.h>
-#include <GameEnginePlatform/GameEngineWindow.h>
-#include <GameEngineCore/GameEngineCollision.h>
+#include <GameEngineCore/GameEngineRenderer.h>
+
 #include "ContentsEnum.h"
-#include <vector>
+
+
 void Player::IdleUpdate(float _DeltaTime)
 {
 	// 바닥에 닿을 시 워프 시 추가된 중력 제거
@@ -23,7 +22,6 @@ void Player::IdleUpdate(float _DeltaTime)
 	}
 
 	// Run 상태 체크
-
 	if (true == GameEngineInput::IsPress(MoveLeftKey) || true == GameEngineInput::IsPress(MoveRightKey))
 	{
 		ChangeState(PlayerState::Run);
@@ -62,12 +60,11 @@ void Player::IdleUpdate(float _DeltaTime)
 	{
 		SetAnimation("Idle");
 	}
-
 }
 
 void Player::CrouchUpdate(float _DeltaTime)
 {
-	// 방향 체크
+	// 방향 전환
 	if (true == GameEngineInput::IsPress(MoveLeftKey))
 	{
 		CurDir = PlayerDir::Left;
@@ -112,6 +109,7 @@ void Player::RunUpdate(float _DeltaTime)
 			SetGravityVector(-CurGravity * JumpForce);
 		}
 
+		FromJump = false;
 		ChangeState(PlayerState::Jump);
 		return;
 	}
@@ -145,7 +143,7 @@ void Player::RunUpdate(float _DeltaTime)
 		{
 			CurDir = PlayerDir::Left;
 
-			// 좌측 충돌 체크
+			// 좌측 충돌 체크 (벽에 박힘 제거)
 			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::LEFT + float4::DOWN);
 			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck + float4::LEFT);
 			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::LEFT + float4::UP);
@@ -170,7 +168,7 @@ void Player::RunUpdate(float _DeltaTime)
 		{
 			CurDir = PlayerDir::Right;
 
-			// 우측 충돌 체크
+			// 우측 충돌 체크 (벽에 박힘 제거)
 			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::RIGHT + float4::DOWN);
 			unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck + float4::RIGHT);
 			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::RIGHT + float4::UP);
@@ -223,7 +221,6 @@ void Player::RunUpdate(float _DeltaTime)
 			RightDownColor != RGB(255, 0, 0))
 		{
 			ChangeState(PlayerState::Fall);
-			FromJump = false;
 			return;
 		}
 	}
@@ -254,7 +251,7 @@ void Player::FallUpdate(float _DeltaTime)
 		}
 	}
 
-	// Fall의 바닥 충돌 체크
+	// Fall의 바닥 충돌 체크 (바닥에 박힘 제거)
 	{
 		unsigned int LeftDownColor;
 		unsigned int MiddleDownColor;
@@ -464,7 +461,7 @@ void Player::JumpUpdate(float _DeltaTime)
 		{
 			CurDir = PlayerDir::Left;
 
-			// 좌측 충돌 체크
+			// 좌측 충돌 체크 (벽에 박힘 제거)
 			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::LEFT + float4::DOWN);
 			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck + float4::LEFT);
 			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::LEFT + float4::UP);
@@ -489,7 +486,7 @@ void Player::JumpUpdate(float _DeltaTime)
 		{
 			CurDir = PlayerDir::Right;
 
-			// 우측 충돌 체크
+			// 우측 충돌 체크 (벽에 박힘 제거)
 			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::RIGHT + float4::DOWN);
 			unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck + float4::RIGHT);
 			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::RIGHT + float4::UP);

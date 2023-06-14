@@ -1,23 +1,20 @@
 #include "PlayLevel.h"
 
-#include <GameEngineBase/GameEnginePath.h>
-#include <GameEngineCore/ResourcesManager.h>
-
-#include <GameEnginePlatform/GameEngineInput.h>
-#include <GameEngineCore/GameEngineCore.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
-#include <GameEngineCore/GameEngineCamera.h>
+#include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineRenderer.h>
-#include <GameEnginePlatform/GameEngineWindowTexture.h>
+#include <GameEngineCore/GameEngineCamera.h>
+#include <GameEngineCore/GameEngineCore.h>
 
+#include "ContentsEnum.h"
 #include "BackGround.h"
 #include "Map.h"
-#include "Player.h"
-#include "ibb.h"
-#include "obb.h"
 #include "RoadMonster.h"
 #include "JumpingMonster.h"
-#include "ContentsEnum.h"
+#include "ibb.h"
+#include "obb.h"
+
+
 
 PlayLevel::PlayLevel()
 {
@@ -78,6 +75,21 @@ void PlayLevel::Update(float _DeltaTime)
 		CollisionDebugRenderSwitch();
 	}
 
+	// ZoomIn, ZoomOut
+	if (true == GameEngineInput::IsPress('Z'))
+	{
+		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(0.005f);
+	}
+
+	if (true == GameEngineInput::IsPress('X'))
+	{
+		GameEngineWindow::MainWindow.AddDoubleBufferingCopyScaleRatio(-0.005f);
+		float ZoomScale = GameEngineWindow::MainWindow.GetDoubleBufferingCopyScaleRatio();
+		if (1.0f > ZoomScale)
+		{
+			GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
+		}
+	}
 }
 
 void PlayLevel::Render(float _DeltaTime)

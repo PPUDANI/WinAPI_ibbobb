@@ -25,6 +25,5 @@ void TitleLevel::Update(float _DeltaTime)
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
-		GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.6f);
 	}
 }

@@ -61,11 +61,13 @@ private:
 	void JumpUpdate(float _DeltaTime);
 	void CrouchUpdate(float _DeltaTime);
 
-	void DeadUpdate(float _DeltaTime);
-	void ChangeState(PlayerState _State);
+	void DeadUpdate(float _DeltaTime); 
 	void SetAnimation(const std::string _State, int _StartFrame = 0);
 
-	void ReverseDir();
+	void ChangeState(PlayerState _State)
+	{
+		State = _State;
+	}
 
 	PlayerState State;
 	PlayerDir CurDir = PlayerDir::Right;
@@ -75,8 +77,8 @@ private:
 	bool FromJump = false;
 	float JumpForce = 1.0f;
 	float Speed = 1.0f;
-	float DefaultGravityPower = 1100.0f;
-	float4 CurGravity = float4::DOWN;
+	float DefaultGravityPower = 1000.0f;
+	float AddGravityByRun = 0.0f;
 	bool CheckPosOn = false;
 
 	// 워프의 기본 중력값

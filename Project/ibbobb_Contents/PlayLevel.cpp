@@ -52,7 +52,7 @@ void PlayLevel::Start()
 	// obb
 	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
 	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-	obbPlayer->SetPos({ 1200, 600 });
+	obbPlayer->SetPos({ 4000, 600 });
 
 	// Monster
 	RoadMonster0 = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
@@ -62,9 +62,10 @@ void PlayLevel::Start()
 
 	JumpingMonster0 = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 	JumpingMonster0->SetGroundTexture("EXLevel_Collision.bmp");
-	JumpingMonster0->SetPos({ 1400.0f, 400.0f });
+	JumpingMonster0->SetPos({ 1300.0f, 400.0f });
 	//GetMainCamera()->SetPos({-50, 300});
 
+	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.6f);
 }
 
 void PlayLevel::Update(float _DeltaTime)

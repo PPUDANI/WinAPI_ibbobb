@@ -40,10 +40,16 @@ public:
 		return GravityVector;
 	}
 
+	inline void AddGravityPower(float _GravityPower)
+	{
+		GravityVector += GravityVector;
+	}
+
 	inline void SetGravityPower(float _GravityPower)
 	{
 		GravityPower = _GravityPower;
 	}
+
 
 	inline float GetGravityPower()
 	{
@@ -63,6 +69,6 @@ private:
 	bool GravityValue = true;
 	float GravityPower = 1.0f;
 	float4 GravityVector = float4::ZERO;
-	
+	float GravityLimit = 1000.0f;
 };
 

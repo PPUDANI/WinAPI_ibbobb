@@ -33,16 +33,17 @@ void Player::Start()
 	Ratio = 2.0f;
 
 	// 중력값 설정
+	DefaultGravityPower = 1200.0f;
 	SetGravityPower(DefaultGravityPower);
 
 	// 점프력 설정
-	JumpForce = 500.0f;
+	JumpForce = 550.0f;
 
 	// 속도 설정
 	Speed = 200.0f;
 
 	// 워프 중력 기본값 설정
-	HoleDefaultGravityValue = 300.0f;
+	HoleDefaultGravityValue = 400.0f;
 }
 
 void Player::Update(float _DeltaTime)
@@ -156,13 +157,3 @@ void Player::SetAnimation(const std::string _State, int _StartFrame)
 }
 
 
-void Player::ChangeState(PlayerState _State)
-{
-	State = _State;
-}
-
-
-void Player::ReverseDir()
-{
-	ReverseValue = !ReverseValue;
-}

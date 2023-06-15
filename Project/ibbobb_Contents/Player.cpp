@@ -88,6 +88,14 @@ void Player::Update(float _DeltaTime)
 		ChangeState(PlayerState::Dead);
 	}
 
+	if (true == BodyCollision->Collision(CollisionOrder::PlayerBody,
+		_Col,
+		CollisionType::CirCle,
+		CollisionType::CirCle))
+	{
+		ChangeState(PlayerState::Dead);
+	}
+
 	//임시 카메라 위치
 	CameraFocus();
 }

@@ -87,7 +87,7 @@ void ibb::Init()
 	
 
 	// 충돌체 설정
-	BodyCollision = CreateCollision(CollisionOrder::PlayerBody);
+	BodyCollision = CreateCollision(CollisionOrder::ibb);
 	BodyCollision->SetCollisionScale({ 40, 40 });
 	BodyCollision->SetCollisionType(CollisionType::CirCle);
 

@@ -36,14 +36,14 @@ void Player::Start()
 	DefaultGravityPower = 1200.0f;
 	SetGravityPower(DefaultGravityPower);
 
+	// 워프홀 기본 중력값 설정 (중력값이 작아 못 빠져나올 가능성 제거)
+	HoleDefaultGravityValue = 400.0f;
+
 	// 점프력 설정
 	JumpForce = 550.0f;
 
 	// 속도 설정
 	Speed = 200.0f;
-
-	// 워프 중력 기본값 설정
-	HoleDefaultGravityValue = 400.0f;
 }
 
 void Player::Update(float _DeltaTime)
@@ -81,14 +81,6 @@ void Player::Update(float _DeltaTime)
 	std::vector<GameEngineCollision*> _Col;
 
 	if (true == BodyCollision->Collision(CollisionOrder::MonsterBody,
-		_Col,
-		CollisionType::CirCle,
-		CollisionType::CirCle))
-	{
-		ChangeState(PlayerState::Dead);
-	}
-
-	if (true == BodyCollision->Collision(CollisionOrder::PlayerBody,
 		_Col,
 		CollisionType::CirCle,
 		CollisionType::CirCle))

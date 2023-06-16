@@ -47,12 +47,12 @@ void PlayLevel::Start()
 	// ibb
 	ibbPlayer = CreateActor<ibb>(UpdateOrder::Player);
 	ibbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-	ibbPlayer->SetPos({ 1200, 600 });
+	ibbPlayer->SetPos({ 860, 600 });
 
 	// obb
 	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
 	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-	obbPlayer->SetPos({ 4000, 600 });
+	obbPlayer->SetPos({ 900, 600 });
 
 	// Monster
 	RoadMonster0 = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
@@ -73,7 +73,7 @@ void PlayLevel::Update(float _DeltaTime)
 	if (true == GameEngineInput::IsDown('O'))
 	{
 		EXMap->SwitchRender();
-		CollisionDebugRenderSwitch();
+		//CollisionDebugRenderSwitch();
 	}
 
 	// ZoomIn, ZoomOut

@@ -20,7 +20,7 @@ void JumpingMonster::Start()
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
 	FilePath.MoveParentToExistsChild("Resources");
-	FilePath.MoveChild("Resources\\Texture\\Monster\\");
+	FilePath.MoveChild("Resources\\Texture\\Monster\\JumpingMonster\\");
 
 	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("JumpingMonster.bmp"), 3, 4);
 	Renderer = CreateRenderer(RenderOrder::JumpingMonster);

@@ -40,9 +40,9 @@ public:
 		return GravityVector;
 	}
 
-	inline void AddGravityPower(float _GravityPower)
+	inline void AddGravityVector(float4 _GravityVector)
 	{
-		GravityVector += GravityVector;
+		GravityVector += _GravityVector;
 	}
 
 	inline void SetGravityPower(float _GravityPower)
@@ -61,6 +61,16 @@ public:
 		GravityVector = float4::ZERO;
 	}
 
+	inline void SetGravityLimit(float _GravityLimit)
+	{
+		GravityLimit = _GravityLimit;
+	}
+
+	inline void ResetGravityLimit()
+	{
+		GravityLimit = GravityLimitDefault;
+	}
+
 protected:
 
 private:
@@ -69,6 +79,7 @@ private:
 	bool GravityValue = true;
 	float GravityPower = 1.0f;
 	float4 GravityVector = float4::ZERO;
-	float GravityLimit = 1000.0f;
+	float GravityLimitDefault = 1500.0f;
+	float GravityLimit = GravityLimitDefault;
 };
 

@@ -75,26 +75,27 @@ private:
 
 	// 캐릭터 기본 물리값
 	bool FromJump = false;
+	bool FromRun = false;
 	float JumpForce = 1.0f;
 	float Speed = 1.0f;
-	float DefaultGravityPower = 1000.0f;
-	float AddGravityByRun = 0.0f;
+	float DefaultGravityPower = 0.0f;
+	
 	bool CheckPosOn = false;
 
 	// 워프의 기본 중력값
 	float HoleDefaultGravityValue = 0.0f;
 
 	// 맵 충돌 체크
-	float4 MapLeftUpCheck = { -18.0f, -17.0f };
-	float4 MapLeftMiddleCheck = { -18.0f, 0.0f };
-	float4 MapLeftDownCheck = { -18.0f, 18.0f };
+	float4 MapLeftUpCheck = { -19.0f, -17.0f };
+	float4 MapLeftMiddleCheck = { -19.0f, 0.0f };
+	float4 MapLeftDownCheck = { -19.0f, 17.0f };
 	
 	float4 MapRightUpCheck = { 19.0f, -17.0f };
 	float4 MapRightMiddleCheck = { 19.0f, 0.0f };
-	float4 MapRightDownCheck = { 19.0f, 18.0f };
+	float4 MapRightDownCheck = { 19.0f, 17.0f };
 	
 	float4 MapMiddleUpCheck = { 0.0f, -17.0f };
-	float4 MapMiddleDownCheck = { 0.0f, 18.0f };
+	float4 MapMiddleDownCheck = { 0.0f, 17.0f };
 	
 };
 

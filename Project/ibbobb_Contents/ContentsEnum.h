@@ -12,10 +12,10 @@ enum class RenderOrder
 {
 	BackGround,
 	Map,
-	ibb,
-	obb,
 	RoadMonster,
 	JumpingMonster,
+	ibb,
+	obb,
 	PlayUI,
 };
 

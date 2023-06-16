@@ -52,7 +52,7 @@ void PlayLevel::Start()
 	// obb
 	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
 	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-	obbPlayer->SetPos({ 900, 600 });
+	obbPlayer->SetPos({ 4000, 600 });
 
 	// Monster
 	RoadMonster0 = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);

@@ -93,8 +93,6 @@ void obb::Init()
 	// 크기 설정
 	MainRenderer->SetScaleRatio(Ratio);
 
-
-
 	// 충돌체 설정
 	BodyCollision = CreateCollision(CollisionOrder::obb);
 	BodyCollision->SetCollisionScale({ 40, 40 });

@@ -24,16 +24,6 @@ void GravityActor::Gravity(float _DeltaTime)
 
 	GravityVector += float4::DOWN * GravityPower * _DeltaTime;
 
-	float AbsoluteVector = GravityVector.Y;
-	if (GravityLimit < AbsoluteVector)
-	{
-		GravityVector.Y = GravityLimit;
-	}
-	else if (-GravityLimit > AbsoluteVector)
-	{
-		GravityVector.Y = -GravityLimit;
-	}
-
 	AddPos(GravityVector * _DeltaTime);
 }
 

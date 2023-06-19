@@ -69,23 +69,30 @@ private:
 		State = _State;
 	}
 
-	PlayerState State;
+	// 캐릭터 상태변수
+	PlayerState State = PlayerState::Fall;
 	PlayerDir CurDir = PlayerDir::Right;
-	bool ReverseValue = false;
-
-	// 캐릭터 기본 물리값
 	bool FromJump = false;
 	bool FromRun = false;
+	
+
+	// 캐릭터 물리변수
 	float JumpForce = 1.0f;
 	float Speed = 1.0f;
-	float DefaultGravityPower = 0.0f;
 	
-	bool CheckPosOn = false;
+	float DefaultGravityPower = 0.0f;
+	bool PrevAreaVectorInit = false;
+	float4 PrevAreaVector = float4::ZERO;
 
-	// 워프의 기본 중력값
-	float HoleDefaultGravityValue = 0.0f;
+	float MinGravityInHole = 0.0f;
+	float MaxGravityInHole = 0.0f;
+
+	float ErrorRangeOfGravity = 0.0f;
+	
 
 	// 맵 충돌 체크
+	bool CheckPosOn = false;
+
 	float4 MapLeftUpCheck = { -19.0f, -17.0f };
 	float4 MapLeftMiddleCheck = { -19.0f, 0.0f };
 	float4 MapLeftDownCheck = { -19.0f, 17.0f };
@@ -97,5 +104,7 @@ private:
 	float4 MapMiddleUpCheck = { 0.0f, -17.0f };
 	float4 MapMiddleDownCheck = { 0.0f, 17.0f };
 	
+	bool LengthWorpPass = false;
+	bool WidthWorpPass = false;
 };
 

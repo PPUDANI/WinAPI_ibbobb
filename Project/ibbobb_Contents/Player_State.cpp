@@ -9,17 +9,7 @@
 
 void Player::IdleUpdate(float _DeltaTime)
 {
-	// 바닥에 닿을 시 워프 시 추가된 중력 제거
-	{
-		if (true == ReverseValue)
-		{
-			SetGravityPower(-DefaultGravityPower);
-		}
-		else
-		{
-			SetGravityPower(DefaultGravityPower);
-		}
-	}
+	
 
 	// Run 상태 체크
 	if (true == GameEngineInput::IsPress(MoveLeftKey) || true == GameEngineInput::IsPress(MoveRightKey))
@@ -121,7 +111,6 @@ void Player::RunUpdate(float _DeltaTime)
 		{
 			if (false == ReverseValue)
 			{
-				FromRun = true;
 				ReverseValue = true;
 				SetGravityPower(-DefaultGravityPower);
 			}
@@ -130,7 +119,6 @@ void Player::RunUpdate(float _DeltaTime)
 		{
 			if (true == ReverseValue)
 			{
-				FromRun = true;
 				ReverseValue = false;
 				SetGravityPower(DefaultGravityPower);
 			}
@@ -235,7 +223,7 @@ void Player::RunUpdate(float _DeltaTime)
 
 void Player::FallUpdate(float _DeltaTime)
 {
-
+	
 	// Fall의 중력 반전 체크
 	{
 		unsigned int MidColor = GetGroundColor(RGB(0, 255, 255), float4::ZERO);
@@ -246,32 +234,50 @@ void Player::FallUpdate(float _DeltaTime)
 				ReverseValue = true;
 				SetGravityPower(-DefaultGravityPower);
 
-				// Run 상태에서 세로워프를 타고 Fall이 된 경우가 아닐때만 시행
-				if (false == FromRun)
+				if (true == LengthWorpPass)
 				{
-					// 워프 통과 시 떨어진 만큼 이동하는 거리 제한
-					SetGravityLimit(GetGravityVector().Y);
-
-					// 워프홀 통과 시 못빠져 나올 가능성 제거
-					float AbsoluteVector = GetGravityVector().Y;
-					if (0 > AbsoluteVector)
+					// 중력 한계치 초기화
+					if (false == PrevAreaVectorInit)
 					{
-						AbsoluteVector = -AbsoluteVector; // 절대값 변환
+						PrevAreaVector.Y = GetGravityVector().Y;
+
+						// 중력이 너무 작아 구멍에서 못 빠져나올 가능성 제거
+						if (PrevAreaVector.Y < MinGravityInHole)
+						{
+							PrevAreaVector.Y = MinGravityInHole;
+						}
+
+						PrevAreaVectorInit = true;
 					}
 
-					if (DefaultGravityPower * 0.3f >= AbsoluteVector)
+					// 영역반전 시 중력의 변화량이 중력 오차범위를 넘었다면 "중력 기준치" 변경
+					int a = GetGravityVector().Y;
+					if (GetGravityVector().Y > PrevAreaVector.Y * ErrorRangeOfGravity)
 					{
-						SetGravityPower(-DefaultGravityPower + HoleDefaultGravityValue);
+						PrevAreaVector.Y = -GetGravityVector().Y;
+
+						// 레벨기준 좌표 이상으로 올라갈 가능성 제거
+						if (PrevAreaVector.Y < -MaxGravityInHole)
+						{
+							PrevAreaVector.Y = -MaxGravityInHole;
+						}
+
+						// Vector를 이전 중력값으로 변경하기 전에 PrevAreaVector를 음수화 하였으므로 음수로 넣어줌
+						SetGravityVector(-PrevAreaVector);
 					}
 					else
 					{
-						SetGravityPower(-DefaultGravityPower);
+						// 레벨기준 좌표 이상으로 올라갈 가능성 제거
+						if (PrevAreaVector.Y > MaxGravityInHole)
+						{
+							PrevAreaVector.Y = MaxGravityInHole;
+						}
+
+						// 오차범위 안이라면 DeltaTime로 인해서 생긴 GravityVector 오차 제거
+						SetGravityVector(PrevAreaVector);
+						PrevAreaVector.Y = -GetGravityVector().Y;
 					}
 				}
-			}
-			else
-			{
-				ResetGravityLimit();
 			}
 		}
 		else if (MidColor == RGB(255, 255, 255))
@@ -281,32 +287,49 @@ void Player::FallUpdate(float _DeltaTime)
 				ReverseValue = false;
 				SetGravityPower(DefaultGravityPower);
 
-				// Run 상태에서 세로워프를 타고 Fall이 된 경우가 아닐때만 시행
-				if (false == FromRun)
+				if (true == LengthWorpPass)
 				{
-					// 워프 통과 시 중력으로 이동하는 거리 제한
-					SetGravityLimit(-GetGravityVector().Y);
-
-					// 워프홀 통과 시 못빠져 나올 가능성 제거
-					float AbsoluteVector = GetGravityVector().Y;
-					if (0 > AbsoluteVector)
+					// 초기화
+					if (false == PrevAreaVectorInit)
 					{
-						AbsoluteVector = -AbsoluteVector; // 절대값 변환
+						PrevAreaVector.Y = GetGravityVector().Y;
+
+						// 중력이 너무 작아 구멍에서 못 빠져나올 가능성 제거
+						if (PrevAreaVector.Y > -MinGravityInHole)
+						{
+							PrevAreaVector.Y = -MinGravityInHole;
+						}
+
+						PrevAreaVectorInit = true;
 					}
 
-					if (DefaultGravityPower * 0.3f >= AbsoluteVector)
+					// 영역반전 시 중력의 변화량이 중력 오차범위를 넘었다면 "중력 기준치" 변경
+					int a = GetGravityVector().Y;
+					if (GetGravityVector().Y < PrevAreaVector.Y * ErrorRangeOfGravity)
 					{
-						SetGravityPower(DefaultGravityPower - HoleDefaultGravityValue);
+						PrevAreaVector.Y = -GetGravityVector().Y;
+
+						// 레벨기준 좌표 이상으로 올라갈 가능성 제거
+						if (PrevAreaVector.Y > MaxGravityInHole)
+						{
+							PrevAreaVector.Y = MaxGravityInHole;
+						}
+
+						SetGravityVector(-PrevAreaVector);
 					}
 					else
 					{
-						SetGravityPower(DefaultGravityPower);
+						// 레벨기준 좌표 이상으로 올라갈 가능성 제거
+						if (PrevAreaVector.Y < -MaxGravityInHole)
+						{
+							PrevAreaVector.Y = -MaxGravityInHole;
+						}
+
+						// 오차범위 안이라면 DeltaTime로 인해서 생긴 GravityVector 오차 제거
+						SetGravityVector(PrevAreaVector);
+						PrevAreaVector.Y = -GetGravityVector().Y;
 					}
 				}
-			}
-			else
-			{
-				ResetGravityLimit();
 			}
 		}
 	}
@@ -317,47 +340,38 @@ void Player::FallUpdate(float _DeltaTime)
 		unsigned int MiddleDownColor;
 		unsigned int RightDownColor;
 
-		unsigned int MiddleColor;
-		unsigned int MiddleUpColor;
-
-
 		// 중력 반전 체크
 		if (true == ReverseValue)
 		{
 			LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::UP - float4::LEFT);
 			MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck + float4::UP);
 			RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::UP - float4::RIGHT);
-			MiddleColor = GetGroundColor(RGB(255, 0, 0), float4::ZERO);
-			MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck);
 
 			// 바닥 체크
 			if (LeftDownColor == RGB(255, 0, 0) ||
 				MiddleDownColor == RGB(255, 0, 0) ||
-				RightDownColor == RGB(255, 0, 0) ||
-				MiddleColor == RGB(255, 0, 0) ||
-				MiddleUpColor == RGB(255, 0, 0))
+				RightDownColor == RGB(255, 0, 0))
 			{
 				while (LeftDownColor == RGB(255, 0, 0) ||
 					MiddleDownColor == RGB(255, 0, 0) ||
-					RightDownColor == RGB(255, 0, 0) ||
-					MiddleColor == RGB(255, 0, 0) ||
-					MiddleUpColor == RGB(255, 0, 0))
+					RightDownColor == RGB(255, 0, 0))
 				{
 					LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck - float4::LEFT);
 					MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck);
 					RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck - float4::RIGHT);
-					MiddleColor = GetGroundColor(RGB(255, 0, 0), float4::ZERO);
-					MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck);
 
 					AddPos(float4::DOWN);
 				}
 				// 지글현상 제거
 				AddPos(float4::UP);
 
-				// 변환한 중력 설정 초기화
-				ResetGravityLimit();
+				// "Fall" 상태 연산 설정 초기화
 				GravityReset();
 				FromRun = false;
+				PrevAreaVectorInit = false;
+				
+				// 바닥에 닿을 시 워프홀 상호작용 때 추가된 중력 초기화
+				SetGravityPower(-DefaultGravityPower);
 
 				SetAnimation("Idle");
 				ChangeState(PlayerState::Idle);
@@ -374,27 +388,19 @@ void Player::FallUpdate(float _DeltaTime)
 			LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::DOWN - float4::LEFT);
 			MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck + float4::DOWN);
 			RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::DOWN - float4::RIGHT);
-			MiddleColor = GetGroundColor(RGB(255, 0, 0), float4::ZERO);
-			MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
 
 			// 바닥 체크
 			if (LeftDownColor == RGB(255, 0, 0) ||
 				MiddleDownColor == RGB(255, 0, 0) ||
-				RightDownColor == RGB(255, 0, 0) ||
-				MiddleColor == RGB(255, 0, 0) ||
-				MiddleUpColor == RGB(255, 0, 0))
+				RightDownColor == RGB(255, 0, 0))
 			{
 				while (LeftDownColor == RGB(255, 0, 0) ||
 					MiddleDownColor == RGB(255, 0, 0) ||
-					RightDownColor == RGB(255, 0, 0) ||
-					MiddleColor == RGB(255, 0, 0) ||
-					MiddleUpColor == RGB(255, 0, 0))
+					RightDownColor == RGB(255, 0, 0))
 				{
 					LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck - float4::LEFT);
 					MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
 					RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck - float4::RIGHT);
-					MiddleColor = GetGroundColor(RGB(255, 0, 0), float4::ZERO);
-					MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
 
 					AddPos(float4::UP);
 				}
@@ -402,9 +408,13 @@ void Player::FallUpdate(float _DeltaTime)
 				AddPos(float4::DOWN);
 
 				// 변환한 외부 설정 초기화
-				ResetGravityLimit();
 				GravityReset();
-				FromRun = false;
+				LengthWorpPass = false;
+				WidthWorpPass = false;
+				PrevAreaVectorInit = false;
+
+				// 바닥에 닿을 시 워프홀 상호작용 때 추가된 중력 초기화
+				SetGravityPower(DefaultGravityPower);
 
 				SetAnimation("Idle");
 				ChangeState(PlayerState::Idle);
@@ -426,112 +436,34 @@ void Player::FallUpdate(float _DeltaTime)
 			CurDir = PlayerDir::Left;
 
 			// 좌측 충돌 체크
-			if (true == ReverseValue)
-			{
-				unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::LEFT);
-				unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck + float4::LEFT);
 
-				if (LeftUpColor == RGB(255, 0, 0) ||
-					LeftMiddleColor == RGB(255, 0, 0))
-				{
-					while (LeftUpColor == RGB(255, 0, 0) ||
-						LeftMiddleColor == RGB(255, 0, 0))
-					{
-						LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck);
-						LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);
-						AddPos(float4::RIGHT);
-					}
-					// 지글현상 제거
-					AddPos(float4::LEFT);
-				}
-				else
-				{
-					MovePos = { -Speed * _DeltaTime, 0.0f };
-				}
-			}
-			else
+			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::LEFT);
+			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck + float4::LEFT);
+			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::LEFT);
+			if (LeftUpColor != RGB(255, 0, 0) &&
+				LeftMiddleColor != RGB(255, 0, 0) &&
+				LeftDownColor != RGB(255, 0, 0))
 			{
-				unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::LEFT);
-				unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck + float4::LEFT);
-
-				if (LeftUpColor == RGB(255, 0, 0) ||
-					LeftMiddleColor == RGB(255, 0, 0))
-				{
-					while (LeftUpColor == RGB(255, 0, 0) ||
-						LeftMiddleColor == RGB(255, 0, 0))
-					{
-						LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck);
-						LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);
-						AddPos(float4::RIGHT);
-					}
-					// 지글현상 제거
-					AddPos(float4::LEFT);
-				}
-				else
-				{
-					MovePos = { -Speed * _DeltaTime, 0.0f };
-				}
+				MovePos = { -Speed * _DeltaTime, 0.0f };
 			}
 		}
 		else if (true == GameEngineInput::IsPress(MoveRightKey))
 		{
 			CurDir = PlayerDir::Right;
-			if (true == ReverseValue)
-			{
-				// 우측 충돌 체크
-				unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::RIGHT);
-				unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck + float4::RIGHT);
 
-				if (RightUpColor == RGB(255, 0, 0) ||
-					RightMiddleColor == RGB(255, 0, 0))
-				{
-					while (RightUpColor == RGB(255, 0, 0) ||
-						RightMiddleColor == RGB(255, 0, 0))
-					{
-						RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck);
-						RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
-						AddPos(float4::LEFT);
-					}
-					// 지글현상 제거
-					AddPos(float4::RIGHT);
-				}
-				else
-				{
-					MovePos = { Speed * _DeltaTime, 0.0f };
-				}
-			}
-			else
+			// 우측 충돌 체크
+			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::RIGHT);
+			unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck + float4::RIGHT);
+			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::RIGHT);
+			if (RightUpColor != RGB(255, 0, 0) &&
+				RightMiddleColor != RGB(255, 0, 0) &&
+				RightDownColor != RGB(255, 0, 0))
 			{
-				// 우측 충돌 체크
-				unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::RIGHT);
-				unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck + float4::RIGHT);
-
-				if (RightUpColor == RGB(255, 0, 0) ||
-					RightMiddleColor == RGB(255, 0, 0))
-				{
-					while (RightUpColor == RGB(255, 0, 0) ||
-						RightMiddleColor == RGB(255, 0, 0))
-					{
-						RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck);
-						RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
-						AddPos(float4::LEFT);
-					}
-					// 지글현상 제거
-					AddPos(float4::RIGHT);
-				}
-				else
-				{
-					MovePos = { Speed * _DeltaTime, 0.0f };
-				}
+				MovePos = { Speed * _DeltaTime, 0.0f };
 			}
-			
 		}
 		AddPos(MovePos);
 	}
-
-	
-
-	
 
 	// 중력 반전 시 Fall 상태에서 상단 충돌 현상으로 인한 상단 충돌 체크
 	{
@@ -608,6 +540,26 @@ void Player::FallUpdate(float _DeltaTime)
 
 void Player::JumpUpdate(float _DeltaTime)
 {
+	// Jump의 중력 반전 체크
+	{
+		unsigned int MidColor = GetGroundColor(RGB(0, 255, 255), float4::ZERO);
+		if (MidColor == RGB(0, 255, 255))
+		{
+			if (false == ReverseValue)
+			{
+				ChangeState(PlayerState::Fall);
+				return;
+			}
+		}
+		else if (MidColor == RGB(255, 255, 255))
+		{
+			if (true == ReverseValue)
+			{
+				ChangeState(PlayerState::Fall);
+				return;
+			}
+		}
+	}
 
 	// Jump의 상단 충돌 체크
 	{
@@ -702,23 +654,14 @@ void Player::JumpUpdate(float _DeltaTime)
 		{
 			CurDir = PlayerDir::Left;
 
-			// 좌측 충돌 체크 (벽에 박힘 제거)
-			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::LEFT + float4::DOWN);
-			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck + float4::LEFT);
-			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::LEFT + float4::UP);
+			// 좌측 충돌 체크
 
-			if (LeftUpColor == RGB(255, 0, 0) || LeftMiddleColor == RGB(255, 0, 0) || LeftDownColor == RGB(255, 0, 0))
-			{
-				while (LeftUpColor == RGB(255, 0, 0) || LeftMiddleColor == RGB(255, 0, 0) || LeftDownColor == RGB(255, 0, 0))
-				{
-					LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::DOWN);
-					LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);
-					LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::UP);
-					AddPos(float4::RIGHT);
-				}
-				AddPos(float4::LEFT);
-			}
-			else
+			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::LEFT);
+			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck + float4::LEFT);
+			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::LEFT);
+			if (LeftUpColor != RGB(255, 0, 0) &&
+				LeftMiddleColor != RGB(255, 0, 0) &&
+				LeftDownColor != RGB(255, 0, 0))
 			{
 				MovePos = { -Speed * _DeltaTime, 0.0f };
 			}
@@ -727,22 +670,13 @@ void Player::JumpUpdate(float _DeltaTime)
 		{
 			CurDir = PlayerDir::Right;
 
-			// 우측 충돌 체크 (벽에 박힘 제거)
-			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::RIGHT + float4::DOWN);
+			// 우측 충돌 체크
+			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::RIGHT);
 			unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck + float4::RIGHT);
-			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::RIGHT + float4::UP);
-			if (RightUpColor == RGB(255, 0, 0) || RightMiddleColor == RGB(255, 0, 0) || RightDownColor == RGB(255, 0, 0))
-			{
-				while (RightUpColor == RGB(255, 0, 0) || RightMiddleColor == RGB(255, 0, 0) || RightDownColor == RGB(255, 0, 0))
-				{
-					RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::DOWN);
-					RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
-					RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::UP);
-					AddPos(float4::LEFT);
-				}
-				AddPos(float4::RIGHT);
-			}
-			else
+			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::RIGHT);
+			if (RightUpColor != RGB(255, 0, 0) &&
+				RightMiddleColor != RGB(255, 0, 0) &&
+				RightDownColor != RGB(255, 0, 0))
 			{
 				MovePos = { Speed * _DeltaTime, 0.0f };
 			}

@@ -61,25 +61,17 @@ public:
 		GravityVector = float4::ZERO;
 	}
 
-	inline void SetGravityLimit(float _GravityLimit)
-	{
-		GravityLimit = _GravityLimit;
-	}
-
-	inline void ResetGravityLimit()
-	{
-		GravityLimit = GravityLimitDefault;
-	}
+	
 
 protected:
+	bool ReverseValue = false;
 
 private:
 	class GameEngineWindowTexture* GroundTexture = nullptr;
 
 	bool GravityValue = true;
-	float GravityPower = 1.0f;
 	float4 GravityVector = float4::ZERO;
-	float GravityLimitDefault = 1500.0f;
-	float GravityLimit = GravityLimitDefault;
+
+	float GravityPower = 0.0f;
 };
 

@@ -37,22 +37,43 @@ void Player::Start()
 	SetGravityPower(DefaultGravityPower);
 
 	// 워프홀 기본 중력값 설정 (중력값이 작아 못 빠져나올 가능성 제거)
-	HoleDefaultGravityValue = 400.0f;
+	MinGravityInHole = 350.0f;
+	MaxGravityInHole = 1100.0f;
+	ErrorRangeOfGravity = 1.1f;
 
 	// 점프력 설정
 	JumpForce = 550.0f;
 
 	// 속도 설정
 	Speed = 200.0f;
+
 }
 
 void Player::Update(float _DeltaTime)
 {
-
 	if (true == GameEngineInput::IsDown('O'))
 	{
 		CheckPosOn = !CheckPosOn;
 	}
+
+	// 가로워프, 세로워프 구분
+	{
+		unsigned int LeftColor = GetGroundColor(RGB(0, 255, 255), MapLeftMiddleCheck);
+		unsigned int RightColor = GetGroundColor(RGB(0, 255, 255), MapRightMiddleCheck);
+		unsigned int UpColor = GetGroundColor(RGB(0, 255, 255), MapMiddleUpCheck);
+		unsigned int DownColor = GetGroundColor(RGB(0, 255, 255), MapMiddleDownCheck);
+		if (LeftColor != RightColor)
+		{
+			LengthWorpPass = false;
+			WidthWorpPass = true;
+		}
+		else if (UpColor != DownColor)
+		{
+			LengthWorpPass = true;
+			WidthWorpPass = false;
+		}
+	}
+
 
 	// 상태에 따른 Update
 	switch (State)
@@ -155,5 +176,3 @@ void Player::SetAnimation(const std::string _State, int _StartFrame)
 	AnimationName += _State;
 	MainRenderer->ChangeAnimation(AnimationName, _StartFrame);
 }
-
-

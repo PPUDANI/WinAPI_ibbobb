@@ -149,6 +149,11 @@ void GameEngineWindowTexture::BitCopy(
 
 void GameEngineWindowTexture::TransCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, int _TransColor/* = RGB(255, 0, 255)*/)
 {
+	if (nullptr == _CopyTexture)
+	{
+		MsgBoxAssert("카피할 텍스처가 세팅되지 않았습니다.");
+	}
+
 	HDC CopyImageDC = _CopyTexture->GetImageDC();
 
 	//// 특정 DC에 연결된 색상을
@@ -206,4 +211,102 @@ void GameEngineWindowTexture::FillTexture(unsigned int _Color)
 	FillRect(ImageDC, &Rc, brh);
 
 	DeleteObject(brh);
+}
+
+void GameEngineWindowTexture::PlgCopy(GameEngineWindowTexture* _CopyTexture
+	, GameEngineWindowTexture* _MaskTexture
+	, const float4& _Pos
+	, const float4& _Scale
+	, const float4& _OtherPos
+	, const float4& _OtherScale
+	, float _Angle
+)
+{
+	// float절대로 오차가 없을수 없다.
+
+	// 아래와 같은 왠만하면 하면 안되요.
+	//if (a == 30.0f)
+	//if (a == 0.0f) <= 같다를 할거면 요런건 허용된다.
+	//{
+	//}
+
+	// float ==
+
+	// 점의 회전을 만들어야 한다.
+
+	if (nullptr == _CopyTexture)
+	{
+		MsgBoxAssert("카피할 텍스처가 세팅되지 않았습니다.");
+	}
+
+	if (nullptr == _MaskTexture)
+	{
+		MsgBoxAssert("마스크 텍스처가 없이 이미지 회전을 시킬수는 없습니다.");
+	}
+
+	if (_Angle == 180.0f)
+	{
+		// 완전히 반전되었을때만 에러가 좀 있어서
+		_Angle = 180.000001f;
+	}
+
+	POINT ArrPoint[3];
+
+	// _Scale화면에 그리고자 하는 크기
+	GameEngineRect Rect = GameEngineRect(float4::ZERO, _Scale);
+
+	float4 LeftTop = Rect.CenterLeftTop();
+	float4 RightTop = Rect.CenterRightTop();
+	float4 LeftBot = Rect.CenterLeftBot();
+	// float4 RightBot = Rect.CenterRightBot();
+
+	ArrPoint[0] = (LeftTop.GetRotationToDegZ(_Angle) + _Pos).WindowPOINT();
+	ArrPoint[1] = (RightTop.GetRotationToDegZ(_Angle) + _Pos).WindowPOINT();
+	ArrPoint[2] = (LeftBot.GetRotationToDegZ(_Angle) + _Pos).WindowPOINT();
+
+	HDC CopyImageDC = _CopyTexture->GetImageDC();
+
+	PlgBlt(ImageDC,
+		ArrPoint,
+		CopyImageDC,
+		_OtherPos.iX(), // 카피하려는 이미지의 왼쪽위 x
+		_OtherPos.iY(), // 카피하려는 이미지의 왼쪽위 y
+		_OtherScale.iX(), // 그부분부터 사이즈  x
+		_OtherScale.iY(), // 그부분부터 사이즈  y
+		_MaskTexture->BitMap,
+		_OtherPos.iX(), // 카피하려는 이미지의 왼쪽위 x
+		_OtherPos.iY()
+	);
+
+}
+
+void GameEngineWindowTexture::AlphaCopy(GameEngineWindowTexture* _CopyTexture, const float4& _Pos, const float4& _Scale, const float4& _OtherPos, const float4& _OtherScale, unsigned char _Alpha)
+{
+	if (nullptr == _CopyTexture)
+	{
+		MsgBoxAssert("카피할 텍스처가 세팅되지 않았습니다.");
+	}
+
+	HDC CopyImageDC = _CopyTexture->GetImageDC();
+
+	BLENDFUNCTION Function;
+
+	Function.BlendOp = AC_SRC_OVER;
+	Function.BlendFlags = 0;
+	Function.SourceConstantAlpha = _Alpha;
+	Function.AlphaFormat = AC_SRC_ALPHA;
+
+	AlphaBlend(
+		ImageDC,
+		_Pos.iX() - _Scale.ihX(),
+		_Pos.iY() - _Scale.ihY(),
+		_Scale.iX(),
+		_Scale.iY(),
+		CopyImageDC,
+		_OtherPos.iX(), // 카피하려는 이미지의 왼쪽위 x
+		_OtherPos.iY(), // 카피하려는 이미지의 왼쪽위 y
+		_OtherScale.iX(), // 그부분부터 사이즈  x
+		_OtherScale.iY(), // 그부분부터 사이즈  y
+		Function
+	);
 }

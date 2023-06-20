@@ -29,8 +29,7 @@ void Player::Start()
 
 	// 이건 무슨 함수?
 	//MainRenderer->SetRenderScaleToTexture();
-	
-	Ratio = 2.0f;
+	MainRenderer->SetScaleRatio(Ratio);
 
 	// 중력값 설정
 	DefaultGravityPower = 1200.0f;

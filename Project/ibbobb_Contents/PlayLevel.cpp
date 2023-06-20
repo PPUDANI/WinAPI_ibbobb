@@ -44,28 +44,10 @@ void PlayLevel::Start()
 	EXMap = CreateActor<Map>();
 	EXMap->Init("EXLevel.bmp", "EXLevel_Collision.bmp");
 
-	// ibb
-	ibbPlayer = CreateActor<ibb>(UpdateOrder::Player);
-	ibbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-	ibbPlayer->SetPos({ 4000, 600 });
 
-	// obb
-	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
-	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-	obbPlayer->SetPos({ 5000, 600 });
-
-	// Monster
-	RoadMonster0 = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
-	RoadMonster0->SetGroundTexture("EXLevel_Collision.bmp");
-	RoadMonster0->SetPos({ 700.0f, 787.0f }); //  709.0f
-	RoadMonster0->SetMovementDistance(200.0f);
-
-	JumpingMonster0 = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-	JumpingMonster0->SetGroundTexture("EXLevel_Collision.bmp");
-	JumpingMonster0->SetPos({ 1300.0f, 400.0f });
 	//GetMainCamera()->SetPos({-50, 300});
 
-	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.6f);
+	
 }
 
 void PlayLevel::Update(float _DeltaTime)
@@ -106,14 +88,37 @@ void PlayLevel::Release()
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	//if (nullptr == ibbPlayer)
-	//{
-	//	MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
-	//}
-	//if (nullptr == obbPlayer)
-	//{
-	//	MsgBoxAssert("플레이어를 세팅해주지 않았습니다");
-	//}
+	// ibb
+	ibbPlayer = CreateActor<ibb>(UpdateOrder::Player);
+	ibbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
+	ibbPlayer->SetPos({ 300.0f, 800.0f });
+	ibbPlayer->SetRatio(2.0f);
+
+	// obb
+	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
+	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
+	obbPlayer->SetPos({ 400.0f, 800.0f });
+	obbPlayer->SetRatio(2.0f);
+
+	// Monster
+	RoadMonster0 = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
+	RoadMonster0->SetGroundTexture("EXLevel_Collision.bmp");
+	RoadMonster0->SetPos({ 2416.0f, 727.0f });
+	RoadMonster0->SetDir(RoadMonsterDir::Left);
+	RoadMonster0->SetMovementDistance(250.0f);
+	RoadMonster0->SetSpeed(0.15f);
+
+	RoadMonster1 = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
+	RoadMonster1->SetGroundTexture("EXLevel_Collision.bmp");
+	RoadMonster1->SetPos({ 3000.0f, 677.0f });
+	RoadMonster1->SetMovementDistance(500.0f);
+	RoadMonster1->ReverseDir();
+	RoadMonster1->SetDir(RoadMonsterDir::Left);
+	RoadMonster1->SetSpeed(0.15f);
+
+	JumpingMonster0 = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
+	JumpingMonster0->SetGroundTexture("EXLevel_Collision.bmp");
+	JumpingMonster0->SetPos({ 1300.0f, 400.0f });
 }
 
 void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)

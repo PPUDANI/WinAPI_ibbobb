@@ -79,3 +79,18 @@ const GameEngineSprite::Sprite& GameEngineSprite::GetSprite(size_t _Index)
 
 	return AllSprite[_Index];
 }
+
+void GameEngineSprite::SetMaskTexture(const std::string& _MaskName)
+{
+	GameEngineWindowTexture* MaskTexture = ResourcesManager::GetInst().FindTexture(_MaskName);
+
+	if (nullptr == MaskTexture)
+	{
+		MsgBoxAssert("존재하지 않는 텍스처를 마스크로 사용하려고 했습니다.");
+	}
+
+	for (size_t i = 0; i < AllSprite.size(); i++)
+	{
+		AllSprite[i].MaskTexture = MaskTexture;
+	}
+}

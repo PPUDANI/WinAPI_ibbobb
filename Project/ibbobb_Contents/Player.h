@@ -32,23 +32,29 @@ public:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
+	inline void SetRatio(float _Ratio)
+	{
+		Ratio = _Ratio;
+	}
+
+
 
 protected:
 
 	virtual void Init() {}
-
+	
 	// 렌더러
 	GameEngineRenderer* MainRenderer = nullptr;
+	float Ratio = 2.0f;
 
 	// 충돌체
 	GameEngineCollision* BodyCollision = nullptr;
 
-	float Ratio = 2.0f;
-
-	int MoveRightKey;
-	int MoveLeftKey;
-	int JumpKey;
-	int CrouchKey;
+	// 조작키
+	int MoveRightKey = 0;
+	int MoveLeftKey = 0;
+	int JumpKey = 0;
+	int CrouchKey = 0;
 
 private:
 
@@ -64,10 +70,11 @@ private:
 	void DeadUpdate(float _DeltaTime); 
 	void SetAnimation(const std::string _State, int _StartFrame = 0);
 
-	void ChangeState(PlayerState _State)
+	inline void ChangeState(PlayerState _State)
 	{
 		State = _State;
 	}
+	
 
 	// 캐릭터 상태변수
 	PlayerState State = PlayerState::Fall;

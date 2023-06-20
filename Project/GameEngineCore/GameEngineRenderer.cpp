@@ -111,13 +111,8 @@ void GameEngineRenderer::TextRender(float _DeltaTime)
 	return;
 }
 
-void GameEngineRenderer::Render(float _DeltaTime)
+void GameEngineRenderer::Update(float _Delta)
 {
-	if ("" != Text)
-	{
-		TextRender(_DeltaTime);
-		return;
-	}
 
 	if (nullptr != CurAnimation)
 	{
@@ -126,7 +121,7 @@ void GameEngineRenderer::Render(float _DeltaTime)
 			CurAnimation->IsEnd = false;
 		}
 
-		CurAnimation->CurInter -= _DeltaTime;
+		CurAnimation->CurInter -= _Delta;
 		if (0.0f >= CurAnimation->CurInter)
 		{
 			++CurAnimation->CurFrame;
@@ -155,6 +150,7 @@ void GameEngineRenderer::Render(float _DeltaTime)
 		Sprite = CurAnimation->Sprite;
 		const GameEngineSprite::Sprite& SpriteInfo = Sprite->GetSprite(Frame);
 		Texture = SpriteInfo.BaseTexture;
+		MaskTexture = SpriteInfo.MaskTexture;
 		SetCopyPos(SpriteInfo.RenderPos);
 		SetCopyScale(SpriteInfo.RenderScale);
 
@@ -162,6 +158,15 @@ void GameEngineRenderer::Render(float _DeltaTime)
 		{
 			SetRenderScale(SpriteInfo.RenderScale * ScaleRatio);
 		}
+	}
+}
+
+void GameEngineRenderer::Render(float _DeltaTime)
+{
+	if ("" != Text)
+	{
+		TextRender(_DeltaTime);
+		return;
 	}
 
 	if (nullptr == Texture)
@@ -171,7 +176,18 @@ void GameEngineRenderer::Render(float _DeltaTime)
 
 	GameEngineWindowTexture* BackBuffer = GameEngineWindow::MainWindow.GetBackBuffer();
 
-	BackBuffer->TransCopy(Texture, GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale);
+	if (0 == Angle && 255 == Alpha)
+	{
+		BackBuffer->TransCopy(Texture, GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale);
+	}
+	else if (0 != Angle)
+	{
+		BackBuffer->PlgCopy(Texture, MaskTexture, GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale, Angle);
+	}
+	else if (255 != Alpha)
+	{
+		BackBuffer->AlphaCopy(Texture, GetActor()->GetPos() + RenderPos - Camera->GetPos(), RenderScale, CopyPos, CopyScale, Alpha);
+	}
 
 }
 
@@ -215,6 +231,7 @@ void GameEngineRenderer::CreateAnimation(
 
 	GameEngineRenderer::Animation& Animation = AllAnimation[UpperName];
 
+	Animation.Name = _AniamtionName;
 	Animation.Sprite = Sprite;
 
 	if (_Start != -1)
@@ -287,6 +304,7 @@ void GameEngineRenderer::CreateAnimationToFrame(
 
 	GameEngineRenderer::Animation& Animation = AllAnimation[UpperName];
 
+	Animation.Name = _AniamtionName;
 	Animation.Sprite = Sprite;
 	Animation.StartFrame = 0;
 	Animation.EndFrame = _Frame.size() - 1;
@@ -343,6 +361,16 @@ void GameEngineRenderer::Start()
 {
 }
 
+void GameEngineRenderer::SetAngle(float _Angle)
+{
+	Angle = _Angle;
+}
+
+void GameEngineRenderer::SetAlpha(unsigned char _Alpha)
+{
+	Alpha = _Alpha;
+}
+
 void GameEngineRenderer::SetOrder(int _Order)
 {
 	if (nullptr == Camera)
@@ -363,4 +391,11 @@ void GameEngineRenderer::SetOrder(int _Order)
 	std::list<GameEngineRenderer*>& NextRenders = Camera->Renderers[GetOrder()];
 	NextRenders.push_back(this);
 
+}
+
+float GameEngineRenderer::GetActorYPivot()
+{
+	float4 ActorPos = GetActor()->GetPos() + RenderPos;
+
+	return ActorPos.Y + YPivot;
 }

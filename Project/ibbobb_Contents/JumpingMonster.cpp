@@ -22,7 +22,11 @@ void JumpingMonster::Start()
 	FilePath.MoveParentToExistsChild("Resources");
 	FilePath.MoveChild("Resources\\Texture\\Monster\\JumpingMonster\\");
 
-	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("JumpingMonster.bmp"), 3, 4);
+	if (ResourcesManager::GetInst().FindSprite("JumpingMonster.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("JumpingMonster.bmp"), 3, 4);
+	}
+	
 	Renderer = CreateRenderer(RenderOrder::JumpingMonster);
 
 	Renderer->CreateAnimation("Idle", "JumpingMonster.bmp", 0, 0, 10.0f, true);

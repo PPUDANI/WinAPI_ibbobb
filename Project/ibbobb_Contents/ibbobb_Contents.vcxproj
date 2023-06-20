@@ -159,11 +159,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="BlinkImage.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ContentCore.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="ContentsEnum.h" />
+    <ClInclude Include="DefaultImage.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EndingLevel.h">
       <SubType>
       </SubType>
@@ -177,6 +185,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="JumpingMonster.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Lobby.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -200,7 +212,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Titleibb.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TitleLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Titleobb.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -210,7 +230,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BlinkImage.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="DefaultImage.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -227,6 +255,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="JumpingMonster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Lobby.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -251,7 +283,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Titleibb.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Titleobb.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -12,6 +12,7 @@ public:
 	{
 	public:
 		GameEngineWindowTexture* BaseTexture = nullptr;
+		GameEngineWindowTexture* MaskTexture = nullptr;
 		float4 RenderPos = float4::ZERO;
 		float4 RenderScale = float4::ZERO;
 	};
@@ -38,11 +39,11 @@ public:
 		return AllSprite.size();
 	}
 
+	void SetMaskTexture(const std::string& _MaskName);
+
 protected:
 
 private:
-
 	std::vector<Sprite> AllSprite;
-
 };
 

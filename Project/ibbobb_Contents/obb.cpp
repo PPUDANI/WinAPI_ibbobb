@@ -13,6 +13,7 @@
 #include "Player.h"
 #include <windows.h>
 
+bool obb::IsLoadTexture = false;
 obb::obb()
 {
 }
@@ -23,17 +24,37 @@ obb::~obb()
 
 void obb::Init()
 {
+
+
+
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
 	FilePath.MoveParentToExistsChild("Resources");
 	FilePath.MoveChild("Resources\\Texture\\Characters\\obb\\");
 
-	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_obb.bmp"), 7, 6);
-	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_obb.bmp"), 7, 6);
-	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_obb_Reverse.bmp"), 7, 6);
-	ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_obb_Reverse.bmp"), 7, 6);
+	if (ResourcesManager::GetInst().FindSprite("Left_obb.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_obb.bmp"), 7, 6);
+	}
+
+	if (ResourcesManager::GetInst().FindSprite("Right_obb.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_obb.bmp"), 7, 6);
+	}
+
+	if (ResourcesManager::GetInst().FindSprite("Left_obb_Reverse.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_obb_Reverse.bmp"), 7, 6);
+	}
+
+	if (ResourcesManager::GetInst().FindSprite("Right_obb_Reverse.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_obb_Reverse.bmp"), 7, 6);
+	}
+
 	MainRenderer = CreateRenderer(RenderOrder::obb);
 	float Frame;
+
 	// Idle Animation
 	Frame = 10.0f;
 	MainRenderer->CreateAnimation("Left_Idle", "Left_obb.bmp", 0, 0, Frame, true);
@@ -89,9 +110,6 @@ void obb::Init()
 	MainRenderer->CreateAnimation("Right_Dead", "Right_obb.bmp", 39, 41, Frame, true);
 	MainRenderer->CreateAnimation("ReverseLeft_Dead", "Left_obb_Reverse.bmp", 39, 41, Frame, true);
 	MainRenderer->CreateAnimation("ReverseRight_Dead", "Right_obb_Reverse.bmp", 39, 41, Frame, true);
-
-	// 크기 설정
-	MainRenderer->SetScaleRatio(Ratio);
 
 	// 충돌체 설정
 	BodyCollision = CreateCollision(CollisionOrder::obb);

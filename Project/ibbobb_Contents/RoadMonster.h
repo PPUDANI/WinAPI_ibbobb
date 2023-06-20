@@ -25,6 +25,16 @@ public:
 		MovementDistance = _MovementDistance;
 	}
 
+	inline void SetSpeed(float _Speed)
+	{
+		Speed = _Speed;
+	}
+
+	inline void SetDir(RoadMonsterDir _Dir)
+	{
+		CurDir = _Dir;
+	}
+
 	inline void ReverseDir()
 	{
 		ReverseValue = !ReverseValue;
@@ -36,12 +46,14 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void SetAnimation(const std::string _State, int _StartFrame = 0);
-	float Speed = 1.0f;
+
+	float Speed = 0.1f;
+	float CurDistance = 0.0f;
 	float MovementDistance = 100.0f;
 	bool ReverseValue = false;
 	RoadMonsterDir CurDir = RoadMonsterDir::Left;
 	
-	class GameEngineCollision* BodyCollision;
-	class GameEngineRenderer* Renderer;
+	class GameEngineCollision* BodyCollision = nullptr;
+	class GameEngineRenderer* Renderer = nullptr;
 };
 

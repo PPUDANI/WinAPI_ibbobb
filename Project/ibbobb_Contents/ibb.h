@@ -18,6 +18,5 @@ protected:
 
 private:
 	void Init() override;
-	//void Start() override;
-	//void Update(float _DeltaTime) override;
+	static bool IsLoadTexture;
 };

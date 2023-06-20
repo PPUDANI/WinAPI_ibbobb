@@ -36,6 +36,21 @@
     <ClInclude Include="obb.h">
       <Filter>Contents\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Lobby.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Titleibb.h">
+      <Filter>TitleObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Titleobb.h">
+      <Filter>TitleObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BlinkImage.h">
+      <Filter>TitleObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultImage.h">
+      <Filter>TitleObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -72,6 +87,21 @@
     </ClCompile>
     <ClCompile Include="obb.cpp">
       <Filter>Contents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Lobby.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Titleibb.cpp">
+      <Filter>TitleObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Titleobb.cpp">
+      <Filter>TitleObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BlinkImage.cpp">
+      <Filter>TitleObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultImage.cpp">
+      <Filter>TitleObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

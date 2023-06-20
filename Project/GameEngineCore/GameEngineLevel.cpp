@@ -2,6 +2,7 @@
 #include "GameEngineCamera.h"
 #include <GameEngineBase/GameEngineDebug.h>
 #include "GameEngineCollision.h"
+#include <GameEngineBase/GameEngineTime.h>
 
 bool GameEngineLevel::IsCollisionDebugRender = false;
 
@@ -54,6 +55,8 @@ void GameEngineLevel::ActorUpdate(float _Delta)
 	{
 		const std::list<GameEngineActor*>& Group = _Pair.second;
 
+		float TimeScale = GameEngineTime::MainTimer.GetTimeScale(_Pair.first);
+
 		for (GameEngineActor* _Actor : Group)
 		{
 			if (false == _Actor->IsUpdate())
@@ -62,7 +65,8 @@ void GameEngineLevel::ActorUpdate(float _Delta)
 			}
 
 			_Actor->AddLiveTime(_Delta);
-			_Actor->Update(_Delta);
+			_Actor->Update(_Delta * TimeScale);
+			_Actor->SubObjectUpdate(_Delta * TimeScale);
 		}
 	}
 }
@@ -175,6 +179,7 @@ void GameEngineLevel::CollisionRelease()
 void GameEngineLevel::ActorRelease()
 {
 	MainCamera->Release();
+	UICamera->Release();
 
 	CollisionRelease();
 

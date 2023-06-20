@@ -25,7 +25,7 @@ public:
 
 	// ChangeTile(int X1, int Y1, int X2, int Y2);
 
-	// GameEngineRenderer* MoveTile(int X1, int Y1, int X2, int Y2);
+	bool MoveTile(int X1, int Y1, int X2, int Y2, float4 _TilePos);
 
 	void SetTile(int X, int Y, int _Index, float4 _TilePos = float4::ZERO, bool _IsImageSize = false);
 

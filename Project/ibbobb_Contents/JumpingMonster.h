@@ -34,5 +34,5 @@ private:
 
 	class GameEngineCollision* BodyCollision;
 	float JumpForce = 1.0f;
-	class GameEngineRenderer* Renderer;
+	class GameEngineRenderer* Renderer = nullptr;
 };

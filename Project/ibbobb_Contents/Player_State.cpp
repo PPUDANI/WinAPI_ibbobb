@@ -9,8 +9,6 @@
 
 void Player::IdleUpdate(float _DeltaTime)
 {
-	
-
 	// Run 상태 체크
 	if (true == GameEngineInput::IsPress(MoveLeftKey) || true == GameEngineInput::IsPress(MoveRightKey))
 	{
@@ -45,11 +43,10 @@ void Player::IdleUpdate(float _DeltaTime)
 	if (RandomNumber == 1)
 	{
 		SetAnimation("Blink");
+		return;
 	}
-	if (true == MainRenderer->IsAnimationEnd())
-	{
-		SetAnimation("Idle");
-	}
+
+	SetAnimation("Idle");
 }
 
 void Player::CrouchUpdate(float _DeltaTime)
@@ -72,7 +69,6 @@ void Player::CrouchUpdate(float _DeltaTime)
 	else
 	{
 		ChangeState(PlayerState::Idle);
-		SetAnimation("Idle");
 	}
 }
 
@@ -184,7 +180,6 @@ void Player::RunUpdate(float _DeltaTime)
 		else
 		{
 			ChangeState(PlayerState::Idle);
-			SetAnimation("Idle");
 			return;
 		}
 		AddPos(MovePos);
@@ -251,7 +246,6 @@ void Player::FallUpdate(float _DeltaTime)
 					}
 
 					// 영역반전 시 중력의 변화량이 중력 오차범위를 넘었다면 "중력 기준치" 변경
-					int a = GetGravityVector().Y;
 					if (GetGravityVector().Y > PrevAreaVector.Y * ErrorRangeOfGravity)
 					{
 						PrevAreaVector.Y = -GetGravityVector().Y;
@@ -304,7 +298,6 @@ void Player::FallUpdate(float _DeltaTime)
 					}
 
 					// 영역반전 시 중력의 변화량이 중력 오차범위를 넘었다면 "중력 기준치" 변경
-					int a = GetGravityVector().Y;
 					if (GetGravityVector().Y < PrevAreaVector.Y * ErrorRangeOfGravity)
 					{
 						PrevAreaVector.Y = -GetGravityVector().Y;
@@ -373,7 +366,6 @@ void Player::FallUpdate(float _DeltaTime)
 				// 바닥에 닿을 시 워프홀 상호작용 때 추가된 중력 초기화
 				SetGravityPower(-DefaultGravityPower);
 
-				SetAnimation("Idle");
 				ChangeState(PlayerState::Idle);
 				return;
 			}
@@ -416,7 +408,6 @@ void Player::FallUpdate(float _DeltaTime)
 				// 바닥에 닿을 시 워프홀 상호작용 때 추가된 중력 초기화
 				SetGravityPower(DefaultGravityPower);
 
-				SetAnimation("Idle");
 				ChangeState(PlayerState::Idle);
 				return;
 			}

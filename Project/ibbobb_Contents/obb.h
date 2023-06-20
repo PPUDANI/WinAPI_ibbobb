@@ -15,8 +15,8 @@ public:
 	obb& operator=(obb&& _Other) noexcept = delete;
 
 protected:
-
+	
 private:
 	void Init() override;
-
+	static bool IsLoadTexture;
 };

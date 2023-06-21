@@ -62,5 +62,8 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
+	TitleibbPlayer->OverOff();
+	TitleobbPlayer->OverOff();
+	PressText->OverOff();
+	Title->OverOff();
 }

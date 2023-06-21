@@ -55,7 +55,7 @@ void PlayLevel::Update(float _DeltaTime)
 	if (true == GameEngineInput::IsDown('O'))
 	{
 		EXMap->SwitchRender();
-		//CollisionDebugRenderSwitch();
+		CollisionDebugRenderSwitch();
 	}
 
 	// ZoomIn, ZoomOut

@@ -127,14 +127,17 @@ void RoadMonster::Update(float _DeltaTime)
 		AddPos(MovePos);
 	}
 
-	int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 500);
+	int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 600);
 	if (RandomNumber == 1)
 	{
 		SetAnimation("Blink");
 		return;
 	}
 
-	SetAnimation("Idle");
+	if (true == Renderer->IsAnimationEnd())
+	{
+		SetAnimation("Idle");
+	}
 }
 
 void RoadMonster::SetAnimation(const std::string _State, int _StartFrame/* = 0*/)

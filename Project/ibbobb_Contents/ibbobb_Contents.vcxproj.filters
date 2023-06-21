@@ -8,9 +8,6 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="ContentCore.h" />
-    <ClInclude Include="TitleLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Global</Filter>
     </ClInclude>
@@ -49,6 +46,9 @@
       <Filter>TitleObject</Filter>
     </ClInclude>
     <ClInclude Include="DefaultImage.h">
+      <Filter>TitleObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleLevel.h">
       <Filter>TitleObject</Filter>
     </ClInclude>
   </ItemGroup>

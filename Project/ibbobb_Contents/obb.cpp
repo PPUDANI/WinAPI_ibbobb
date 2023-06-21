@@ -113,12 +113,31 @@ void obb::Init()
 
 	// 충돌체 설정
 	BodyCollision = CreateCollision(CollisionOrder::obb);
-	BodyCollision->SetCollisionScale({ 40, 40 });
-	BodyCollision->SetCollisionType(CollisionType::CirCle);
+	BodyCollision->SetCollisionScale({ 38, 36 });
+	BodyCollision->SetCollisionType(CollisionType::Rect);
 
+	// 조작키
+	OtherPlayerOrder = static_cast<int>(CollisionOrder::ibb);
 	MoveRightKey = VK_RIGHT;
 	MoveLeftKey = VK_LEFT;
 	JumpKey = VK_UP;
 	CrouchKey = VK_DOWN;
+}
+
+bool obb::PlayerColCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return BodyCollision->Collision(OtherPlayerOrder,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+bool obb::PlayerColCheck(std::vector<GameEngineCollision*> _ColVec)
+{
+	return BodyCollision->Collision(OtherPlayerOrder,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
 }
 

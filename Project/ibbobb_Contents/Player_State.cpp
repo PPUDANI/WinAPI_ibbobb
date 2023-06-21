@@ -3,7 +3,7 @@
 #include <GameEngineBase/GameEngineRandom.h>
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineRenderer.h>
-
+#include <GameEngineCore/GameEngineCollision.h>
 #include "ContentsEnum.h"
 
 
@@ -38,15 +38,21 @@ void Player::IdleUpdate(float _DeltaTime)
 		return;
 	}
 
+	OtherPlayerMoveCheck();
+
 	// Blink, Idle 애니메이션 랜덤 교차
-	int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 500);
+	int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 600);
+
 	if (RandomNumber == 1)
 	{
 		SetAnimation("Blink");
 		return;
 	}
 
-	SetAnimation("Idle");
+	if (true == MainRenderer->IsAnimationEnd())
+	{
+		SetAnimation("Idle");
+	}
 }
 
 void Player::CrouchUpdate(float _DeltaTime)
@@ -68,9 +74,11 @@ void Player::CrouchUpdate(float _DeltaTime)
 	}
 	else
 	{
+		SetAnimation("Idle");
 		ChangeState(PlayerState::Idle);
 	}
 }
+
 
 
 void Player::RunUpdate(float _DeltaTime)
@@ -123,7 +131,6 @@ void Player::RunUpdate(float _DeltaTime)
 
 	// Run의 좌, 우 이동
 	{
-		float4 MovePos = float4::ZERO;
 
 		if (true == GameEngineInput::IsPress(MoveLeftKey))
 		{
@@ -151,7 +158,7 @@ void Player::RunUpdate(float _DeltaTime)
 				MovePos = { -Speed * _DeltaTime, 0.0f };
 			}
 		}
-		else if (true == GameEngineInput::IsPress(MoveRightKey))
+		else if (true == GameEngineInput::IsPress(MoveRightKey) )
 		{
 			CurDir = PlayerDir::Right;
 
@@ -179,9 +186,26 @@ void Player::RunUpdate(float _DeltaTime)
 		}
 		else
 		{
+			MovePos = float4::ZERO;
+			SetAnimation("Idle");
 			ChangeState(PlayerState::Idle);
 			return;
 		}
+
+		if (true == PlayerColCheck())
+		{
+			if (PlayerDir::Left == CurDir)
+			{
+				MovePos = float4::ZERO;
+				AddPos(float4::RIGHT * 2);
+			}
+			else
+			{
+				MovePos = float4::ZERO;
+				AddPos(float4::LEFT * 2);
+			}
+		}
+
 		AddPos(MovePos);
 	}
 
@@ -360,12 +384,15 @@ void Player::FallUpdate(float _DeltaTime)
 
 				// "Fall" 상태 연산 설정 초기화
 				GravityReset();
-				FromRun = false;
+				LengthWorpPass = false;
+				WidthWorpPass = false;
 				PrevAreaVectorInit = false;
-				
+
 				// 바닥에 닿을 시 워프홀 상호작용 때 추가된 중력 초기화
 				SetGravityPower(-DefaultGravityPower);
 
+				MovePos = float4::ZERO;
+				SetAnimation("Idle");
 				ChangeState(PlayerState::Idle);
 				return;
 			}
@@ -408,6 +435,8 @@ void Player::FallUpdate(float _DeltaTime)
 				// 바닥에 닿을 시 워프홀 상호작용 때 추가된 중력 초기화
 				SetGravityPower(DefaultGravityPower);
 
+				MovePos = float4::ZERO;
+				SetAnimation("Idle");
 				ChangeState(PlayerState::Idle);
 				return;
 			}
@@ -417,6 +446,8 @@ void Player::FallUpdate(float _DeltaTime)
 			}
 		}
 	}
+
+	//
 
 	// Fall의 좌, 우 이동
 	{

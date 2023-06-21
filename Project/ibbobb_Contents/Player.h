@@ -1,6 +1,6 @@
 #pragma once
 #include "GravityActor.h"
-
+#include <vector>
 enum class PlayerState
 {
 	Idle,
@@ -37,18 +37,36 @@ public:
 		Ratio = _Ratio;
 	}
 
+	inline float4 GetMovePos() const
+	{
+		return MovePos;
+	}
 
+	inline PlayerDir GetDir() const
+	{
+		return CurDir;
+	}
 
 protected:
 
 	virtual void Init() {}
-	
+
+	virtual bool PlayerColCheck()
+	{
+		return false;
+	}
+	virtual bool PlayerColCheck(std::vector<GameEngineCollision*> _ColVec)
+	{
+		return false;
+	}
+
 	// 렌더러
 	GameEngineRenderer* MainRenderer = nullptr;
 	float Ratio = 2.0f;
 
 	// 충돌체
 	GameEngineCollision* BodyCollision = nullptr;
+	int OtherPlayerOrder;
 
 	// 조작키
 	int MoveRightKey = 0;
@@ -66,10 +84,10 @@ private:
 	void FallUpdate(float _DeltaTime);
 	void JumpUpdate(float _DeltaTime);
 	void CrouchUpdate(float _DeltaTime);
-
+	
 	void DeadUpdate(float _DeltaTime); 
 	void SetAnimation(const std::string _State, int _StartFrame = 0);
-
+	void OtherPlayerMoveCheck();
 	inline void ChangeState(PlayerState _State)
 	{
 		State = _State;
@@ -96,6 +114,7 @@ private:
 
 	float ErrorRangeOfGravity = 0.0f;
 	
+	float4 MovePos = float4::ZERO;
 
 	// 맵 충돌 체크
 	bool CheckPosOn = false;

@@ -13,8 +13,6 @@
 #include "Player.h"
 #include <windows.h>
 
-bool ibb::IsLoadTexture = false;
-
 ibb::ibb()
 {
 }
@@ -25,8 +23,6 @@ ibb::~ibb()
 
 void ibb::Init()
 {
-	
-
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
 	FilePath.MoveParentToExistsChild("Resources");
@@ -112,12 +108,37 @@ void ibb::Init()
 	MainRenderer->CreateAnimation("ReverseRight_Dead", "Right_ibb_Reverse.bmp", 39, 41, 0.04f, true);
 
 	// 충돌체 설정
+
 	BodyCollision = CreateCollision(CollisionOrder::ibb);
-	BodyCollision->SetCollisionScale({ 38, 36 });
+	BodyCollision->SetCollisionScale({ 40.0f, 36.0f });
 	BodyCollision->SetCollisionType(CollisionType::Rect);
 
+	LeftCol = CreateCollision(CollisionOrder::ibbLeft);
+	LeftCol->SetCollisionScale({ 10.0f, 30.0f });
+	LeftCol->SetCollisionPos({ -15.0f, 0.0f });
+	LeftCol->SetCollisionType(CollisionType::Rect);
 
-	OtherPlayerOrder = static_cast<int>(CollisionOrder::obb);
+	RightCol = CreateCollision(CollisionOrder::ibbRight);
+	RightCol->SetCollisionScale({ 10.0f, 30.0f });
+	RightCol->SetCollisionPos({ 15.0f, 0.0f });
+	RightCol->SetCollisionType(CollisionType::Rect);
+
+	UpCol = CreateCollision(CollisionOrder::ibbUp);
+	UpCol->SetCollisionScale({ 40.0f, 10.0f });
+	UpCol->SetCollisionPos({ 0.0f, -12.0f });
+	UpCol->SetCollisionType(CollisionType::Rect);
+
+	DownCol = CreateCollision(CollisionOrder::ibbDown);
+	DownCol->SetCollisionScale({ 40.0f, 10.0f });
+	DownCol->SetCollisionPos({ 0.0f, 12.0f });
+	DownCol->SetCollisionType(CollisionType::Rect);
+
+
+	OtherPlayerCol = static_cast<int>(CollisionOrder::obb);
+	OtherPlayerLeftCol = static_cast<int>(CollisionOrder::obbLeft);
+	OtherPlayerRightCol = static_cast<int>(CollisionOrder::obbRight);
+	OtherPlayerUpCol = static_cast<int>(CollisionOrder::obbUp);
+	OtherPlayerDownCol = static_cast<int>(CollisionOrder::obbDown);
 
 	// 조작키
 	MoveRightKey = 'D';
@@ -125,20 +146,52 @@ void ibb::Init()
 	JumpKey = 'W';
 	CrouchKey = 'S';
 }
-bool ibb::PlayerColCheck()
+
+bool ibb::BodyToOtherBodyCheck()
 {
 	std::vector<GameEngineCollision*> _ColVec;
-	return BodyCollision->Collision(CollisionOrder::obb,
+	return BodyCollision->Collision(OtherPlayerCol,
 		_ColVec,
 		CollisionType::Rect,
 		CollisionType::Rect);
 }
 
-bool ibb::PlayerColCheck(std::vector<GameEngineCollision*> _ColVec)
+
+bool ibb::LeftToOtherBodyCheck()
 {
-	return BodyCollision->Collision(CollisionOrder::obb,
+	std::vector<GameEngineCollision*> _ColVec;
+	return LeftCol->Collision(OtherPlayerCol,
 		_ColVec,
 		CollisionType::Rect,
 		CollisionType::Rect);
 }
 
+
+
+bool ibb::RightToOtherBodyCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return RightCol->Collision(OtherPlayerCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+
+bool ibb::UpToOtherBodyCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return UpCol->Collision(OtherPlayerCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+bool ibb::DownToOtherBodyCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return DownCol->Collision(OtherPlayerCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}

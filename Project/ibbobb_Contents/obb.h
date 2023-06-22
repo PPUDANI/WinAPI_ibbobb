@@ -18,8 +18,10 @@ protected:
 	
 private:
 	void Init() override;
-	bool PlayerColCheck() override;
-	bool PlayerColCheck(std::vector<GameEngineCollision*> _ColVec) override;
-	static bool IsLoadTexture;
-	
+
+	bool BodyToOtherBodyCheck() override;
+	bool LeftToOtherBodyCheck() override;
+	bool RightToOtherBodyCheck() override;
+	bool UpToOtherBodyCheck() override;
+	bool DownToOtherBodyCheck() override;
 };

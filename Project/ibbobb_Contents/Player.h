@@ -47,26 +47,62 @@ public:
 		return CurDir;
 	}
 
+	inline PlayerState GetState() const
+	{
+		return CurState;
+	}
+
+	inline void SetPushForce(float _PushForce)
+	{
+		PushForce = _PushForce;
+	}
+
 protected:
 
 	virtual void Init() {}
 
-	virtual bool PlayerColCheck()
-	{
-		return false;
-	}
-	virtual bool PlayerColCheck(std::vector<GameEngineCollision*> _ColVec)
-	{
-		return false;
-	}
 
 	// 렌더러
 	GameEngineRenderer* MainRenderer = nullptr;
 	float Ratio = 2.0f;
 
 	// 충돌체
+	virtual bool BodyToOtherBodyCheck()
+	{
+		return false;
+	}
+
+	virtual bool LeftToOtherBodyCheck()
+	{
+		return false;
+	}
+
+	virtual bool RightToOtherBodyCheck()
+	{
+		return false;
+	}
+
+	virtual bool UpToOtherBodyCheck()
+	{
+		return false;
+	}
+
+	virtual bool DownToOtherBodyCheck()
+	{
+		return false;
+	}
+
+
 	GameEngineCollision* BodyCollision = nullptr;
-	int OtherPlayerOrder;
+	GameEngineCollision* LeftCol = nullptr;
+	GameEngineCollision* RightCol = nullptr;
+	GameEngineCollision* UpCol = nullptr;
+	GameEngineCollision* DownCol = nullptr;
+	int OtherPlayerCol;
+	int OtherPlayerLeftCol;
+	int OtherPlayerRightCol;
+	int OtherPlayerUpCol;
+	int OtherPlayerDownCol;
 
 	// 조작키
 	int MoveRightKey = 0;
@@ -90,12 +126,12 @@ private:
 	void OtherPlayerMoveCheck();
 	inline void ChangeState(PlayerState _State)
 	{
-		State = _State;
+		CurState = _State;
 	}
 	
 
 	// 캐릭터 상태변수
-	PlayerState State = PlayerState::Fall;
+	PlayerState CurState = PlayerState::Fall;
 	PlayerDir CurDir = PlayerDir::Right;
 	bool FromJump = false;
 	bool FromRun = false;
@@ -104,7 +140,8 @@ private:
 	// 캐릭터 물리변수
 	float JumpForce = 1.0f;
 	float Speed = 1.0f;
-	
+	float PushForce = 0.0f;
+
 	float DefaultGravityPower = 0.0f;
 	bool PrevAreaVectorInit = false;
 	float4 PrevAreaVector = float4::ZERO;

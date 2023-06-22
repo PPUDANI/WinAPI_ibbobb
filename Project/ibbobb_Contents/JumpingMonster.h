@@ -26,12 +26,13 @@ protected:
 private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
-
+	void SetAnimation(const std::string _State);
 	inline void SetJumpForce(float _JumpForce)
 	{
 		JumpForce = _JumpForce;
 	}
 
+	bool ReverseValue = false;
 	class GameEngineCollision* BodyCollision;
 	float JumpForce = 1.0f;
 	class GameEngineRenderer* Renderer = nullptr;

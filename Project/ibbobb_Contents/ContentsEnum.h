@@ -23,6 +23,14 @@ enum class RenderOrder
 enum class CollisionOrder
 {
 	ibb,
+	ibbLeft,
+	ibbRight,
+	ibbUp,
+	ibbDown,
 	obb,
+	obbLeft,
+	obbRight,
+	obbUp,
+	obbDown,
 	MonsterBody,
 };

@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="PlayLevel.h">
-      <Filter>Level</Filter>
+      <Filter>Global\Level</Filter>
     </ClInclude>
     <ClInclude Include="EndingLevel.h">
-      <Filter>Level</Filter>
+      <Filter>Global\Level</Filter>
     </ClInclude>
     <ClInclude Include="ContentCore.h" />
     <ClInclude Include="Player.h">
@@ -34,7 +34,7 @@
       <Filter>Contents\Player</Filter>
     </ClInclude>
     <ClInclude Include="Lobby.h">
-      <Filter>Level</Filter>
+      <Filter>Global\Level</Filter>
     </ClInclude>
     <ClInclude Include="Titleibb.h">
       <Filter>TitleObject</Filter>
@@ -54,14 +54,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>Global\Level</Filter>
     </ClCompile>
     <ClCompile Include="EndingLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>Global\Level</Filter>
     </ClCompile>
     <ClCompile Include="ContentCore.cpp" />
     <ClCompile Include="TitleLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>Global\Level</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Global</Filter>
@@ -89,7 +89,7 @@
       <Filter>Contents\Player</Filter>
     </ClCompile>
     <ClCompile Include="Lobby.cpp">
-      <Filter>Level</Filter>
+      <Filter>Global\Level</Filter>
     </ClCompile>
     <ClCompile Include="Titleibb.cpp">
       <Filter>TitleObject</Filter>
@@ -105,9 +105,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Level">
-      <UniqueIdentifier>{0b45b5c6-4732-4776-bfcf-9e2d38454413}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{c24e4729-4c0c-443b-8b50-73ba2b0a6abc}</UniqueIdentifier>
     </Filter>
@@ -122,6 +119,9 @@
     </Filter>
     <Filter Include="Contents\Player">
       <UniqueIdentifier>{460bb9d0-94bc-4350-bf86-97db6af1054c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global\Level">
+      <UniqueIdentifier>{0b45b5c6-4732-4776-bfcf-9e2d38454413}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

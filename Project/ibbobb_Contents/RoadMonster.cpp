@@ -56,30 +56,34 @@ void RoadMonster::Start()
 	}
 	
 	Renderer = CreateRenderer(RenderOrder::RoadMonster);
-
+	float Frame;
 	// Idle
-	Renderer->CreateAnimation("Left_Idle", "Left_RoadMonster.bmp", 0, 0, 10.0f, true);
-	Renderer->CreateAnimation("Right_Idle", "Right_RoadMonster.bmp", 0, 0, 10.0f, true);
-	Renderer->CreateAnimation("ReverseLeft_Idle", "Left_RoadMonster_Reverse.bmp", 0, 0, 10.0f, true);
-	Renderer->CreateAnimation("ReverseRight_Idle", "Right_RoadMonster_Reverse.bmp", 0, 0, 10.0f, true);
+	Frame = 10.0f;
+	Renderer->CreateAnimation("Left_Idle", "Left_RoadMonster.bmp", 0, 0, Frame, true);
+	Renderer->CreateAnimation("Right_Idle", "Right_RoadMonster.bmp", 0, 0, Frame, true);
+	Renderer->CreateAnimation("ReverseLeft_Idle", "Left_RoadMonster_Reverse.bmp", 0, 0, Frame, true);
+	Renderer->CreateAnimation("ReverseRight_Idle", "Right_RoadMonster_Reverse.bmp", 0, 0, Frame, true);
 
 	// Blink
-	Renderer->CreateAnimation("Left_Blink", "Left_RoadMonster.bmp", 0, 1, 0.08f, true);
-	Renderer->CreateAnimation("Right_Blink", "Right_RoadMonster.bmp", 0, 1, 0.08f, true);
-	Renderer->CreateAnimation("ReverseLeft_Blink", "Left_RoadMonster_Reverse.bmp", 0, 1, 0.08f, true);
-	Renderer->CreateAnimation("ReverseRight_Blink", "Right_RoadMonster_Reverse.bmp", 0, 1, 0.08f, true);
+	Frame = 0.1f;
+	Renderer->CreateAnimation("Left_Blink", "Left_RoadMonster.bmp", 0, 1, Frame, true);
+	Renderer->CreateAnimation("Right_Blink", "Right_RoadMonster.bmp", 0, 1, Frame, true);
+	Renderer->CreateAnimation("ReverseLeft_Blink", "Left_RoadMonster_Reverse.bmp", 0, 1, Frame, true);
+	Renderer->CreateAnimation("ReverseRight_Blink", "Right_RoadMonster_Reverse.bmp", 0, 1, Frame, true);
 
 	// Dead
-	Renderer->CreateAnimation("Left_Dead", "Left_RoadMonster.bmp", 1, 11, 0.02f, true);
-	Renderer->CreateAnimation("Right_Dead", "Right_RoadMonster.bmp", 1, 11, 0.02f, true);
-	Renderer->CreateAnimation("ReverseLeft_Dead", "Left_RoadMonster_Reverse.bmp", 1, 11, 0.02f, true);
-	Renderer->CreateAnimation("ReverseRight_Dead", "Right_RoadMonster_Reverse.bmp", 1, 11, 0.02f, true);
+	Frame = 0.02f;
+	Renderer->CreateAnimation("Left_Dead", "Left_RoadMonster.bmp", 1, 11, Frame, true);
+	Renderer->CreateAnimation("Right_Dead", "Right_RoadMonster.bmp", 1, 11, Frame, true);
+	Renderer->CreateAnimation("ReverseLeft_Dead", "Left_RoadMonster_Reverse.bmp", 1, 11, Frame, true);
+	Renderer->CreateAnimation("ReverseRight_Dead", "Right_RoadMonster_Reverse.bmp", 1, 11, Frame, true);
 
 	// Turn
-	Renderer->CreateAnimation("Left_Turn", "Turn_RoadMonster.bmp", 0, 4, 0.07f, true);
-	Renderer->CreateAnimation("Right_Turn", "Turn_RoadMonster.bmp", 4, 0, 0.07f, true);
-	Renderer->CreateAnimation("ReverseLeft_Turn", "Turn_RoadMonster_Reverse.bmp", 0, 4, 0.07f, true);
-	Renderer->CreateAnimation("ReverseRight_Turn", "Turn_RoadMonster_Reverse.bmp", 4, 0, 0.07f, true);
+	Frame = 0.07f;
+	Renderer->CreateAnimation("Left_Turn", "Turn_RoadMonster.bmp", 0, 4, Frame, true);
+	Renderer->CreateAnimation("Right_Turn", "Turn_RoadMonster.bmp", 4, 0, Frame, true);
+	Renderer->CreateAnimation("ReverseLeft_Turn", "Turn_RoadMonster_Reverse.bmp", 0, 4, Frame, true);
+	Renderer->CreateAnimation("ReverseRight_Turn", "Turn_RoadMonster_Reverse.bmp", 4, 0, Frame, true);
 	Renderer->ChangeAnimation("Left_Idle");
 	
 

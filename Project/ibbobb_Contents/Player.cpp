@@ -75,7 +75,7 @@ void Player::Update(float _DeltaTime)
 
 
 	// 상태에 따른 Update
-	switch (State)
+	switch (CurState)
 	{
 	case PlayerState::Idle:
 		IdleUpdate(_DeltaTime);
@@ -102,8 +102,8 @@ void Player::Update(float _DeltaTime)
 
 	if (true == BodyCollision->Collision(CollisionOrder::MonsterBody,
 		_Col,
-		CollisionType::CirCle,
-		CollisionType::CirCle))
+		CollisionType::Rect,
+		CollisionType::Rect))
 	{
 		ChangeState(PlayerState::Dead);
 	}
@@ -181,7 +181,7 @@ void Player::OtherPlayerMoveCheck()
 	// 플레이어 충돌 체크
 	Player* OtherPlayer = nullptr;
 	std::vector<GameEngineCollision*> _ColVec;
-	if (true == BodyCollision->Collision(OtherPlayerOrder,
+	if (true == LeftCol->Collision(OtherPlayerRightCol,
 		_ColVec,
 		CollisionType::Rect,
 		CollisionType::Rect))
@@ -189,32 +189,15 @@ void Player::OtherPlayerMoveCheck()
 		GameEngineCollision* Collision = _ColVec[0];
 		GameEngineActor* PlayerActor = Collision->GetActor();
 		OtherPlayer = dynamic_cast<Player*>(PlayerActor);
-	}
 
-
-	if (OtherPlayer != nullptr)
-	{
-		if (OtherPlayer->GetDir() == PlayerDir::Left)
-		{
-			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::LEFT + float4::DOWN);
-			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck + float4::LEFT);
-			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::LEFT + float4::UP);
-
-			if (LeftUpColor != RGB(255, 0, 0) || LeftMiddleColor != RGB(255, 0, 0) || LeftDownColor != RGB(255, 0, 0))
-			{
-				AddPos(OtherPlayer->GetMovePos());
-			}
-			else
-			{
-				OtherPlayer->AddPos(float4::RIGHT);
-			}
-		}
-		else
+		if (OtherPlayer != nullptr)
 		{
 			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::RIGHT + float4::DOWN);
 			unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck + float4::RIGHT);
 			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::RIGHT + float4::UP);
-			if (RightUpColor != RGB(255, 0, 0) || RightMiddleColor != RGB(255, 0, 0) || RightDownColor != RGB(255, 0, 0))
+			if (RightUpColor != RGB(255, 0, 0) ||
+				RightMiddleColor != RGB(255, 0, 0) ||
+				RightDownColor != RGB(255, 0, 0))
 			{
 				AddPos(OtherPlayer->GetMovePos());
 			}
@@ -223,6 +206,46 @@ void Player::OtherPlayerMoveCheck()
 				OtherPlayer->AddPos(float4::LEFT);
 			}
 		}
+	}	
+	else if (true == RightCol->Collision(OtherPlayerLeftCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect))
+	{
+		GameEngineCollision* Collision = _ColVec[0];
+		GameEngineActor* PlayerActor = Collision->GetActor();
+		OtherPlayer = dynamic_cast<Player*>(PlayerActor);
 
+		if (OtherPlayer != nullptr)
+		{
+			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::LEFT + float4::DOWN);
+			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck + float4::LEFT);
+			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::LEFT + float4::UP);
+
+			if (LeftUpColor != RGB(255, 0, 0) ||
+				LeftMiddleColor != RGB(255, 0, 0) ||
+				LeftDownColor != RGB(255, 0, 0))
+			{
+				AddPos(OtherPlayer->GetMovePos());
+			}
+			else
+			{
+				OtherPlayer->AddPos(float4::RIGHT);
+			}
+		}
+	}
+	else if (true == DownCol->Collision(OtherPlayerUpCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect))
+	{
+		GameEngineCollision* Collision = _ColVec[0];
+		GameEngineActor* PlayerActor = Collision->GetActor();
+		OtherPlayer = dynamic_cast<Player*>(PlayerActor);
+
+		if (OtherPlayer != nullptr)
+		{
+			AddPos(OtherPlayer->GetMovePos());
+		}
 	}
 }

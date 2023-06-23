@@ -19,9 +19,8 @@ protected:
 private:
 	void Init() override;
 
-	bool BodyToOtherBodyCheck() override;
-	bool LeftToOtherBodyCheck() override;
-	bool RightToOtherBodyCheck() override;
-	bool UpToOtherBodyCheck() override;
-	bool DownToOtherBodyCheck() override;
+	bool LeftToOtherRightCheck() override;
+	bool RightToOtherLeftCheck() override;
+	bool UpToOtherDownCheck() override;
+	bool DownToOtherUpCheck() override;
 };

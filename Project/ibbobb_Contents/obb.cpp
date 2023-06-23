@@ -110,31 +110,31 @@ void obb::Init()
 
 	// 충돌체 설정
 
-	BodyCollision = CreateCollision(CollisionOrder::obb);
-	BodyCollision->SetCollisionScale({ 40.0f, 36.0f });
-	BodyCollision->SetCollisionType(CollisionType::Rect);
+	BodyCol = CreateCollision(CollisionOrder::obb);
+	BodyCol->SetCollisionScale({ 34.0f, 34.0f });
+	BodyCol->SetCollisionType(CollisionType::Rect);
 
 	LeftCol = CreateCollision(CollisionOrder::obbLeft);
 	LeftCol->SetCollisionScale({ 10.0f, 30.0f });
-	LeftCol->SetCollisionPos({-15.0f, 0.0f});
+	LeftCol->SetCollisionPos({-14.0f, 0.0f});
 	LeftCol->SetCollisionType(CollisionType::Rect);
 
 	RightCol = CreateCollision(CollisionOrder::obbRight);
 	RightCol->SetCollisionScale({ 10.0f, 30.0f });
-	RightCol->SetCollisionPos({ 15.0f, 0.0f });
+	RightCol->SetCollisionPos({ 14.0f, 0.0f });
 	RightCol->SetCollisionType(CollisionType::Rect);
 
 	UpCol = CreateCollision(CollisionOrder::obbUp);
-	UpCol->SetCollisionScale({ 40.0f, 10.0f });
+	UpCol->SetCollisionScale({ 25.0f, 10.0f });
 	UpCol->SetCollisionPos({ 0.0f, -12.0f });
 	UpCol->SetCollisionType(CollisionType::Rect);
 
 	DownCol = CreateCollision(CollisionOrder::obbDown);
-	DownCol->SetCollisionScale({ 40.0f, 10.0f });
+	DownCol->SetCollisionScale({ 25.0f, 10.0f });
 	DownCol->SetCollisionPos({ 0.0f, 12.0f });
 	DownCol->SetCollisionType(CollisionType::Rect);
 
-	OtherPlayerCol = static_cast<int>(CollisionOrder::ibb);
+	OtherPlayerBodyCol = static_cast<int>(CollisionOrder::ibb);
 	OtherPlayerLeftCol = static_cast<int>(CollisionOrder::ibbLeft);
 	OtherPlayerRightCol = static_cast<int>(CollisionOrder::ibbRight);
 	OtherPlayerUpCol = static_cast<int>(CollisionOrder::ibbUp);
@@ -147,49 +147,36 @@ void obb::Init()
 	CrouchKey = VK_DOWN;
 }
 
-bool obb::BodyToOtherBodyCheck()
+bool obb::LeftToOtherRightCheck()
 {
 	std::vector<GameEngineCollision*> _ColVec;
-	return BodyCollision->Collision(OtherPlayerCol,
+	return LeftCol->Collision(OtherPlayerRightCol,
 		_ColVec,
 		CollisionType::Rect,
 		CollisionType::Rect);
 }
 
-
-bool obb::LeftToOtherBodyCheck()
+bool obb::RightToOtherLeftCheck()
 {
 	std::vector<GameEngineCollision*> _ColVec;
-	return LeftCol->Collision(OtherPlayerCol,
+	return RightCol->Collision(OtherPlayerLeftCol,
 		_ColVec,
 		CollisionType::Rect,
 		CollisionType::Rect);
 }
 
-
-bool obb::RightToOtherBodyCheck()
+bool obb::UpToOtherDownCheck()
 {
 	std::vector<GameEngineCollision*> _ColVec;
-	return RightCol->Collision(OtherPlayerCol,
+	return UpCol->Collision(OtherPlayerDownCol,
 		_ColVec,
 		CollisionType::Rect,
 		CollisionType::Rect);
 }
-
-
-bool obb::UpToOtherBodyCheck()
+bool obb::DownToOtherUpCheck()
 {
 	std::vector<GameEngineCollision*> _ColVec;
-	return UpCol->Collision(OtherPlayerCol,
-		_ColVec,
-		CollisionType::Rect,
-		CollisionType::Rect);
-}
-
-bool obb::DownToOtherBodyCheck()
-{
-	std::vector<GameEngineCollision*> _ColVec;
-	return DownCol->Collision(OtherPlayerCol,
+	return DownCol->Collision(OtherPlayerUpCol,
 		_ColVec,
 		CollisionType::Rect,
 		CollisionType::Rect);

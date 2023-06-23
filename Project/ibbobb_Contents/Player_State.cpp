@@ -9,14 +9,34 @@
 
 void Player::IdleUpdate(float _DeltaTime)
 {
-	
+	// Run의 중력 반전 체크
+	{
+		unsigned int MidColor = GetGroundColor(RGB(0, 255, 255), float4::ZERO);
+		if (MidColor == RGB(0, 255, 255))
+		{
+			if (false == ReverseValue)
+			{
+				ChangeState(PlayerState::Fall);
+				return;
+			}
+		}
+		else if (MidColor == RGB(255, 255, 255))
+		{
+			if (true == ReverseValue)
+			{
+				ChangeState(PlayerState::Fall);
+				return;
+			}
+		}
+	}
+
 	// Run 상태 체크
 	if (true == GameEngineInput::IsPress(MoveLeftKey) || true == GameEngineInput::IsPress(MoveRightKey))
 	{
 		ChangeState(PlayerState::Run);
 		return;
 	}
-
+	
 	// Jump 상태 체크
 	if (true == GameEngineInput::IsPress(JumpKey))
 	{
@@ -58,47 +78,17 @@ void Player::IdleUpdate(float _DeltaTime)
 			RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::DOWN);
 		}
 
-		Player* OtherPlayer = nullptr;
-		std::vector<GameEngineCollision*> _ColVec;
-		if (true == DownCol->Collision(OtherPlayerUpCol,
-			_ColVec,
-			CollisionType::Rect,
-			CollisionType::Rect))
+		if (LeftDownColor != RGB(255, 0, 0) &&
+			MiddleDownColor != RGB(255, 0, 0) &&
+			RightDownColor != RGB(255, 0, 0))
 		{
-			GameEngineCollision* Collision = _ColVec[0];
-			GameEngineActor* PlayerActor = Collision->GetActor();
-			OtherPlayer = dynamic_cast<Player*>(PlayerActor);
-		}
-
-		if (nullptr != OtherPlayer)
-		{
-			if (PlayerState::Jump == OtherPlayer->GetState() ||
-				PlayerState::Fall == OtherPlayer->GetState())
-			{
-				if (LeftDownColor != RGB(255, 0, 0) &&
-					MiddleDownColor != RGB(255, 0, 0) &&
-					RightDownColor != RGB(255, 0, 0))
-				{
-					ChangeState(PlayerState::Fall);
-					return;
-				}
-			}
-		}
-		else
-		{
-			if (LeftDownColor != RGB(255, 0, 0) &&
-				MiddleDownColor != RGB(255, 0, 0) &&
-				RightDownColor != RGB(255, 0, 0) &&
-				false == DownToOtherBodyCheck())
-			{
-				ChangeState(PlayerState::Fall);
-				return;
-			}
+			ChangeState(PlayerState::Fall);
+			return;
 		}
 	}
 
 	OtherPlayerMoveCheck();
-
+	
 	// Blink, Idle 애니메이션 랜덤 교차
 	int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 600);
 
@@ -116,6 +106,7 @@ void Player::IdleUpdate(float _DeltaTime)
 
 void Player::CrouchUpdate(float _DeltaTime)
 {
+
 	// 방향 전환
 	if (true == GameEngineInput::IsPress(MoveLeftKey))
 	{
@@ -174,16 +165,16 @@ void Player::RunUpdate(float _DeltaTime)
 		{
 			if (false == ReverseValue)
 			{
-				ReverseValue = true;
-				SetGravityPower(-DefaultGravityPower);
+				ChangeState(PlayerState::Fall);
+				return;
 			}
 		}
 		else if(MidColor == RGB(255, 255, 255))
 		{
 			if (true == ReverseValue)
 			{
-				ReverseValue = false;
-				SetGravityPower(DefaultGravityPower);
+				ChangeState(PlayerState::Fall);
+				return;
 			}
 		}
 	}
@@ -210,6 +201,7 @@ void Player::RunUpdate(float _DeltaTime)
 					AddPos(float4::RIGHT);
 				}
 				AddPos(float4::LEFT);
+				MovePos = float4::ZERO;
 			}
 			else
 			{
@@ -217,24 +209,17 @@ void Player::RunUpdate(float _DeltaTime)
 			}
 
 			// 서로 Run일 때 충돌 제어
-			std::vector<GameEngineCollision*> _ColVec;
-			Player* OtherPlayer = nullptr;
-			if(LeftCol->Collision(OtherPlayerCol,
-				_ColVec,
-				CollisionType::Rect,
-				CollisionType::Rect))
-			{
-				GameEngineCollision* Col = _ColVec[0];
-				GameEngineActor* OtherActor = Col->GetActor();
-				OtherPlayer = dynamic_cast<Player*>(OtherActor);
-			}
-
-			if (nullptr != OtherPlayer)
+			if(true == LeftToOtherRightCheck())
 			{
 				PlayerState OtherPlayerState = OtherPlayer->GetState();
 				if (PlayerState::Run == OtherPlayerState)
 				{
 					MovePos = float4::ZERO;
+				}
+				else
+				{
+					MovePos = MovePos * 0.6f;
+					OtherPlayer->AddPos(MovePos);
 				}
 			}
 		}
@@ -259,6 +244,7 @@ void Player::RunUpdate(float _DeltaTime)
 					AddPos(float4::LEFT);
 				}
 				AddPos(float4::RIGHT);
+				MovePos = float4::ZERO;
 			}
 			else
 			{
@@ -266,24 +252,18 @@ void Player::RunUpdate(float _DeltaTime)
 			}
 
 			// 서로 Run일 때 충돌 제어
-			std::vector<GameEngineCollision*> _ColVec;
-			Player* OtherPlayer = nullptr;
-			if (RightCol->Collision(OtherPlayerCol,
-				_ColVec,
-				CollisionType::Rect,
-				CollisionType::Rect))
-			{
-				GameEngineCollision* Col = _ColVec[0];
-				GameEngineActor* OtherActor = Col->GetActor();
-				OtherPlayer = dynamic_cast<Player*>(OtherActor);
-			}
-
-			if (nullptr != OtherPlayer)
+			
+			if (true == RightToOtherLeftCheck())
 			{
 				PlayerState OtherPlayerState = OtherPlayer->GetState();
 				if (PlayerState::Run == OtherPlayerState)
 				{
 					MovePos = float4::ZERO;
+				}
+				else
+				{
+					MovePos = MovePos * 0.6f;
+					OtherPlayer->AddPos(MovePos);
 				}
 			}
 		}
@@ -294,6 +274,11 @@ void Player::RunUpdate(float _DeltaTime)
 			ChangeState(PlayerState::Idle);
 			return;
 		}
+
+		//if (true == UpToOtherDownCheck())
+		//{
+		//	OtherPlayer->AddPos(MovePos);
+		//}
 
 		AddPos(MovePos);
 	}
@@ -320,7 +305,7 @@ void Player::RunUpdate(float _DeltaTime)
 		if (LeftDownColor != RGB(255, 0, 0) &&
 			MiddleDownColor != RGB(255, 0, 0) &&
 			RightDownColor != RGB(255, 0, 0) &&
-			false == DownToOtherBodyCheck())
+			false == DownToOtherUpCheck())
 		{
 			ChangeState(PlayerState::Fall);
 			return;
@@ -332,7 +317,6 @@ void Player::RunUpdate(float _DeltaTime)
 
 void Player::FallUpdate(float _DeltaTime)
 {
-	
 	// Fall의 중력 반전 체크
 	{
 		unsigned int MidColor = GetGroundColor(RGB(0, 255, 255), float4::ZERO);
@@ -340,6 +324,7 @@ void Player::FallUpdate(float _DeltaTime)
 		{
 			if (false == ReverseValue)
 			{
+				ReverseCol();
 				ReverseValue = true;
 				SetGravityPower(-DefaultGravityPower);
 
@@ -392,6 +377,8 @@ void Player::FallUpdate(float _DeltaTime)
 		{
 			if (true == ReverseValue)
 			{
+				ReverseCol();
+
 				ReverseValue = false;
 				SetGravityPower(DefaultGravityPower);
 
@@ -446,7 +433,7 @@ void Player::FallUpdate(float _DeltaTime)
 		unsigned int LeftDownColor;
 		unsigned int MiddleDownColor;
 		unsigned int RightDownColor;
-
+		
 		// 중력 반전 체크
 		if (true == ReverseValue)
 		{
@@ -487,15 +474,9 @@ void Player::FallUpdate(float _DeltaTime)
 				ChangeState(PlayerState::Idle);
 				return;
 			}
-			else if (true == UpCol->Collision(OtherPlayerDownCol,
-				_ColVec,
-				CollisionType::Rect,
-				CollisionType::Rect))
+			else if (true == DownToOtherUpCheck())
 			{
-				while (true == UpCol->Collision(OtherPlayerDownCol,
-					_ColVec,
-					CollisionType::Rect,
-					CollisionType::Rect))
+				while (true == DownToOtherUpCheck())
 				{
 					AddPos(float4::DOWN);
 				}
@@ -512,8 +493,9 @@ void Player::FallUpdate(float _DeltaTime)
 				SetGravityPower(-DefaultGravityPower);
 
 				MovePos = float4::ZERO;
+				DistanceFromOtherPlayer = GetPos() - OtherPlayer->GetPos();
 				SetAnimation("Idle");
-				ChangeState(PlayerState::Idle);
+				ChangeState(PlayerState::RidingMode);
 				return;
 			}
 			else
@@ -561,15 +543,9 @@ void Player::FallUpdate(float _DeltaTime)
 				ChangeState(PlayerState::Idle);
 				return;
 			}
-			else if (true == DownCol->Collision(OtherPlayerUpCol,
-					_ColVec,
-					CollisionType::Rect,
-					CollisionType::Rect))
+			else if (true == DownToOtherUpCheck())
 			{
-				while (true == DownCol->Collision(OtherPlayerUpCol,
-					_ColVec,
-					CollisionType::Rect,
-					CollisionType::Rect))
+				while (true == DownToOtherUpCheck())
 				{
 					AddPos(float4::UP);
 				}
@@ -586,8 +562,9 @@ void Player::FallUpdate(float _DeltaTime)
 				SetGravityPower(DefaultGravityPower);
 
 				MovePos = float4::ZERO;
+				DistanceFromOtherPlayer = GetPos() - OtherPlayer->GetPos();
 				SetAnimation("Idle");
-				ChangeState(PlayerState::Idle);
+				ChangeState(PlayerState::RidingMode);
 				return;
 			}
 			else
@@ -596,8 +573,6 @@ void Player::FallUpdate(float _DeltaTime)
 			}
 		}
 	}
-
-	//
 
 	// Fall의 좌, 우 이동
 	{
@@ -618,6 +593,22 @@ void Player::FallUpdate(float _DeltaTime)
 			{
 				MovePos = { -Speed * _DeltaTime, 0.0f };
 			}
+
+			// 서로 Run일 때 충돌 제어
+			if (true == LeftToOtherRightCheck())
+			{
+				PlayerState OtherPlayerState = OtherPlayer->GetState();
+				if (PlayerState::Fall == OtherPlayerState ||
+					PlayerState::Jump == OtherPlayerState)
+				{
+					MovePos = float4::ZERO;
+				}
+				else
+				{
+					MovePos = MovePos * 0.6f;
+					OtherPlayer->AddPos(MovePos);
+				}
+			}
 		}
 		else if (true == GameEngineInput::IsPress(MoveRightKey))
 		{
@@ -633,7 +624,29 @@ void Player::FallUpdate(float _DeltaTime)
 			{
 				MovePos = { Speed * _DeltaTime, 0.0f };
 			}
+
+			// 서로 Run일 때 충돌 제어
+			if (true == RightToOtherLeftCheck())
+			{
+				PlayerState OtherPlayerState = OtherPlayer->GetState();
+				if (PlayerState::Fall == OtherPlayerState ||
+					PlayerState::Jump == OtherPlayerState)
+				{
+					MovePos = float4::ZERO;
+				}
+				else
+				{
+					MovePos = MovePos * 0.6f;
+					OtherPlayer->AddPos(MovePos);
+				}
+			}
 		}
+
+		if (true == UpToOtherDownCheck())
+		{
+			OtherPlayer->AddPos(MovePos);
+		}
+
 		AddPos(MovePos);
 	}
 
@@ -698,16 +711,12 @@ void Player::FallUpdate(float _DeltaTime)
 			{
 				FromJump = false;
 			}
-			
 		}
 		else
 		{
 			SetAnimation("Fall");
 		}
 	}
-
-
-
 }
 
 void Player::JumpUpdate(float _DeltaTime)
@@ -761,6 +770,7 @@ void Player::JumpUpdate(float _DeltaTime)
 				ChangeState(PlayerState::Fall);
 				return;
 			}
+			
 			else
 			{
 				Gravity(_DeltaTime);
@@ -788,6 +798,7 @@ void Player::JumpUpdate(float _DeltaTime)
 				ChangeState(PlayerState::Fall);
 				return;
 			}
+			
 			else
 			{
 				Gravity(_DeltaTime);
@@ -836,6 +847,22 @@ void Player::JumpUpdate(float _DeltaTime)
 			{
 				MovePos = { -Speed * _DeltaTime, 0.0f };
 			}
+
+			// 서로 Run일 때 충돌 제어
+			if (true == LeftToOtherRightCheck())
+			{
+				PlayerState OtherPlayerState = OtherPlayer->GetState();
+				if (PlayerState::Fall == OtherPlayerState ||
+					PlayerState::Jump == OtherPlayerState)
+				{
+					MovePos = float4::ZERO;
+				}
+				else
+				{
+					MovePos = MovePos * 0.6f;
+					OtherPlayer->AddPos(MovePos);
+				}
+			}
 		}
 		else if (true == GameEngineInput::IsPress(MoveRightKey))
 		{
@@ -851,6 +878,27 @@ void Player::JumpUpdate(float _DeltaTime)
 			{
 				MovePos = { Speed * _DeltaTime, 0.0f };
 			}
+
+			// 서로 Run일 때 충돌 제어
+			if (true == RightToOtherLeftCheck())
+			{
+				PlayerState OtherPlayerState = OtherPlayer->GetState();
+				if (PlayerState::Fall == OtherPlayerState ||
+					PlayerState::Jump == OtherPlayerState)
+				{
+					MovePos = float4::ZERO;
+				}
+				else
+				{
+					MovePos = MovePos * 0.6f;
+					OtherPlayer->AddPos(MovePos);
+				}
+			}
+		}
+
+		if (true == UpToOtherDownCheck())
+		{
+			OtherPlayer->AddPos(MovePos);
 		}
 		AddPos(MovePos);
 	}
@@ -858,6 +906,113 @@ void Player::JumpUpdate(float _DeltaTime)
 	SetAnimation("Jump");
 }
 
+void Player::RidingModeUpdate(float _DeltaTime)
+{
+	if (OtherPlayer->GetState() != PlayerState::Idle)
+	{
+	    SetPos(OtherPlayer->GetPos() + DistanceFromOtherPlayer);
+	}
+
+	if (false == DownToOtherUpCheck())
+	{
+		ChangeState(PlayerState::Fall);
+		return;
+	}
+
+	// Run의 Crouch 상태 체크
+	if (true == GameEngineInput::IsPress(CrouchKey))
+	{
+		SetAnimation("Crouch");
+		return;
+	}
+
+	// Run의 Jump 상태 체크
+	if (true == GameEngineInput::IsDown(JumpKey))
+	{
+		if (true == ReverseValue)
+		{
+			SetGravityVector(float4::DOWN * JumpForce);
+		}
+		else
+		{
+			SetGravityVector(float4::UP * JumpForce);
+		}
+
+		FromJump = false;
+		ChangeState(PlayerState::Jump);
+		return;
+	}
+
+	// Run의 좌, 우 이동
+	{
+		if (true == GameEngineInput::IsPress(MoveLeftKey))
+		{
+			CurDir = PlayerDir::Left;
+
+			// 좌측 충돌 체크
+			unsigned int LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::LEFT + float4::DOWN);
+			unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck + float4::LEFT);
+			unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::LEFT + float4::UP);
+
+			if (LeftUpColor == RGB(255, 0, 0) || LeftMiddleColor == RGB(255, 0, 0) || LeftDownColor == RGB(255, 0, 0))
+			{
+				// 벽에 박힘 제거
+				while (LeftUpColor == RGB(255, 0, 0) || LeftMiddleColor == RGB(255, 0, 0) || LeftDownColor == RGB(255, 0, 0))
+				{
+					LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::DOWN);
+					LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);
+					LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::UP);
+					AddPos(float4::RIGHT);
+				}
+				AddPos(float4::LEFT);
+				MovePos = float4::ZERO;
+			}
+			else
+			{
+				MovePos = { -Speed * _DeltaTime, 0.0f };
+			}
+			SetAnimation("Run");
+		}
+		else if (true == GameEngineInput::IsPress(MoveRightKey))
+		{
+			CurDir = PlayerDir::Right;
+
+			// 우측 충돌 체크
+			unsigned int RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::RIGHT + float4::DOWN);
+			unsigned int RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck + float4::RIGHT);
+			unsigned int RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::RIGHT + float4::UP);
+			if (RightUpColor == RGB(255, 0, 0) || RightMiddleColor == RGB(255, 0, 0) || RightDownColor == RGB(255, 0, 0))
+			{
+				// 벽에 박힘 제거
+				while (RightUpColor == RGB(255, 0, 0) ||
+					RightMiddleColor == RGB(255, 0, 0) ||
+					RightDownColor == RGB(255, 0, 0))
+				{
+					RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::DOWN);
+					RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
+					RightDownColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::UP);
+					AddPos(float4::LEFT);
+				}
+				AddPos(float4::RIGHT);
+				MovePos = float4::ZERO;
+			}
+			else
+			{
+				MovePos = { Speed * _DeltaTime, 0.0f };
+			}
+			SetAnimation("Run");
+		}
+		else
+		{
+			MovePos = float4::ZERO;
+			SetAnimation("Idle");
+
+			return;
+		}
+		DistanceFromOtherPlayer += MovePos;
+		AddPos(MovePos);
+	}
+}
 
 void Player::DeadUpdate(float _DeltaTime)
 {

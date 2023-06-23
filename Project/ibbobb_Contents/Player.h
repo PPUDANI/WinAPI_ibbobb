@@ -9,7 +9,8 @@ enum class PlayerState
 	Jump,
 	Fall,
 	Dead,
-	Crouch
+	Crouch,
+	RidingMode
 };
 
 enum class PlayerDir
@@ -52,9 +53,24 @@ public:
 		return CurState;
 	}
 
+	inline bool GetReverseValue() const
+	{
+		return ReverseValue;
+	}
+
 	inline void SetPushForce(float _PushForce)
 	{
 		PushForce = _PushForce;
+	}
+
+	inline void SetOtherPlayer(Player* _OtherPlayer)
+	{
+		OtherPlayer = _OtherPlayer;
+	}
+
+	inline Player* GetOtherPlayer() const
+	{
+		return OtherPlayer;
 	}
 
 protected:
@@ -67,42 +83,39 @@ protected:
 	float Ratio = 2.0f;
 
 	// 충돌체
-	virtual bool BodyToOtherBodyCheck()
+
+	virtual bool LeftToOtherRightCheck()
 	{
 		return false;
 	}
 
-	virtual bool LeftToOtherBodyCheck()
+	virtual bool RightToOtherLeftCheck()
 	{
 		return false;
 	}
 
-	virtual bool RightToOtherBodyCheck()
+	virtual bool UpToOtherDownCheck()
 	{
 		return false;
 	}
 
-	virtual bool UpToOtherBodyCheck()
+	virtual bool DownToOtherUpCheck()
 	{
 		return false;
 	}
 
-	virtual bool DownToOtherBodyCheck()
-	{
-		return false;
-	}
-
-
-	GameEngineCollision* BodyCollision = nullptr;
+	Player* OtherPlayer = nullptr;
+	GameEngineCollision* BodyCol = nullptr;
 	GameEngineCollision* LeftCol = nullptr;
 	GameEngineCollision* RightCol = nullptr;
 	GameEngineCollision* UpCol = nullptr;
 	GameEngineCollision* DownCol = nullptr;
-	int OtherPlayerCol;
+	int OtherPlayerBodyCol;
 	int OtherPlayerLeftCol;
 	int OtherPlayerRightCol;
 	int OtherPlayerUpCol;
 	int OtherPlayerDownCol;
+	bool OtherPlayerReverseValue = false;
 
 	// 조작키
 	int MoveRightKey = 0;
@@ -120,15 +133,16 @@ private:
 	void FallUpdate(float _DeltaTime);
 	void JumpUpdate(float _DeltaTime);
 	void CrouchUpdate(float _DeltaTime);
-	
 	void DeadUpdate(float _DeltaTime); 
+	void RidingModeUpdate(float _DeltaTime);
+
 	void SetAnimation(const std::string _State, int _StartFrame = 0);
 	void OtherPlayerMoveCheck();
 	inline void ChangeState(PlayerState _State)
 	{
 		CurState = _State;
 	}
-	
+	void ReverseCol();
 
 	// 캐릭터 상태변수
 	PlayerState CurState = PlayerState::Fall;
@@ -152,6 +166,8 @@ private:
 	float ErrorRangeOfGravity = 0.0f;
 	
 	float4 MovePos = float4::ZERO;
+
+	float4 DistanceFromOtherPlayer = float4::ZERO;
 
 	// 맵 충돌 체크
 	bool CheckPosOn = false;

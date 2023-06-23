@@ -84,11 +84,11 @@ void RoadMonster::Start()
 	Renderer->CreateAnimation("Right_Turn", "Turn_RoadMonster.bmp", 4, 0, Frame, true);
 	Renderer->CreateAnimation("ReverseLeft_Turn", "Turn_RoadMonster_Reverse.bmp", 0, 4, Frame, true);
 	Renderer->CreateAnimation("ReverseRight_Turn", "Turn_RoadMonster_Reverse.bmp", 4, 0, Frame, true);
+
 	Renderer->ChangeAnimation("Left_Idle");
 	
-
 	BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
-	BodyCollision->SetCollisionScale({ 40.0f, 40.0f }); // 58
+	BodyCollision->SetCollisionScale({ 40.0f, 40.0f });
 	BodyCollision->SetCollisionType(CollisionType::CirCle);
 }
 

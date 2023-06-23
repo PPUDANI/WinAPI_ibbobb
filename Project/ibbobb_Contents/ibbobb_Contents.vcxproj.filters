@@ -2,23 +2,23 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="PlayLevel.h">
-      <Filter>Global\Level</Filter>
+      <Filter>Contents\Level</Filter>
     </ClInclude>
     <ClInclude Include="EndingLevel.h">
-      <Filter>Global\Level</Filter>
+      <Filter>Contents\Level</Filter>
     </ClInclude>
     <ClInclude Include="ContentCore.h" />
     <ClInclude Include="Player.h">
-      <Filter>Global</Filter>
+      <Filter>Contents\Global</Filter>
     </ClInclude>
     <ClInclude Include="BackGround.h">
-      <Filter>Global</Filter>
+      <Filter>Contents\Global</Filter>
     </ClInclude>
     <ClInclude Include="ContentsEnum.h">
-      <Filter>Global</Filter>
+      <Filter>Contents\Global</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
-      <Filter>Global</Filter>
+      <Filter>Contents\Global</Filter>
     </ClInclude>
     <ClInclude Include="GravityActor.h" />
     <ClInclude Include="RoadMonster.h">
@@ -34,46 +34,46 @@
       <Filter>Contents\Player</Filter>
     </ClInclude>
     <ClInclude Include="Lobby.h">
-      <Filter>Global\Level</Filter>
+      <Filter>Contents\Level</Filter>
     </ClInclude>
     <ClInclude Include="Titleibb.h">
-      <Filter>TitleObject</Filter>
+      <Filter>Contents\Level\TitleObject</Filter>
     </ClInclude>
     <ClInclude Include="Titleobb.h">
-      <Filter>TitleObject</Filter>
+      <Filter>Contents\Level\TitleObject</Filter>
     </ClInclude>
     <ClInclude Include="BlinkImage.h">
-      <Filter>TitleObject</Filter>
+      <Filter>Contents\Level\TitleObject</Filter>
     </ClInclude>
     <ClInclude Include="DefaultImage.h">
-      <Filter>TitleObject</Filter>
+      <Filter>Contents\Level\TitleObject</Filter>
     </ClInclude>
     <ClInclude Include="TitleLevel.h">
-      <Filter>TitleObject</Filter>
+      <Filter>Contents\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
-      <Filter>Global\Level</Filter>
+      <Filter>Contents\Level</Filter>
     </ClCompile>
     <ClCompile Include="EndingLevel.cpp">
-      <Filter>Global\Level</Filter>
+      <Filter>Contents\Level</Filter>
     </ClCompile>
     <ClCompile Include="ContentCore.cpp" />
     <ClCompile Include="TitleLevel.cpp">
-      <Filter>Global\Level</Filter>
+      <Filter>Contents\Level</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Global</Filter>
+      <Filter>Contents\Global</Filter>
     </ClCompile>
     <ClCompile Include="BackGround.cpp">
-      <Filter>Global</Filter>
+      <Filter>Contents\Global</Filter>
     </ClCompile>
     <ClCompile Include="Player_State.cpp">
-      <Filter>Global</Filter>
+      <Filter>Contents\Global</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>Global</Filter>
+      <Filter>Contents\Global</Filter>
     </ClCompile>
     <ClCompile Include="GravityActor.cpp" />
     <ClCompile Include="RoadMonster.cpp">
@@ -89,28 +89,22 @@
       <Filter>Contents\Player</Filter>
     </ClCompile>
     <ClCompile Include="Lobby.cpp">
-      <Filter>Global\Level</Filter>
+      <Filter>Contents\Level</Filter>
     </ClCompile>
     <ClCompile Include="Titleibb.cpp">
-      <Filter>TitleObject</Filter>
+      <Filter>Contents\Level\TitleObject</Filter>
     </ClCompile>
     <ClCompile Include="Titleobb.cpp">
-      <Filter>TitleObject</Filter>
+      <Filter>Contents\Level\TitleObject</Filter>
     </ClCompile>
     <ClCompile Include="BlinkImage.cpp">
-      <Filter>TitleObject</Filter>
+      <Filter>Contents\Level\TitleObject</Filter>
     </ClCompile>
     <ClCompile Include="DefaultImage.cpp">
-      <Filter>TitleObject</Filter>
+      <Filter>Contents\Level\TitleObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Global">
-      <UniqueIdentifier>{c24e4729-4c0c-443b-8b50-73ba2b0a6abc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="TitleObject">
-      <UniqueIdentifier>{d6c07d50-61dc-43ce-993e-9d37b60d33c0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Contents">
       <UniqueIdentifier>{37df1d23-5b60-40bb-b28a-ce5d6c32017c}</UniqueIdentifier>
     </Filter>
@@ -120,8 +114,14 @@
     <Filter Include="Contents\Player">
       <UniqueIdentifier>{460bb9d0-94bc-4350-bf86-97db6af1054c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Global\Level">
+    <Filter Include="Contents\Level">
       <UniqueIdentifier>{0b45b5c6-4732-4776-bfcf-9e2d38454413}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Level\TitleObject">
+      <UniqueIdentifier>{d6c07d50-61dc-43ce-993e-9d37b60d33c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Global">
+      <UniqueIdentifier>{c24e4729-4c0c-443b-8b50-73ba2b0a6abc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

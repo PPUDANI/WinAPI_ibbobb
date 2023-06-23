@@ -52,6 +52,12 @@ void PlayLevel::Start()
 
 void PlayLevel::Update(float _DeltaTime)
 {
+	if (ibbPlayer->GetOtherPlayer() == nullptr ||
+		obbPlayer->GetOtherPlayer() == nullptr)
+	{
+		MsgBoxAssert("OtherPlayer가 세팅되지 않았습니다.")
+	}
+
 	if (true == GameEngineInput::IsDown('O'))
 	{
 		EXMap->SwitchRender();
@@ -91,14 +97,17 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	// ibb
 	ibbPlayer = CreateActor<ibb>(UpdateOrder::Player);
 	ibbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-	ibbPlayer->SetPos({ 300.0f, 800.0f });
+	ibbPlayer->SetPos({ 3100.0f, 500.0f });
 	ibbPlayer->SetRatio(2.0f);
 
 	// obb
 	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
 	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-	obbPlayer->SetPos({ 400.0f, 800.0f });
+	obbPlayer->SetPos({ 3200.0f, 500.0f });
 	obbPlayer->SetRatio(2.0f);
+
+	obbPlayer->SetOtherPlayer(dynamic_cast<Player*>(ibbPlayer));
+	ibbPlayer->SetOtherPlayer(dynamic_cast<Player*>(obbPlayer));
 
 	// Monster
 	RoadMonster0 = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
@@ -115,6 +124,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	RoadMonster1->ReverseDir();
 	RoadMonster1->SetDir(RoadMonsterDir::Left);
 	RoadMonster1->SetSpeed(0.15f);
+	
 
 	JumpingMonster0 = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 	JumpingMonster0->SetGroundTexture("EXLevel_Collision.bmp");

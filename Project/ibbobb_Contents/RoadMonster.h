@@ -38,6 +38,7 @@ public:
 	inline void ReverseDir()
 	{
 		ReverseValue = !ReverseValue;
+		SetAnimation("Idle");
 	}
 
 protected:
@@ -46,6 +47,7 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void SetAnimation(const std::string _State, int _StartFrame = 0);
+	
 
 	float Speed = 0.1f;
 	float CurDistance = 0.0f;

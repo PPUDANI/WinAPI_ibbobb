@@ -49,7 +49,7 @@
       <Filter>Contents\Level\TitleObject</Filter>
     </ClInclude>
     <ClInclude Include="TitleLevel.h">
-      <Filter>Contents\Monster</Filter>
+      <Filter>Contents\Level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -76,9 +76,6 @@
       <Filter>Contents\Global</Filter>
     </ClCompile>
     <ClCompile Include="GravityActor.cpp" />
-    <ClCompile Include="RoadMonster.cpp">
-      <Filter>Contents\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="JumpingMonster.cpp">
       <Filter>Contents\Monster</Filter>
     </ClCompile>
@@ -102,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="DefaultImage.cpp">
       <Filter>Contents\Level\TitleObject</Filter>
+    </ClCompile>
+    <ClCompile Include="RoadMonster.cpp">
+      <Filter>Contents\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

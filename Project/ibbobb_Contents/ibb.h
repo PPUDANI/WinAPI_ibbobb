@@ -23,4 +23,7 @@ private:
 	bool RightToOtherLeftCheck() override;
 	bool UpToOtherDownCheck() override;
 	bool DownToOtherUpCheck() override;
+
+	bool UpToOtherBodyCheck() override;
+	bool DownToOtherBodyCheck() override;
 };

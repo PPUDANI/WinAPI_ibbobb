@@ -124,12 +124,12 @@ void ibb::Init()
 	RightCol->SetCollisionType(CollisionType::Rect);
 
 	UpCol = CreateCollision(CollisionOrder::ibbUp);
-	UpCol->SetCollisionScale({ 25.0f, 10.0f });
+	UpCol->SetCollisionScale({ 34.0f, 10.0f });
 	UpCol->SetCollisionPos({ 0.0f, -12.0f });
 	UpCol->SetCollisionType(CollisionType::Rect);
 
 	DownCol = CreateCollision(CollisionOrder::ibbDown);
-	DownCol->SetCollisionScale({ 25.0f, 10.0f });
+	DownCol->SetCollisionScale({ 34.0f, 10.0f });
 	DownCol->SetCollisionPos({ 0.0f, 12.0f });
 	DownCol->SetCollisionType(CollisionType::Rect);
 
@@ -177,6 +177,24 @@ bool ibb::DownToOtherUpCheck()
 {
 	std::vector<GameEngineCollision*> _ColVec;
 	return DownCol->Collision(OtherPlayerUpCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+bool ibb::UpToOtherBodyCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return UpCol->Collision(OtherPlayerBodyCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+bool ibb::DownToOtherBodyCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return DownCol->Collision(OtherPlayerBodyCol,
 		_ColVec,
 		CollisionType::Rect,
 		CollisionType::Rect);

@@ -108,7 +108,7 @@ void obb::Init()
 	MainRenderer->CreateAnimation("ReverseRight_Dead", "Right_obb_Reverse.bmp", 39, 41, Frame, true);
 
 
-	// 충돌체 설정
+	// 충돌체 설정 (Body높이와 Up Down 높이가 같아야함)
 
 	BodyCol = CreateCollision(CollisionOrder::obb);
 	BodyCol->SetCollisionScale({ 34.0f, 34.0f });
@@ -125,12 +125,12 @@ void obb::Init()
 	RightCol->SetCollisionType(CollisionType::Rect);
 
 	UpCol = CreateCollision(CollisionOrder::obbUp);
-	UpCol->SetCollisionScale({ 25.0f, 10.0f });
+	UpCol->SetCollisionScale({ 34.0f, 10.0f });
 	UpCol->SetCollisionPos({ 0.0f, -12.0f });
 	UpCol->SetCollisionType(CollisionType::Rect);
 
 	DownCol = CreateCollision(CollisionOrder::obbDown);
-	DownCol->SetCollisionScale({ 25.0f, 10.0f });
+	DownCol->SetCollisionScale({ 34.0f, 10.0f });
 	DownCol->SetCollisionPos({ 0.0f, 12.0f });
 	DownCol->SetCollisionType(CollisionType::Rect);
 
@@ -181,3 +181,22 @@ bool obb::DownToOtherUpCheck()
 		CollisionType::Rect,
 		CollisionType::Rect);
 }
+
+bool obb::UpToOtherBodyCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return UpCol->Collision(OtherPlayerBodyCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+bool obb::DownToOtherBodyCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return DownCol->Collision(OtherPlayerBodyCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+

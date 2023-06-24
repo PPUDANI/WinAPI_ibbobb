@@ -104,12 +104,23 @@ protected:
 		return false;
 	}
 
+	virtual bool UpToOtherBodyCheck()
+	{
+		return false;
+	}
+
+	virtual bool DownToOtherBodyCheck()
+	{
+		return false;
+	}
+
 	Player* OtherPlayer = nullptr;
 	GameEngineCollision* BodyCol = nullptr;
 	GameEngineCollision* LeftCol = nullptr;
 	GameEngineCollision* RightCol = nullptr;
 	GameEngineCollision* UpCol = nullptr;
 	GameEngineCollision* DownCol = nullptr;
+
 	int OtherPlayerBodyCol;
 	int OtherPlayerLeftCol;
 	int OtherPlayerRightCol;
@@ -136,13 +147,24 @@ private:
 	void DeadUpdate(float _DeltaTime); 
 	void RidingModeUpdate(float _DeltaTime);
 
-	void SetAnimation(const std::string _State, int _StartFrame = 0);
+	void IdleInitFromFall();
+	bool LeftMapColCheck();
+	bool RightMapColCheck();
+	bool DownMapColCheck();
+	bool UpMapColCheck();
+
+	void ReverseInit();
+	void ReverseCol();
+
+	
 	void OtherPlayerMoveCheck();
+
+	void SetAnimation(const std::string _State, int _StartFrame = 0);
 	inline void ChangeState(PlayerState _State)
 	{
 		CurState = _State;
 	}
-	void ReverseCol();
+	
 
 	// 캐릭터 상태변수
 	PlayerState CurState = PlayerState::Fall;
@@ -162,11 +184,10 @@ private:
 
 	float MinGravityInHole = 0.0f;
 	float MaxGravityInHole = 0.0f;
-
+	float PushPowerInVirticalHole = 0.0f;
 	float ErrorRangeOfGravity = 0.0f;
-	
-	float4 MovePos = float4::ZERO;
 
+	float4 MovePos = float4::ZERO;
 	float4 DistanceFromOtherPlayer = float4::ZERO;
 
 	// 맵 충돌 체크
@@ -183,7 +204,7 @@ private:
 	float4 MapMiddleUpCheck = { 0.0f, -17.0f };
 	float4 MapMiddleDownCheck = { 0.0f, 17.0f };
 	
-	bool LengthWorpPass = false;
-	bool WidthWorpPass = false;
+	bool HorizontalWorpPass = false;
+	bool VirticalWorpPass = false;
 };
 

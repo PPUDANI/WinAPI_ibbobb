@@ -37,15 +37,15 @@ void Player::IdleUpdate(float _DeltaTime)
 		ChangeState(PlayerState::RidingMode);
 		return;
 	}
-	else if (false == DownMapColCheck() &&
-		false == DownToOtherBodyCheck())
+	else if (false == DownMapColCheck())
 	{
 		ChangeState(PlayerState::Fall);
 		return;
 	}
 
 	// Run 상태 체크
-	if (true == GameEngineInput::IsPress(MoveLeftKey) || true == GameEngineInput::IsPress(MoveRightKey))
+	if (true == GameEngineInput::IsPress(MoveLeftKey) ||
+		true == GameEngineInput::IsPress(MoveRightKey))
 	{
 		ChangeState(PlayerState::Run);
 		return;
@@ -240,6 +240,7 @@ void Player::RunUpdate(float _DeltaTime)
 			return;
 		}
 
+
 		AddPos(MovePos);
 	}
 
@@ -260,7 +261,8 @@ void Player::FallUpdate(float _DeltaTime)
 			ChangeState(PlayerState::Idle);
 			return;
 		}
-		else if (true == DownToOtherUpCheck())
+		else if (true == DownToOtherUpCheck() &&
+			ReverseValue == OtherPlayer->GetReverseValue())
 		{
 			if (true == ReverseValue)
 			{
@@ -287,8 +289,10 @@ void Player::FallUpdate(float _DeltaTime)
 			return;
 		}
 		else if (ReverseValue != OtherPlayer->GetReverseValue() &&
+			false == HorizontalWorpPass &&
 			true == DownToOtherBodyCheck())
 		{
+
 			if (true == ReverseValue)
 			{
 				while (true == DownToOtherBodyCheck())
@@ -307,6 +311,7 @@ void Player::FallUpdate(float _DeltaTime)
 				// 지글현상 제거
 				AddPos(float4::DOWN);
 			}
+
 
 			IdleInitFromFall();
 			ChangeState(PlayerState::Idle);
@@ -538,7 +543,7 @@ void Player::JumpUpdate(float _DeltaTime)
 
 void Player::RidingModeUpdate(float _DeltaTime)
 {
-	// Run의 중력 반전 체크
+	// RidingMode의 중력 반전 체크
 	{
 		unsigned int MidColor = GetGroundColor(RGB(0, 255, 255), float4::ZERO);
 		if (MidColor == RGB(0, 255, 255))
@@ -559,22 +564,20 @@ void Player::RidingModeUpdate(float _DeltaTime)
 		}
 	}
 
-	if (true == UpMapColCheck())
+	
+
+	// RideMode 연산 코드
+	if (OtherPlayer->GetState() != PlayerState::Idle)
 	{
-		if (true == ReverseValue)
+		if (false == LeftMapColCheck() ||
+			false == RightMapColCheck())
 		{
-			AddPos(float4::UP);
-			OtherPlayer->AddPos(float4::UP);
+			SetPos(OtherPlayer->GetPos() + DistanceFromOtherPlayer);
 		}
 		else
 		{
-			AddPos(float4::DOWN);
-			OtherPlayer->AddPos(float4::DOWN);
+			int a = 0;
 		}
-		
-		OtherPlayer->GravityReset();
-		OtherPlayer->ChangeState(PlayerState::Fall);
-		return;
 	}
 
 	// Crouch 상태 체크
@@ -609,15 +612,8 @@ void Player::RidingModeUpdate(float _DeltaTime)
 		return;
 	}
 
-	if (OtherPlayer->GetState() != PlayerState::Idle)
-	{
-		if (false == LeftMapColCheck() ||
-			false == RightMapColCheck())
-		{
-			SetPos(OtherPlayer->GetPos() + DistanceFromOtherPlayer);
-		}
-	}
 
+	// 머리위에서 좌, 우 이동 중 못 빠져나오는 현상 제거
 	if (false == DownToOtherUpCheck())
 	{
 		if (PlayerDir::Left == CurDir)
@@ -681,6 +677,26 @@ void Player::RidingModeUpdate(float _DeltaTime)
 		DistanceFromOtherPlayer += MovePos;
 		AddPos(MovePos);
 	}
+
+	// 상단 충돌이 일어날경우 OtherPlayer 제어
+	if (true == UpMapColCheck())
+	{
+		if (true == ReverseValue)
+		{
+			AddPos(float4::UP);
+			OtherPlayer->AddPos(float4::UP);
+		}
+		else
+		{
+			AddPos(float4::DOWN);
+			OtherPlayer->AddPos(float4::DOWN);
+		}
+
+		OtherPlayer->GravityReset();
+		OtherPlayer->ChangeState(PlayerState::Fall);
+		return;
+	}
+
 }
 
 void Player::DeadUpdate(float _DeltaTime)

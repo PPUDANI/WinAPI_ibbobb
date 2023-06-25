@@ -171,7 +171,7 @@ private:
 	PlayerDir CurDir = PlayerDir::Right;
 	bool FromJump = false;
 	bool FromRun = false;
-	
+	bool AnimIsBlink = false;
 
 	// 캐릭터 물리변수
 	float JumpForce = 1.0f;

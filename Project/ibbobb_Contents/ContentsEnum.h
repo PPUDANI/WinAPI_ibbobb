@@ -15,6 +15,7 @@ enum class RenderOrder
 	Image,
 	RoadMonster,
 	JumpingMonster,
+	MonsterCore,
 	ibb,
 	obb,
 	PlayUI,
@@ -22,15 +23,16 @@ enum class RenderOrder
 
 enum class CollisionOrder
 {
-	ibb,
+	ibbBody,
 	ibbLeft,
 	ibbRight,
 	ibbUp,
 	ibbDown,
-	obb,
+	obbBody,
 	obbLeft,
 	obbRight,
 	obbUp,
 	obbDown,
 	MonsterBody,
+	MonsterCore,
 };

@@ -109,7 +109,7 @@ void ibb::Init()
 
 	// 충돌체 설정
 
-	BodyCol = CreateCollision(CollisionOrder::ibb);
+	BodyCol = CreateCollision(CollisionOrder::ibbBody);
 	BodyCol->SetCollisionScale({ 34.0f, 34.0f });
 	BodyCol->SetCollisionType(CollisionType::Rect);
 
@@ -134,7 +134,7 @@ void ibb::Init()
 	DownCol->SetCollisionType(CollisionType::Rect);
 
 
-	OtherPlayerBodyCol = static_cast<int>(CollisionOrder::obb);
+	OtherPlayerBodyCol = static_cast<int>(CollisionOrder::obbBody);
 	OtherPlayerLeftCol = static_cast<int>(CollisionOrder::obbLeft);
 	OtherPlayerRightCol = static_cast<int>(CollisionOrder::obbRight);
 	OtherPlayerUpCol = static_cast<int>(CollisionOrder::obbUp);

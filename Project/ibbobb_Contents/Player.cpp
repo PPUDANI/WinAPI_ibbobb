@@ -138,6 +138,7 @@ void Player::Update(float _DeltaTime)
 		CollisionType::Rect,
 		CollisionType::Rect))
 	{
+		SetAnimation("Dead");
 		ChangeState(PlayerState::Dead);
 	}
 
@@ -289,10 +290,7 @@ void Player::IdleInitFromFall()
 	{
 		SetGravityPower(DefaultGravityPower);
 	}
-
-
 	MovePos = float4::ZERO;
-	SetAnimation("Idle");
 }
 
 void Player::ReverseInit()

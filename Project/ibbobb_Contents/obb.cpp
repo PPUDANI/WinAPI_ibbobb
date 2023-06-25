@@ -110,7 +110,7 @@ void obb::Init()
 
 	// 충돌체 설정 (Body높이와 Up Down 높이가 같아야함)
 
-	BodyCol = CreateCollision(CollisionOrder::obb);
+	BodyCol = CreateCollision(CollisionOrder::obbBody);
 	BodyCol->SetCollisionScale({ 34.0f, 34.0f });
 	BodyCol->SetCollisionType(CollisionType::Rect);
 
@@ -134,7 +134,7 @@ void obb::Init()
 	DownCol->SetCollisionPos({ 0.0f, 12.0f });
 	DownCol->SetCollisionType(CollisionType::Rect);
 
-	OtherPlayerBodyCol = static_cast<int>(CollisionOrder::ibb);
+	OtherPlayerBodyCol = static_cast<int>(CollisionOrder::ibbBody);
 	OtherPlayerLeftCol = static_cast<int>(CollisionOrder::ibbLeft);
 	OtherPlayerRightCol = static_cast<int>(CollisionOrder::ibbRight);
 	OtherPlayerUpCol = static_cast<int>(CollisionOrder::ibbUp);

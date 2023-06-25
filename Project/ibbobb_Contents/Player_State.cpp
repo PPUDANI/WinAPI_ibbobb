@@ -82,10 +82,18 @@ void Player::IdleUpdate(float _DeltaTime)
 	if (RandomNumber == 1)
 	{
 		SetAnimation("Blink");
+		AnimIsBlink = true;
 		return;
 	}
-
-	if (true == MainRenderer->IsAnimationEnd())
+	else if (true == AnimIsBlink)
+	{
+		if (true == MainRenderer->IsAnimationEnd())
+		{
+			AnimIsBlink = false;
+			SetAnimation("Idle");
+		}
+	}
+	else
 	{
 		SetAnimation("Idle");
 	}
@@ -235,7 +243,6 @@ void Player::RunUpdate(float _DeltaTime)
 		else
 		{
 			MovePos = float4::ZERO;
-			SetAnimation("Idle");
 			ChangeState(PlayerState::Idle);
 			return;
 		}
@@ -635,7 +642,6 @@ void Player::RidingModeUpdate(float _DeltaTime)
 		if (false == LeftMapColCheck() ||
 			false == RightMapColCheck())
 		{
-			SetAnimation("Idle");
 			ChangeState(PlayerState::Idle);
 		}
 		return;
@@ -670,7 +676,29 @@ void Player::RidingModeUpdate(float _DeltaTime)
 		else
 		{
 			MovePos = float4::ZERO;
-			SetAnimation("Idle");
+
+			// Blink, Idle 애니메이션 랜덤 교차
+			int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 600);
+
+			if (RandomNumber == 1)
+			{
+				SetAnimation("Blink");
+				AnimIsBlink = true;
+				return;
+			}
+			if (true == AnimIsBlink)
+			{
+				if (true == MainRenderer->IsAnimationEnd())
+				{
+					AnimIsBlink = false;
+					SetAnimation("Idle");
+				}
+			}
+			else
+			{
+				SetAnimation("Idle");
+			}
+			
 			return;
 		}
 
@@ -696,12 +724,11 @@ void Player::RidingModeUpdate(float _DeltaTime)
 		OtherPlayer->ChangeState(PlayerState::Fall);
 		return;
 	}
-
 }
 
 void Player::DeadUpdate(float _DeltaTime)
 {
-	SetAnimation("Dead");
+
 	if (true == MainRenderer->IsAnimationEnd())
 	{
 		Death();

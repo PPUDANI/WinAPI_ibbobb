@@ -35,7 +35,7 @@ void BackGround::Init(const std::string& _FileName)
 	}
 
 	GameEngineWindowTexture* Texture = ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
-	
+
 	float4 Scale = Texture->GetScale();
 	Renderer->SetTexture(_FileName);
 	Renderer->SetRenderScale(Scale);

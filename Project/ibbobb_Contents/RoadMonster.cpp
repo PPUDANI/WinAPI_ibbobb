@@ -193,6 +193,7 @@ void RoadMonster::MoveUpdate(float _DeltaTime)
 		SetAnimation("Dead");
 		CoreRenderer->ChangeAnimation("Dead");
 		CurState = RoadMonsterState::Dead;
+		return;
 	}
 
 

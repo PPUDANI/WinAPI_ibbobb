@@ -275,21 +275,26 @@ void Player::ReverseCol()
 
 void Player::IdleInitFromFall()
 {
-	// 변환한 외부 설정 초기화
-	GravityReset();
-	HorizontalWorpPass = false;
-	VirticalWorpPass = false;
-	PrevAreaVectorInit = false;
+	if (PlayerState::Fall == CurState)
+	{
+		// 변환한 외부 설정 초기화
+		GravityReset();
+		HorizontalWorpPass = false;
+		VirticalWorpPass = false;
+		PrevAreaVectorInit = false;
 
-	// 바닥에 닿을 시 워프홀 상호작용 때 추가된 중력 초기화
-	if (true == ReverseValue)
-	{
-		SetGravityPower(-DefaultGravityPower);
+		// 바닥에 닿을 시 워프홀 상호작용 때 추가된 중력 초기화
+		if (true == ReverseValue)
+		{
+			SetGravityPower(-DefaultGravityPower);
+		}
+		else
+		{
+			SetGravityPower(DefaultGravityPower);
+		}
 	}
-	else
-	{
-		SetGravityPower(DefaultGravityPower);
-	}
+	
+	AnimIsBlink = false;
 	MovePos = float4::ZERO;
 }
 
@@ -479,9 +484,9 @@ bool Player::UpMapColCheck()
 
 	if (true == ReverseValue)
 	{
-		LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck - float4::LEFT);
+		LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::RIGHT * 2.0f);
 		MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
-		RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck - float4::RIGHT);
+		RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::LEFT * 2.0f);
 
 		if (LeftUpColor == RGB(255, 0, 0) ||
 			MiddleUpColor == RGB(255, 0, 0) ||
@@ -491,9 +496,9 @@ bool Player::UpMapColCheck()
 				MiddleUpColor == RGB(255, 0, 0) ||
 				RightUpColor == RGB(255, 0, 0))
 			{
-				LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck - float4::LEFT);
+				LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::RIGHT * 2.0f);
 				MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
-				RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck - float4::RIGHT);
+				RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::LEFT * 2.0f);
 				AddPos(float4::UP);
 			}
 			return true;
@@ -502,9 +507,9 @@ bool Player::UpMapColCheck()
 	}
 	else
 	{
-		LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck - float4::LEFT);
+		LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::RIGHT * 2.0f);
 		MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck);
-		RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck - float4::RIGHT);
+		RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::LEFT * 2.0f);
 		if (LeftUpColor == RGB(255, 0, 0) ||
 			MiddleUpColor == RGB(255, 0, 0) ||
 			RightUpColor == RGB(255, 0, 0))
@@ -513,9 +518,9 @@ bool Player::UpMapColCheck()
 				MiddleUpColor == RGB(255, 0, 0) ||
 				RightUpColor == RGB(255, 0, 0))
 			{
-				LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck - float4::LEFT);
+				LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::RIGHT * 2.0f);
 				MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck);
-				RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck - float4::RIGHT);
+				RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::LEFT * 2.0f);
 				AddPos(float4::DOWN);
 			}
 			return true;

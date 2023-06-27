@@ -16,9 +16,7 @@ enum class PlayerState
 enum class PlayerDir
 {
 	Left,
-	Right,
-	ReverseLeft,
-	ReverseRight
+	Right
 };
 
 class Player : public GravityActor

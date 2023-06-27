@@ -101,6 +101,42 @@ void Player::IdleUpdate(float _DeltaTime)
 
 void Player::CrouchUpdate(float _DeltaTime)
 {
+	// Idle의 중력 반전 체크
+	{
+		unsigned int MidColor = GetGroundColor(RGB(0, 255, 255), float4::ZERO);
+		if (MidColor == RGB(0, 255, 255))
+		{
+			if (false == ReverseValue)
+			{
+				ChangeState(PlayerState::Fall);
+				return;
+			}
+		}
+		else if (MidColor == RGB(255, 255, 255))
+		{
+			if (true == ReverseValue)
+			{
+				ChangeState(PlayerState::Fall);
+				return;
+			}
+		}
+	}
+
+	// Idle의 바닥 충돌 체크
+	if (true == DownToOtherUpCheck())
+	{
+		DistanceFromOtherPlayer = GetPos() - OtherPlayer->GetPos();
+		ChangeState(PlayerState::RidingMode);
+		return;
+	}
+	else if (false == DownMapColCheck())
+	{
+		ChangeState(PlayerState::Fall);
+		return;
+	}
+
+	OtherPlayerMoveCheck();
+
 	// 방향 전환
 	if (true == GameEngineInput::IsPress(MoveLeftKey))
 	{
@@ -118,7 +154,7 @@ void Player::CrouchUpdate(float _DeltaTime)
 	}
 	else
 	{
-		SetAnimation("Idle");
+		IdleInitFromFall();
 		ChangeState(PlayerState::Idle);
 	}
 }
@@ -198,17 +234,16 @@ void Player::RunUpdate(float _DeltaTime)
 			if(true == LeftToOtherRightCheck())
 			{
 				PlayerState OtherPlayerState = OtherPlayer->GetState();
-				if (PlayerState::Run == OtherPlayerState ||
-					PlayerState::Jump == OtherPlayerState ||
-					PlayerState::Fall == OtherPlayerState ||
-					PlayerState::RidingMode == OtherPlayerState)
-				{
-					MovePos = float4::ZERO;
-				}
-				else
+
+				if (OtherPlayerState == PlayerState::Idle ||
+					OtherPlayerState == PlayerState::Crouch)
 				{
 					MovePos *= 0.6f;
 					OtherPlayer->AddPos(MovePos);
+				}
+				else
+				{
+					MovePos = float4::ZERO;
 				}
 			}
 		}
@@ -226,23 +261,21 @@ void Player::RunUpdate(float _DeltaTime)
 			if (true == RightToOtherLeftCheck())
 			{
 				PlayerState OtherPlayerState = OtherPlayer->GetState();
-				if (PlayerState::Run == OtherPlayerState ||
-					PlayerState::Jump == OtherPlayerState ||
-					PlayerState::Fall == OtherPlayerState ||
-					PlayerState::RidingMode == OtherPlayerState)
-				{
-					MovePos = float4::ZERO;
-				}
-				else
+				if (OtherPlayerState == PlayerState::Idle ||
+					OtherPlayerState == PlayerState::Crouch)
 				{
 					MovePos *= 0.6f;
 					OtherPlayer->AddPos(MovePos);
+				}
+				else
+				{
+					MovePos = float4::ZERO;
 				}
 			}
 		}
 		else
 		{
-			MovePos = float4::ZERO;
+			IdleInitFromFall();
 			ChangeState(PlayerState::Idle);
 			return;
 		}
@@ -348,15 +381,15 @@ void Player::FallUpdate(float _DeltaTime)
 			if (true == LeftToOtherRightCheck())
 			{
 				PlayerState OtherPlayerState = OtherPlayer->GetState();
-				if (PlayerState::Fall == OtherPlayerState ||
-					PlayerState::Jump == OtherPlayerState)
+				if (PlayerState::Idle == OtherPlayerState ||
+					PlayerState::Crouch == OtherPlayerState)
 				{
-					MovePos = float4::ZERO;
+					MovePos *= 0.6f;
+					OtherPlayer->AddPos(MovePos);		
 				}
 				else
 				{
-					MovePos *= 0.6f;
-					OtherPlayer->AddPos(MovePos);
+					MovePos = float4::ZERO;
 				}
 			}
 		}
@@ -374,15 +407,15 @@ void Player::FallUpdate(float _DeltaTime)
 			if (true == RightToOtherLeftCheck())
 			{
 				PlayerState OtherPlayerState = OtherPlayer->GetState();
-				if (PlayerState::Fall == OtherPlayerState ||
-					PlayerState::Jump == OtherPlayerState)
-				{
-					MovePos = float4::ZERO;
-				}
-				else
+				if (PlayerState::Idle == OtherPlayerState ||
+					PlayerState::Crouch == OtherPlayerState)
 				{
 					MovePos *= 0.6f;
 					OtherPlayer->AddPos(MovePos);
+				}
+				else
+				{
+					MovePos = float4::ZERO;
 				}
 			}
 		}
@@ -448,7 +481,8 @@ void Player::JumpUpdate(float _DeltaTime)
 		GravityReset();
 		ChangeState(PlayerState::Fall);
 	}
-	else if (true == UpToOtherBodyCheck() &&
+	else if (
+		true == UpToOtherBodyCheck() &&
 		PlayerState::RidingMode != OtherPlayer->GetState())
 	{
 		GravityReset();
@@ -499,15 +533,15 @@ void Player::JumpUpdate(float _DeltaTime)
 			if (true == LeftToOtherRightCheck())
 			{
 				PlayerState OtherPlayerState = OtherPlayer->GetState();
-				if (PlayerState::Fall == OtherPlayerState ||
-					PlayerState::Jump == OtherPlayerState)
+				if (PlayerState::Idle == OtherPlayerState ||
+					PlayerState::Crouch == OtherPlayerState)
 				{
-					MovePos = float4::ZERO;
+					MovePos *= 0.6f;
+					OtherPlayer->AddPos(MovePos);
 				}
 				else
 				{
-					MovePos = MovePos * 0.6f;
-					OtherPlayer->AddPos(MovePos);
+					MovePos = float4::ZERO;
 				}
 			}
 		}
@@ -525,15 +559,15 @@ void Player::JumpUpdate(float _DeltaTime)
 			if (true == RightToOtherLeftCheck())
 			{
 				PlayerState OtherPlayerState = OtherPlayer->GetState();
-				if (PlayerState::Fall == OtherPlayerState ||
-					PlayerState::Jump == OtherPlayerState)
+				if (PlayerState::Idle == OtherPlayerState ||
+					PlayerState::Crouch == OtherPlayerState)
 				{
-					MovePos = float4::ZERO;
+					MovePos *= 0.6f;
+					OtherPlayer->AddPos(MovePos);
 				}
 				else
 				{
-					MovePos = MovePos * 0.6f;
-					OtherPlayer->AddPos(MovePos);
+					MovePos = float4::ZERO;
 				}
 			}
 		}
@@ -571,19 +605,31 @@ void Player::RidingModeUpdate(float _DeltaTime)
 		}
 	}
 
-	
-
-	// RideMode 연산 코드
-	if (OtherPlayer->GetState() != PlayerState::Idle)
+	// Jump 상태 체크
+	if (true == GameEngineInput::IsDown(JumpKey))
 	{
-		if (false == LeftMapColCheck() ||
-			false == RightMapColCheck())
+		if (true == ReverseValue)
 		{
-			SetPos(OtherPlayer->GetPos() + DistanceFromOtherPlayer);
+			SetGravityVector(float4::DOWN * JumpForce);
 		}
 		else
 		{
-			int a = 0;
+			SetGravityVector(float4::UP * JumpForce);
+		}
+
+		FromJump = false;
+		ChangeState(PlayerState::Jump);
+		return;
+	}
+
+
+	// RideMode 연산 코드
+	if (OtherPlayer->GetState() != PlayerState::Idle &&
+		OtherPlayer->GetState() != PlayerState::Crouch)
+	{
+		if (false == LeftMapColCheck() || false == RightMapColCheck())
+		{
+			SetPos(OtherPlayer->GetPos() + DistanceFromOtherPlayer);
 		}
 	}
 
@@ -602,20 +648,22 @@ void Player::RidingModeUpdate(float _DeltaTime)
 		return;
 	}
 
-	// Jump 상태 체크
-	if (true == GameEngineInput::IsDown(JumpKey))
+	// 상단 충돌이 일어날경우 OtherPlayer 제어
+	if (true == UpMapColCheck())
 	{
 		if (true == ReverseValue)
 		{
-			SetGravityVector(float4::DOWN * JumpForce);
+			AddPos(float4::UP);
+			OtherPlayer->AddPos(float4::UP);
 		}
 		else
 		{
-			SetGravityVector(float4::UP * JumpForce);
+			AddPos(float4::DOWN);
+			OtherPlayer->AddPos(float4::DOWN);
 		}
 
-		FromJump = false;
-		ChangeState(PlayerState::Jump);
+		OtherPlayer->GravityReset();
+		OtherPlayer->ChangeState(PlayerState::Fall);
 		return;
 	}
 
@@ -642,10 +690,12 @@ void Player::RidingModeUpdate(float _DeltaTime)
 		if (false == LeftMapColCheck() ||
 			false == RightMapColCheck())
 		{
+			IdleInitFromFall();
 			ChangeState(PlayerState::Idle);
 		}
 		return;
 	}
+
 
 	// 좌, 우 이동
 	{
@@ -659,6 +709,9 @@ void Player::RidingModeUpdate(float _DeltaTime)
 				MovePos = { -Speed * _DeltaTime, 0.0f };
 			}
 
+			DistanceFromOtherPlayer += MovePos;
+			AddPos(MovePos);
+
 			SetAnimation("Run");
 		}
 		else if (true == GameEngineInput::IsPress(MoveRightKey))
@@ -669,14 +722,17 @@ void Player::RidingModeUpdate(float _DeltaTime)
 			if (false == RightMapColCheck())
 			{
 				MovePos = { Speed * _DeltaTime, 0.0f };
+				
 			}
+
+			DistanceFromOtherPlayer += MovePos;
+			AddPos(MovePos);
 
 			SetAnimation("Run");
 		}
 		else
 		{
 			MovePos = float4::ZERO;
-
 			// Blink, Idle 애니메이션 랜덤 교차
 			int RandomNumber = GameEngineRandom::MainRandom.RandomInt(1, 600);
 
@@ -686,6 +742,7 @@ void Player::RidingModeUpdate(float _DeltaTime)
 				AnimIsBlink = true;
 				return;
 			}
+
 			if (true == AnimIsBlink)
 			{
 				if (true == MainRenderer->IsAnimationEnd())
@@ -698,32 +755,12 @@ void Player::RidingModeUpdate(float _DeltaTime)
 			{
 				SetAnimation("Idle");
 			}
-			
-			return;
 		}
-
-		DistanceFromOtherPlayer += MovePos;
-		AddPos(MovePos);
 	}
 
-	// 상단 충돌이 일어날경우 OtherPlayer 제어
-	if (true == UpMapColCheck())
-	{
-		if (true == ReverseValue)
-		{
-			AddPos(float4::UP);
-			OtherPlayer->AddPos(float4::UP);
-		}
-		else
-		{
-			AddPos(float4::DOWN);
-			OtherPlayer->AddPos(float4::DOWN);
-		}
 
-		OtherPlayer->GravityReset();
-		OtherPlayer->ChangeState(PlayerState::Fall);
-		return;
-	}
+
+
 }
 
 void Player::DeadUpdate(float _DeltaTime)

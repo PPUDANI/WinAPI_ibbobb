@@ -58,7 +58,7 @@ void PlayLevel::Update(float _DeltaTime)
 		MsgBoxAssert("OtherPlayer가 세팅되지 않았습니다.")
 	}
 
-	if (true == GameEngineInput::IsDown('O'))
+	if (true == GameEngineInput::IsDown('I'))
 	{
 		EXMap->SwitchRender();
 		CollisionDebugRenderSwitch();
@@ -97,13 +97,13 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	// ibb
 	ibbPlayer = CreateActor<ibb>(UpdateOrder::Player);
 	ibbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-	ibbPlayer->SetPos({ 1000.0f, 500.0f });
+	ibbPlayer->SetPos({ 3000.0f, 500.0f });
 	ibbPlayer->SetRatio(2.0f);
 
 	// obb
 	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
 	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-	obbPlayer->SetPos({ 1100.0f, 500.0f });
+	obbPlayer->SetPos({ 3100.0f, 500.0f });
 	obbPlayer->SetRatio(2.0f);
 
 	obbPlayer->SetOtherPlayer(dynamic_cast<Player*>(ibbPlayer));

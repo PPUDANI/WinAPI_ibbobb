@@ -293,7 +293,6 @@ void Player::IdleInitFromFall()
 			SetGravityPower(DefaultGravityPower);
 		}
 	}
-	
 	AnimIsBlink = false;
 	MovePos = float4::ZERO;
 }
@@ -411,9 +410,9 @@ bool Player::LeftMapColCheck()
 	unsigned int LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck + float4::LEFT);
 	unsigned int LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::LEFT + float4::UP);
 
-	if (LeftUpColor == RGB(255, 0, 0) ||
+	if ((LeftUpColor == RGB(255, 0, 0) ||
 		LeftMiddleColor == RGB(255, 0, 0) ||
-		LeftDownColor == RGB(255, 0, 0))
+		LeftDownColor == RGB(255, 0, 0)))
 	{
 		if (CurState == PlayerState::Run ||
 			CurState == PlayerState::RidingMode)
@@ -451,9 +450,10 @@ bool Player::RightMapColCheck()
 		RightMiddleColor == RGB(255, 0, 0) ||
 		RightDownColor == RGB(255, 0, 0))
 	{
-		if (CurState == PlayerState::Run ||
+		if (CurState == PlayerState::Run || 
 			CurState == PlayerState::RidingMode)
 		{
+
 			// 벽에 박힘 제거
 			while (RightUpColor == RGB(255, 0, 0) ||
 				RightMiddleColor == RGB(255, 0, 0) ||

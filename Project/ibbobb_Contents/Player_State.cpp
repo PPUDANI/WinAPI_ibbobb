@@ -627,25 +627,37 @@ void Player::RidingModeUpdate(float _DeltaTime)
 	if (OtherPlayer->GetState() != PlayerState::Idle &&
 		OtherPlayer->GetState() != PlayerState::Crouch)
 	{
-		if (false == LeftMapColCheck() || false == RightMapColCheck())
+		PlayerDir OtherPlayerDir = OtherPlayer->GetDir();
+		if (true == LeftMapColCheck())
 		{
-			SetPos(OtherPlayer->GetPos() + DistanceFromOtherPlayer);
+			AddPos(float4::RIGHT);
+
+			DistanceFromOtherPlayer.X = GetPos().X - OtherPlayer->GetPos().X;
 		}
+
+		if (true == RightMapColCheck())
+		{
+			AddPos(float4::LEFT);
+			DistanceFromOtherPlayer.X = GetPos().X - OtherPlayer->GetPos().X;
+		}
+
+		SetPos(OtherPlayer->GetPos() + DistanceFromOtherPlayer);
 	}
 
-	// Crouch 상태 체크
-	if (true == GameEngineInput::IsPress(CrouchKey))
+	// 머리위에서 좌, 우 이동 중 못 빠져나오는 현상 제거
+	
+
+    if (true == DownMapColCheck())
 	{
-		if (true == GameEngineInput::IsPress(MoveLeftKey))
+		bool LeftCheck = LeftMapColCheck();
+		bool RightCheck = RightMapColCheck();
+		if (false == LeftCheck &&
+			false == RightCheck)
 		{
-			CurDir = PlayerDir::Left;
+			IdleInitFromFall();
+			ChangeState(PlayerState::Idle);
+			return;
 		}
-		else if (true == GameEngineInput::IsPress(MoveRightKey))
-		{
-			CurDir = PlayerDir::Right;
-		}
-		SetAnimation("Crouch");
-		return;
 	}
 
 	// 상단 충돌이 일어날경우 OtherPlayer 제어
@@ -667,35 +679,21 @@ void Player::RidingModeUpdate(float _DeltaTime)
 		return;
 	}
 
-
-	// 머리위에서 좌, 우 이동 중 못 빠져나오는 현상 제거
-	if (false == DownToOtherUpCheck())
+	// Crouch 상태 체크
+	if (true == GameEngineInput::IsPress(CrouchKey))
 	{
-		if (PlayerDir::Left == CurDir)
+		if (true == GameEngineInput::IsPress(MoveLeftKey))
 		{
-			AddPos(float4::LEFT * 5);
-			LeftMapColCheck();
+			CurDir = PlayerDir::Left;
 		}
-		else
+		else if (true == GameEngineInput::IsPress(MoveRightKey))
 		{
-			AddPos(float4::RIGHT * 5);
-			RightMapColCheck();
+			CurDir = PlayerDir::Right;
 		}
-
-		ChangeState(PlayerState::Fall);
+		AnimIsBlink = false;
+		SetAnimation("Crouch");
 		return;
 	}
-	else if (true == DownMapColCheck())
-	{
-		if (false == LeftMapColCheck() ||
-			false == RightMapColCheck())
-		{
-			IdleInitFromFall();
-			ChangeState(PlayerState::Idle);
-		}
-		return;
-	}
-
 
 	// 좌, 우 이동
 	{
@@ -707,12 +705,34 @@ void Player::RidingModeUpdate(float _DeltaTime)
 			if (false == LeftMapColCheck())
 			{
 				MovePos = { -Speed * _DeltaTime, 0.0f };
+				DistanceFromOtherPlayer += MovePos;
+			}
+			else
+			{
+				DistanceFromOtherPlayer.X = GetPos().X - OtherPlayer->GetPos().X;
 			}
 
-			DistanceFromOtherPlayer += MovePos;
+			
 			AddPos(MovePos);
-
+			AnimIsBlink = false;
 			SetAnimation("Run");
+
+			if (false == DownToOtherUpCheck())
+			{
+				if (PlayerDir::Left == CurDir)
+				{
+					AddPos(float4::LEFT * 5);
+					LeftMapColCheck();
+				}
+				else
+				{
+					AddPos(float4::RIGHT * 5);
+					RightMapColCheck();
+				}
+
+				ChangeState(PlayerState::Fall);
+				return;
+			}
 		}
 		else if (true == GameEngineInput::IsPress(MoveRightKey))
 		{
@@ -722,13 +742,34 @@ void Player::RidingModeUpdate(float _DeltaTime)
 			if (false == RightMapColCheck())
 			{
 				MovePos = { Speed * _DeltaTime, 0.0f };
-				
+				DistanceFromOtherPlayer += MovePos;
+			}
+			else
+			{
+				DistanceFromOtherPlayer.X = GetPos().X - OtherPlayer->GetPos().X;
 			}
 
-			DistanceFromOtherPlayer += MovePos;
+			
 			AddPos(MovePos);
-
+			AnimIsBlink = false;
 			SetAnimation("Run");
+
+			if (false == DownToOtherUpCheck())
+			{
+				if (PlayerDir::Left == CurDir)
+				{
+					AddPos(float4::LEFT * 5);
+					LeftMapColCheck();
+				}
+				else
+				{
+					AddPos(float4::RIGHT * 5);
+					RightMapColCheck();
+				}
+
+				ChangeState(PlayerState::Fall);
+				return;
+			}
 		}
 		else
 		{
@@ -757,10 +798,6 @@ void Player::RidingModeUpdate(float _DeltaTime)
 			}
 		}
 	}
-
-
-
-
 }
 
 void Player::DeadUpdate(float _DeltaTime)

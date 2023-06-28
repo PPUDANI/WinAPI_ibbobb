@@ -15,6 +15,10 @@ public:
 
 	void Init(const std::string& _FileName, const std::string& _DebugFileName);
 	void SwitchRender();
+	inline float4 GetRendererScale()
+	{
+		
+	}
 protected:
 
 private:

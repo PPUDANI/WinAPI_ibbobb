@@ -143,7 +143,7 @@ void Player::Update(float _DeltaTime)
 	}
 
 	//임시 카메라 위치
-	CameraFocus();
+	// CameraFocus();
 }
 
 void Player::Render(float _DeltaTime)

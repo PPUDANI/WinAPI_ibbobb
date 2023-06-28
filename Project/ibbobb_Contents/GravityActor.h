@@ -22,7 +22,6 @@ public:
 		GravityValue = false;
 	}
 
-	void CameraFocus();
 	float4 ActorCameraPos();
 
 	void Gravity(float _DeltaTime);

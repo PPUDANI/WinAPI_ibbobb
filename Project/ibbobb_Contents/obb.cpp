@@ -108,7 +108,7 @@ void obb::Init()
 	MainRenderer->CreateAnimation("ReverseRight_Dead", "Right_obb_Reverse.bmp", 39, 41, Frame, true);
 
 
-	// 충돌체 설정 (Body높이와 Up Down 높이가 같아야함)
+	// 충돌체 설정
 
 	BodyCol = CreateCollision(CollisionOrder::obbBody);
 	BodyCol->SetCollisionScale({ 34.0f, 34.0f });

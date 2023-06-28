@@ -70,7 +70,8 @@ void Player::IdleUpdate(float _DeltaTime)
 
 
 	// Crouch 상태 체크
-	if (true == GameEngineInput::IsPress(CrouchKey))
+	if (false == UpToOtherDownCheck() &&
+		true == GameEngineInput::IsPress(CrouchKey))
 	{
 		ChangeState(PlayerState::Crouch);
 		return;
@@ -164,7 +165,8 @@ void Player::CrouchUpdate(float _DeltaTime)
 void Player::RunUpdate(float _DeltaTime)
 {
 	// Run의 Crouch 상태 체크
-	if (true == GameEngineInput::IsPress(CrouchKey))
+	if (false == UpToOtherDownCheck() &&
+		true == GameEngineInput::IsPress(CrouchKey))
 	{
 		ChangeState(PlayerState::Crouch);
 		SetAnimation("Crouch");
@@ -749,7 +751,6 @@ void Player::RidingModeUpdate(float _DeltaTime)
 				DistanceFromOtherPlayer.X = GetPos().X - OtherPlayer->GetPos().X;
 			}
 
-			
 			AddPos(MovePos);
 			AnimIsBlink = false;
 			SetAnimation("Run");
@@ -805,6 +806,6 @@ void Player::DeadUpdate(float _DeltaTime)
 
 	if (true == MainRenderer->IsAnimationEnd())
 	{
-		Death();
+		Off();
 	}
 }

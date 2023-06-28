@@ -18,7 +18,7 @@
 
 PlayLevel::PlayLevel()
 {
-
+	WindowScaleHalf = GameEngineWindow::MainWindow.GetScale().Half();
 }
 
 PlayLevel::~PlayLevel()
@@ -79,12 +79,38 @@ void PlayLevel::Update(float _DeltaTime)
 			GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
 		}
 	}
+
+	float4 ibbPlayerPos = ibbPlayer->GetPos();
+	float4 obbPlayerPos = obbPlayer->GetPos();
+
+	float4 CameraPos = (ibbPlayerPos + (obbPlayerPos - ibbPlayerPos) * 0.5f - WindowScaleHalf);
+
+	if (CameraPos.X < 0.0f)
+	{
+		CameraPos.X = 0.0f;
+	}
+	else if(CameraPos.X > 7280.0f)
+	{
+		CameraPos.X = 7280.0f;
+	}
+
+	if (false == ibbPlayer->IsUpdate())
+	{
+		GetMainCamera()->SetPos(obbPlayer->GetPos() - WindowScaleHalf);
+	}
+	else if (false == obbPlayer->IsUpdate())
+	{
+		GetMainCamera()->SetPos(ibbPlayer->GetPos() - WindowScaleHalf);
+	}
+	else
+	{
+		GetMainCamera()->SetPos(CameraPos);
+	}
 }
 
 void PlayLevel::Render(float _DeltaTime)
 {
-	float4 WindowScaleHlaf = { 750.0f, 450.0f };
-	UpBack->SetPos(GetMainCamera()->GetPos() + WindowScaleHlaf);
+	UpBack->SetPos(GetMainCamera()->GetPos() + WindowScaleHalf);
 }
 
 void PlayLevel::Release() 
@@ -95,15 +121,17 @@ void PlayLevel::Release()
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	// ibb
+	float DefaultPosX = 300.0f;
+	float DefaultPosY = 500.0f;
 	ibbPlayer = CreateActor<ibb>(UpdateOrder::Player);
 	ibbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-	ibbPlayer->SetPos({ 3000.0f, 500.0f });
+	ibbPlayer->SetPos({ DefaultPosX, DefaultPosY });
 	ibbPlayer->SetRatio(2.0f);
 
 	// obb
 	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
 	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
-	obbPlayer->SetPos({ 3100.0f, 500.0f });
+	obbPlayer->SetPos({ DefaultPosX + 100.0f, DefaultPosY });
 	obbPlayer->SetRatio(2.0f);
 
 	obbPlayer->SetOtherPlayer(dynamic_cast<Player*>(ibbPlayer));
@@ -130,6 +158,9 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	JumpingMonster0->SetGroundTexture("EXLevel_Collision.bmp");
 	JumpingMonster0->SetPos({ 1300.0f, 800.0f });
 	JumpingMonster0->SetJumpForce(500.0f);
+
+
+
 }
 
 void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)

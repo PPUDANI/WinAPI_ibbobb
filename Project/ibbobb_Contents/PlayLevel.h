@@ -23,6 +23,8 @@ private:
 	void Render(float _DeltaTime) override;
 	void Release() override;
 
+	float4 WindowScaleHalf = float4::ZERO;
+
 	class BackGround* UpBack = nullptr;
 	class BackGround* DownBack = nullptr;
 

@@ -51,6 +51,9 @@
     <ClInclude Include="TitleLevel.h">
       <Filter>Contents\Level</Filter>
     </ClInclude>
+    <ClInclude Include="Warp.h">
+      <Filter>Contents\Warp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlayLevel.cpp">
@@ -103,6 +106,9 @@
     <ClCompile Include="RoadMonster.cpp">
       <Filter>Contents\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="Warp.cpp">
+      <Filter>Contents\Warp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -122,6 +128,9 @@
     </Filter>
     <Filter Include="Contents\Global">
       <UniqueIdentifier>{c24e4729-4c0c-443b-8b50-73ba2b0a6abc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Warp">
+      <UniqueIdentifier>{0a2d6088-5382-48fd-a2b3-18aae3c8afbc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

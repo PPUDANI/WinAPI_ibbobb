@@ -5,9 +5,12 @@
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
+#include <GameEnginePlatform/GameEngineWindow.h>
 
+#include <GameEnginePlatform/GameEngineInput.h>
 
 #include "ContentsEnum.h"
+
 RoadMonster::RoadMonster()
 {
 
@@ -27,12 +30,12 @@ void RoadMonster::Init()
 
 	if (ResourcesManager::GetInst().FindSprite("Left_RoadMonster.bmp") == nullptr)
 	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_RoadMonster.bmp"), 3, 4);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_RoadMonster.bmp"), 5, 2);
 	}
 
 	if (ResourcesManager::GetInst().FindSprite("Right_RoadMonster.bmp") == nullptr)
 	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_RoadMonster.bmp"), 3, 4);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_RoadMonster.bmp"), 5, 2);
 	}
 
 	if (ResourcesManager::GetInst().FindSprite("Turn_RoadMonster.bmp") == nullptr)
@@ -42,7 +45,7 @@ void RoadMonster::Init()
 
 	if (ResourcesManager::GetInst().FindSprite("RoadMonsterCore_Reverse.bmp") == nullptr)
 	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RoadMonsterCore_Reverse.bmp"), 5, 2);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RoadMonsterCore_Reverse.bmp"), 3, 3);
 	}
 
 	MonsterRenderer = CreateRenderer(RenderOrder::RoadMonster);
@@ -62,12 +65,12 @@ void RoadMonster::Init()
 
 	// Dead
 	Frame = 0.02f;
-	MonsterRenderer->CreateAnimation("Left_Dead", "Left_RoadMonster.bmp", 1, 11, Frame, true);
-	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster.bmp", 1, 11, Frame, true);
-	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore_Reverse.bmp", 1, 9, Frame, true);
+	MonsterRenderer->CreateAnimation("Left_Dead", "Left_RoadMonster.bmp", 2, 9, Frame, true);
+	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster.bmp", 2, 9, Frame, true);
+	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore_Reverse.bmp", 1, 8, Frame, true);
 
 	// Turn
-	Frame = 0.07f;
+	Frame = 0.05f;
 	MonsterRenderer->CreateAnimation("Left_Turn", "Turn_RoadMonster.bmp", 0, 4, Frame, true);
 	MonsterRenderer->CreateAnimation("Right_Turn", "Turn_RoadMonster.bmp", 4, 0, Frame, true);
 
@@ -86,6 +89,8 @@ void RoadMonster::Init()
 	CoreRenderer->SetRenderPos({ 0.0f, 27.0f });
 
 	CurState = RoadMonsterState::Move;
+
+	ReverseValue = false;
 }
 
 void RoadMonster::ReverseInit()
@@ -97,12 +102,12 @@ void RoadMonster::ReverseInit()
 
 	if (ResourcesManager::GetInst().FindSprite("Left_RoadMonster_Reverse.bmp") == nullptr)
 	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_RoadMonster_Reverse.bmp"), 3, 4);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_RoadMonster_Reverse.bmp"), 5, 2);
 	}
 
 	if (ResourcesManager::GetInst().FindSprite("Right_RoadMonster_Reverse.bmp") == nullptr)
 	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_RoadMonster_Reverse.bmp"), 3, 4);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_RoadMonster_Reverse.bmp"), 5, 2);
 	}
 
 	if (ResourcesManager::GetInst().FindSprite("Turn_RoadMonster_Reverse.bmp") == nullptr)
@@ -112,7 +117,7 @@ void RoadMonster::ReverseInit()
 
 	if (ResourcesManager::GetInst().FindSprite("RoadMonsterCore.bmp") == nullptr)
 	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RoadMonsterCore.bmp"), 5, 2);
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RoadMonsterCore.bmp"), 3, 3);
 	}
 
 
@@ -133,12 +138,12 @@ void RoadMonster::ReverseInit()
 
 	// Dead
 	Frame = 0.02f;
-	MonsterRenderer->CreateAnimation("Left_Dead", "Left_RoadMonster_Reverse.bmp", 1, 11, Frame, true);
-	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster_Reverse.bmp", 1, 11, Frame, true);
-	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore.bmp", 1, 9, Frame, true);
+	MonsterRenderer->CreateAnimation("Left_Dead", "Left_RoadMonster_Reverse.bmp", 2, 9, Frame, true);
+	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster_Reverse.bmp", 2, 9, Frame, true);
+	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore.bmp", 1, 8, Frame, true);
 
 	// Turn
-	Frame = 0.07f;
+	Frame = 0.05f;
 	MonsterRenderer->CreateAnimation("Left_Turn", "Turn_RoadMonster_Reverse.bmp", 0, 4, Frame, true);
 	MonsterRenderer->CreateAnimation("Right_Turn", "Turn_RoadMonster_Reverse.bmp", 4, 0, Frame, true);
 
@@ -156,6 +161,8 @@ void RoadMonster::ReverseInit()
 	CoreRenderer->SetRenderPos({ 0.0f, -27.0f });
 
 	CurState = RoadMonsterState::Move;
+
+	ReverseValue = true;
 }
 
 void RoadMonster::Start()
@@ -164,6 +171,11 @@ void RoadMonster::Start()
 
 void RoadMonster::Update(float _DeltaTime)
 {
+	if (true == GameEngineInput::IsDown('O'))
+	{
+		CheckPosOn = !CheckPosOn;
+	}
+
 	switch (CurState)
 	{
 	case RoadMonsterState::Move:
@@ -172,21 +184,54 @@ void RoadMonster::Update(float _DeltaTime)
 	case RoadMonsterState::Dead:
 		DeadUpdate(_DeltaTime);
 		break;
+	case RoadMonsterState::Turn:
+		TurnUpdate(_DeltaTime);
+		break;
 	default:
 		break;
 	}
 }
+
+void RoadMonster::Render(float _DeltaTime)
+{
+	if(true == CheckPosOn)
+	{
+		CollisionData Data;
+		HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
+		Data.Scale = { 3, 3 };
+		Data.Pos = ActorCameraPos() + LeftCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		Data.Pos = ActorCameraPos() + RightCheck;
+		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		if (true == ReverseValue)
+		{
+			Data.Pos = ActorCameraPos() + ReverseLeftDownCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+			Data.Pos = ActorCameraPos() + ReverseRightDownCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		}
+		else
+		{
+			Data.Pos = ActorCameraPos() + LeftDownCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+			Data.Pos = ActorCameraPos() + RightDownCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+			
+		}
+	}
+}
+
 void RoadMonster::MoveUpdate(float _DeltaTime)
 {
 	// Core 충돌 체크
 	std::vector<GameEngineCollision*> _Col;
 	if (CoreCollision->Collision(CollisionOrder::ibbBody,
 		_Col,
-		CollisionType::CirCle,
+		CollisionType::Rect,
 		CollisionType::Rect) ||
 		CoreCollision->Collision(CollisionOrder::obbBody,
 			_Col,
-			CollisionType::CirCle,
+			CollisionType::Rect,
 			CollisionType::Rect)
 		)
 	{
@@ -213,24 +258,10 @@ void RoadMonster::MoveUpdate(float _DeltaTime)
 		MovePos = float4::RIGHT * Speed * _DeltaTime;
 	}
 
-	if (CurDistance > MovementDistance)
+	if (false == MovePossibleCheck())
 	{
 		SetAnimation("Turn");
-		if (MonsterRenderer->IsAnimationEnd())
-		{
-			CurDistance = 0.0f;
-
-			if (CurDir == RoadMonsterDir::Right)
-			{
-				CurDir = RoadMonsterDir::Left;
-			}
-			else if (CurDir == RoadMonsterDir::Left)
-			{
-				CurDir = RoadMonsterDir::Right;
-			}
-
-			SetAnimation("Idle");
-		}
+		ChangeState(RoadMonsterState::Turn);
 		return;
 	}
 	else
@@ -260,13 +291,36 @@ void RoadMonster::MoveUpdate(float _DeltaTime)
 	}
 }
 
+void RoadMonster::TurnUpdate(float _DeltaTime)
+{
+	if (MonsterRenderer->IsAnimationEnd())
+	{
+		CurDistance = 0.0f;
+
+		if (CurDir == RoadMonsterDir::Right)
+		{
+			CurDir = RoadMonsterDir::Left;
+			AddPos(float4::LEFT);
+		}
+		else if (CurDir == RoadMonsterDir::Left)
+		{
+			CurDir = RoadMonsterDir::Right;
+			AddPos(float4::RIGHT);
+		}
+		SetAnimation("Idle");
+		ChangeState(RoadMonsterState::Move);
+		return;
+	}
+}
+
 void RoadMonster::DeadUpdate(float _DeltaTime)
 {
 	if (MonsterRenderer->IsAnimationEnd())
 	{
-		Death();
+		Off();
 	}
 }
+
 
 void RoadMonster::SetAnimation(const std::string _State, int _StartFrame/* = 0*/)
 {
@@ -289,3 +343,49 @@ void RoadMonster::SetAnimation(const std::string _State, int _StartFrame/* = 0*/
 	MonsterRenderer->ChangeAnimation(AnimationName, _StartFrame);
 }
 
+bool RoadMonster::MovePossibleCheck()
+{
+	unsigned int LeftColor = GetGroundColor(RGB(255, 0, 0), LeftCheck);
+	unsigned int RightColor = GetGroundColor(RGB(255, 0, 0), RightCheck);
+	unsigned int LeftDownColor;
+	unsigned int RightDownColor;
+
+	if (true == ReverseValue)
+	{
+		LeftDownColor = GetGroundColor(RGB(255, 0, 0), ReverseLeftDownCheck);
+		RightDownColor = GetGroundColor(RGB(255, 0, 0), ReverseRightDownCheck);
+	}
+	else
+	{
+		LeftDownColor = GetGroundColor(RGB(255, 0, 0), LeftDownCheck);
+		RightDownColor = GetGroundColor(RGB(255, 0, 0), RightDownCheck);
+	}
+
+	if (RGB(255, 0, 0) == LeftColor ||
+		RGB(255, 0, 0) == RightColor ||
+		LeftDownColor != RightDownColor)
+	{
+		return false;
+	}
+
+	std::vector<GameEngineCollision*> _Col;
+	if (BodyCollision->Collision(CollisionOrder::MonsterBody,
+		_Col,
+		CollisionType::Rect,
+		CollisionType::Rect))
+	{
+		for (int i = 0; i < _Col.size(); i++)
+		{
+			if (_Col[i] == BodyCollision)
+			{
+				continue;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
+}

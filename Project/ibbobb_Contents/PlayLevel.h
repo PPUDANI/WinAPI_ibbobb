@@ -1,6 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
-
+#include <vector>
 class PlayLevel : public GameEngineLevel
 {
 public:
@@ -21,9 +21,8 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void Render(float _DeltaTime) override;
-	void Release() override;
 
-	float4 WindowScaleHalf = float4::ZERO;
+	float4 WindowScale = float4::ZERO;
 
 	class BackGround* UpBack = nullptr;
 	class BackGround* DownBack = nullptr;
@@ -31,9 +30,14 @@ private:
 	class ibb* ibbPlayer = nullptr;
 	class obb* obbPlayer = nullptr;
 
-	class RoadMonster* RoadMonster0 = nullptr;
-	class RoadMonster* RoadMonster1 = nullptr;
-	class JumpingMonster* JumpingMonster0 = nullptr;
+	std::vector<class RoadMonster*> RoadMonsters;
+
+	std::vector<class JumpingMonster*> JumpingMonsters;
+	std::vector<class Warp*> Warps;
+
 	class Map* EXMap = nullptr;
+
+	float ZoomScale = 1.5f;
+
 };
 

@@ -5,6 +5,7 @@ enum class UpdateOrder
 	Player,
 	RoadMonster,
 	JumpingMonster,
+	Warp,
 	BackGround
 };
 
@@ -18,6 +19,7 @@ enum class RenderOrder
 	MonsterCore,
 	ibb,
 	obb,
+	Warp,
 	PlayUI,
 };
 

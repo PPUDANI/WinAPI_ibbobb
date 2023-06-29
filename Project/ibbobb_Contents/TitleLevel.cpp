@@ -33,9 +33,6 @@ void TitleLevel::Start()
 	PressText = CreateActor<BlinkImage>(RenderOrder::Image);
 	PressText->Init("Press_Text.bmp");
 	PressText->SetPos({750.0f, 360.0f});
-
-
-	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
 }
 
 void TitleLevel::Update(float _DeltaTime)
@@ -43,9 +40,7 @@ void TitleLevel::Update(float _DeltaTime)
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
-		GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
 	}
-
 }
 
 void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)

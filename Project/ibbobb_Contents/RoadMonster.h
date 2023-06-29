@@ -12,6 +12,7 @@ enum class RoadMonsterDir
 enum class RoadMonsterState
 {
 	Move,
+	Turn,
 	Dead
 };
 
@@ -29,24 +30,9 @@ public:
 	void Init();
 	void ReverseInit();
 
-	inline void SetMovementDistance(float _MovementDistance)
-	{
-		MovementDistance = _MovementDistance;
-	}
-
-	inline void SetSpeed(float _Speed)
-	{
-		Speed = _Speed;
-	}
-
 	inline void SetDir(RoadMonsterDir _Dir)
 	{
 		CurDir = _Dir;
-	}
-
-	inline void ReverseDir()
-	{
-		ReverseValue = !ReverseValue;
 	}
 	
 protected:
@@ -54,10 +40,13 @@ protected:
 private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
+	void Render(float _DeltaTime) override;
 	void MoveUpdate(float _DeltaTime);
 	void DeadUpdate(float _DeltaTime);
-	void SetAnimation(const std::string _State, int _StartFrame = 0);
+	void TurnUpdate(float _DeltaTime);
 
+	void SetAnimation(const std::string _State, int _StartFrame = 0);
+	bool MovePossibleCheck();
 	inline void ChangeState(RoadMonsterState _State)
 	{
 		CurState = _State;
@@ -66,13 +55,20 @@ private:
 	// RoadMonster 상태변수
 	bool ReverseValue = false;
 	bool IsAnimBlink = false;
+	bool CheckPosOn = false;
 	RoadMonsterDir CurDir = RoadMonsterDir::Left;
 	RoadMonsterState CurState;
-
 	// RoadMonster 물리변수
-	float Speed = 0.1f;
+	float Speed = 100.0f;
 	float CurDistance = 0.0f;
-	float MovementDistance = 100.0f;
+
+	float4 LeftCheck = { -30.0f, 0.0f };
+	float4 RightCheck = { 30.0f, 0.0f };
+	float4 LeftDownCheck = { -55.0f, 12.0f };
+	float4 RightDownCheck = { 55.0f, 12.0f };
+
+	float4 ReverseLeftDownCheck = { -55.0f, -12.0f };
+	float4 ReverseRightDownCheck = { 55.0f, -12.0f };
 
 	class GameEngineRenderer* MonsterRenderer = nullptr;
 	class GameEngineRenderer* CoreRenderer = nullptr;

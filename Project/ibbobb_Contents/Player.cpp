@@ -45,7 +45,7 @@ void Player::Start()
 	JumpForce = 550.0f;
 
 	// 속도 설정
-	Speed = 200.0f;
+	Speed = 250.0f;
 
 }
 
@@ -68,7 +68,7 @@ void Player::Update(float _DeltaTime)
 		{
 
 			HorizontalWorpPass = false;
-			VirticalWorpPass = true;
+			VerticalWorpPass = true;
 			if (LeftColor == MiddleColor)
 			{
 				if (true == LeftToOtherRightCheck())
@@ -90,7 +90,7 @@ void Player::Update(float _DeltaTime)
 		else if (UpColor != DownColor)
 		{
 			HorizontalWorpPass = true;
-			VirticalWorpPass = false;
+			VerticalWorpPass = false;
 		}
 	}
 	
@@ -280,7 +280,7 @@ void Player::IdleInitFromFall()
 		// 변환한 외부 설정 초기화
 		GravityReset();
 		HorizontalWorpPass = false;
-		VirticalWorpPass = false;
+		VerticalWorpPass = false;
 		PrevAreaVectorInit = false;
 
 		// 바닥에 닿을 시 워프홀 상호작용 때 추가된 중력 초기화

@@ -203,6 +203,6 @@ private:
 	float4 MapMiddleDownCheck = { 0.0f, 17.0f };
 	
 	bool HorizontalWorpPass = false;
-	bool VirticalWorpPass = false;
+	bool VerticalWorpPass = false;
 };
 

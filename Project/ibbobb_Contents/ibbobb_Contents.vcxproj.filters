@@ -16,10 +16,10 @@
     </ClInclude>
     <ClInclude Include="GravityActor.h" />
     <ClInclude Include="RoadMonster.h">
-      <Filter>Contents\Monster</Filter>
+      <Filter>Contents\Global\Monster</Filter>
     </ClInclude>
     <ClInclude Include="JumpingMonster.h">
-      <Filter>Contents\Monster</Filter>
+      <Filter>Contents\Global\Monster</Filter>
     </ClInclude>
     <ClInclude Include="ibb.h">
       <Filter>Contents\Player</Filter>
@@ -42,13 +42,16 @@
     <ClInclude Include="DefaultImage.h">
       <Filter>Contents\Level\TitleObject</Filter>
     </ClInclude>
-    <ClInclude Include="TitleLevel.h">
+    <ClInclude Include="Warp.h">
+      <Filter>Contents\Global\Warp</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayLevel1.h">
       <Filter>Contents\Level</Filter>
     </ClInclude>
-    <ClInclude Include="Warp.h">
-      <Filter>Contents\Warp</Filter>
+    <ClInclude Include="SubLevel.h">
+      <Filter>Contents\Global</Filter>
     </ClInclude>
-    <ClInclude Include="PlayLevel1_1.h">
+    <ClInclude Include="TitleLevel.h">
       <Filter>Contents\Level</Filter>
     </ClInclude>
   </ItemGroup>
@@ -71,7 +74,7 @@
     </ClCompile>
     <ClCompile Include="GravityActor.cpp" />
     <ClCompile Include="JumpingMonster.cpp">
-      <Filter>Contents\Monster</Filter>
+      <Filter>Contents\Global\Monster</Filter>
     </ClCompile>
     <ClCompile Include="ibb.cpp">
       <Filter>Contents\Player</Filter>
@@ -95,21 +98,21 @@
       <Filter>Contents\Level\TitleObject</Filter>
     </ClCompile>
     <ClCompile Include="RoadMonster.cpp">
-      <Filter>Contents\Monster</Filter>
+      <Filter>Contents\Global\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Warp.cpp">
-      <Filter>Contents\Warp</Filter>
+      <Filter>Contents\Global\Warp</Filter>
     </ClCompile>
-    <ClCompile Include="PlayLevel1_1.cpp">
+    <ClCompile Include="PlayLevel1.cpp">
       <Filter>Contents\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="SubLevel.cpp">
+      <Filter>Contents\Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
       <UniqueIdentifier>{37df1d23-5b60-40bb-b28a-ce5d6c32017c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Monster">
-      <UniqueIdentifier>{a6575aa2-de71-44b8-97af-b905a301a971}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contents\Player">
       <UniqueIdentifier>{460bb9d0-94bc-4350-bf86-97db6af1054c}</UniqueIdentifier>
@@ -123,8 +126,11 @@
     <Filter Include="Contents\Global">
       <UniqueIdentifier>{c24e4729-4c0c-443b-8b50-73ba2b0a6abc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Warp">
+    <Filter Include="Contents\Global\Warp">
       <UniqueIdentifier>{0a2d6088-5382-48fd-a2b3-18aae3c8afbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Global\Monster">
+      <UniqueIdentifier>{a6575aa2-de71-44b8-97af-b905a301a971}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

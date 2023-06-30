@@ -3,7 +3,15 @@
 
 class obb : public Player
 {
+private:
+	static obb* Mainobb;
+
 public:
+	static obb* GetMainobb()
+	{
+		return Mainobb;
+	}
+
 	// Constructor Destructor
 	obb();
 	~obb();
@@ -23,7 +31,8 @@ private:
 	bool RightToOtherLeftCheck() override;
 	bool UpToOtherDownCheck() override;
 	bool DownToOtherUpCheck() override;
-
 	bool UpToOtherBodyCheck() override;
 	bool DownToOtherBodyCheck() override;
+
+	void LevelStart() override;
 };

@@ -200,11 +200,15 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayLevel1_1.h">
+    <ClInclude Include="PlayLevel1.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="RoadMonster.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SubLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -271,11 +275,15 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Player_State.cpp" />
-    <ClCompile Include="PlayLevel1_1.cpp">
+    <ClCompile Include="PlayLevel1.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="RoadMonster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SubLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

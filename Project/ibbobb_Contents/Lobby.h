@@ -1,6 +1,6 @@
 #pragma once
-#include <GameEngineCore/GameEngineLevel.h>
-class Lobby : public GameEngineLevel
+#include "SubLevel.h"
+class Lobby : public SubLevel
 {
 public:
 	// Constructor Destructor
@@ -22,8 +22,5 @@ private:
 	void Update(float _DeltaTime) override;
 	void Render(float _DeltaTime) override;
 
-	class BackGround* Back = nullptr;
-	class Map* LobbyMap = nullptr;
-
-
+	class Warp* LobbyWarp = nullptr;
 };

@@ -13,6 +13,8 @@
 #include "Player.h"
 #include <windows.h>
 
+ibb* ibb::Mainibb = nullptr;
+
 ibb::ibb()
 {
 }
@@ -198,4 +200,10 @@ bool ibb::DownToOtherBodyCheck()
 		_ColVec,
 		CollisionType::Rect,
 		CollisionType::Rect);
+}
+
+void ibb::LevelStart()
+{
+	Mainibb = this;
+	Mainibb->SetPos({ 100, 500 });
 }

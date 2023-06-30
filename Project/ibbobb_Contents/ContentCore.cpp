@@ -4,8 +4,8 @@
 
 #include "TitleLevel.h"
 #include "Lobby.h"
-#include "PlayLevel1_1.h"
-
+#include "PlayLevel1.h"
+#include "SubLevel.h"
 ContentCore::ContentCore()
 {
 
@@ -22,9 +22,8 @@ void ContentCore::Start()
 	GameEngineWindow::MainWindow.SetPosAndScale({ 100, 50 }, { 1500, 900 });
 	GameEngineWindow::MainWindow.CursorOff();
 	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
-	GameEngineCore::CreateLevel<PlayLevel1_1>("PlayLevel1_1");
+	GameEngineCore::CreateLevel<PlayLevel1>("PlayLevel1");
 	GameEngineCore::CreateLevel<Lobby>("Lobby");
-
 
 	GameEngineCore::ChangeLevel("TitleLevel");
 }

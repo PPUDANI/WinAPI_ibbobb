@@ -3,7 +3,13 @@
 
 class ibb : public Player
 {
+private:
+	static ibb* Mainibb;
 public:
+	static ibb* GetMainibb()
+	{
+		return Mainibb;
+	}
 	// Constructor Destructor
 	ibb();
 	~ibb();
@@ -26,4 +32,6 @@ private:
 
 	bool UpToOtherBodyCheck() override;
 	bool DownToOtherBodyCheck() override;
+
+	void LevelStart() override;
 };

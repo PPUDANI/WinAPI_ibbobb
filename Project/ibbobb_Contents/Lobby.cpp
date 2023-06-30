@@ -1,8 +1,13 @@
 #include "Lobby.h"
-
+#include <GameEnginePlatform/GameEngineWindow.h>
+#include <GameEnginePlatform/GameEngineInput.h>
+#include <GameEngineCore/GameEngineCore.h>
 #include "BackGround.h"
 #include "ContentsEnum.h"
+#include "Warp.h"
 #include "Map.h"
+#include "ibb.h"
+#include "obb.h"
 
 Lobby::Lobby()
 {
@@ -19,7 +24,12 @@ void Lobby::Start()
 
 void Lobby::Update(float _DeltaTime)
 {
+	if (true == GameEngineInput::IsDown('P'))
+	{
+		GameEngineCore::ChangeLevel("PlayLevel1");
+	}
 
+	SubLevel::Update(_DeltaTime);
 }
 
 void Lobby::Render(float _DeltaTime)
@@ -29,15 +39,44 @@ void Lobby::Render(float _DeltaTime)
 
 void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	//Back = CreateActor<BackGround>(UpdateOrder::BackGround);
-	//Back->Init("LobbyBackGround.bmp");
+	Back = CreateActor<BackGround>(UpdateOrder::BackGround);
+	Back->Init("Lobby_BackGround.bmp");
+	std::string ColName = "Lobby_Collision.bmp";
+	LevelMap = CreateActor<Map>(UpdateOrder::Map);
+	LevelMap->Init("Lobby_Map.bmp", ColName);
+	
 
-	LobbyMap = CreateActor<Map>(UpdateOrder::Map);
-	LobbyMap->Init("Lobby.Bmp", "Lobby_Collision.Bmp");
+	float DefaultPosX = 300.0f;
+	float DefaultPosY = 500.0f;
 
+	// ibb
+	ibbPlayer = CreateActor<ibb>(UpdateOrder::Player);
+	ibbPlayer->SetRatio(2.0f);
+	ibbPlayer->SetGroundTexture(ColName);
+	ibbPlayer->SetPos({ DefaultPosX, DefaultPosY });
+	
+	// obb
+	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
+	obbPlayer->SetRatio(2.0f);
+	obbPlayer->SetGroundTexture(ColName);
+	obbPlayer->SetPos({ DefaultPosX + 100.0f, DefaultPosY });
+
+	ibbPlayer->SetOtherPlayer(dynamic_cast<Player*>(obbPlayer));
+	obbPlayer->SetOtherPlayer(dynamic_cast<Player*>(ibbPlayer));
+
+	LobbyWarp = CreateActor<Warp>(UpdateOrder::Warp);
+	LobbyWarp->SetStarNumber(12);
+	LobbyWarp->SetWorpDir(WarpDir::Horizontal);
+	LobbyWarp->SetWorpType(WarpType::Common);
+	LobbyWarp->SetPos({ 423.0f, 650.0f });
+	LobbyWarp->Init();
+
+	LevelMaxScaleX = 2002.0f;
+	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
 }
 
 void Lobby::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
+	ibbPlayer->OverOn();
+	obbPlayer->OverOn();
 }

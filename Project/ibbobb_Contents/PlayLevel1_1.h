@@ -1,16 +1,16 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
 #include <vector>
-class PlayLevel : public GameEngineLevel
+class PlayLevel1_1 : public GameEngineLevel
 {
 public:
-	PlayLevel();
-	~PlayLevel();
+	PlayLevel1_1();
+	~PlayLevel1_1();
 
-	PlayLevel(const PlayLevel& _Other) = delete;
-	PlayLevel(PlayLevel&& _Other) noexcept = delete;
-	PlayLevel& operator=(const PlayLevel& _Other) = delete;
-	PlayLevel& operator=(PlayLevel&& _Other) noexcept = delete;
+	PlayLevel1_1(const PlayLevel1_1& _Other) = delete;
+	PlayLevel1_1(PlayLevel1_1&& _Other) noexcept = delete;
+	PlayLevel1_1& operator=(const PlayLevel1_1& _Other) = delete;
+	PlayLevel1_1& operator=(PlayLevel1_1&& _Other) noexcept = delete;
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
@@ -24,8 +24,7 @@ private:
 
 	float4 WindowScale = float4::ZERO;
 
-	class BackGround* UpBack = nullptr;
-	class BackGround* DownBack = nullptr;
+	class BackGround* Back = nullptr;
 
 	class ibb* ibbPlayer = nullptr;
 	class obb* obbPlayer = nullptr;

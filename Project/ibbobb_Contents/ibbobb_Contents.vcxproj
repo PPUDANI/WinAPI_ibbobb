@@ -172,10 +172,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EndingLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="GravityActor.h">
       <SubType>
       </SubType>
@@ -204,7 +200,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayLevel.h">
+    <ClInclude Include="PlayLevel1_1.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -246,10 +242,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EndingLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="GravityActor.cpp">
       <SubType>
       </SubType>
@@ -279,7 +271,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Player_State.cpp" />
-    <ClCompile Include="PlayLevel.cpp">
+    <ClCompile Include="PlayLevel1_1.cpp">
       <SubType>
       </SubType>
     </ClCompile>

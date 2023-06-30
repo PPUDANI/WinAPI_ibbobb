@@ -5,8 +5,9 @@ enum class UpdateOrder
 	Player,
 	RoadMonster,
 	JumpingMonster,
+	BackGround,
 	Warp,
-	BackGround
+	Map
 };
 
 enum class RenderOrder

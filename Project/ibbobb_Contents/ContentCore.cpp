@@ -3,8 +3,8 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 
 #include "TitleLevel.h"
-#include "PlayLevel.h"
-#include "EndingLevel.h"
+#include "Lobby.h"
+#include "PlayLevel1_1.h"
 
 ContentCore::ContentCore()
 {
@@ -22,11 +22,11 @@ void ContentCore::Start()
 	GameEngineWindow::MainWindow.SetPosAndScale({ 100, 50 }, { 1500, 900 });
 	GameEngineWindow::MainWindow.CursorOff();
 	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
-	GameEngineCore::CreateLevel<PlayLevel>("PlayLevel");
-	GameEngineCore::CreateLevel<EndingLevel>("EndingLevel");
+	GameEngineCore::CreateLevel<PlayLevel1_1>("PlayLevel1_1");
+	GameEngineCore::CreateLevel<Lobby>("Lobby");
+
 
 	GameEngineCore::ChangeLevel("TitleLevel");
-	//GameEngineCore::ChangeLevel("PlayLevel");
 }
 
 void ContentCore::Update(float _DeltaTime)

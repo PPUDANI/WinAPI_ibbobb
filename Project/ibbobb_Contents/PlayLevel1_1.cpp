@@ -1,4 +1,4 @@
-#include "PlayLevel.h"
+#include "PlayLevel1_1.h"
 
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEnginePlatform/GameEngineInput.h>
@@ -17,26 +17,22 @@
 
 
 
-PlayLevel::PlayLevel()
+PlayLevel1_1::PlayLevel1_1()
 {
 	WindowScale = GameEngineWindow::MainWindow.GetScale();
 }
 
-PlayLevel::~PlayLevel()
+PlayLevel1_1::~PlayLevel1_1()
 {
 
 }
 
-void PlayLevel::Start()
+void PlayLevel1_1::Start()
 {
-	UpBack = CreateActor<BackGround>(RenderOrder::BackGround);
-	UpBack->Init("OrangeGreen.bmp");
 
-	EXMap = CreateActor<Map>();
-	EXMap->Init("EXLevel.bmp", "EXLevel_Collision.bmp");
 }
 
-void PlayLevel::Update(float _DeltaTime)
+void PlayLevel1_1::Update(float _DeltaTime)
 {
 	if (ibbPlayer->GetOtherPlayer() == nullptr ||
 		obbPlayer->GetOtherPlayer() == nullptr)
@@ -117,7 +113,9 @@ void PlayLevel::Update(float _DeltaTime)
 	//	ZoomScale = 1.0f;
 	//}
 
-	if (500.0f > GetMainCamera()->GetPos().X)
+	float CameraPosX = GetMainCamera()->GetPos().X;
+
+	if (500.0f > CameraPosX)
 	{
 		ZoomScale -= 0.5f * _DeltaTime;
 		if (1.0f > ZoomScale)
@@ -125,7 +123,7 @@ void PlayLevel::Update(float _DeltaTime)
 			ZoomScale = 1.0f;
 		}
 	}
-	else if (3000.0f > GetMainCamera()->GetPos().X)
+	else if (3000.0f > CameraPosX)
 	{
 		ZoomScale += 0.5f * _DeltaTime;
 		if (1.4f < ZoomScale)
@@ -133,7 +131,7 @@ void PlayLevel::Update(float _DeltaTime)
 			ZoomScale = 1.4f;
 		}
 	}
-	else if(5000.0f > GetMainCamera()->GetPos().X)
+	else if (4800.0f > CameraPosX)
 	{
 		ZoomScale -= 0.5f * _DeltaTime;
 		if (1.0f > ZoomScale)
@@ -141,7 +139,7 @@ void PlayLevel::Update(float _DeltaTime)
 			ZoomScale = 1.0f;
 		}
 	}
-	else if (5300.0f > GetMainCamera()->GetPos().X)
+	else if (5300.0f > CameraPosX)
 	{
 		ZoomScale += 0.5f * _DeltaTime;
 		if (1.4f < ZoomScale)
@@ -149,7 +147,7 @@ void PlayLevel::Update(float _DeltaTime)
 			ZoomScale = 1.4f;
 		}
 	}
-	else if (5900.0f < GetMainCamera()->GetPos().X)
+	else if (5900.0f < CameraPosX)
 	{
 		ZoomScale -= 0.5f * _DeltaTime;
 		if (1.0f > ZoomScale)
@@ -158,26 +156,38 @@ void PlayLevel::Update(float _DeltaTime)
 		}
 	}
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(ZoomScale);
+	Back->SetPos(GetMainCamera()->GetPos() + WindowScale.Half());
+
+	if (true == GameEngineInput::IsDown('N'))
+	{
+		GameEngineCore::ChangeLevel("Lobby");
+	}
 }
 
-void PlayLevel::Render(float _DeltaTime)
+void PlayLevel1_1::Render(float _DeltaTime)
 {
-	UpBack->SetPos(GetMainCamera()->GetPos() + WindowScale.Half());
+	
 }
 
-void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
+void PlayLevel1_1::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	Back = CreateActor<BackGround>(RenderOrder::BackGround);
+	Back->Init("OrangeGreen.bmp");
+
+	EXMap = CreateActor<Map>();
+	EXMap->Init("Level1-1.bmp", "Level1-1_Collision.bmp");
+
 	// ibb
 	float DefaultPosX = 300.0f;
 	float DefaultPosY = 900.0f;
 	ibbPlayer = CreateActor<ibb>(UpdateOrder::Player);
-	ibbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
+	ibbPlayer->SetGroundTexture("Level1-1_Collision.bmp");
 	ibbPlayer->SetPos({ DefaultPosX, DefaultPosY });
 	ibbPlayer->SetRatio(2.0f);
 
 	// obb
 	obbPlayer = CreateActor<obb>(UpdateOrder::Player);
-	obbPlayer->SetGroundTexture("EXLevel_Collision.bmp");
+	obbPlayer->SetGroundTexture("Level1-1_Collision.bmp");
 	obbPlayer->SetPos({ DefaultPosX + 100.0f, DefaultPosY });
 	obbPlayer->SetRatio(2.0f);
 
@@ -188,14 +198,14 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		RoadMonster* _RoadMonster = nullptr;
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
-		_RoadMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_RoadMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_RoadMonster->ReverseInit();
 		_RoadMonster->SetPos({ 3200.0f, 755.0f });
 		_RoadMonster->SetDir(RoadMonsterDir::Left);
 		RoadMonsters.push_back(_RoadMonster);
 
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
-		_RoadMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_RoadMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_RoadMonster->ReverseInit();
 		_RoadMonster->SetPos({ 3100.0f, 755.0f });;
 		_RoadMonster->SetDir(RoadMonsterDir::Right);
@@ -203,14 +213,14 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
 		_RoadMonster->Init();
-		_RoadMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_RoadMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_RoadMonster->SetPos({ 3400.0f, 649.0f });
 		_RoadMonster->SetDir(RoadMonsterDir::Right);
 		RoadMonsters.push_back(_RoadMonster);
 
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
 		_RoadMonster->Init();
-		_RoadMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_RoadMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_RoadMonster->SetPos({ 3600.0f, 649.0f });
 		_RoadMonster->SetDir(RoadMonsterDir::Left);
 		RoadMonsters.push_back(_RoadMonster);
@@ -221,14 +231,14 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		JumpingMonster* _JumpingMonster = nullptr;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ 2100.0f, 800.0f });
 		_JumpingMonster->SetJumpForce(500.0f);
 		_JumpingMonster->Init();
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ 2500.0f, 1100.0f });
 		_JumpingMonster->SetJumpForce(600.0f);
 		_JumpingMonster->ReverseInit();
@@ -240,7 +250,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		float UnitPosY = 100.0f;
 
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
 		_JumpingMonster->SetJumpForce(600.0f);
 		_JumpingMonster->ReverseInit();
@@ -249,7 +259,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		DefaultPosX += UnitPosX;
 		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
 		_JumpingMonster->SetJumpForce(600.0f);
 		_JumpingMonster->ReverseInit();
@@ -258,7 +268,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		DefaultPosX += UnitPosX;
 		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
 		_JumpingMonster->SetJumpForce(600.0f);
 		_JumpingMonster->ReverseInit();
@@ -267,7 +277,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		DefaultPosX += UnitPosX;
 		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
 		_JumpingMonster->SetJumpForce(600.0f);
 		_JumpingMonster->ReverseInit();
@@ -276,7 +286,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		DefaultPosX += UnitPosX;
 		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
 		_JumpingMonster->SetJumpForce(600.0f);
 		_JumpingMonster->ReverseInit();
@@ -285,7 +295,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		DefaultPosX += UnitPosX;
 		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
 		_JumpingMonster->SetJumpForce(600.0f);
 		_JumpingMonster->ReverseInit();
@@ -294,7 +304,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		DefaultPosX += UnitPosX;
 		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
 		_JumpingMonster->SetJumpForce(600.0f);
 		_JumpingMonster->ReverseInit();
@@ -303,7 +313,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		DefaultPosX += UnitPosX;
 		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
 		_JumpingMonster->SetJumpForce(600.0f);
 		_JumpingMonster->ReverseInit();
@@ -312,7 +322,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		DefaultPosX += UnitPosX;
 		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
 		_JumpingMonster->SetJumpForce(600.0f);
 		_JumpingMonster->ReverseInit();
@@ -321,7 +331,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		DefaultPosX += UnitPosX;
 		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
 		_JumpingMonster->SetJumpForce(600.0f);
 		_JumpingMonster->ReverseInit();
@@ -330,7 +340,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		DefaultPosX += UnitPosX;
 		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture("EXLevel_Collision.bmp");
+		_JumpingMonster->SetGroundTexture("Level1-1_Collision.bmp");
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
 		_JumpingMonster->SetJumpForce(600.0f);
 		_JumpingMonster->ReverseInit();
@@ -405,7 +415,7 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 }
 
-void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)
+void PlayLevel1_1::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	obbPlayer->OverOn();
 	ibbPlayer->OverOn();
@@ -420,7 +430,7 @@ void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)
 		JumpingMonsters[i]->OverOff();
 	}
 
-	for (int i = 0; i < JumpingMonsters.size(); i++)
+	for (int i = 0; i < Warps.size(); i++)
 	{
 		Warps[i]->OverOff();
 	}

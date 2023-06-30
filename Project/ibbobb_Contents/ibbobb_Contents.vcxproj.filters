@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="PlayLevel.h">
-      <Filter>Contents\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="EndingLevel.h">
-      <Filter>Contents\Level</Filter>
-    </ClInclude>
     <ClInclude Include="ContentCore.h" />
     <ClInclude Include="Player.h">
       <Filter>Contents\Global</Filter>
@@ -54,14 +48,11 @@
     <ClInclude Include="Warp.h">
       <Filter>Contents\Warp</Filter>
     </ClInclude>
+    <ClInclude Include="PlayLevel1_1.h">
+      <Filter>Contents\Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PlayLevel.cpp">
-      <Filter>Contents\Level</Filter>
-    </ClCompile>
-    <ClCompile Include="EndingLevel.cpp">
-      <Filter>Contents\Level</Filter>
-    </ClCompile>
     <ClCompile Include="ContentCore.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Contents\Level</Filter>
@@ -108,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="Warp.cpp">
       <Filter>Contents\Warp</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayLevel1_1.cpp">
+      <Filter>Contents\Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

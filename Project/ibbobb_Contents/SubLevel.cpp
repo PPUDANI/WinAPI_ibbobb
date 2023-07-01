@@ -101,5 +101,5 @@ void SubLevel::ReviveCharacter()
 	obbPlayer->On();
 	ibbPlayer->ChangeState(PlayerState::Fall);
 	obbPlayer->ChangeState(PlayerState::Fall);
-	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
+	ZoomScale = 1.0f;
 }

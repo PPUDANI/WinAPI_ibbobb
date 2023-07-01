@@ -35,11 +35,12 @@ void Medal::Init()
 	Renderer->CreateAnimation("Idle", "LevelMedal.bmp", 0, 8, 0.15f, true);
 
 	// Get
-	Renderer->CreateAnimation("Get", "LevelMedal.bmp", 9, 12, 0.05f, true);
+	Renderer->CreateAnimation("Get", "LevelMedal.bmp", 9, 12, 0.02f, true);
 	Renderer->CreateAnimation("Get1", "LevelMedal.bmp", 9, 12, 0.05f, true);
-	Renderer->CreateAnimation("Get2", "LevelMedal.bmp", 9, 12, 0.1f, true);
-	Renderer->CreateAnimation("Get3", "LevelMedal.bmp", 9, 12, 0.2f, true);
-	Renderer->CreateAnimation("Get4", "LevelMedal.bmp", 9, 9, 0.5f, true);
+	Renderer->CreateAnimation("Get2", "LevelMedal.bmp", 9, 12, 0.05f, true);
+	Renderer->CreateAnimation("Get3", "LevelMedal.bmp", 9, 12, 0.1f, true);
+	Renderer->CreateAnimation("Get4", "LevelMedal.bmp", 9, 9, 0.3f, true);
+	Renderer->CreateAnimation("Get5", "LevelMedal.bmp", 13, 13, 0.2f, true);
 
 	// Collision
 	MedalCol = CreateCollision(CollisionOrder::Medal);
@@ -69,11 +70,12 @@ void Medal::ReverseInit()
 	Renderer->CreateAnimation("Idle", "LevelMedal_Reverse.bmp", 0, 8, 0.1f, true);
 
 	// Get
-	Renderer->CreateAnimation("Get", "LevelMedal_Reverse.bmp", 9, 12, 0.05f, true);
+	Renderer->CreateAnimation("Get", "LevelMedal_Reverse.bmp", 9, 12, 0.02f, true);
 	Renderer->CreateAnimation("Get1", "LevelMedal_Reverse.bmp", 9, 12, 0.05f, true);
-	Renderer->CreateAnimation("Get2", "LevelMedal_Reverse.bmp", 9, 12, 0.1f, true);
-	Renderer->CreateAnimation("Get3", "LevelMedal_Reverse.bmp", 9, 12, 0.2f, true);
+	Renderer->CreateAnimation("Get2", "LevelMedal_Reverse.bmp", 9, 12, 0.07f, true);
+	Renderer->CreateAnimation("Get3", "LevelMedal_Reverse.bmp", 9, 12, 0.1f, true);
 	Renderer->CreateAnimation("Get4", "LevelMedal_Reverse.bmp", 9, 9, 0.5f, true);
+	Renderer->CreateAnimation("Get5", "LevelMedal_Reverse.bmp", 13, 13, 0.3f, true);
 
 	// Collision
 	MedalCol = CreateCollision(CollisionOrder::Medal);
@@ -164,6 +166,9 @@ void Medal::GetUpdate(float _DeltaTime)
 			break;
 		case 4:
 			SetAnimation("Get4");
+			break;
+		case 5:
+			SetAnimation("Get5");
 			break;
 		default:
 			Off();

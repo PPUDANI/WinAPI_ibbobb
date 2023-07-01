@@ -15,7 +15,7 @@
 #include "Warp.h"
 #include "ibb.h"
 #include "obb.h"
-
+#include "Medal.h"
 
 
 PlayLevel1::PlayLevel1()
@@ -34,6 +34,30 @@ void PlayLevel1::Start()
 
 void PlayLevel1::Update(float _DeltaTime)
 {
+	if (true == GameEngineInput::IsDown('G'))
+	{
+		ibbPlayer->SetPos({ 1000.0f, 500.0f});
+		obbPlayer->SetPos({ 1100.0f, 500.0f});
+	}
+	
+	if (true == GameEngineInput::IsDown('H'))
+	{
+		ibbPlayer->SetPos({ 3000.0f, 200.0f });
+		obbPlayer->SetPos({ 3100.0f, 200.0f });
+	}
+	
+	if (true == GameEngineInput::IsDown('J'))
+	{
+		ibbPlayer->SetPos({ 4000.0f, 500.0f });
+		obbPlayer->SetPos({ 4100.0f, 500.0f });
+	}
+
+	if(true == GameEngineInput::IsDown('K'))
+	{
+		ibbPlayer->SetPos({ 7100.0f, 400.0f });
+		obbPlayer->SetPos({ 7200.0f, 400.0f });
+	}
+
 	SubLevel::Update(_DeltaTime);
 	float CameraPosX = GetMainCamera()->GetPos().X;
 
@@ -97,8 +121,8 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 	LevelMap->Init("Level1_Map.bmp", ColName);
 	LevelMaxScaleX = 7956.0f;
 	
-	float DefaultPosX = 300.0f;
-	float DefaultPosY = 900.0f;
+	float DefaultPosX = 200.0f;
+	float DefaultPosY = 380.0f;
 	
 	// ibb
 	if (nullptr == ibb::GetMainibb())
@@ -273,6 +297,25 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		JumpingMonsters.push_back(_JumpingMonster);
 	}
 
+	// Medal
+	{
+		Medal* _Medal = nullptr;
+		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
+		_Medal->Init();
+		_Medal->SetPos({1000, 680});
+		Medals.push_back(_Medal);
+
+		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
+		_Medal->Init();
+		_Medal->SetPos({ 5057, 460 });
+		Medals.push_back(_Medal);
+
+		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
+		_Medal->Init();
+		_Medal->SetPos({ 6800, 540 });
+		Medals.push_back(_Medal);
+	}
+
 	// Warp
 	{
 		Warp* _Warp = nullptr;
@@ -335,27 +378,30 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_Warp->SetStarNumber(12);
 		_Warp->SetWorpDir(WarpDir::Horizontal);
 		_Warp->SetWorpType(WarpType::Common);
-		_Warp->SetPos({ 6872.0f, 1027.0f });
+		_Warp->SetPos({ 6871.0f, 1027.0f });
 		_Warp->Init();
 		Warps.push_back(_Warp);
 	}
+
 }
 
 void PlayLevel1::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
 	for (int i = 0; i < RoadMonsters.size(); i++)
 	{
 		RoadMonsters[i]->OverOff();
+		RoadMonsters[i] = nullptr;
 	}
 
 	for (int i = 0; i < JumpingMonsters.size(); i++)
 	{
 		JumpingMonsters[i]->OverOff();
+		JumpingMonsters[i] = nullptr;
 	}
 
 	for (int i = 0; i < Warps.size(); i++)
 	{
 		Warps[i]->OverOff();
+		Warps[i] = nullptr;
 	}
 }

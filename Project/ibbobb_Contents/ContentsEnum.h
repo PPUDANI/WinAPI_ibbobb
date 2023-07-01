@@ -5,6 +5,7 @@ enum class UpdateOrder
 	Player,
 	RoadMonster,
 	JumpingMonster,
+	Medal,
 	BackGround,
 	Warp,
 	Map
@@ -15,6 +16,7 @@ enum class RenderOrder
 	BackGround,
 	Map,
 	Image,
+	Medal,
 	RoadMonster,
 	JumpingMonster,
 	MonsterCore,

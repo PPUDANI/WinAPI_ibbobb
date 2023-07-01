@@ -26,6 +26,8 @@ private:
 
 	std::vector<class RoadMonster*> RoadMonsters;
 	std::vector<class JumpingMonster*> JumpingMonsters;
+	std::vector<class Medal*> Medals;
 	std::vector<class Warp*> Warps;
+
 };
 

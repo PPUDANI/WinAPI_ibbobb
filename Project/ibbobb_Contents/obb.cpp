@@ -204,6 +204,5 @@ bool obb::DownToOtherBodyCheck()
 void obb::LevelStart()
 {
 	Mainobb = this;
-	Mainobb->SetPos({ 200, 500 });
 }
 

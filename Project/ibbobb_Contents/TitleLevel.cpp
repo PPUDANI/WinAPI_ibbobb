@@ -52,7 +52,6 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	// obb
 	TitleobbPlayer = CreateActor<Titleobb>(UpdateOrder::Player);
 	TitleobbPlayer->SetPos({ 1000.0f, 650.0f });
-
 }
 
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)

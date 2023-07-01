@@ -27,9 +27,6 @@
     <ClInclude Include="obb.h">
       <Filter>Contents\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Lobby.h">
-      <Filter>Contents\Level</Filter>
-    </ClInclude>
     <ClInclude Include="Titleibb.h">
       <Filter>Contents\Level\TitleObject</Filter>
     </ClInclude>
@@ -53,6 +50,18 @@
     </ClInclude>
     <ClInclude Include="TitleLevel.h">
       <Filter>Contents\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Medal.h">
+      <Filter>Contents\Global\Medal</Filter>
+    </ClInclude>
+    <ClInclude Include="Lobby.h">
+      <Filter>Contents\Level\Lobby</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyMedal.h">
+      <Filter>Contents\Level\Lobby</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorStar.h">
+      <Filter>Contents\Level\Lobby</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -82,9 +91,6 @@
     <ClCompile Include="obb.cpp">
       <Filter>Contents\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Lobby.cpp">
-      <Filter>Contents\Level</Filter>
-    </ClCompile>
     <ClCompile Include="Titleibb.cpp">
       <Filter>Contents\Level\TitleObject</Filter>
     </ClCompile>
@@ -109,6 +115,18 @@
     <ClCompile Include="SubLevel.cpp">
       <Filter>Contents\Global</Filter>
     </ClCompile>
+    <ClCompile Include="Medal.cpp">
+      <Filter>Contents\Global\Medal</Filter>
+    </ClCompile>
+    <ClCompile Include="Lobby.cpp">
+      <Filter>Contents\Level\Lobby</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyMedal.cpp">
+      <Filter>Contents\Level\Lobby</Filter>
+    </ClCompile>
+    <ClCompile Include="DoorStar.cpp">
+      <Filter>Contents\Level\Lobby</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -131,6 +149,12 @@
     </Filter>
     <Filter Include="Contents\Global\Monster">
       <UniqueIdentifier>{a6575aa2-de71-44b8-97af-b905a301a971}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Global\Medal">
+      <UniqueIdentifier>{9eee2b4a-0c31-4c68-b095-deb0d1d9e851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Level\Lobby">
+      <UniqueIdentifier>{4b471413-7128-4d22-bd2f-1bb3c5ac7a2c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

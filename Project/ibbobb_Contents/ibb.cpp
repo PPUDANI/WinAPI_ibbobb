@@ -205,5 +205,4 @@ bool ibb::DownToOtherBodyCheck()
 void ibb::LevelStart()
 {
 	Mainibb = this;
-	Mainibb->SetPos({ 100, 500 });
 }

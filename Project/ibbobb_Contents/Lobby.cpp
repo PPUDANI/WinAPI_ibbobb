@@ -24,12 +24,19 @@ void Lobby::Start()
 
 void Lobby::Update(float _DeltaTime)
 {
+	ZoomScale -= 0.5f * _DeltaTime;
+	if (1.0f > ZoomScale)
+	{
+		ZoomScale = 1.0f;
+	}
+
 	if (true == GameEngineInput::IsDown('P'))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel1");
 	}
 
 	SubLevel::Update(_DeltaTime);
+	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(ZoomScale);
 }
 
 void Lobby::Render(float _DeltaTime)
@@ -46,8 +53,8 @@ void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 	LevelMap->Init("Lobby_Map.bmp", ColName);
 	
 
-	float DefaultPosX = 300.0f;
-	float DefaultPosY = 500.0f;
+	float DefaultPosX = 100.0f;
+	float DefaultPosY = 0.0f;
 
 	// ibb
 	ibbPlayer = CreateActor<ibb>(UpdateOrder::Player);
@@ -71,8 +78,10 @@ void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 	LobbyWarp->SetPos({ 423.0f, 650.0f });
 	LobbyWarp->Init();
 
-	LevelMaxScaleX = 2002.0f;
-	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
+
+
+	LevelMaxScaleX = 2782.0f;
+	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(2.0f);
 }
 
 void Lobby::LevelEnd(GameEngineLevel* _NextLevel)

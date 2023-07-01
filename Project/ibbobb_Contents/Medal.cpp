@@ -2,6 +2,7 @@
 
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineRenderer.h>
+#include <GameEngineCore/GameEngineCollision.h>
 #include <cmath>
 #include "ContentsEnum.h"
 
@@ -33,11 +34,19 @@ void Medal::Init()
 	Renderer->CreateAnimation("Idle", "LevelMedal.bmp", 0, 8, 0.15f, true);
 
 	// Get
-	Renderer->CreateAnimation("Get", "LevelMedal.bmp", 9, 12, 0.2f, true);
+	Renderer->CreateAnimation("Get", "LevelMedal.bmp", 9, 12, 0.05f, true);
+	Renderer->CreateAnimation("Get1", "LevelMedal.bmp", 9, 12, 0.05f, true);
+	Renderer->CreateAnimation("Get2", "LevelMedal.bmp", 9, 12, 0.1f, true);
+	Renderer->CreateAnimation("Get3", "LevelMedal.bmp", 9, 12, 0.2f, true);
+	Renderer->CreateAnimation("Get4", "LevelMedal.bmp", 9, 9, 0.5f, true);
+
+	// Collision
+	MedalCol = CreateCollision(CollisionOrder::Medal);
+	MedalCol->SetCollisionType(CollisionType::CirCle);
+	MedalCol->SetCollisionScale({ 56, 56 });
 
 	CurState = MedalState::Idle;
 	ReverseValue = false;
-
 	MedalsByLevelIsAcquired.push_back(this);
 }
 
@@ -59,11 +68,19 @@ void Medal::ReverseInit()
 	Renderer->CreateAnimation("Idle", "LevelMedal_Reverse.bmp", 0, 8, 0.1f, true);
 
 	// Get
-	Renderer->CreateAnimation("Get", "LevelMedal_Reverse.bmp", 9, 12, 0.2f, true);
+	Renderer->CreateAnimation("Get", "LevelMedal_Reverse.bmp", 9, 12, 0.05f, true);
+	Renderer->CreateAnimation("Get1", "LevelMedal_Reverse.bmp", 9, 12, 0.05f, true);
+	Renderer->CreateAnimation("Get2", "LevelMedal_Reverse.bmp", 9, 12, 0.1f, true);
+	Renderer->CreateAnimation("Get3", "LevelMedal_Reverse.bmp", 9, 12, 0.2f, true);
+	Renderer->CreateAnimation("Get4", "LevelMedal_Reverse.bmp", 9, 9, 0.5f, true);
+
+	// Collision
+	MedalCol = CreateCollision(CollisionOrder::Medal);
+	MedalCol->SetCollisionType(CollisionType::CirCle);
+	MedalCol->SetCollisionScale({ 56, 56 });
 
 	CurState = MedalState::Idle;
 	ReverseValue = true;
-
 	MedalsByLevelIsAcquired.push_back(this);
 }
 
@@ -74,6 +91,7 @@ void Medal::Start()
 
 void Medal::Update(float _DeltaTime)
 {
+
 	switch (CurState)
 	{
 	case MedalState::Idle:
@@ -81,9 +99,6 @@ void Medal::Update(float _DeltaTime)
 		break;
 	case MedalState::Get:
 		GetUpdate(_DeltaTime);
-		break;
-	case MedalState::Acquired:
-		AcquiredUpdate(_DeltaTime);
 		break;
 	default:
 		break;
@@ -97,34 +112,64 @@ void Medal::LevelStart()
 
 void Medal::IdleUpdate(float _DeltaTime)
 {
-	Radian += Speed;
-
-	if (Radian == 180.0f)
+	std::vector<GameEngineCollision*> _Col;
+	if (true == MedalCol->Collision(CollisionOrder::ibbBody,
+		_Col,
+		CollisionType::CirCle,
+		CollisionType::Rect) ||
+		true == MedalCol->Collision(CollisionOrder::obbBody,
+		_Col,
+		CollisionType::CirCle,
+		CollisionType::Rect))
 	{
-		Radian = 0.0f;
+		CurState = MedalState::Get;
+		SetAnimation("Get");
+		return;
 	}
 
-	float yOffset = sinf(Radian) * MovingHeight;
+	// 공중부양 연산
+	{
+		Radian += Speed;
 
-	float4 add = { 0.0f, yOffset };
-	AddPos(add * _DeltaTime);
+		if (Radian == 180.0f)
+		{
+			Radian = 0.0f;
+		}
+
+		float4 AddPosY = { 0.0f, sinf(Radian) * MovingHeight };
+		AddPos(AddPosY * _DeltaTime);
+	}
+
+
 	SetAnimation("Idle");
 }
 
 void Medal::GetUpdate(float _DeltaTime)
 {
-
+	if (Renderer->IsAnimationEnd())
+	{
+		Count++;
+		switch (Count)
+		{
+		case 1:
+			SetAnimation("Get1");
+			break;
+		case 2:
+			SetAnimation("Get2");
+			break;
+		case 3:
+			SetAnimation("Get3");
+			break;
+		case 4:
+			SetAnimation("Get4");
+			break;
+		default:
+			Off();
+			break;
+		}
+	}
 }
 
-void Medal::AcquiredUpdate(float _DeltaTime)
-{
-
-}
-
-void Medal::MedalArrayInit()
-{
-
-}
 void Medal::SetAnimation(const std::string _Name)
 {
 	Renderer->ChangeAnimation(_Name);

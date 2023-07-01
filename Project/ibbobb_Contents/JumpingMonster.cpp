@@ -61,10 +61,21 @@ void JumpingMonster::Init()
 		CoreRenderer->ChangeAnimation("Idle");
 	}
 
+	// MosterBody Collision
+	BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
+	BodyCollision->SetCollisionScale({ 60, 60 });
+	BodyCollision->SetCollisionType(CollisionType::CirCle);
+
+	// Monster Core Collision
+	CoreCollision = CreateCollision(CollisionOrder::MonsterCore);
+	CoreCollision->SetCollisionScale({ 57, 57 });
+	CoreCollision->SetCollisionType(CollisionType::CirCle);
+
 	SetGravityPower(1000.0f);
 	GravityDir = float4::UP;
 	ReverseValue = false;
 	DownCheck = float4::DOWN * BodyHalf;
+	ChangeState(JumpingMonsterState::Fall);
 }
 
 void JumpingMonster::ReverseInit()
@@ -111,14 +122,6 @@ void JumpingMonster::ReverseInit()
 		CoreRenderer->ChangeAnimation("Idle");
 	}
 
-	SetGravityPower(-1000.0f);
-	GravityDir = float4::DOWN;
-	ReverseValue = true;
-	DownCheck = float4::UP * BodyHalf;
-}
-
-void JumpingMonster::Start()
-{	
 	// MosterBody Collision
 	BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
 	BodyCollision->SetCollisionScale({ 60, 60 });
@@ -129,9 +132,15 @@ void JumpingMonster::Start()
 	CoreCollision->SetCollisionScale({ 57, 57 });
 	CoreCollision->SetCollisionType(CollisionType::CirCle);
 
-
+	SetGravityPower(-1000.0f);
+	GravityDir = float4::DOWN;
+	ReverseValue = true;
+	DownCheck = float4::UP * BodyHalf;
 	ChangeState(JumpingMonsterState::Fall);
+}
 
+void JumpingMonster::Start()
+{	
 
 }
 
@@ -188,9 +197,13 @@ void JumpingMonster::FallUpdate(float _DeltaTime)
 	}
 	else
 	{
-		PrevPos = GetPos().Y;
+		while (RGB(255, 0, 0) != Color)
+		{
+			AddPos(GravityDir);
+		}
+
 		AddPos(GravityDir);
-		
+		PrevPos = GetPos().Y;
 		SetGravityVector(GravityDir * JumpForce);
 	}
 

@@ -55,7 +55,7 @@ private:
 	class GameEngineRenderer* CoreRenderer = nullptr;
 
 	class GameEngineCollision* CoreCollision = nullptr;
-	class GameEngineCollision* BodyCollision;
+	class GameEngineCollision* BodyCollision = nullptr;
 
 
 	// Monster 상태 변수

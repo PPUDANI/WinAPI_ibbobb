@@ -33,15 +33,18 @@ private:
 
 	void IdleUpdate(float _DeltaTime);
 	void GetUpdate(float _DeltaTime);
-	void AcquiredUpdate(float _DeltaTime);
-	void MedalArrayInit();
 
-	MedalState CurState;
+	
 	class GameEngineRenderer* Renderer = nullptr;
+
+	class GameEngineCollision* MedalCol = nullptr;
+
+	// Medal 상태변수
+	MedalState CurState;
 	bool IsAcquired = false;
 	bool ReverseValue = false;
-
-	// 메달 물리변수
+	int Count = 0;
+	// Medal 물리변수
 	float Speed = 0.01f;
 	float Radian = 0.0f;
 	float MovingHeight = 60.0f;

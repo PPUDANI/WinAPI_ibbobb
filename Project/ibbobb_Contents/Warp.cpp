@@ -51,5 +51,27 @@ void Warp::Start()
 
 void Warp::Update(float _DeltaTime)
 {
+	// 공중부양 연산
+	{
+		Radian += Speed;
 
+		if (Radian == 180.0f)
+		{
+			Radian = 0.0f;
+		}
+		
+		float4 AddPosY = { 0.0f, sinf(Radian) * MovingHeight };
+
+		for (int i = 0; i < StarNum; i++)
+		{
+			if (i % 2 == 0)
+			{
+				StarRenderer[i]->SetRenderPos(AddPosY);
+			}
+			else
+			{
+				StarRenderer[i]->SetRenderPos(-AddPosY);
+			}
+		}
+	}
 }

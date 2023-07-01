@@ -198,11 +198,12 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		float DefaultPosY = 1200.0f;
 		float UnitPosX = 70.0f;
 		float UnitPosY = 100.0f;
+		float Jumpforce = 600.0f;
 
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
@@ -211,7 +212,7 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
@@ -220,7 +221,7 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
@@ -229,7 +230,7 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
@@ -238,7 +239,7 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
@@ -247,7 +248,7 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
@@ -256,7 +257,7 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
@@ -265,7 +266,7 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
@@ -274,7 +275,7 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
@@ -283,7 +284,7 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
@@ -292,7 +293,7 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
 		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 	}

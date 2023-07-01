@@ -40,4 +40,5 @@ enum class CollisionOrder
 	obbDown,
 	MonsterBody,
 	MonsterCore,
+	Medal,
 };

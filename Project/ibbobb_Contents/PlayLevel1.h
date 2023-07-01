@@ -17,7 +17,7 @@ public:
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
-
+	
 
 private:
 	void Start() override;
@@ -29,5 +29,9 @@ private:
 	std::vector<class Medal*> Medals;
 	std::vector<class Warp*> Warps;
 
+	RoadMonster* _RoadMonster = nullptr;
+	JumpingMonster* _JumpingMonster = nullptr;
+	Medal* _Medal = nullptr;
+	Warp* _Warp = nullptr;
 };
 

@@ -324,7 +324,7 @@ void Player::ReverseInit()
 			}
 
 			// 영역반전 시 중력의 변화량이 중력 오차범위를 넘었다면 "중력 기준치" 변경
-			if (GetGravityVector().Y > PrevAreaVector.Y * ErrorRangeOfGravity)
+			if (GetPos().Y > PrevAreaPos.Y * ErrorRangeOfGravity)
 			{
 				PrevAreaVector.Y = -GetGravityVector().Y;
 
@@ -350,6 +350,7 @@ void Player::ReverseInit()
 				PrevAreaVector.Y = -GetGravityVector().Y;
 			}
 		}
+		PrevAreaPos = GetPos();
 	}
 	else if (MidColor == RGB(255, 255, 255) && true == ReverseValue)
 	{
@@ -374,7 +375,7 @@ void Player::ReverseInit()
 			}
 
 			// 영역반전 시 중력의 변화량이 중력 오차범위를 넘었다면 "중력 기준치" 변경
-			if (GetGravityVector().Y < PrevAreaVector.Y * ErrorRangeOfGravity)
+			if (GetPos().Y < PrevAreaPos.Y * ErrorRangeOfGravity)
 			{
 				PrevAreaVector.Y = -GetGravityVector().Y;
 
@@ -398,6 +399,7 @@ void Player::ReverseInit()
 				SetGravityVector(PrevAreaVector);
 				PrevAreaVector.Y = -GetGravityVector().Y;
 			}
+			PrevAreaPos = GetPos();
 		}
 	}
 }

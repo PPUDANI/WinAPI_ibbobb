@@ -178,6 +178,7 @@ private:
 
 	float DefaultGravityPower = 0.0f;
 	bool PrevAreaVectorInit = false;
+	float4 PrevAreaPos = float4::ZERO;
 	float4 PrevAreaVector = float4::ZERO;
 
 	float MinGravityInHole = 0.0f;

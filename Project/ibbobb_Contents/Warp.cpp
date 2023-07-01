@@ -29,7 +29,7 @@ void Warp::Init()
 	{
 		GameEngineRenderer* Renderer = CreateRenderer(RenderOrder::Warp);
 
-		Renderer->CreateAnimation("Turn", "WarpStar_Yellow.bmp", 0, 3, 0.1f, true);
+		Renderer->CreateAnimation("Turn", "WarpStar_Yellow.bmp", 0, 3, 0.07f, true);
 		if (WarpDir::Horizontal == Dir)
 		{
 			Renderer->SetRenderPos({ i * 13.0f, 0.0f });
@@ -55,22 +55,30 @@ void Warp::Update(float _DeltaTime)
 	{
 		Radian += Speed;
 
-		if (Radian == 180.0f)
+		if (Radian == 360.0f)
 		{
 			Radian = 0.0f;
 		}
-		
-		float4 AddPosY = { 0.0f, sinf(Radian) * MovingHeight };
 
+		float4 AddPosY;
+		if (WarpDir::Horizontal == Dir)
+		{
+			AddPosY = { 0.0f, sinf(Radian) * MovingHeight };
+		}
+		else if(WarpDir::Vertical == Dir)
+		{
+			AddPosY = { sinf(Radian) * MovingHeight ,0.0f };
+		}
+		
 		for (int i = 0; i < StarNum; i++)
 		{
 			if (i % 2 == 0)
 			{
-				StarRenderer[i]->SetRenderPos(AddPosY);
+				StarRenderer[i]->AddRenderPos(AddPosY * _DeltaTime);
 			}
 			else
 			{
-				StarRenderer[i]->SetRenderPos(-AddPosY);
+				StarRenderer[i]->AddRenderPos(-AddPosY * _DeltaTime );
 			}
 		}
 	}

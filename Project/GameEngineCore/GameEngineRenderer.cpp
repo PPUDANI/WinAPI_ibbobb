@@ -30,6 +30,7 @@ void GameEngineRenderer::SetSprite(const std::string& _Name, size_t _Index/* = 0
 	const GameEngineSprite::Sprite& SpriteInfo = Sprite->GetSprite(_Index);
 
 	Texture = SpriteInfo.BaseTexture;
+	MaskTexture = SpriteInfo.MaskTexture;
 
 	SetCopyPos(SpriteInfo.RenderPos);
 	SetCopyScale(SpriteInfo.RenderScale);
@@ -51,6 +52,16 @@ void GameEngineRenderer::SetTexture(const std::string& _Name)
 	if (false == ScaleCheck)
 	{
 		SetRenderScaleToTexture();
+	}
+}
+
+void GameEngineRenderer::SetMaskTexture(const std::string& _Name)
+{
+	MaskTexture = ResourcesManager::GetInst().FindTexture(_Name);
+
+	if (nullptr == MaskTexture)
+	{
+		MsgBoxAssert("존재하지 않는 마스크 텍스처를 세팅하려고 했습니다." + _Name);
 	}
 }
 
@@ -144,7 +155,13 @@ void GameEngineRenderer::Update(float _Delta)
 			CurAnimation->CurInter
 				= CurAnimation->Inters[CurAnimation->CurFrame];
 		}
+	}
+}
 
+void GameEngineRenderer::Render(float _DeltaTime)
+{
+	if (nullptr != CurAnimation)
+	{
 		size_t Frame = CurAnimation->Frames[CurAnimation->CurFrame];
 
 		Sprite = CurAnimation->Sprite;
@@ -159,10 +176,8 @@ void GameEngineRenderer::Update(float _Delta)
 			SetRenderScale(SpriteInfo.RenderScale * ScaleRatio);
 		}
 	}
-}
 
-void GameEngineRenderer::Render(float _DeltaTime)
-{
+
 	if ("" != Text)
 	{
 		TextRender(_DeltaTime);
@@ -190,6 +205,7 @@ void GameEngineRenderer::Render(float _DeltaTime)
 	}
 
 }
+
 
 GameEngineRenderer::Animation* GameEngineRenderer::FindAnimation(const std::string& _AniamtionName)
 {
@@ -363,6 +379,11 @@ void GameEngineRenderer::Start()
 void GameEngineRenderer::SetAngle(float _Angle)
 {
 	Angle = _Angle;
+}
+
+void GameEngineRenderer::AddAngle(const float _Value)
+{
+	Angle += _Value;
 }
 
 void GameEngineRenderer::SetAlpha(unsigned char _Alpha)

@@ -32,9 +32,20 @@ public:
 	GameEngineRenderer& operator=(GameEngineRenderer&& _Other) noexcept = delete;
 
 
+
+	float4 GetRenderPos() const
+	{
+		return RenderPos;
+	}
+
 	void SetRenderPos(const float4& _Value)
 	{
 		RenderPos = _Value;
+	}
+
+	void AddRenderPos(const float4& _Value)
+	{
+		RenderPos += _Value;
 	}
 
 
@@ -74,9 +85,13 @@ public:
 
 	void SetAngle(float _Angle);
 
+	void AddAngle(const float _Value);
+
 	void SetSprite(const std::string& _Name, size_t _Index = 0);
 
 	void SetTexture(const std::string& _Name);
+
+	void SetMaskTexture(const std::string& _Name);
 
 	void SetRenderScaleToTexture();
 

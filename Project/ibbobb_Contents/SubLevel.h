@@ -18,7 +18,7 @@ public:
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
-
+	void ReviveCharacter();
 
 	float4 WindowScale = float4::ZERO;
 	float ZoomScale = 1.5f;
@@ -28,7 +28,7 @@ protected:
 	float LevelMaxScaleX = 0.0f;
 	class ibb* ibbPlayer = nullptr;
 	class obb* obbPlayer = nullptr;
-
+	bool FirstDeathIsibb = false;
 private:
 	
 };

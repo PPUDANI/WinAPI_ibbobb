@@ -36,24 +36,45 @@ void PlayLevel1::Update(float _DeltaTime)
 {
 	if (true == GameEngineInput::IsDown('G'))
 	{
+		if (false == ibbPlayer->IsUpdate() &&
+			false == obbPlayer->IsUpdate())
+		{
+			ReviveCharacter();
+		}
+		
 		ibbPlayer->SetPos({ 1000.0f, 500.0f});
 		obbPlayer->SetPos({ 1100.0f, 500.0f});
 	}
 	
 	if (true == GameEngineInput::IsDown('H'))
 	{
+		if (false == ibbPlayer->IsUpdate() &&
+			false == obbPlayer->IsUpdate())
+		{
+			ReviveCharacter();
+		}
 		ibbPlayer->SetPos({ 3000.0f, 200.0f });
 		obbPlayer->SetPos({ 3100.0f, 200.0f });
 	}
 	
 	if (true == GameEngineInput::IsDown('J'))
 	{
+		if (false == ibbPlayer->IsUpdate() &&
+			false == obbPlayer->IsUpdate())
+		{
+			ReviveCharacter();
+		}
 		ibbPlayer->SetPos({ 4000.0f, 500.0f });
 		obbPlayer->SetPos({ 4100.0f, 500.0f });
 	}
 
 	if(true == GameEngineInput::IsDown('K'))
 	{
+		if (false == ibbPlayer->IsUpdate() &&
+			false == obbPlayer->IsUpdate())
+		{
+			ReviveCharacter();
+		}
 		ibbPlayer->SetPos({ 7100.0f, 400.0f });
 		obbPlayer->SetPos({ 7200.0f, 400.0f });
 	}
@@ -63,43 +84,23 @@ void PlayLevel1::Update(float _DeltaTime)
 
 	if (500.0f > CameraPosX)
 	{
-		ZoomScale -= 0.5f * _DeltaTime;
-		if (1.0f > ZoomScale)
-		{
-			ZoomScale = 1.0f;
-		}
+		SetZoomScale(1.0f, _DeltaTime);
 	}
 	else if (3000.0f > CameraPosX)
 	{
-		ZoomScale += 0.5f * _DeltaTime;
-		if (1.4f < ZoomScale)
-		{
-			ZoomScale = 1.4f;
-		}
+		SetZoomScale(1.4f, _DeltaTime);
 	}
 	else if (4800.0f > CameraPosX)
 	{
-		ZoomScale -= 0.5f * _DeltaTime;
-		if (1.0f > ZoomScale)
-		{
-			ZoomScale = 1.0f;
-		}
+		SetZoomScale(1.0f, _DeltaTime);
 	}
 	else if (5300.0f > CameraPosX)
 	{
-		ZoomScale += 0.5f * _DeltaTime;
-		if (1.4f < ZoomScale)
-		{
-			ZoomScale = 1.4f;
-		}
+		SetZoomScale(1.4f, _DeltaTime);
 	}
 	else if (5900.0f < CameraPosX)
 	{
-		ZoomScale -= 0.5f * _DeltaTime;
-		if (1.0f > ZoomScale)
-		{
-			ZoomScale = 1.0f;
-		}
+		SetZoomScale(1.0f, _DeltaTime);
 	}
 
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(ZoomScale);
@@ -313,7 +314,7 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 
 		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
 		_Medal->Init();
-		_Medal->SetPos({ 6800.0f, 540.0f });
+		_Medal->SetPos({ 6800.0f, 500.0f });
 		Medals.push_back(_Medal);
 	}
 
@@ -404,5 +405,25 @@ void PlayLevel1::LevelEnd(GameEngineLevel* _NextLevel)
 	{
 		Warps[i]->OverOff();
 		Warps[i] = nullptr;
+	}
+}
+
+void PlayLevel1::SetZoomScale(float _Ratio, float _DeltaTime)
+{
+	if (_Ratio >= ZoomScale)
+	{
+		ZoomScale += 0.5f * _DeltaTime;
+		if (_Ratio < ZoomScale)
+		{
+			ZoomScale = _Ratio;
+		}
+	}
+	else if (_Ratio < ZoomScale)
+	{
+		ZoomScale -= 0.5f * _DeltaTime;
+		if (_Ratio > ZoomScale)
+		{
+			ZoomScale = _Ratio;
+		}
 	}
 }

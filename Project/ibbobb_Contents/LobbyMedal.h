@@ -1,6 +1,7 @@
 #pragma once
+#include <GameEngineCore/GameEngineActor.h>
 
-class LobbyMedal
+class LobbyMedal : public GameEngineActor
 {
 public:
 	// Constructor Destructor
@@ -13,8 +14,13 @@ public:
 	LobbyMedal& operator=(const LobbyMedal& _Other) = delete;
 	LobbyMedal& operator=(LobbyMedal&& _Other) noexcept = delete;
 
+	void SetAnimation(const std::string _Name);
+
 protected:
 
 private:
+	void Start() override;
+	void LevelStart() override;
 
+	class GameEngineRenderer* Renderer;
 };

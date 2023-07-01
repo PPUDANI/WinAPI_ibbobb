@@ -7,6 +7,7 @@
 #include "ContentsEnum.h"
 
 std::vector<Medal*> Medal::MedalsByLevelIsAcquired;
+
 Medal::Medal()
 {
 	
@@ -107,7 +108,7 @@ void Medal::Update(float _DeltaTime)
 
 void Medal::LevelStart()
 {
-
+	StartPos = GetPos();
 }
 
 void Medal::IdleUpdate(float _DeltaTime)
@@ -122,6 +123,7 @@ void Medal::IdleUpdate(float _DeltaTime)
 		CollisionType::CirCle,
 		CollisionType::Rect))
 	{
+		AcquiredValue = true;
 		CurState = MedalState::Get;
 		SetAnimation("Get");
 		return;
@@ -131,15 +133,15 @@ void Medal::IdleUpdate(float _DeltaTime)
 	{
 		Radian += Speed;
 
-		if (Radian == 360.0f)
+		if (Radian >= GameEngineMath::PI2 + GameEngineMath::PI / 2.0f)
 		{
-			Radian = 0.0f;
+			Radian = GameEngineMath::PI / 2.0f;
+			SetPos(StartPos);
 		}
 
 		float4 AddPosY = { 0.0f, sinf(Radian) * MovingHeight };
 		AddPos(AddPosY * _DeltaTime);
 	}
-
 
 	SetAnimation("Idle");
 }

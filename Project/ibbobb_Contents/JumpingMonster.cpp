@@ -179,7 +179,6 @@ void JumpingMonster::FallUpdate(float _DeltaTime)
 		return;
 	}
 
-
 	// 바닥 충돌 체크
 	unsigned int Color = GetGroundColor(RGB(255, 0, 0), DownCheck);
 	if (RGB(255, 0, 0) != Color)
@@ -204,6 +203,7 @@ void JumpingMonster::FallUpdate(float _DeltaTime)
 
 		AddPos(GravityDir);
 		PrevPos = GetPos().Y;
+		GravityReset();
 		SetGravityVector(GravityDir * JumpForce);
 	}
 

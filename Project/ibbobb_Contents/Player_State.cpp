@@ -803,7 +803,6 @@ void Player::RidingModeUpdate(float _DeltaTime)
 
 void Player::DeadUpdate(float _DeltaTime)
 {
-
 	if (true == MainRenderer->IsAnimationEnd())
 	{
 		Off();

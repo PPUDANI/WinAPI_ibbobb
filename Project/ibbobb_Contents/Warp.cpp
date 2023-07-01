@@ -1,5 +1,7 @@
 #include "Warp.h"
 #include <GameEngineBase/GameEnginePath.h>
+#include <GameEngineBase/GameEngineMath.h>
+
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 
@@ -54,10 +56,11 @@ void Warp::Update(float _DeltaTime)
 	// 공중부양 연산
 	{
 		Radian += Speed;
-
-		if (Radian == 360.0f)
+		
+		if (Radian >= GameEngineMath::PI2 + GameEngineMath::PI / 2.0f)
 		{
-			Radian = 0.0f;
+			Radian = GameEngineMath::PI / 2.0f;
+			InitPos();
 		}
 
 		float4 AddPosY;
@@ -80,6 +83,21 @@ void Warp::Update(float _DeltaTime)
 			{
 				StarRenderer[i]->AddRenderPos(-AddPosY * _DeltaTime );
 			}
+		}
+	}
+}
+
+void Warp::InitPos()
+{
+	for (int i = 0; i < StarNum; i++)
+	{
+		if (WarpDir::Horizontal == Dir)
+		{
+			StarRenderer[i]->SetRenderPos({i * 13.0f, 0.0f});
+		}
+		else if (WarpDir::Vertical == Dir)
+		{
+			StarRenderer[i]->SetRenderPos({ 0.0f, i * 13.0f });
 		}
 	}
 }

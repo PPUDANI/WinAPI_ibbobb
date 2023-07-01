@@ -49,15 +49,14 @@ private:
 
 	void Start() override;
 	void Update(float _DeltaTime) override;
-
+	void InitPos();
 	WarpType Type = WarpType::Common;
 	WarpDir Dir;
 	std::vector<GameEngineRenderer*> StarRenderer;
 	int StarNum = 5;
 
 	// Warp 물리변수
-	float Speed = 0.01f;
-	float Radian = 90.0f;
+	float Speed = 0.015f;
+	float Radian = GameEngineMath::PI / 2.0f;
 	float MovingHeight = 8.0f;
-
 };

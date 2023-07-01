@@ -71,6 +71,11 @@ public:
 		return OtherPlayer;
 	}
 
+	inline void ChangeState(PlayerState _State)
+	{
+		CurState = _State;
+	}
+
 protected:
 
 	virtual void Init() {}
@@ -158,10 +163,7 @@ private:
 	void OtherPlayerMoveCheck();
 
 	void SetAnimation(const std::string _State, int _StartFrame = 0);
-	inline void ChangeState(PlayerState _State)
-	{
-		CurState = _State;
-	}
+
 	
 
 	// 캐릭터 상태변수
@@ -170,6 +172,7 @@ private:
 	bool FromJump = false;
 	bool FromRun = false;
 	bool AnimIsBlink = false;
+	float DeathTurm = 0.0f;
 
 	// 캐릭터 물리변수
 	float JumpForce = 1.0f;

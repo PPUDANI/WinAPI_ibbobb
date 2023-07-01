@@ -4,8 +4,7 @@
 enum class MedalState
 {
 	Idle,
-	Get,
-	Acquired
+	Get
 };
 
 class Medal : public GameEngineActor
@@ -21,8 +20,16 @@ public:
 	Medal& operator=(const Medal& _Other) = delete;
 	Medal& operator=(Medal&& _Other) noexcept = delete;
 
+	static std::vector<Medal*>MedalsByLevelIsAcquired;
+
 	void Init();
 	void ReverseInit();
+
+	inline bool IsAcquired() const
+	{
+		return AcquiredValue;
+	}
+
 protected:
 
 private:
@@ -41,14 +48,16 @@ private:
 
 	// Medal 상태변수
 	MedalState CurState;
-	bool IsAcquired = false;
+	bool AcquiredValue = false;
 	bool ReverseValue = false;
 	int Count = 0;
+
 	// Medal 물리변수
 	float Speed = 0.01f;
-	float Radian = 90.0f;
+	float Radian = GameEngineMath::PI / 2.0f;
 	float MovingHeight = 60.0f;
+	float4 StartPos = float4::ZERO;
 
-	static std::vector<Medal*>MedalsByLevelIsAcquired;
+	
 
 };

@@ -56,6 +56,17 @@ void Player::Update(float _DeltaTime)
 		CheckPosOn = !CheckPosOn;
 	}
 
+	if (false == OtherPlayer->IsUpdate())
+	{
+		DeathTurm += _DeltaTime;
+		if (DeathTurm >= 1.0f)
+		{
+			DeathTurm = 0.0f;
+			SetAnimation("Dead");
+			ChangeState(PlayerState::Dead);
+		}
+	}
+
 	// 가로워프, 세로워프 구분
 	{
 		unsigned int MiddleColor = GetGroundColor(RGB(0, 255, 255), float4::ZERO);

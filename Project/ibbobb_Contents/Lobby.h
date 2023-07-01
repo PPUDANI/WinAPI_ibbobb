@@ -1,5 +1,7 @@
 #pragma once
 #include "SubLevel.h"
+#include <vector>
+
 class Lobby : public SubLevel
 {
 public:
@@ -21,8 +23,13 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void Render(float _DeltaTime) override;
+	void MedalInit();
+	void CreateCharacter();
+
+	bool IsCharacterCreated = false;
+
+	std::vector<class LobbyMedal*> Medals;
 
 	class Warp* LobbyWarp = nullptr;
-
 	
 };

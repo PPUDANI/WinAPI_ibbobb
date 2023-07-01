@@ -49,12 +49,26 @@ void SubLevel::Update(float _DeltaTime)
 	float DistanceXFromibbToobb = obbPlayerPos.X - ibbPlayerPos.X;
 	float4 CameraPos;
 
-	if (false == ibbPlayer->IsUpdate())
+	if (false == ibbPlayer->IsUpdate() &&
+		false == obbPlayer->IsUpdate())
 	{
+		if (false == FirstDeathIsibb)
+		{
+			CameraPos = ibbPlayer->GetPos() - WindowScale.Half();
+		}
+		else
+		{
+			CameraPos = obbPlayer->GetPos() - WindowScale.Half();
+		}
+	}
+	else if (false == ibbPlayer->IsUpdate())
+	{
+		FirstDeathIsibb = true;
 		CameraPos = obbPlayer->GetPos() - WindowScale.Half();
 	}
 	else if (false == obbPlayer->IsUpdate())
 	{
+		FirstDeathIsibb = false;
 		CameraPos = ibbPlayer->GetPos() - WindowScale.Half();
 	}
 	else
@@ -79,4 +93,13 @@ void SubLevel::Update(float _DeltaTime)
 
 	GetMainCamera()->SetPos(CameraPos);
 	Back->SetPos(GetMainCamera()->GetPos() + WindowScale.Half());
+}
+
+void SubLevel::ReviveCharacter()
+{
+	ibbPlayer->On();
+	obbPlayer->On();
+	ibbPlayer->ChangeState(PlayerState::Fall);
+	obbPlayer->ChangeState(PlayerState::Fall);
+	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(1.0f);
 }

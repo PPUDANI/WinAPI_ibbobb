@@ -303,17 +303,17 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		Medal* _Medal = nullptr;
 		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
 		_Medal->Init();
-		_Medal->SetPos({1000, 680});
+		_Medal->SetPos({1000.0f, 680.0f });
 		Medals.push_back(_Medal);
 
 		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
 		_Medal->Init();
-		_Medal->SetPos({ 5057, 460 });
+		_Medal->SetPos({ 5057.0f, 490.0f });
 		Medals.push_back(_Medal);
 
 		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
 		_Medal->Init();
-		_Medal->SetPos({ 6800, 540 });
+		_Medal->SetPos({ 6800.0f, 540.0f });
 		Medals.push_back(_Medal);
 	}
 

@@ -370,6 +370,7 @@ void Player::ReverseInit()
 				if (PrevAreaVector.Y > -MinGravityInHole)
 				{
 					PrevAreaVector.Y = -MinGravityInHole;
+					SetGravityVector(PrevAreaVector);
 				}
 
 				PrevAreaVectorInit = true;

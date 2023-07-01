@@ -57,7 +57,7 @@ private:
 
 	// Warp 물리변수
 	float Speed = 0.01f;
-	float Radian = 0.0f;
-	float MovingHeight = 6.0f;
+	float Radian = 90.0f;
+	float MovingHeight = 8.0f;
 
 };

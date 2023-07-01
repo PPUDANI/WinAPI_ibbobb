@@ -131,7 +131,7 @@ void Medal::IdleUpdate(float _DeltaTime)
 	{
 		Radian += Speed;
 
-		if (Radian == 180.0f)
+		if (Radian == 360.0f)
 		{
 			Radian = 0.0f;
 		}

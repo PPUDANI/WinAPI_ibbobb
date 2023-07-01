@@ -46,7 +46,7 @@ private:
 	int Count = 0;
 	// Medal 물리변수
 	float Speed = 0.01f;
-	float Radian = 0.0f;
+	float Radian = 90.0f;
 	float MovingHeight = 60.0f;
 
 	static std::vector<Medal*>MedalsByLevelIsAcquired;

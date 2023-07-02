@@ -188,7 +188,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="LevelDoor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Lobby.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LobbyLevelText.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -274,7 +282,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="LevelDoor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Lobby.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LobbyLevelText.cpp">
       <SubType>
       </SubType>
     </ClCompile>

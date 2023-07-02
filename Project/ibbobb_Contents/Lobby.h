@@ -46,4 +46,14 @@ private:
 	class Warp* LobbyWarp = nullptr;
 	class Fade* LobbyStartFade = nullptr;
 	Fade* LobbyEndFade = nullptr;
+
+	class LobbyLevelText* Level1Text = nullptr;
+	LobbyLevelText* Level2Text = nullptr;
+	LobbyLevelText* Level3Text = nullptr;
+	LobbyLevelText* Level4Text = nullptr;
+
+	class LevelDoor* Level1Door = nullptr;
+	LevelDoor* Level2Door = nullptr;
+	LevelDoor* Level3Door = nullptr;
+	LevelDoor* Level4Door = nullptr;
 };

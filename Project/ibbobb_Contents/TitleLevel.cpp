@@ -27,13 +27,23 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Start()
 {
+	// BackGround 持失
 	TitleBack = CreateActor<BackGround>(UpdateOrder::BackGround);
 	TitleBack->Init("Title_BackGround.bmp");
 
+	// PressText 持失
 	PressText = CreateActor<DefaultImage>(UpdateOrder::UI);
 	PressText->Init("Press_Text.bmp", 0.05f);
 	PressText->LevitationOn();
 	PressText->SetPos({750.0f, 370.0f});
+
+	// ibb
+	TitleibbPlayer = CreateActor<Titleibb>(UpdateOrder::Player);
+	TitleibbPlayer->SetPos({ 500.0f, 650.0f });
+
+	// obb
+	TitleobbPlayer = CreateActor<Titleobb>(UpdateOrder::Player);
+	TitleobbPlayer->SetPos({ 1000.0f, 650.0f });
 
 }
 
@@ -77,13 +87,7 @@ void TitleLevel::LobbyStart(float _DeltaTime)
 
 void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	// ibb
-	TitleibbPlayer = CreateActor<Titleibb>(UpdateOrder::Player);
-	TitleibbPlayer->SetPos({ 500.0f, 650.0f });
-
-	// obb
-	TitleobbPlayer = CreateActor<Titleobb>(UpdateOrder::Player);
-	TitleobbPlayer->SetPos({ 1000.0f, 650.0f });
+	
 }
 
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)

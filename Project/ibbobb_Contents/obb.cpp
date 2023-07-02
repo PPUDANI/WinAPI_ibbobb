@@ -109,7 +109,6 @@ void obb::Init()
 	MainRenderer->CreateAnimation("ReverseLeft_Dead", "Left_obb_Reverse.bmp", 39, 41, Frame, true);
 	MainRenderer->CreateAnimation("ReverseRight_Dead", "Right_obb_Reverse.bmp", 39, 41, Frame, true);
 
-
 	// 충돌체 설정
 
 	BodyCol = CreateCollision(CollisionOrder::obbBody);

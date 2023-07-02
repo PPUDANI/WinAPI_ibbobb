@@ -20,6 +20,16 @@ public:
 	DefaultImage& operator=(const DefaultImage& _Other) = delete;
 	DefaultImage& operator=(DefaultImage&& _Other) noexcept = delete;
 
+	inline void SetSpeed(float _Speed)
+	{
+		Speed = _Speed;
+	}
+
+	inline void SetMovingHeight(float _MovingHeight)
+	{
+		MovingHeight = _MovingHeight;
+	}
+
 	inline void LevitationOn()
 	{
 		LevitationValue = true;
@@ -39,17 +49,19 @@ public:
 	{
 		BlinkValue = false;
 	}
-
+ 
 	void Init(const std::string& _FileName, float _BlinkFrameSpeed = 0.5f);
 
 protected:
+	class GameEngineRenderer* Renderer;
+	virtual void Update(float _DeltaTime) override;
 
 private:
-	void Update(float _DeltaTime) override;
+	
 	void BlinkUpdate(float _DeltaTime);
 	void LevitationUpdate(float _DeltaTime);
 	void LevelStart() override;
-	class GameEngineRenderer* Renderer;
+	
 	bool BlinkValue = false;
 	bool LevitationValue = false;
 
@@ -58,5 +70,4 @@ private:
 	float Radian = GameEngineMath::PI / 2.0f;
 	float MovingHeight = 30.0f;
 	float4 StartPos = float4::ZERO;
-
 };

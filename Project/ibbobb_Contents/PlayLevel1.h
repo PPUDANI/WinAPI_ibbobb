@@ -32,20 +32,27 @@ private:
 
 	const std::string ColName = "Level1_Collision.bmp";
 
-	bool LobbyOn = false;
-	bool EndFadeInit = false;
+	
+	
 
 	std::vector<class RoadMonster*> RoadMonsters;
 	std::vector<class JumpingMonster*> JumpingMonsters;
 	std::vector<class Medal*> Medals;
 	std::vector<class Warp*> Warps;
+	
 
 	RoadMonster* _RoadMonster = nullptr;
 	JumpingMonster* _JumpingMonster = nullptr;
 	Medal* _Medal = nullptr;
 	Warp* _Warp = nullptr;
+	class DefaultImage* GoalText = nullptr;
+	
 
 	class Fade* Level1StartFade = nullptr;
 	Fade* Level1EndFade = nullptr;
+	bool LobbyOn = false;
+	bool EndFadeInit = false;
+
+	class LevelDoor* LobyDoor = nullptr;
 };
 

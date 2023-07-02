@@ -63,6 +63,12 @@
     <ClInclude Include="Fade.h">
       <Filter>Contents\Global\Fade</Filter>
     </ClInclude>
+    <ClInclude Include="LobbyLevelText.h">
+      <Filter>Contents\Level\Lobby</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelDoor.h">
+      <Filter>Contents\Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentCore.cpp" />
@@ -126,6 +132,12 @@
     </ClCompile>
     <ClCompile Include="Fade.cpp">
       <Filter>Contents\Global\Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyLevelText.cpp">
+      <Filter>Contents\Level\Lobby</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelDoor.cpp">
+      <Filter>Contents\Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

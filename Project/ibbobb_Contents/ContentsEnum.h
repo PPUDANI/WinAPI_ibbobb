@@ -48,4 +48,6 @@ enum class CollisionOrder
 	MonsterCore,
 
 	Medal,
+
+	LevelDoor,
 };

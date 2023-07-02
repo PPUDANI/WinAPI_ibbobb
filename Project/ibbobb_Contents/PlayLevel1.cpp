@@ -16,6 +16,8 @@
 #include "ibb.h"
 #include "obb.h"
 #include "Medal.h"
+#include "DefaultImage.h"
+#include "LevelDoor.h"
 #include "Fade.h"
 
 
@@ -31,6 +33,17 @@ PlayLevel1::~PlayLevel1()
 
 void PlayLevel1::Start()
 {
+	LevelMaxScaleX = 7956.0f;
+
+	// BackGround & Map 생성
+	{
+		Back = CreateActor<BackGround>(RenderOrder::BackGround);
+		Back->Init("Level1_BackGround.bmp");
+
+		LevelMap = CreateActor<Map>();
+		LevelMap->Init("Level1_Map.bmp", ColName);
+	}
+
 	// Medal
 	{
 		Medal* _Medal = nullptr;
@@ -50,11 +63,99 @@ void PlayLevel1::Start()
 		Medals.push_back(_Medal);
 	}
 
+	// Warp
+	{
+		Warp* _Warp = nullptr;
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(12);
+		_Warp->SetWorpDir(WarpDir::Horizontal);
+		_Warp->SetWorpType(WarpType::Common);
+		_Warp->SetPos({ 1774.0f, 897.0f });
+		_Warp->Init();
+		Warps.push_back(_Warp);
+
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(10);
+		_Warp->SetWorpDir(WarpDir::Vertical);
+		_Warp->SetWorpType(WarpType::Common);
+		_Warp->SetPos({ 2769.0f, 760.0f });
+		_Warp->Init();
+		Warps.push_back(_Warp);
+
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(10);
+		_Warp->SetWorpDir(WarpDir::Vertical);
+		_Warp->SetWorpType(WarpType::Common);
+		_Warp->SetPos({ 3887.0f, 682.0f });
+		_Warp->Init();
+		Warps.push_back(_Warp);
+
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(12);
+		_Warp->SetWorpDir(WarpDir::Horizontal);
+		_Warp->SetWorpType(WarpType::Common);
+		_Warp->SetPos({ 4791.0f, 975.0f });
+		_Warp->Init();
+		Warps.push_back(_Warp);
+
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(10);
+		_Warp->SetWorpDir(WarpDir::Vertical);
+		_Warp->SetWorpType(WarpType::Common);
+		_Warp->SetPos({ 4980.0f, 578.0f });
+		_Warp->Init();
+		Warps.push_back(_Warp);
+
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(10);
+		_Warp->SetWorpDir(WarpDir::Vertical);
+		_Warp->SetWorpType(WarpType::Common);
+		_Warp->SetPos({ 5526.0f, 1124.0f });
+		_Warp->Init();
+		Warps.push_back(_Warp);
+
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(12);
+		_Warp->SetWorpDir(WarpDir::Horizontal);
+		_Warp->SetWorpType(WarpType::Common);
+		_Warp->SetPos({ 6585.0f, 1105.0f });
+		_Warp->Init();
+		Warps.push_back(_Warp);
+
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(12);
+		_Warp->SetWorpDir(WarpDir::Horizontal);
+		_Warp->SetWorpType(WarpType::Common);
+		_Warp->SetPos({ 6871.0f, 1027.0f });
+		_Warp->Init();
+		Warps.push_back(_Warp);
+	}
+
+	// Text
+	{
+		GoalText = CreateActor<DefaultImage>();
+		GoalText->Init("GoalText.bmp");
+		GoalText->LevitationOn();
+		GoalText->SetPos({ 7813.0f, 865.0f });
+		GoalText->SetSpeed(5.0f);
+		GoalText->SetMovingHeight(13.0f);
+	}
+
+	LobyDoor = CreateActor<LevelDoor>();
+	LobyDoor->SetPos({ 7813.0f, 984.0f });
+
 }
 
 void PlayLevel1::Update(float _DeltaTime)
 {
+	
+
 	if (true == GameEngineInput::IsDown('B'))
+	{
+		LobbyOn = true;
+	}
+
+	if (true == LobyDoor->IsPlayerGoIn())
 	{
 		LobbyOn = true;
 	}
@@ -162,13 +263,6 @@ void PlayLevel1::LobbyStart(float _DeltaTime)
 
 void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	Back = CreateActor<BackGround>(RenderOrder::BackGround);
-	Back->Init("Level1_BackGround.bmp");
-
-	LevelMap = CreateActor<Map>();
-	LevelMap->Init("Level1_Map.bmp", ColName);
-	LevelMaxScaleX = 7956.0f;
-
 	LevelPlayerInit();
 
 	// RoadMonster
@@ -204,7 +298,6 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	// JumpingMonster
-
 	{
 		JumpingMonster* _JumpingMonster = nullptr;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
@@ -325,75 +418,6 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		JumpingMonsters.push_back(_JumpingMonster);
 	}
 
-
-	// Warp
-	{
-		Warp* _Warp = nullptr;
-		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
-		_Warp->SetStarNumber(12);
-		_Warp->SetWorpDir(WarpDir::Horizontal);
-		_Warp->SetWorpType(WarpType::Common);
-		_Warp->SetPos({ 1774.0f, 897.0f });
-		_Warp->Init();
-		Warps.push_back(_Warp);
-
-		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
-		_Warp->SetStarNumber(10);
-		_Warp->SetWorpDir(WarpDir::Vertical);
-		_Warp->SetWorpType(WarpType::Common);
-		_Warp->SetPos({ 2769.0f, 760.0f });
-		_Warp->Init();
-		Warps.push_back(_Warp);
-
-		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
-		_Warp->SetStarNumber(10);
-		_Warp->SetWorpDir(WarpDir::Vertical);
-		_Warp->SetWorpType(WarpType::Common);
-		_Warp->SetPos({ 3887.0f, 682.0f });
-		_Warp->Init();
-		Warps.push_back(_Warp);
-
-		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
-		_Warp->SetStarNumber(12);
-		_Warp->SetWorpDir(WarpDir::Horizontal);
-		_Warp->SetWorpType(WarpType::Common);
-		_Warp->SetPos({ 4791.0f, 975.0f });
-		_Warp->Init();
-		Warps.push_back(_Warp);
-
-		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
-		_Warp->SetStarNumber(10);
-		_Warp->SetWorpDir(WarpDir::Vertical);
-		_Warp->SetWorpType(WarpType::Common);
-		_Warp->SetPos({ 4980.0f, 578.0f });
-		_Warp->Init();
-		Warps.push_back(_Warp);
-
-		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
-		_Warp->SetStarNumber(10);
-		_Warp->SetWorpDir(WarpDir::Vertical);
-		_Warp->SetWorpType(WarpType::Common);
-		_Warp->SetPos({ 5526.0f, 1124.0f });
-		_Warp->Init();
-		Warps.push_back(_Warp);
-
-		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
-		_Warp->SetStarNumber(12);
-		_Warp->SetWorpDir(WarpDir::Horizontal);
-		_Warp->SetWorpType(WarpType::Common);
-		_Warp->SetPos({ 6585.0f, 1105.0f });
-		_Warp->Init();
-		Warps.push_back(_Warp);
-
-		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
-		_Warp->SetStarNumber(12);
-		_Warp->SetWorpDir(WarpDir::Horizontal);
-		_Warp->SetWorpType(WarpType::Common);
-		_Warp->SetPos({ 6871.0f, 1027.0f });
-		_Warp->Init();
-		Warps.push_back(_Warp);
-	}
-
 	Level1StartFade = CreateActor<Fade>();
 	Level1StartFade->Init("FadeBlack.bmp", FadeState::FadeIn);
 	Level1StartFade->SetFadeSpeed(400.0f);
@@ -401,9 +425,8 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 
 void PlayLevel1::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	Back->Death();
-	LevelMap->Death();
-
+	ibbPlayer->OverOn();
+	obbPlayer->OverOn();
 	for (int i = 0; i < RoadMonsters.size(); i++)
 	{
 		if (RoadMonsters[i] == nullptr)
@@ -426,20 +449,8 @@ void PlayLevel1::LevelEnd(GameEngineLevel* _NextLevel)
 	}
 	JumpingMonsters.clear();
 
-	for (int i = 0; i < Warps.size(); i++)
-	{
-		if (Warps[i] == nullptr)
-		{
-			MsgBoxAssert("null인 Warp를 Release 하려 했습니다.")
-		}
-		Warps[i]->Death();
-		Warps[i] = nullptr;
-	}
-	Warps.clear();
-
 	Level1StartFade->Death();
 	Level1StartFade = nullptr;
-
 	Level1EndFade->Death();
 	Level1EndFade = nullptr;
 
@@ -460,7 +471,7 @@ void PlayLevel1::LevelPlayerInit()
 	ibbPlayer->SetGroundTexture(ColName);
 	ibbPlayer->SetPos({ DefaultPosX, DefaultPosY });
 	ibbPlayer->ChangeState(PlayerState::Fall);
-	ibbPlayer->SetDir(PlayerDir::Left);
+	ibbPlayer->SetDir(PlayerDir::Right);
 
 	// obb
 	if (nullptr == obb::GetMainobb())
@@ -471,7 +482,7 @@ void PlayLevel1::LevelPlayerInit()
 	obbPlayer->SetGroundTexture(ColName);
 	obbPlayer->SetPos({ DefaultPosX + 100.0f, DefaultPosY });
 	obbPlayer->ChangeState(PlayerState::Fall);
-	ibbPlayer->SetDir(PlayerDir::Left);
+	obbPlayer->SetDir(PlayerDir::Right);
 }
 
 void PlayLevel1::SetZoomScale(float _Ratio, float _DeltaTime)
@@ -492,6 +503,7 @@ void PlayLevel1::SetZoomScale(float _Ratio, float _DeltaTime)
 			ZoomScale = _Ratio;
 		}
 	}
+
 }
 
 void PlayLevel1::Level1SettingInit()

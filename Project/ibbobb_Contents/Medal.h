@@ -40,7 +40,7 @@ private:
 
 	void IdleUpdate(float _DeltaTime);
 	void GetUpdate(float _DeltaTime);
-
+	void Levitation(float _DeltaTime);
 	
 	class GameEngineRenderer* Renderer = nullptr;
 
@@ -53,11 +53,9 @@ private:
 	int Count = 0;
 
 	// Medal 물리변수
-	float Speed = 0.01f;
+	float Speed = 5.0f;
 	float Radian = GameEngineMath::PI / 2.0f;
-	float MovingHeight = 60.0f;
+	float MovingHeight = 30.0f;
 	float4 StartPos = float4::ZERO;
-
-	
 
 };

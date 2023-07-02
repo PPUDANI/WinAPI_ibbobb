@@ -20,12 +20,13 @@ private:
 
 	void Start() override;
 	void Update(float _DeltaTime) override;
+	void LobbyStart(float _DeltaTime);
 
-	class BackGround* Title;
-	class BlinkImage* PressText;
+	bool GameStartValue = false;
+	class BackGround* TitleBack;
+	class DefaultImage* PressText;
 	class Titleibb* TitleibbPlayer = nullptr;
 	class Titleobb* TitleobbPlayer = nullptr;
-
-
+	class Fade* TitleFade = nullptr;
 };
 

@@ -23,7 +23,18 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void Render(float _DeltaTime) override;
+
+	void LevelPlayerInit();
 	void SetZoomScale(float _Ratio, float _DeltaTime);
+
+	void LobbyStart(float _DeltaTime);
+	void Level1SettingInit();
+
+	const std::string ColName = "Level1_Collision.bmp";
+
+	bool LobbyOn = false;
+	bool EndFadeInit = false;
+
 	std::vector<class RoadMonster*> RoadMonsters;
 	std::vector<class JumpingMonster*> JumpingMonsters;
 	std::vector<class Medal*> Medals;
@@ -33,5 +44,8 @@ private:
 	JumpingMonster* _JumpingMonster = nullptr;
 	Medal* _Medal = nullptr;
 	Warp* _Warp = nullptr;
+
+	class Fade* Level1StartFade = nullptr;
+	Fade* Level1EndFade = nullptr;
 };
 

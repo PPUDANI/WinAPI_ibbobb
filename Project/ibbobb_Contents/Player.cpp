@@ -518,7 +518,6 @@ bool Player::UpMapColCheck()
 			}
 			return true;
 		}
-		else false;
 	}
 	else
 	{
@@ -540,11 +539,9 @@ bool Player::UpMapColCheck()
 			}
 			return true;
 		}
-		else
-		{
-			return false;
-		}
 	}
+
+	return false;
 }
 
 bool Player::DownMapColCheck()

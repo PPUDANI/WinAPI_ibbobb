@@ -8,7 +8,8 @@ enum class UpdateOrder
 	Medal,
 	BackGround,
 	Warp,
-	Map
+	Map,
+	UI,
 };
 
 enum class RenderOrder
@@ -16,14 +17,17 @@ enum class RenderOrder
 	BackGround,
 	Map,
 	Image,
+
 	Medal,
 	RoadMonster,
 	JumpingMonster,
 	MonsterCore,
+
 	ibb,
 	obb,
+
 	Warp,
-	PlayUI,
+	UI,
 };
 
 enum class CollisionOrder
@@ -33,12 +37,15 @@ enum class CollisionOrder
 	ibbRight,
 	ibbUp,
 	ibbDown,
+
 	obbBody,
 	obbLeft,
 	obbRight,
 	obbUp,
 	obbDown,
+
 	MonsterBody,
 	MonsterCore,
+
 	Medal,
 };

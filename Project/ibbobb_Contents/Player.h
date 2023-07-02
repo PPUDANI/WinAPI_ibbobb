@@ -46,6 +46,11 @@ public:
 		return CurDir;
 	}
 
+	inline void SetDir(PlayerDir _Dir)
+	{
+		CurDir = _Dir;
+	}
+
 	inline PlayerState GetState() const
 	{
 		return CurState;

@@ -7,10 +7,11 @@
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEngineCore/GameEngineCore.h>
 
+
 #include "ContentsEnum.h"
 #include "BackGround.h"
-#include "BlinkImage.h"
-
+#include "DefaultImage.h"
+#include "Fade.h"
 #include "Titleibb.h"
 #include "Titleobb.h"
 
@@ -26,20 +27,51 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Start()
 {
-	
-	Title = CreateActor<BackGround>(RenderOrder::BackGround);
-	Title->Init("Title_BackGround.bmp");
+	TitleBack = CreateActor<BackGround>(UpdateOrder::BackGround);
+	TitleBack->Init("Title_BackGround.bmp");
 
-	PressText = CreateActor<BlinkImage>(RenderOrder::Image);
-	PressText->Init("Press_Text.bmp");
-	PressText->SetPos({750.0f, 360.0f});
+	PressText = CreateActor<DefaultImage>(UpdateOrder::UI);
+	PressText->Init("Press_Text.bmp", 0.05f);
+	PressText->LevitationOn();
+	PressText->SetPos({750.0f, 370.0f});
+
 }
 
 void TitleLevel::Update(float _DeltaTime)
 {
 	if (true == GameEngineInput::IsDown('P'))
 	{
+		PressText->BlinkOn();
+		GameStartValue = true;;
+	}
+	if (true == GameStartValue)
+	{
+		LobbyStart(_DeltaTime);
+	}
+}
+
+void TitleLevel::LobbyStart(float _DeltaTime)
+{
+	static float Time = 0.0f;
+	static bool FadeOn = false;
+	Time += _DeltaTime;
+
+	if (Time >= 2.0f)
+	{
 		GameEngineCore::ChangeLevel("Lobby");
+	}
+	else if (Time >= 0.5f)
+	{
+		PressText->BlinkOff();
+		PressText->Off();
+		if (false == FadeOn)
+		{
+			FadeOn = true;
+			TitleFade = CreateActor<Fade>();
+			TitleFade->Init("FadeBlack.bmp", FadeState::FadeOut);
+			TitleFade->SetFadeSpeed(200.0f);
+		}
+		GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(Time + 0.5f);
 	}
 }
 
@@ -57,7 +89,17 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	TitleibbPlayer->OverOff();
+	TitleibbPlayer = nullptr;
+
 	TitleobbPlayer->OverOff();
+	TitleobbPlayer = nullptr;
+
 	PressText->OverOff();
-	Title->OverOff();
+	PressText = nullptr;
+
+	TitleBack->OverOff();
+	TitleBack = nullptr;
+
+	TitleFade->OverOff();
+	TitleFade = nullptr;
 }

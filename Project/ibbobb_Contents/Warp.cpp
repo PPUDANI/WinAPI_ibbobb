@@ -55,7 +55,7 @@ void Warp::Update(float _DeltaTime)
 {
 	// 공중부양 연산
 	{
-		Radian += Speed;
+		Radian += Speed * _DeltaTime;
 		
 		if (Radian >= GameEngineMath::PI2 + GameEngineMath::PI / 2.0f)
 		{

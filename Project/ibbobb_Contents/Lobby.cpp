@@ -7,6 +7,7 @@
 
 #include "Medal.h"
 #include "LobbyMedal.h"
+#include "Fade.h"
 #include "Warp.h"
 #include "Map.h"
 #include "ibb.h"
@@ -28,21 +29,21 @@ void Lobby::Start()
 		Medals.push_back(_Medal);
 	}
 
-	Medals[0]->SetPos({ 1052.0f, 546.0f});
-	Medals[1]->SetPos({ 1052.0f, 578.0f });
-	Medals[2]->SetPos({ 1052.0f, 610.0f });
+	Medals[0]->SetPos({ 1050.0f, 546.0f});
+	Medals[1]->SetPos({ 1050.0f, 580.0f });
+	Medals[2]->SetPos({ 1050.0f, 614.0f });
 
-	Medals[3]->SetPos({ 1442.0f, 546.0f });
-	Medals[4]->SetPos({ 1442.0f, 578.0f });
-	Medals[5]->SetPos({ 1442.0f, 610.0f });
+	Medals[3]->SetPos({ 1440.0f, 546.0f });
+	Medals[4]->SetPos({ 1440.0f, 580.0f });
+	Medals[5]->SetPos({ 1440.0f, 614.0f });
 
-	Medals[6]->SetPos({ 1832.0f, 546.0f }); // 390
-	Medals[7]->SetPos({ 1832.0f, 578.0f });
-	Medals[8]->SetPos({ 1832.0f, 610.0f });
+	Medals[6]->SetPos({ 1830.0f, 546.0f }); // 390
+	Medals[7]->SetPos({ 1830.0f, 580.0f });
+	Medals[8]->SetPos({ 1830.0f, 614.0f });
 
-	Medals[9]->SetPos({ 2222.0f, 546.0f });
-	Medals[10]->SetPos({ 2222.0f, 578.0f });
-	Medals[11]->SetPos({ 2222.0f, 610.0f });
+	Medals[9]->SetPos({ 2220.0f, 546.0f });
+	Medals[10]->SetPos({ 2220.0f, 580.0f });
+	Medals[11]->SetPos({ 2220.0f, 614.0f });
 }
 
 void Lobby::Update(float _DeltaTime)
@@ -53,9 +54,30 @@ void Lobby::Update(float _DeltaTime)
 		ZoomScale = 1.0f;
 	}
 
-	if (true == GameEngineInput::IsDown('P'))
+	if (true == GameEngineInput::IsDown('1'))
 	{
-		GameEngineCore::ChangeLevel("PlayLevel1");
+		Level1On = true;
+	}
+	if (true == GameEngineInput::IsDown('2'))
+	{
+		Level2On = true;
+	}
+	if (true == GameEngineInput::IsDown('3'))
+	{
+		Level3On = true;
+	}
+
+	if (true == Level1On)
+	{
+		Level1Start(_DeltaTime);
+	}
+	if (true == Level1On)
+	{
+		Level2Start(_DeltaTime);
+	}
+	if (true == Level1On)
+	{
+		Level3Start(_DeltaTime);
 	}
 
 	SubLevel::Update(_DeltaTime);
@@ -83,13 +105,43 @@ void Lobby::CreateCharacter()
 	IsCharacterCreated = true;
 }
 
+void Lobby::Level1Start(float _DeltaTime)
+{
+	if (false == EndFadeInit)
+	{
+		LobbyEndFade = CreateActor<Fade>();
+		LobbyEndFade->Init("FadeBlack.bmp", FadeState::FadeOut);
+		LobbyEndFade->SetFadeSpeed(400.0f);
+
+		EndFadeInit = true;
+	}
+
+	if (LobbyEndFade == nullptr)
+	{
+		MsgBoxAssert("LobbyEndFade가 nullptr입니다.")
+	}
+
+	if (true == LobbyEndFade->FadeIsEnd())
+	{
+		GameEngineCore::ChangeLevel("PlayLevel1");
+	}
+}
+
+void Lobby::Level2Start(float _DeltaTime)
+{
+	return;
+}
+
+void Lobby::Level3Start(float _DeltaTime)
+{
+	return;
+}
 
 void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	Back = CreateActor<BackGround>(UpdateOrder::BackGround);
+	Back = CreateActor<BackGround>(RenderOrder::BackGround);
 	Back->Init("Lobby_BackGround.bmp");
 
-	std::string ColName = "Lobby_Collision.bmp";
 	LevelMap = CreateActor<Map>(UpdateOrder::Map);
 	LevelMap->Init("Lobby_Map.bmp", ColName);
 
@@ -97,16 +149,7 @@ void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		CreateCharacter();
 	}
-
-	float DefaultPosX = 100.0f;
-	float DefaultPosY = 0.0f;
-
-	ibbPlayer->SetGroundTexture(ColName);
-	ibbPlayer->SetPos({ DefaultPosX, DefaultPosY });
-
-	obbPlayer->SetGroundTexture(ColName);
-	obbPlayer->SetPos({ DefaultPosX + 100.0f, DefaultPosY });
-
+	LevelPlayerInit();
 	// Warp
 	{
 		LobbyWarp = CreateActor<Warp>(UpdateOrder::Warp);
@@ -126,6 +169,10 @@ void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
+	LobbyStartFade = CreateActor<Fade>();
+	LobbyStartFade->Init("FadeBlack.bmp", FadeState::FadeIn);
+	LobbyStartFade->SetFadeSpeed(500.0f);
+
 	LevelMaxScaleX = 2782.0f;
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(2.0f);
 }
@@ -143,4 +190,47 @@ void Lobby::LevelEnd(GameEngineLevel* _NextLevel)
 
 	ibbPlayer->OverOn();
 	obbPlayer->OverOn();
+
+	LobbyStartFade->Death();
+	LobbyStartFade = nullptr;
+
+	LobbyEndFade->Death();
+	LobbyEndFade = nullptr;
+
+	LobbySettingInit();
+}
+
+void Lobby::LevelPlayerInit()
+{
+	float DefaultPosX = 100.0f;
+	float DefaultPosY = 0.0f;
+
+	// ibb
+	if (ibbPlayer == nullptr)
+	{
+		MsgBoxAssert("ibbPlayer가 세팅되지 않았습니다.")
+	}
+
+	ibbPlayer->SetGroundTexture(ColName);
+	ibbPlayer->SetPos({ DefaultPosX, DefaultPosY });
+	ibbPlayer->ChangeState(PlayerState::Fall);
+	ibbPlayer->SetDir(PlayerDir::Left);
+
+	// obb
+	if (obbPlayer == nullptr)
+	{
+		MsgBoxAssert("ibbPlayer가 세팅되지 않았습니다.")
+	}
+	obbPlayer->SetGroundTexture(ColName);
+	obbPlayer->SetPos({ DefaultPosX + 100.0f, DefaultPosY });
+	obbPlayer->ChangeState(PlayerState::Fall);
+	ibbPlayer->SetDir(PlayerDir::Left);
+}
+
+void Lobby::LobbySettingInit()
+{
+	Level1On = false;
+	Level2On = false;
+	Level3On = false;
+	EndFadeInit = false;
 }

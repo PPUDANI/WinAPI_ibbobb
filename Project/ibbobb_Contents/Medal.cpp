@@ -32,7 +32,7 @@ void Medal::Init()
 	Renderer = CreateRenderer(RenderOrder::Medal);
 
 	// Idle
-	Renderer->CreateAnimation("Idle", "LevelMedal.bmp", 0, 8, 0.15f, true);
+	Renderer->CreateAnimation("Idle", "LevelMedal.bmp", 0, 8, 0.1f, true);
 
 	// Get
 	Renderer->CreateAnimation("Get", "LevelMedal.bmp", 9, 12, 0.02f, true);
@@ -67,7 +67,7 @@ void Medal::ReverseInit()
 	Renderer = CreateRenderer(RenderOrder::Medal);
 
 	// Idle
-	Renderer->CreateAnimation("Idle", "LevelMedal_Reverse.bmp", 0, 8, 0.1f, true);
+	Renderer->CreateAnimation("Idle", "LevelMedal_Reverse.bmp", 0, 8, 0.05f, true);
 
 	// Get
 	Renderer->CreateAnimation("Get", "LevelMedal_Reverse.bmp", 9, 12, 0.02f, true);
@@ -132,18 +132,7 @@ void Medal::IdleUpdate(float _DeltaTime)
 	}
 
 	// 공중부양 연산
-	{
-		Radian += Speed;
-
-		if (Radian >= GameEngineMath::PI2 + GameEngineMath::PI / 2.0f)
-		{
-			Radian = GameEngineMath::PI / 2.0f;
-			SetPos(StartPos);
-		}
-
-		float4 AddPosY = { 0.0f, sinf(Radian) * MovingHeight };
-		AddPos(AddPosY * _DeltaTime);
-	}
+	Levitation(_DeltaTime);
 
 	SetAnimation("Idle");
 }
@@ -175,6 +164,20 @@ void Medal::GetUpdate(float _DeltaTime)
 			break;
 		}
 	}
+}
+
+void Medal::Levitation(float _DeltaTime)
+{
+	Radian += Speed * _DeltaTime;
+
+	if (Radian >= GameEngineMath::PI2 + GameEngineMath::PI / 2.0f)
+	{
+		Radian = GameEngineMath::PI / 2.0f;
+		SetPos(StartPos);
+	}
+
+	float4 AddPosY = { 0.0f, sinf(Radian) * MovingHeight };
+	AddPos(AddPosY * _DeltaTime);
 }
 
 void Medal::SetAnimation(const std::string _Name)

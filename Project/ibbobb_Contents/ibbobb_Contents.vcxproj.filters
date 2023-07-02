@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="ContentCore.h" />
-    <ClInclude Include="Player.h">
-      <Filter>Contents\Global</Filter>
-    </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>Contents\Global</Filter>
     </ClInclude>
@@ -33,12 +30,6 @@
     <ClInclude Include="Titleobb.h">
       <Filter>Contents\Level\TitleObject</Filter>
     </ClInclude>
-    <ClInclude Include="BlinkImage.h">
-      <Filter>Contents\Level\TitleObject</Filter>
-    </ClInclude>
-    <ClInclude Include="DefaultImage.h">
-      <Filter>Contents\Level\TitleObject</Filter>
-    </ClInclude>
     <ClInclude Include="Warp.h">
       <Filter>Contents\Global\Warp</Filter>
     </ClInclude>
@@ -63,19 +54,22 @@
     <ClInclude Include="DoorStar.h">
       <Filter>Contents\Level\Lobby</Filter>
     </ClInclude>
+    <ClInclude Include="DefaultImage.h">
+      <Filter>Contents\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Contents\Global\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Fade.h">
+      <Filter>Contents\Global\Fade</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentCore.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Contents\Level</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Contents\Global</Filter>
-    </ClCompile>
     <ClCompile Include="BackGround.cpp">
-      <Filter>Contents\Global</Filter>
-    </ClCompile>
-    <ClCompile Include="Player_State.cpp">
       <Filter>Contents\Global</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
@@ -95,12 +89,6 @@
       <Filter>Contents\Level\TitleObject</Filter>
     </ClCompile>
     <ClCompile Include="Titleobb.cpp">
-      <Filter>Contents\Level\TitleObject</Filter>
-    </ClCompile>
-    <ClCompile Include="BlinkImage.cpp">
-      <Filter>Contents\Level\TitleObject</Filter>
-    </ClCompile>
-    <ClCompile Include="DefaultImage.cpp">
       <Filter>Contents\Level\TitleObject</Filter>
     </ClCompile>
     <ClCompile Include="RoadMonster.cpp">
@@ -126,6 +114,18 @@
     </ClCompile>
     <ClCompile Include="DoorStar.cpp">
       <Filter>Contents\Level\Lobby</Filter>
+    </ClCompile>
+    <ClCompile Include="DefalutImage.cpp">
+      <Filter>Contents\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Contents\Global\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_State.cpp">
+      <Filter>Contents\Global\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Fade.cpp">
+      <Filter>Contents\Global\Fade</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +155,12 @@
     </Filter>
     <Filter Include="Contents\Level\Lobby">
       <UniqueIdentifier>{4b471413-7128-4d22-bd2f-1bb3c5ac7a2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Global\Player">
+      <UniqueIdentifier>{ac1cb32d-eda8-41db-b373-7e0867d7f323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Global\Fade">
+      <UniqueIdentifier>{55c0c4fc-d8b1-4d66-a784-5dd52f7618db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

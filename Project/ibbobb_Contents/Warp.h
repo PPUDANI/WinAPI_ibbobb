@@ -56,7 +56,7 @@ private:
 	int StarNum = 5;
 
 	// Warp 물리변수
-	float Speed = 0.015f;
+	float Speed = 7.0f;
 	float Radian = GameEngineMath::PI / 2.0f;
-	float MovingHeight = 8.0f;
+	float MovingHeight = 15.0f;
 };

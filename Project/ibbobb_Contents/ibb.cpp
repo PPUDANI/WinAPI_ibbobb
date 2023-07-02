@@ -17,6 +17,7 @@ ibb* ibb::Mainibb = nullptr;
 
 ibb::ibb()
 {
+	Mainibb = this;
 }
 
 ibb::~ibb()
@@ -204,5 +205,5 @@ bool ibb::DownToOtherBodyCheck()
 
 void ibb::LevelStart()
 {
-	Mainibb = this;
+	
 }

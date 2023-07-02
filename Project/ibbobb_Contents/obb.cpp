@@ -16,6 +16,7 @@
 obb* obb::Mainobb = nullptr;
 obb::obb()
 {
+	Mainobb = this;
 }
 
 obb::~obb()
@@ -203,6 +204,6 @@ bool obb::DownToOtherBodyCheck()
 
 void obb::LevelStart()
 {
-	Mainobb = this;
+	
 }
 

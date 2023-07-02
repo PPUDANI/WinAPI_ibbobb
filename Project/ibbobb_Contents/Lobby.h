@@ -23,13 +23,27 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void Render(float _DeltaTime) override;
-	void MedalInit();
+
+	void Level1Start(float _DeltaTime);
+	void Level2Start(float _DeltaTime);
+	void Level3Start(float _DeltaTime);
+
+	void LevelPlayerInit();
 	void CreateCharacter();
+	void LobbySettingInit();
+
+	const std::string ColName = "Lobby_Collision.bmp";
+
+	bool Level1On = false;
+	bool Level2On = false;
+	bool Level3On = false;
+	bool EndFadeInit = false;
 
 	bool IsCharacterCreated = false;
 
 	std::vector<class LobbyMedal*> Medals;
 
 	class Warp* LobbyWarp = nullptr;
-	
+	class Fade* LobbyStartFade = nullptr;
+	Fade* LobbyEndFade = nullptr;
 };

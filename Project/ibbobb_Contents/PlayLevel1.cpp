@@ -16,6 +16,7 @@
 #include "ibb.h"
 #include "obb.h"
 #include "Medal.h"
+#include "Fade.h"
 
 
 PlayLevel1::PlayLevel1()
@@ -55,7 +56,7 @@ void PlayLevel1::Update(float _DeltaTime)
 {
 	if (true == GameEngineInput::IsDown('B'))
 	{
-		GameEngineCore::ChangeLevel("Lobby");
+		LobbyOn = true;
 	}
 
 	if (true == GameEngineInput::IsDown('G'))
@@ -129,6 +130,10 @@ void PlayLevel1::Update(float _DeltaTime)
 
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(ZoomScale);
 	
+	if (true == LobbyOn)
+	{
+		LobbyStart(_DeltaTime);
+	}
 }
 
 void PlayLevel1::Render(float _DeltaTime)
@@ -136,38 +141,35 @@ void PlayLevel1::Render(float _DeltaTime)
 	
 }
 
+void PlayLevel1::LobbyStart(float _DeltaTime)
+{
+	if (false == EndFadeInit)
+	{
+		Level1EndFade = CreateActor<Fade>();
+		Level1EndFade->Init("FadeBlack.bmp", FadeState::FadeOut);
+		Level1EndFade->SetFadeSpeed(400.0f);
+
+		EndFadeInit = true;
+	}
+
+	if (true == Level1EndFade->FadeIsEnd())
+	{
+		GameEngineCore::ChangeLevel("Lobby");
+	}
+}
+
+
+
 void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	const std::string ColName = "Level1_Collision.bmp";
 	Back = CreateActor<BackGround>(RenderOrder::BackGround);
 	Back->Init("Level1_BackGround.bmp");
 
 	LevelMap = CreateActor<Map>();
 	LevelMap->Init("Level1_Map.bmp", ColName);
 	LevelMaxScaleX = 7956.0f;
-	
-	float DefaultPosX = 200.0f;
-	float DefaultPosY = 380.0f;
-	
-	// ibb
-	if (nullptr == ibb::GetMainibb())
-	{
-		MsgBoxAssert("이전 레벨에서 ibb플레이어가 세팅되지 않았습니다.")
-	}
 
-	ibbPlayer = ibb::GetMainibb();
-	ibbPlayer->SetGroundTexture(ColName);
-	ibbPlayer->SetPos({ DefaultPosX, DefaultPosY });
-
-	// obb
-	if (nullptr == obb::GetMainobb())
-	{
-		MsgBoxAssert("이전 레벨에서 obb플레이어가 세팅되지 않았습니다.")
-	}
-
-	obbPlayer = obb::GetMainobb();
-	obbPlayer->SetGroundTexture(ColName); 
-	obbPlayer->SetPos({ DefaultPosX + 100.0f, DefaultPosY });
+	LevelPlayerInit();
 
 	// RoadMonster
 	{
@@ -349,6 +351,7 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_Warp->SetWorpType(WarpType::Common);
 		_Warp->SetPos({ 3887.0f, 682.0f });
 		_Warp->Init();
+		Warps.push_back(_Warp);
 
 		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
 		_Warp->SetStarNumber(12);
@@ -391,6 +394,9 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		Warps.push_back(_Warp);
 	}
 
+	Level1StartFade = CreateActor<Fade>();
+	Level1StartFade->Init("FadeBlack.bmp", FadeState::FadeIn);
+	Level1StartFade->SetFadeSpeed(400.0f);
 }
 
 void PlayLevel1::LevelEnd(GameEngineLevel* _NextLevel)
@@ -431,16 +437,41 @@ void PlayLevel1::LevelEnd(GameEngineLevel* _NextLevel)
 	}
 	Warps.clear();
 
-	//for (int i = 0; i < Medals.size(); i++)
-	//{
-	//	if (Medals[i] == nullptr)
-	//	{
-	//		MsgBoxAssert("null인 Medal을 Release 하려 했습니다.")
-	//	}
-	//	Medals[i]->Death();
-	//	Medals[i] = nullptr;
-	//}
-	Medals.clear();
+	Level1StartFade->Death();
+	Level1StartFade = nullptr;
+
+	Level1EndFade->Death();
+	Level1EndFade = nullptr;
+
+	Level1SettingInit();
+}
+
+void PlayLevel1::LevelPlayerInit()
+{
+	float DefaultPosX = 200.0f;
+	float DefaultPosY = 380.0f;
+
+	// ibb
+	if (nullptr == ibb::GetMainibb())
+	{
+		MsgBoxAssert("이전 레벨에서 ibb플레이어가 세팅되지 않았습니다.")
+	}
+	ibbPlayer = ibb::GetMainibb();
+	ibbPlayer->SetGroundTexture(ColName);
+	ibbPlayer->SetPos({ DefaultPosX, DefaultPosY });
+	ibbPlayer->ChangeState(PlayerState::Fall);
+	ibbPlayer->SetDir(PlayerDir::Left);
+
+	// obb
+	if (nullptr == obb::GetMainobb())
+	{
+		MsgBoxAssert("이전 레벨에서 obb플레이어가 세팅되지 않았습니다.")
+	}
+	obbPlayer = obb::GetMainobb();
+	obbPlayer->SetGroundTexture(ColName);
+	obbPlayer->SetPos({ DefaultPosX + 100.0f, DefaultPosY });
+	obbPlayer->ChangeState(PlayerState::Fall);
+	ibbPlayer->SetDir(PlayerDir::Left);
 }
 
 void PlayLevel1::SetZoomScale(float _Ratio, float _DeltaTime)
@@ -461,4 +492,10 @@ void PlayLevel1::SetZoomScale(float _Ratio, float _DeltaTime)
 			ZoomScale = _Ratio;
 		}
 	}
+}
+
+void PlayLevel1::Level1SettingInit()
+{
+	EndFadeInit = false;
+	LobbyOn = false;
 }

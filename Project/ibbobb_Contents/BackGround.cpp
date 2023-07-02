@@ -25,16 +25,16 @@ void BackGround::Init(const std::string& _FileName)
 {
 	Renderer = CreateRenderer(RenderOrder::BackGround);
 
-	GameEnginePath FilePath;
-
+	GameEngineWindowTexture* Texture = nullptr;
 	if (false == ResourcesManager::GetInst().IsLoadTexture(_FileName))
 	{
+		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("Resources");
 		FilePath.MoveChild("Resources\\Texture\\Map\\" + _FileName);
+		ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
 	}
-
-	GameEngineWindowTexture* Texture = ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
+	Texture = ResourcesManager::GetInst().FindTexture(_FileName);
 
 	float4 Scale = Texture->GetScale();
 	Renderer->SetTexture(_FileName);

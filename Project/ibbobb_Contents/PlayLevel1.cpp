@@ -30,10 +30,34 @@ PlayLevel1::~PlayLevel1()
 
 void PlayLevel1::Start()
 {
+	// Medal
+	{
+		Medal* _Medal = nullptr;
+		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
+		_Medal->Init();
+		_Medal->SetPos({ 1000.0f, 680.0f });
+		Medals.push_back(_Medal);
+
+		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
+		_Medal->Init();
+		_Medal->SetPos({ 5057.0f, 490.0f });
+		Medals.push_back(_Medal);
+
+		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
+		_Medal->Init();
+		_Medal->SetPos({ 6800.0f, 500.0f });
+		Medals.push_back(_Medal);
+	}
+
 }
 
 void PlayLevel1::Update(float _DeltaTime)
 {
+	if (true == GameEngineInput::IsDown('B'))
+	{
+		GameEngineCore::ChangeLevel("Lobby");
+	}
+
 	if (true == GameEngineInput::IsDown('G'))
 	{
 		if (false == ibbPlayer->IsUpdate() &&
@@ -299,24 +323,6 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		JumpingMonsters.push_back(_JumpingMonster);
 	}
 
-	// Medal
-	{
-		Medal* _Medal = nullptr;
-		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
-		_Medal->Init();
-		_Medal->SetPos({1000.0f, 680.0f });
-		Medals.push_back(_Medal);
-
-		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
-		_Medal->Init();
-		_Medal->SetPos({ 5057.0f, 490.0f });
-		Medals.push_back(_Medal);
-
-		_Medal = CreateActor<Medal>(UpdateOrder::Medal);
-		_Medal->Init();
-		_Medal->SetPos({ 6800.0f, 500.0f });
-		Medals.push_back(_Medal);
-	}
 
 	// Warp
 	{
@@ -389,23 +395,52 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 
 void PlayLevel1::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	Back->Death();
+	LevelMap->Death();
+
 	for (int i = 0; i < RoadMonsters.size(); i++)
 	{
-		RoadMonsters[i]->OverOff();
+		if (RoadMonsters[i] == nullptr)
+		{
+			MsgBoxAssert("null인 RoadMonster를 Release 하려 했습니다.")
+		}
+		RoadMonsters[i]->Death();
 		RoadMonsters[i] = nullptr;
 	}
+	RoadMonsters.clear();
 
 	for (int i = 0; i < JumpingMonsters.size(); i++)
 	{
-		JumpingMonsters[i]->OverOff();
+		if (JumpingMonsters[i] == nullptr)
+		{
+			MsgBoxAssert("null인 JumpingMonster를 Release 하려 했습니다.")
+		}
+		JumpingMonsters[i]->Death();
 		JumpingMonsters[i] = nullptr;
 	}
+	JumpingMonsters.clear();
 
 	for (int i = 0; i < Warps.size(); i++)
 	{
-		Warps[i]->OverOff();
+		if (Warps[i] == nullptr)
+		{
+			MsgBoxAssert("null인 Warp를 Release 하려 했습니다.")
+		}
+		Warps[i]->Death();
 		Warps[i] = nullptr;
 	}
+	Warps.clear();
+
+	//for (int i = 0; i < Medals.size(); i++)
+	//{
+	//	if (Medals[i] == nullptr)
+	//	{
+	//		MsgBoxAssert("null인 Medal을 Release 하려 했습니다.")
+	//	}
+	//	Medals[i]->Death();
+	//	Medals[i] = nullptr;
+	//}
+	Medals.clear();
 }
 
 void PlayLevel1::SetZoomScale(float _Ratio, float _DeltaTime)

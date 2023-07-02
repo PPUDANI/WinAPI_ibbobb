@@ -132,6 +132,14 @@ void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 
 void Lobby::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	Back->Death();
+	Back = nullptr;
+
+	LevelMap->Death();
+	LevelMap = nullptr;
+
+	LobbyWarp->Death();
+	LobbyWarp = nullptr;
 
 	ibbPlayer->OverOn();
 	obbPlayer->OverOn();

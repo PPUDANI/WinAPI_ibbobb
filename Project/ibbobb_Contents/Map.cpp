@@ -48,10 +48,13 @@ void Map::Init(const std::string& _FileName, const std::string& _DebugFileName)
 	FilePath.MoveChild("Resources\\Texture\\Map\\");
 
 	GameEngineWindowTexture* Texture = nullptr;
+
 	if (false == ResourcesManager::GetInst().IsLoadTexture(_FileName))
 	{
-		Texture = ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath(_FileName));
+		ResourcesManager::GetInst().TextureLoad(FilePath.PlusFilePath(_FileName));
 	}
+
+	Texture = ResourcesManager::GetInst().FindTexture(_FileName);
 
 	float4 Scale = Texture->GetScale();
 	Renderer->SetTexture(_FileName);

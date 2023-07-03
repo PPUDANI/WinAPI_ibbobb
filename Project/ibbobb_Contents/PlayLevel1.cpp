@@ -19,7 +19,7 @@
 #include "DefaultImage.h"
 #include "LevelDoor.h"
 #include "Fade.h"
-
+#include "Lobby.h"
 
 PlayLevel1::PlayLevel1()
 {
@@ -148,19 +148,17 @@ void PlayLevel1::Start()
 
 void PlayLevel1::Update(float _DeltaTime)
 {
-	
-
 	if (true == GameEngineInput::IsDown('B'))
 	{
-		LobbyOn = true;
+		EnterLobby = true;
 	}
 
-	if (true == LobyDoor->IsPlayerGoIn())
+	if (true == LobyDoor->IsPlayerEnter())
 	{
-		LobbyOn = true;
+		EnterLobby = true;
 	}
 
-	if (true == GameEngineInput::IsDown('G'))
+	if (true == GameEngineInput::IsDown('1'))
 	{
 		if (false == ibbPlayer->IsUpdate() &&
 			false == obbPlayer->IsUpdate())
@@ -168,11 +166,11 @@ void PlayLevel1::Update(float _DeltaTime)
 			ReviveCharacter();
 		}
 		
-		ibbPlayer->SetPos({ 1000.0f, 500.0f});
-		obbPlayer->SetPos({ 1100.0f, 500.0f});
+		ibbPlayer->SetPos({ 1650.0f, 500.0f});
+		obbPlayer->SetPos({ 1720.0f, 500.0f});
 	}
 	
-	if (true == GameEngineInput::IsDown('H'))
+	if (true == GameEngineInput::IsDown('2'))
 	{
 		if (false == ibbPlayer->IsUpdate() &&
 			false == obbPlayer->IsUpdate())
@@ -183,7 +181,7 @@ void PlayLevel1::Update(float _DeltaTime)
 		obbPlayer->SetPos({ 3100.0f, 200.0f });
 	}
 	
-	if (true == GameEngineInput::IsDown('J'))
+	if (true == GameEngineInput::IsDown('3'))
 	{
 		if (false == ibbPlayer->IsUpdate() &&
 			false == obbPlayer->IsUpdate())
@@ -194,7 +192,7 @@ void PlayLevel1::Update(float _DeltaTime)
 		obbPlayer->SetPos({ 4100.0f, 500.0f });
 	}
 
-	if(true == GameEngineInput::IsDown('K'))
+	if(true == GameEngineInput::IsDown('4'))
 	{
 		if (false == ibbPlayer->IsUpdate() &&
 			false == obbPlayer->IsUpdate())
@@ -231,7 +229,7 @@ void PlayLevel1::Update(float _DeltaTime)
 
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(ZoomScale);
 	
-	if (true == LobbyOn)
+	if (true == EnterLobby)
 	{
 		LobbyStart(_DeltaTime);
 	}
@@ -244,6 +242,9 @@ void PlayLevel1::Render(float _DeltaTime)
 
 void PlayLevel1::LobbyStart(float _DeltaTime)
 {
+	static float Time = 0.0f;
+	Time += _DeltaTime;
+	
 	if (false == EndFadeInit)
 	{
 		Level1EndFade = CreateActor<Fade>();
@@ -255,6 +256,7 @@ void PlayLevel1::LobbyStart(float _DeltaTime)
 
 	if (true == Level1EndFade->FadeIsEnd())
 	{
+		Lobby::Level1Clear();
 		GameEngineCore::ChangeLevel("Lobby");
 	}
 }
@@ -509,5 +511,5 @@ void PlayLevel1::SetZoomScale(float _Ratio, float _DeltaTime)
 void PlayLevel1::Level1SettingInit()
 {
 	EndFadeInit = false;
-	LobbyOn = false;
+	EnterLobby = false;
 }

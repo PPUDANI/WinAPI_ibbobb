@@ -50,7 +50,7 @@ private:
 
 	class Fade* Level1StartFade = nullptr;
 	Fade* Level1EndFade = nullptr;
-	bool LobbyOn = false;
+	bool EnterLobby = false;
 	bool EndFadeInit = false;
 
 	class LevelDoor* LobyDoor = nullptr;

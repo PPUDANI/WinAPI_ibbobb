@@ -607,6 +607,15 @@ void Player::RidingModeUpdate(float _DeltaTime)
 		}
 	}
 
+	// RidingMode의 OtherPlayer중력 반전 체크
+	{
+		if (OtherPlayer->GetReverseValue() != ReverseValue)
+		{
+			ChangeState(PlayerState::Fall);
+			return;
+		}
+	}
+
 	// Jump 상태 체크
 	if (true == GameEngineInput::IsDown(JumpKey))
 	{
@@ -647,8 +656,6 @@ void Player::RidingModeUpdate(float _DeltaTime)
 	}
 
 	// 머리위에서 좌, 우 이동 중 못 빠져나오는 현상 제거
-	
-
     if (true == DownMapColCheck())
 	{
 		bool LeftCheck = LeftMapColCheck();

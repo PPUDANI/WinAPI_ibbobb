@@ -13,19 +13,24 @@ public:
 	LevelDoor& operator=(const LevelDoor& _Other) = delete;
 	LevelDoor& operator=(LevelDoor&& _Other) noexcept = delete;
 
-	inline void PlayerGoInInit()
+	inline void DeActivation()
 	{
-		PlayerGoIn = false;
+		ActivationValue = false;
 	}
 
-	inline bool IsPlayerGoIn()
+	inline void PlayerEnterInit()
 	{
-		if (PlayerGoIn == true)
+		PlayerEnter = false;
+	}
+
+	inline bool IsPlayerEnter()
+	{
+		if (PlayerEnter == true)
 		{
-			PlayerGoIn = false;
+			PlayerEnter = false;
 			return true;
 		}
-		return PlayerGoIn;
+		return PlayerEnter;
 	}
 
 protected:
@@ -34,6 +39,8 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
-	bool PlayerGoIn = false;
+	bool PlayerEnter = false;
+	bool ActivationValue = true;
+
 	class GameEngineCollision* DoorCol = nullptr;
 };

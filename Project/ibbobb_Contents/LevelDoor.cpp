@@ -20,27 +20,30 @@ void LevelDoor::Start()
 
 void LevelDoor::Update(float _DeltaTime)
 {
-	std::vector<GameEngineCollision*> _ibbCol;
-	std::vector<GameEngineCollision*> _obbCol;
-	if (true == DoorCol->Collision(CollisionOrder::ibbBody,
-		_ibbCol,
-		CollisionType::Rect,
-		CollisionType::Rect) &&
-		true == DoorCol->Collision(CollisionOrder::obbBody,
-	    _obbCol,
-		CollisionType::Rect,
-		CollisionType::Rect))
+	if (true == ActivationValue)
 	{
-		GameEngineActor* _Actor = _ibbCol[0]->GetActor();
-		Player* _ibb = dynamic_cast<Player*>(_Actor);
-
-	    _Actor = _obbCol[0]->GetActor();
-		Player* _obb = dynamic_cast<Player*>(_Actor);
-
-		if (_ibb->GetState() == PlayerState::Crouch &&
-			_obb->GetState() == PlayerState::Crouch)
+		std::vector<GameEngineCollision*> _ibbCol;
+		std::vector<GameEngineCollision*> _obbCol;
+		if (true == DoorCol->Collision(CollisionOrder::ibbBody,
+			_ibbCol,
+			CollisionType::Rect,
+			CollisionType::Rect) &&
+			true == DoorCol->Collision(CollisionOrder::obbBody,
+				_obbCol,
+				CollisionType::Rect,
+				CollisionType::Rect))
 		{
-			PlayerGoIn = true;
+			GameEngineActor* _Actor = _ibbCol[0]->GetActor();
+			Player* _ibb = dynamic_cast<Player*>(_Actor);
+
+			_Actor = _obbCol[0]->GetActor();
+			Player* _obb = dynamic_cast<Player*>(_Actor);
+
+			if (_ibb->GetState() == PlayerState::Crouch &&
+				_obb->GetState() == PlayerState::Crouch)
+			{
+				PlayerEnter = true;
+			}
 		}
 	}
 }

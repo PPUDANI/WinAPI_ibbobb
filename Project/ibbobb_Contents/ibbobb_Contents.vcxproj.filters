@@ -69,6 +69,9 @@
     <ClInclude Include="LevelDoor.h">
       <Filter>Contents\Global</Filter>
     </ClInclude>
+    <ClInclude Include="SoundLoadManager.h">
+      <Filter>Contents\Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentCore.cpp" />
@@ -137,6 +140,9 @@
       <Filter>Contents\Level\Lobby</Filter>
     </ClCompile>
     <ClCompile Include="LevelDoor.cpp">
+      <Filter>Contents\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundLoadManager.cpp">
       <Filter>Contents\Global</Filter>
     </ClCompile>
   </ItemGroup>

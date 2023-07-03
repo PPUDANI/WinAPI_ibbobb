@@ -2,6 +2,7 @@
 
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineBase/GameEnginePath.h>
@@ -9,6 +10,7 @@
 
 
 #include "ContentsEnum.h"
+#include "SoundLoadManager.h"
 #include "BackGround.h"
 #include "DefaultImage.h"
 #include "Fade.h"
@@ -45,6 +47,8 @@ void TitleLevel::Start()
 	TitleobbPlayer = CreateActor<Titleobb>(UpdateOrder::Player);
 	TitleobbPlayer->SetPos({ 1000.0f, 650.0f });
 
+	SoundLoadManager::LoadSound("TitleBGM.mp3");
+
 }
 
 void TitleLevel::Update(float _DeltaTime)
@@ -68,6 +72,7 @@ void TitleLevel::LobbyStart(float _DeltaTime)
 
 	if (Time >= 2.0f)
 	{
+		BGMPlayer.Stop();
 		GameEngineCore::ChangeLevel("Lobby");
 	}
 	else if (Time >= 0.5f)
@@ -83,11 +88,13 @@ void TitleLevel::LobbyStart(float _DeltaTime)
 		}
 		GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(Time + 0.5f);
 	}
+
 }
 
 void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	
+	BGMPlayer = GameEngineSound::SoundPlay("TitleBGM.mp3");
+	BGMPlayer.SetVolume(0.5f);
 }
 
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)

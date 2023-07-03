@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 
 class TitleLevel : public GameEngineLevel
 {
@@ -28,5 +29,6 @@ private:
 	class Titleibb* TitleibbPlayer = nullptr;
 	class Titleobb* TitleobbPlayer = nullptr;
 	class Fade* TitleFade = nullptr;
+	GameEngineSoundPlayer BGMPlayer;
 };
 

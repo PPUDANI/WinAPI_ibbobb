@@ -72,7 +72,7 @@ void JumpingMonster::Init()
 	CoreCollision->SetCollisionType(CollisionType::CirCle);
 
 	SetGravityPower(1000.0f);
-	GravityDir = float4::UP;
+	GravityDir = float4::DOWN;
 	ReverseValue = false;
 	DownCheck = float4::DOWN * BodyHalf;
 	ChangeState(JumpingMonsterState::Fall);
@@ -133,7 +133,7 @@ void JumpingMonster::ReverseInit()
 	CoreCollision->SetCollisionType(CollisionType::CirCle);
 
 	SetGravityPower(-1000.0f);
-	GravityDir = float4::DOWN;
+	GravityDir = float4::UP;
 	ReverseValue = true;
 	DownCheck = float4::UP * BodyHalf;
 	ChangeState(JumpingMonsterState::Fall);
@@ -180,8 +180,8 @@ void JumpingMonster::FallUpdate(float _DeltaTime)
 	}
 
 	// 바닥 충돌 체크
-	unsigned int Color = GetGroundColor(RGB(255, 0, 0), DownCheck);
-	if (RGB(255, 0, 0) != Color)
+	unsigned int DownColor = GetGroundColor(RGB(255, 0, 0), DownCheck);
+	if (RGB(255, 0, 0) != DownColor)
 	{
 		if (true == ReverseValue)
 		{
@@ -196,15 +196,14 @@ void JumpingMonster::FallUpdate(float _DeltaTime)
 	}
 	else
 	{
-		while (RGB(255, 0, 0) != Color)
+		while (RGB(255, 0, 0) != DownColor)
 		{
-			AddPos(GravityDir);
+			AddPos(-GravityDir);
 		}
-
-		AddPos(GravityDir);
+		AddPos(-GravityDir);
 		PrevPos = GetPos().Y;
 		GravityReset();
-		SetGravityVector(GravityDir * JumpForce);
+		SetGravityVector(-GravityDir * JumpForce);
 	}
 
 

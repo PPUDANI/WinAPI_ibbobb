@@ -199,8 +199,8 @@ void PlayLevel1::Update(float _DeltaTime)
 		{
 			ReviveCharacter();
 		}
-		ibbPlayer->SetPos({ 7100.0f, 400.0f });
-		obbPlayer->SetPos({ 7200.0f, 400.0f });
+		ibbPlayer->SetPos({ 5550.0f, 500.0f });
+		obbPlayer->SetPos({ 5650.0f, 500.0f });
 	}
 
 	SubLevel::Update(_DeltaTime);
@@ -312,111 +312,61 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
 		_JumpingMonster->SetPos({ 2500.0f, 1100.0f });
-		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->SetJumpForce(500.0f);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
+
 		float DefaultPosX = 5800.0f;
-		float DefaultPosY = 1200.0f;
-		float UnitPosX = 70.0f;
-		float UnitPosY = 100.0f;
+
+		float UnitPosX = 100.0f;
 		float Jumpforce = 600.0f;
 
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
+		_JumpingMonster->SetPos({ DefaultPosX, 1200.0f });
 		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		DefaultPosX += UnitPosX;
-		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
+		_JumpingMonster->SetPos({ DefaultPosX, 1500.0f});
 		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		DefaultPosX += UnitPosX;
-		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
+		_JumpingMonster->SetPos({ DefaultPosX, 1200.0f });
 		_JumpingMonster->SetJumpForce(Jumpforce);
 		_JumpingMonster->ReverseInit();
 		JumpingMonsters.push_back(_JumpingMonster);
 
-		DefaultPosX += UnitPosX;
-		DefaultPosY += UnitPosY;
-		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
+		DefaultPosX += UnitPosX * 2;
+		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster); 
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
+		_JumpingMonster->SetPos({ DefaultPosX, 1010.0f});
 		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->ReverseInit();
+		_JumpingMonster->Init();
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		DefaultPosX += UnitPosX;
-		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
+		_JumpingMonster->SetPos({ DefaultPosX, 710.0f });
 		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->ReverseInit();
+		_JumpingMonster->Init();
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		DefaultPosX += UnitPosX;
-		DefaultPosY += UnitPosY;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
+		_JumpingMonster->SetPos({ DefaultPosX, 1010.0f });
 		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->ReverseInit();
-		JumpingMonsters.push_back(_JumpingMonster);
-
-		DefaultPosX += UnitPosX;
-		DefaultPosY += UnitPosY;
-		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->ReverseInit();
-		JumpingMonsters.push_back(_JumpingMonster);
-
-		DefaultPosX += UnitPosX;
-		DefaultPosY += UnitPosY;
-		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->ReverseInit();
-		JumpingMonsters.push_back(_JumpingMonster);
-
-		DefaultPosX += UnitPosX;
-		DefaultPosY += UnitPosY;
-		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->ReverseInit();
-		JumpingMonsters.push_back(_JumpingMonster);
-
-		DefaultPosX += UnitPosX;
-		DefaultPosY += UnitPosY;
-		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->ReverseInit();
-		JumpingMonsters.push_back(_JumpingMonster);
-
-		DefaultPosX += UnitPosX;
-		DefaultPosY += UnitPosY;
-		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
-		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, DefaultPosY });
-		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->ReverseInit();
+		_JumpingMonster->Init();
 		JumpingMonsters.push_back(_JumpingMonster);
 	}
 

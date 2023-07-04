@@ -1,6 +1,8 @@
 #pragma once
 #include "GravityActor.h"
 
+#include <GameEnginePlatform/GameEngineSound.h>
+
 enum class RoadMonsterDir
 {
 	Left,
@@ -76,5 +78,6 @@ private:
 	class GameEngineCollision* BodyCollision = nullptr;
 	class GameEngineCollision* CoreCollision = nullptr;
 
+	GameEngineSoundPlayer EffectPlayer;
 };
 

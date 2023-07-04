@@ -47,6 +47,7 @@ void Player::Start()
 	// 속도 설정
 	Speed = 250.0f;
 
+	PlayerEffectSoundLoad();
 }
 
 void Player::Update(float _DeltaTime)
@@ -142,15 +143,18 @@ void Player::Update(float _DeltaTime)
 		break;
 	}
 
-	std::vector<GameEngineCollision*> _Col;
-
-	if (true == BodyCol->Collision(CollisionOrder::MonsterBody,
-		_Col,
-		CollisionType::Rect,
-		CollisionType::Rect))
+	if (PlayerState::Dead != CurState)
 	{
-		SetAnimation("Dead");
-		ChangeState(PlayerState::Dead);
+		std::vector<GameEngineCollision*> _Col;
+		if (true == BodyCol->Collision(CollisionOrder::MonsterBody,
+			_Col,
+			CollisionType::Rect,
+			CollisionType::Rect))
+		{
+			SetAnimation("Dead");
+			CrouchSoundPlay();
+			ChangeState(PlayerState::Dead);
+		}
 	}
 
 	//임시 카메라 위치
@@ -315,7 +319,7 @@ void Player::ReverseInit()
 	{
 		ReverseCol();
 		ReverseValue = true;
-
+		
 		SetGravityPower(-DefaultGravityPower);
 
 		if (true == HorizontalWorpPass)
@@ -363,6 +367,15 @@ void Player::ReverseInit()
 			}
 		}
 		PrevAreaPos = GetPos();
+
+		if (GetGravityVector().Y > WarpSoundCriteria)
+		{
+			LongWarpPassSoundPlay();
+		}
+		else
+		{
+			WarpPassSoundPlay();
+		}
 	}
 	else if (MidColor == RGB(255, 255, 255) && true == ReverseValue)
 	{
@@ -413,6 +426,17 @@ void Player::ReverseInit()
 				PrevAreaVector.Y = -GetGravityVector().Y;
 			}
 			PrevAreaPos = GetPos();
+			WarpPassSoundPlay();
+		}
+
+		float a = GetGravityVector().Y;
+		if (GetGravityVector().Y < -WarpSoundCriteria)
+		{
+			LongWarpPassSoundPlay();
+		}
+		else
+		{
+			WarpPassSoundPlay();
 		}
 	}
 }

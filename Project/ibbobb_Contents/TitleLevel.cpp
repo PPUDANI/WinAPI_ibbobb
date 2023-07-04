@@ -47,7 +47,19 @@ void TitleLevel::Start()
 	TitleobbPlayer = CreateActor<Titleobb>(UpdateOrder::Player);
 	TitleobbPlayer->SetPos({ 1000.0f, 650.0f });
 
-	SoundLoadManager::LoadSound("TitleBGM.mp3");
+	// Sound
+	{
+		if (nullptr == GameEngineSound::FindSound("TitleBGM.mp3"))
+		{
+			SoundLoadManager::LoadSound("BGM", "TitleBGM.mp3");
+		}
+
+		if (nullptr == GameEngineSound::FindSound("PressP.mp3"))
+		{
+			SoundLoadManager::LoadSound("LevelEffect", "PressP.mp3");
+		}
+	}
+	
 
 }
 
@@ -55,9 +67,12 @@ void TitleLevel::Update(float _DeltaTime)
 {
 	if (true == GameEngineInput::IsDown('P'))
 	{
+		EffectPlayer = GameEngineSound::SoundPlay("PressP.mp3");
+		EffectPlayer.SetVolume(0.4f);
 		PressText->BlinkOn();
-		GameStartValue = true;;
+		GameStartValue = true;
 	}
+
 	if (true == GameStartValue)
 	{
 		LobbyStart(_DeltaTime);
@@ -94,7 +109,8 @@ void TitleLevel::LobbyStart(float _DeltaTime)
 void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	BGMPlayer = GameEngineSound::SoundPlay("TitleBGM.mp3");
-	BGMPlayer.SetVolume(0.5f);
+	BGMPlayer.SetLoop(10);
+	BGMPlayer.SetVolume(0.3f);
 }
 
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)

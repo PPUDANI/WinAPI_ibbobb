@@ -318,7 +318,8 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Player_State.cpp" />
+    <ClCompile Include="PlayerSound.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayLevel1.cpp">
       <SubType>
       </SubType>

@@ -1,5 +1,6 @@
 #pragma once
 #include "SubLevel.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 #include <vector>
 class PlayLevel1 : public SubLevel
 {
@@ -54,5 +55,9 @@ private:
 	bool EndFadeInit = false;
 
 	class LevelDoor* LobyDoor = nullptr;
+
+	GameEngineSoundPlayer BGMPlayer;
+	GameEngineSoundPlayer EffectPlayer;
+	
 };
 

@@ -8,6 +8,7 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
 
+#include "SoundLoadManager.h"
 
 JumpingMonster::JumpingMonster()
 {
@@ -141,7 +142,10 @@ void JumpingMonster::ReverseInit()
 
 void JumpingMonster::Start()
 {	
-
+	if (GameEngineSound::FindSound("Death.mp3") == nullptr)
+	{
+		SoundLoadManager::LoadSound("Death", "Death.mp3");
+	}
 }
 
 void JumpingMonster::Update(float _DeltaTime)
@@ -175,6 +179,10 @@ void JumpingMonster::FallUpdate(float _DeltaTime)
 	{
 		SetAnimation("Dead");
 		CoreRenderer->ChangeAnimation("Dead");
+
+		EffectPlayer = GameEngineSound::SoundPlay("Death.mp3");
+		EffectPlayer.SetVolume(1.0f);
+
 		ChangeState(JumpingMonsterState::Dead);
 		return;
 	}

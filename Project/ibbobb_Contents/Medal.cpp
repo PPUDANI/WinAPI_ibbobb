@@ -5,6 +5,7 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include <cmath>
 #include "ContentsEnum.h"
+#include "SoundLoadManager.h"
 
 std::vector<Medal*> Medal::MedalsByLevelIsAcquired;
 
@@ -89,8 +90,11 @@ void Medal::ReverseInit()
 
 void Medal::Start()
 {
-
-}
+	if (GameEngineSound::FindSound("GetMedal.mp3") == nullptr)
+	{
+		SoundLoadManager::LoadSound("Medal", "GetMedal.mp3");
+	}
+}	
 
 void Medal::Update(float _DeltaTime)
 {
@@ -127,6 +131,9 @@ void Medal::IdleUpdate(float _DeltaTime)
 	{
 		AcquiredValue = true;
 		CurState = MedalState::Get;
+
+		EffectPlayer = GameEngineSound::SoundPlay("GetMedal.mp3");
+		EffectPlayer.SetVolume(0.5f);
 		SetAnimation("Get");
 		return;
 	}

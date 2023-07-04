@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GravityActor.h"
-
+#include <GameEnginePlatform/GameEngineSound.h>
 enum class JumpingMonsterState
 {
 	Fall,
@@ -75,4 +75,5 @@ private:
 	float MovedPos = 0.0f;
 	float4 AddCoreVec = float4::ZERO;
 
+	GameEngineSoundPlayer EffectPlayer;
 };

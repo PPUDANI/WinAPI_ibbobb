@@ -1,5 +1,6 @@
 #pragma once
 #include "SubLevel.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 #include <vector>
 
 class Lobby : public SubLevel
@@ -98,4 +99,7 @@ private:
 	DoorStar* Level2Star = nullptr;
 	DoorStar* Level3Star = nullptr;
 	DoorStar* Level4Star = nullptr;
+
+	GameEngineSoundPlayer BGMPlayer;
+	GameEngineSoundPlayer EffectPlayer;
 };

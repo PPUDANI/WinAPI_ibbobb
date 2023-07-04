@@ -8,6 +8,7 @@
 #include <cmath>
 
 #include "ContentsEnum.h"
+#include "SoundLoadManager.h"
 #include "BackGround.h"
 #include "Map.h"
 #include "RoadMonster.h"
@@ -144,6 +145,17 @@ void PlayLevel1::Start()
 	LobyDoor = CreateActor<LevelDoor>();
 	LobyDoor->SetPos({ 7813.0f, 984.0f });
 
+	// Sound
+	{
+		if (nullptr == GameEngineSound::FindSound("Level1BGM.mp3"))
+		{
+			SoundLoadManager::LoadSound("BGM", "Level1BGM.mp3");
+		}
+		if (nullptr == GameEngineSound::FindSound("EnterLevel.mp3"))
+		{
+			SoundLoadManager::LoadSound("LevelEffect", "EnterLevel.mp3");
+		}
+	}		
 }
 
 void PlayLevel1::Update(float _DeltaTime)
@@ -242,14 +254,14 @@ void PlayLevel1::Render(float _DeltaTime)
 
 void PlayLevel1::LobbyStart(float _DeltaTime)
 {
-	static float Time = 0.0f;
-	Time += _DeltaTime;
-	
 	if (false == EndFadeInit)
 	{
 		Level1EndFade = CreateActor<Fade>();
 		Level1EndFade->Init("FadeBlack.bmp", FadeState::FadeOut);
 		Level1EndFade->SetFadeSpeed(400.0f);
+		
+		EffectPlayer = GameEngineSound::SoundPlay("EnterLevel.mp3");
+		EffectPlayer.SetVolume(0.5f);
 
 		EndFadeInit = true;
 	}
@@ -257,6 +269,7 @@ void PlayLevel1::LobbyStart(float _DeltaTime)
 	if (true == Level1EndFade->FadeIsEnd())
 	{
 		Lobby::Level1Clear();
+		BGMPlayer.Stop();
 		GameEngineCore::ChangeLevel("Lobby");
 	}
 }
@@ -266,6 +279,12 @@ void PlayLevel1::LobbyStart(float _DeltaTime)
 void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	LevelPlayerInit();
+	
+	{
+		BGMPlayer = GameEngineSound::SoundPlay("Level1BGM.mp3");
+		BGMPlayer.SetLoop(10);
+		BGMPlayer.SetVolume(0.3f);
+	}
 
 	// RoadMonster
 	{

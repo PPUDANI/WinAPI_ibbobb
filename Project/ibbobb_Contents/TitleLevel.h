@@ -30,5 +30,7 @@ private:
 	class Titleobb* TitleobbPlayer = nullptr;
 	class Fade* TitleFade = nullptr;
 	GameEngineSoundPlayer BGMPlayer;
+
+	GameEngineSoundPlayer EffectPlayer;
 };
 

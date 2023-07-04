@@ -15,6 +15,7 @@
 #include "LobbyLevelText.h"
 #include "DoorStar.h"
 #include "Fade.h"
+#include "SoundLoadManager.h"
 
 bool Lobby::Level1ClearValue = false;
 bool Lobby::Level2ClearValue = false;
@@ -182,6 +183,19 @@ void Lobby::Start()
 		Level4Door->SetPos({ 2301.0f, 610.0f });
 		Level4Door->DeActivation();
 	}
+
+	// Sound
+	{
+		if (GameEngineSound::FindSound("LobbyBGM.mp3") == nullptr)
+		{
+			SoundLoadManager::LoadSound("BGM", "LobbyBGM.mp3");
+		}
+
+		if (GameEngineSound::FindSound("EnterLevel.mp3") == nullptr)
+		{
+			SoundLoadManager::LoadSound("LevelEffect", "EnterLevel.mp3");
+		}
+	}
 }
 
 void Lobby::Update(float _DeltaTime)
@@ -262,6 +276,13 @@ void Lobby::CreateCharacter()
 
 void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	{
+		BGMPlayer = GameEngineSound::SoundPlay("LobbyBGM.mp3");
+		BGMPlayer.SetLoop(10);
+		BGMPlayer.SetVolume(0.3f);
+
+	}
+
 	if (false == IsCharacterCreated)
 	{
 		CreateCharacter();
@@ -390,6 +411,9 @@ void Lobby::Level1Start(float _DeltaTime)
 		LobbyEndFade->Init("FadeBlack.bmp", FadeState::FadeOut);
 		LobbyEndFade->SetFadeSpeed(400.0f);
 
+		EffectPlayer = GameEngineSound::SoundPlay("EnterLevel.mp3");
+		EffectPlayer.SetVolume(0.5f);
+
 		EndFadeInit = true;
 	}
 
@@ -401,6 +425,7 @@ void Lobby::Level1Start(float _DeltaTime)
 	if (true == LobbyEndFade->FadeIsEnd())
 	{
 		Time = 0.0f;
+		BGMPlayer.Stop();
 		GameEngineCore::ChangeLevel("PlayLevel1");
 	}
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(Time + 1.0f);

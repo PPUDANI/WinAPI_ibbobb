@@ -90,11 +90,11 @@ void ibb::Init()
 	MainRenderer->CreateAnimation("ReverseRight_Jump", "Right_ibb_Reverse.bmp", 22, 22, Frame, true);
 
 	// Tumbling Animation
-	Frame = 0.05f;
-	MainRenderer->CreateAnimation("Left_Tumbling", "Left_ibb.bmp", 23, 28, Frame, true);
-	MainRenderer->CreateAnimation("Right_Tumbling", "Right_ibb.bmp", 23, 28, Frame, true);
-	MainRenderer->CreateAnimation("ReverseLeft_Tumbling", "Left_ibb_Reverse.bmp", 23, 28, Frame, true);
-	MainRenderer->CreateAnimation("ReverseRight_Tumbling", "Right_ibb_Reverse.bmp", 23, 28, Frame, true);
+	//Frame = 0.05f;
+	//MainRenderer->CreateAnimation("Left_Tumbling", "Left_ibb.bmp", 23, 28, Frame, true);
+	//MainRenderer->CreateAnimation("Right_Tumbling", "Right_ibb.bmp", 23, 28, Frame, true);
+	//MainRenderer->CreateAnimation("ReverseLeft_Tumbling", "Left_ibb_Reverse.bmp", 23, 28, Frame, true);
+	//MainRenderer->CreateAnimation("ReverseRight_Tumbling", "Right_ibb_Reverse.bmp", 23, 28, Frame, true);
 
 	// Fall Animation
 	Frame = 0.07f;

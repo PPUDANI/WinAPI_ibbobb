@@ -1,5 +1,6 @@
 #pragma once
 #include "GravityActor.h"
+#include <GameEnginePlatform/GameEngineSound.h>
 #include <vector>
 enum class PlayerState
 {
@@ -164,9 +165,14 @@ private:
 	void ReverseInit();
 	void ReverseCol();
 
-	
 	void OtherPlayerMoveCheck();
 
+	void PlayerEffectSoundLoad();
+	void JumpSoundPlay();
+	void CrouchSoundPlay();
+	void DeadSoundPlay();
+	void WarpPassSoundPlay();
+	void LongWarpPassSoundPlay();
 	void SetAnimation(const std::string _State, int _StartFrame = 0);
 
 	
@@ -178,7 +184,7 @@ private:
 	bool FromRun = false;
 	bool AnimIsBlink = false;
 	float DeathTurm = 0.0f;
-
+	float WarpSoundCriteria = 400.0f;
 	// 캐릭터 물리변수
 	float JumpForce = 1.0f;
 	float Speed = 1.0f;
@@ -213,5 +219,7 @@ private:
 	
 	bool HorizontalWorpPass = false;
 	bool VerticalWorpPass = false;
+
+	GameEngineSoundPlayer EffectPlayer;
 };
 

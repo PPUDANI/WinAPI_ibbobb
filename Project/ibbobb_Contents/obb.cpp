@@ -89,11 +89,11 @@ void obb::Init()
 	MainRenderer->CreateAnimation("ReverseRight_Jump", "Right_obb_Reverse.bmp", 22, 22, Frame, true);
 
 	// Tumbling Animation
-	Frame = 0.05f;
-	MainRenderer->CreateAnimation("Left_Tumbling", "Left_obb.bmp", 23, 28, Frame, true);
-	MainRenderer->CreateAnimation("Right_Tumbling", "Right_obb.bmp", 23, 28, Frame, true);
-	MainRenderer->CreateAnimation("ReverseLeft_Tumbling", "Left_obb_Reverse.bmp", 23, 28, Frame, true);
-	MainRenderer->CreateAnimation("ReverseRight_Tumbling", "Right_obb_Reverse.bmp", 23, 28, Frame, true);
+	//Frame = 0.05f;
+	//MainRenderer->CreateAnimation("Left_Tumbling", "Left_obb.bmp", 23, 28, Frame, true);
+	//MainRenderer->CreateAnimation("Right_Tumbling", "Right_obb.bmp", 23, 28, Frame, true);
+	//MainRenderer->CreateAnimation("ReverseLeft_Tumbling", "Left_obb_Reverse.bmp", 23, 28, Frame, true);
+	//MainRenderer->CreateAnimation("ReverseRight_Tumbling", "Right_obb_Reverse.bmp", 23, 28, Frame, true);
 
 	// Fall Animation
 	Frame = 0.07f;

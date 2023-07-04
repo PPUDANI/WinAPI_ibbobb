@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 #include <vector>
 enum class MedalState
 {
@@ -58,4 +59,5 @@ private:
 	float MovingHeight = 30.0f;
 	float4 StartPos = float4::ZERO;
 
+	GameEngineSoundPlayer EffectPlayer;
 };

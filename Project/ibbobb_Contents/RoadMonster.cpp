@@ -8,7 +8,7 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 
 #include <GameEnginePlatform/GameEngineInput.h>
-
+#include "SoundLoadManager.h"
 #include "ContentsEnum.h"
 
 RoadMonster::RoadMonster()
@@ -167,6 +167,10 @@ void RoadMonster::ReverseInit()
 
 void RoadMonster::Start()
 {
+	if (GameEngineSound::FindSound("Death.mp3") == nullptr)
+	{
+		SoundLoadManager::LoadSound("Death", "Death.mp3");
+	}
 }
 
 void RoadMonster::Update(float _DeltaTime)
@@ -237,6 +241,10 @@ void RoadMonster::MoveUpdate(float _DeltaTime)
 	{
 		SetAnimation("Dead");
 		CoreRenderer->ChangeAnimation("Dead");
+
+		EffectPlayer = GameEngineSound::SoundPlay("Death.mp3");
+		EffectPlayer.SetVolume(1.0f);
+
 		CurState = RoadMonsterState::Dead;
 		return;
 	}
@@ -361,11 +369,21 @@ bool RoadMonster::MovePossibleCheck()
 		RightDownColor = GetGroundColor(RGB(255, 0, 0), RightDownCheck);
 	}
 
-	if (RGB(255, 0, 0) == LeftColor ||
-		RGB(255, 0, 0) == RightColor ||
-		LeftDownColor != RightDownColor)
+	if (RoadMonsterDir::Left == CurDir)
 	{
-		return false;
+		if (RGB(255, 0, 0) == LeftColor ||
+			RGB(255, 0, 0) != LeftDownColor)
+		{
+			return false;
+		}
+	}
+	else if (RoadMonsterDir::Right == CurDir)
+	{
+		if (RGB(255, 0, 0) == RightColor ||
+			RGB(255, 0, 0) != RightDownColor)
+		{
+			return false;
+		}
 	}
 
 	std::vector<GameEngineCollision*> _Col;

@@ -47,6 +47,8 @@ enum class CollisionOrder
 	MonsterBody,
 	MonsterCore,
 
+	ibbOnlyWarp,
+	obbOnlyWarp,
 	Medal,
 
 	LevelDoor,

@@ -161,9 +161,8 @@ void Lobby::Start()
 		LobbyWarp = CreateActor<Warp>(UpdateOrder::Warp);
 		LobbyWarp->SetStarNumber(12);
 		LobbyWarp->SetWorpDir(WarpDir::Horizontal);
-		LobbyWarp->SetWorpType(WarpType::Common);
 		LobbyWarp->SetPos({ 423.0f, 650.0f });
-		LobbyWarp->Init();
+		LobbyWarp->Init(WarpType::Common);
 	}
 
 	// LevelDoor 생성
@@ -336,6 +335,7 @@ void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 		Level2Open = true;
 		Level2Text->Activation();
 		Level2Lock->Death();
+		Level2Door->Activation();
 	}
 	if (true == Level2ClearValue && false == Level3Open)
 	{
@@ -433,6 +433,32 @@ void Lobby::Level1Start(float _DeltaTime)
 
 void Lobby::Level2Start(float _DeltaTime)
 {
+	static float Time = 0.0f;
+	Time += _DeltaTime;
+	if (false == EndFadeInit)
+	{
+		LobbyEndFade = CreateActor<Fade>();
+		LobbyEndFade->Init("FadeBlack.bmp", FadeState::FadeOut);
+		LobbyEndFade->SetFadeSpeed(400.0f);
+
+		EffectPlayer = GameEngineSound::SoundPlay("EnterLevel.mp3");
+		EffectPlayer.SetVolume(0.5f);
+
+		EndFadeInit = true;
+	}
+
+	if (LobbyEndFade == nullptr)
+	{
+		MsgBoxAssert("LobbyEndFade가 nullptr입니다.")
+	}
+
+	if (true == LobbyEndFade->FadeIsEnd())
+	{
+		Time = 0.0f;
+		BGMPlayer.Stop();
+		GameEngineCore::ChangeLevel("PlayLevel2");
+	}
+	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(Time + 1.0f);
 	return;
 }
 

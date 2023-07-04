@@ -140,7 +140,8 @@ void obb::Init()
 	OtherPlayerRightCol = static_cast<int>(CollisionOrder::ibbRight);
 	OtherPlayerUpCol = static_cast<int>(CollisionOrder::ibbUp);
 	OtherPlayerDownCol = static_cast<int>(CollisionOrder::ibbDown);
-
+	OtherColorWarpCol = static_cast<int>(CollisionOrder::ibbOnlyWarp);
+	
 	// ¡∂¿€≈∞
 	MoveRightKey = VK_RIGHT;
 	MoveLeftKey = VK_LEFT;
@@ -174,6 +175,7 @@ bool obb::UpToOtherDownCheck()
 		CollisionType::Rect,
 		CollisionType::Rect);
 }
+
 bool obb::DownToOtherUpCheck()
 {
 	std::vector<GameEngineCollision*> _ColVec;
@@ -200,6 +202,43 @@ bool obb::DownToOtherBodyCheck()
 		CollisionType::Rect,
 		CollisionType::Rect);
 }
+
+bool obb::LeftToOtherColorWarpCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return LeftCol->Collision(OtherColorWarpCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+bool obb::RightToOtherColorWarpCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return RightCol->Collision(OtherColorWarpCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+bool obb::UpToOtherColorWarpCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return UpCol->Collision(OtherColorWarpCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+bool obb::DownToOtherColorWarpCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return DownCol->Collision(OtherColorWarpCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
 
 void obb::LevelStart()
 {

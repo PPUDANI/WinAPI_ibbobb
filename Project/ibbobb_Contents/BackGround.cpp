@@ -34,6 +34,7 @@ void BackGround::Init(const std::string& _FileName)
 		FilePath.MoveChild("Resources\\Texture\\Map\\" + _FileName);
 		ResourcesManager::GetInst().TextureLoad(FilePath.GetStringPath());
 	}
+
 	Texture = ResourcesManager::GetInst().FindTexture(_FileName);
 
 	float4 Scale = Texture->GetScale();

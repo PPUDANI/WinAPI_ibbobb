@@ -93,35 +93,20 @@ protected:
 
 	// 충돌체
 
-	virtual bool LeftToOtherRightCheck()
-	{
-		return false;
-	}
+	virtual bool LeftToOtherRightCheck() { return false; }
+	virtual bool RightToOtherLeftCheck() { return false; }
+	virtual bool UpToOtherDownCheck() { return false; }
+	virtual bool DownToOtherUpCheck() { return false; }
 
-	virtual bool RightToOtherLeftCheck()
-	{
-		return false;
-	}
+	virtual bool UpToOtherBodyCheck() { return false; }
+	virtual bool DownToOtherBodyCheck() { return false; }
 
-	virtual bool UpToOtherDownCheck()
-	{
-		return false;
-	}
+	virtual bool LeftToOtherColorWarpCheck() { return false; }
+	virtual bool RightToOtherColorWarpCheck() { return false; }
+	virtual bool UpToOtherColorWarpCheck() { return false; }
+	virtual bool DownToOtherColorWarpCheck() { return false; }
 
-	virtual bool DownToOtherUpCheck()
-	{
-		return false;
-	}
 
-	virtual bool UpToOtherBodyCheck()
-	{
-		return false;
-	}
-
-	virtual bool DownToOtherBodyCheck()
-	{
-		return false;
-	}
 
 	Player* OtherPlayer = nullptr;
 	GameEngineCollision* BodyCol = nullptr;
@@ -135,6 +120,7 @@ protected:
 	int OtherPlayerRightCol;
 	int OtherPlayerUpCol;
 	int OtherPlayerDownCol;
+	int OtherColorWarpCol;
 	bool OtherPlayerReverseValue = false;
 
 	// 조작키

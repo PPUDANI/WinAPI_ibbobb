@@ -31,8 +31,14 @@ private:
 	bool RightToOtherLeftCheck() override;
 	bool UpToOtherDownCheck() override;
 	bool DownToOtherUpCheck() override;
+
 	bool UpToOtherBodyCheck() override;
 	bool DownToOtherBodyCheck() override;
+
+	bool LeftToOtherColorWarpCheck() override;
+	bool RightToOtherColorWarpCheck() override;
+	bool UpToOtherColorWarpCheck() override;
+	bool DownToOtherColorWarpCheck() override;
 
 	void LevelStart() override;
 };

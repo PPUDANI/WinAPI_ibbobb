@@ -451,7 +451,8 @@ bool Player::LeftMapColCheck()
 
 	if ((LeftUpColor == RGB(255, 0, 0) ||
 		LeftMiddleColor == RGB(255, 0, 0) ||
-		LeftDownColor == RGB(255, 0, 0)))
+		LeftDownColor == RGB(255, 0, 0)) ||
+		LeftToOtherColorWarpCheck())
 	{
 		if (CurState == PlayerState::Run ||
 			CurState == PlayerState::RidingMode)
@@ -459,7 +460,8 @@ bool Player::LeftMapColCheck()
 			// 벽에 박힘 제거
 			while (LeftUpColor == RGB(255, 0, 0) ||
 				LeftMiddleColor == RGB(255, 0, 0) ||
-				LeftDownColor == RGB(255, 0, 0))
+				LeftDownColor == RGB(255, 0, 0) ||
+				LeftToOtherColorWarpCheck())
 			{
 				LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::DOWN);
 				LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);
@@ -487,7 +489,8 @@ bool Player::RightMapColCheck()
 
 	if (RightUpColor == RGB(255, 0, 0) ||
 		RightMiddleColor == RGB(255, 0, 0) ||
-		RightDownColor == RGB(255, 0, 0))
+		RightDownColor == RGB(255, 0, 0) ||
+		RightToOtherColorWarpCheck())
 	{
 		if (CurState == PlayerState::Run || 
 			CurState == PlayerState::RidingMode)
@@ -496,7 +499,8 @@ bool Player::RightMapColCheck()
 			// 벽에 박힘 제거
 			while (RightUpColor == RGB(255, 0, 0) ||
 				RightMiddleColor == RGB(255, 0, 0) ||
-				RightDownColor == RGB(255, 0, 0))
+				RightDownColor == RGB(255, 0, 0) ||
+				RightToOtherColorWarpCheck())
 			{
 				RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::DOWN);
 				RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
@@ -529,11 +533,13 @@ bool Player::UpMapColCheck()
 
 		if (LeftUpColor == RGB(255, 0, 0) ||
 			MiddleUpColor == RGB(255, 0, 0) ||
-			RightUpColor == RGB(255, 0, 0))
+			RightUpColor == RGB(255, 0, 0) ||
+			DownToOtherColorWarpCheck())
 		{
 			while (LeftUpColor == RGB(255, 0, 0) ||
 				MiddleUpColor == RGB(255, 0, 0) ||
-				RightUpColor == RGB(255, 0, 0))
+				RightUpColor == RGB(255, 0, 0) ||
+				DownToOtherColorWarpCheck())
 			{
 				LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::RIGHT * 2.0f);
 				MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
@@ -550,11 +556,13 @@ bool Player::UpMapColCheck()
 		RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::LEFT * 2.0f);
 		if (LeftUpColor == RGB(255, 0, 0) ||
 			MiddleUpColor == RGB(255, 0, 0) ||
-			RightUpColor == RGB(255, 0, 0))
+			RightUpColor == RGB(255, 0, 0) ||
+			UpToOtherColorWarpCheck())
 		{
 			while (LeftUpColor == RGB(255, 0, 0) ||
 				MiddleUpColor == RGB(255, 0, 0) ||
-				RightUpColor == RGB(255, 0, 0))
+				RightUpColor == RGB(255, 0, 0) ||
+				UpToOtherColorWarpCheck())
 			{
 				LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::RIGHT * 2.0f);
 				MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck);
@@ -582,13 +590,15 @@ bool Player::DownMapColCheck()
 
 		if (LeftDownColor == RGB(255, 0, 0) ||
 			MiddleDownColor == RGB(255, 0, 0) ||
-			RightDownColor == RGB(255, 0, 0))
+			RightDownColor == RGB(255, 0, 0) ||
+			UpToOtherColorWarpCheck())
 		{
 			if (PlayerState::Fall == CurState)
 			{
 				while (LeftDownColor == RGB(255, 0, 0) ||
 					MiddleDownColor == RGB(255, 0, 0) ||
-					RightDownColor == RGB(255, 0, 0))
+					RightDownColor == RGB(255, 0, 0) ||
+					UpToOtherColorWarpCheck())
 				{
 					LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::RIGHT * 2.0f);
 					MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck);
@@ -610,14 +620,16 @@ bool Player::DownMapColCheck()
 
 		if (LeftDownColor == RGB(255, 0, 0) ||
 			MiddleDownColor == RGB(255, 0, 0) ||
-			RightDownColor == RGB(255, 0, 0))
+			RightDownColor == RGB(255, 0, 0) ||
+			DownToOtherColorWarpCheck())
 		{
 
 			if (PlayerState::Fall == CurState)
 			{
 				while (LeftDownColor == RGB(255, 0, 0) ||
 					MiddleDownColor == RGB(255, 0, 0) ||
-					RightDownColor == RGB(255, 0, 0))
+					RightDownColor == RGB(255, 0, 0) ||
+					DownToOtherColorWarpCheck())
 				{
 					LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::RIGHT * 2.0f);
 					MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);

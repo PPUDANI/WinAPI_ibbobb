@@ -30,6 +30,11 @@ private:
 	bool UpToOtherDownCheck() override;
 	bool DownToOtherUpCheck() override;
 
+	bool LeftToOtherColorWarpCheck() override;
+	bool RightToOtherColorWarpCheck() override;
+	bool UpToOtherColorWarpCheck() override;
+	bool DownToOtherColorWarpCheck() override;
+
 	bool UpToOtherBodyCheck() override;
 	bool DownToOtherBodyCheck() override;
 

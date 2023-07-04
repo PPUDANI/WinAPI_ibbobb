@@ -70,65 +70,57 @@ void PlayLevel1::Start()
 		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
 		_Warp->SetStarNumber(12);
 		_Warp->SetWorpDir(WarpDir::Horizontal);
-		_Warp->SetWorpType(WarpType::Common);
 		_Warp->SetPos({ 1774.0f, 897.0f });
-		_Warp->Init();
+		_Warp->Init(WarpType::Common);
 		Warps.push_back(_Warp);
 
 		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
 		_Warp->SetStarNumber(10);
 		_Warp->SetWorpDir(WarpDir::Vertical);
-		_Warp->SetWorpType(WarpType::Common);
 		_Warp->SetPos({ 2769.0f, 760.0f });
-		_Warp->Init();
+		_Warp->Init(WarpType::Common);
 		Warps.push_back(_Warp);
 
 		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
 		_Warp->SetStarNumber(10);
 		_Warp->SetWorpDir(WarpDir::Vertical);
-		_Warp->SetWorpType(WarpType::Common);
 		_Warp->SetPos({ 3887.0f, 682.0f });
-		_Warp->Init();
+		_Warp->Init(WarpType::Common);
 		Warps.push_back(_Warp);
 
 		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
 		_Warp->SetStarNumber(12);
 		_Warp->SetWorpDir(WarpDir::Horizontal);
-		_Warp->SetWorpType(WarpType::Common);
 		_Warp->SetPos({ 4791.0f, 975.0f });
-		_Warp->Init();
+		_Warp->Init(WarpType::Common);
 		Warps.push_back(_Warp);
 
 		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
 		_Warp->SetStarNumber(10);
 		_Warp->SetWorpDir(WarpDir::Vertical);
-		_Warp->SetWorpType(WarpType::Common);
 		_Warp->SetPos({ 4980.0f, 578.0f });
-		_Warp->Init();
+		_Warp->Init(WarpType::Common);
 		Warps.push_back(_Warp);
 
 		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
 		_Warp->SetStarNumber(10);
 		_Warp->SetWorpDir(WarpDir::Vertical);
-		_Warp->SetWorpType(WarpType::Common);
 		_Warp->SetPos({ 5526.0f, 1124.0f });
-		_Warp->Init();
+		_Warp->Init(WarpType::Common);
 		Warps.push_back(_Warp);
 
 		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
 		_Warp->SetStarNumber(12);
 		_Warp->SetWorpDir(WarpDir::Horizontal);
-		_Warp->SetWorpType(WarpType::Common);
 		_Warp->SetPos({ 6585.0f, 1105.0f });
-		_Warp->Init();
+		_Warp->Init(WarpType::Common);
 		Warps.push_back(_Warp);
 
 		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
 		_Warp->SetStarNumber(12);
 		_Warp->SetWorpDir(WarpDir::Horizontal);
-		_Warp->SetWorpType(WarpType::Common);
 		_Warp->SetPos({ 6871.0f, 1027.0f });
-		_Warp->Init();
+		_Warp->Init(WarpType::Common);
 		Warps.push_back(_Warp);
 	}
 

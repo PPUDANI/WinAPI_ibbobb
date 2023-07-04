@@ -27,11 +27,6 @@ public:
 	Warp& operator=(const Warp& _Other) = delete;
 	Warp& operator=(Warp&& _Other) noexcept = delete;
 
-	inline void SetWorpType(WarpType _Type)
-	{
-		Type = _Type;
-	}
-
 	inline void SetWorpDir(WarpDir _Dir)
 	{
 		Dir = _Dir;
@@ -42,7 +37,8 @@ public:
 		StarNum = _Num;
 	}
 
-	void Init();
+	void Init(WarpType _Type);
+
 protected:
 
 private:
@@ -50,13 +46,18 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void InitPos();
+
 	WarpType Type = WarpType::Common;
 	WarpDir Dir;
 	std::vector<GameEngineRenderer*> StarRenderer;
 	int StarNum = 5;
 
+	
 	// Warp 물리변수
+	float StarInterval = 13.0f;
 	float Speed = 7.0f;
 	float Radian = GameEngineMath::PI / 2.0f;
 	float MovingHeight = 15.0f;
+
+	class GameEngineCollision* WarpCol = nullptr;
 };

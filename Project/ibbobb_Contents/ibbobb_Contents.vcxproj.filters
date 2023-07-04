@@ -72,6 +72,12 @@
     <ClInclude Include="SoundLoadManager.h">
       <Filter>Contents\Global</Filter>
     </ClInclude>
+    <ClInclude Include="PlayLevel2.h">
+      <Filter>Contents\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityTransferPlatform.h">
+      <Filter>Contents\Global\GravityTransferPlatform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentCore.cpp" />
@@ -105,9 +111,6 @@
     </ClCompile>
     <ClCompile Include="Warp.cpp">
       <Filter>Contents\Global\Warp</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayLevel1.cpp">
-      <Filter>Contents\Level</Filter>
     </ClCompile>
     <ClCompile Include="SubLevel.cpp">
       <Filter>Contents\Global</Filter>
@@ -148,6 +151,15 @@
     <ClCompile Include="PlayerSound.cpp">
       <Filter>Contents\Global\Player</Filter>
     </ClCompile>
+    <ClCompile Include="PlayLevel2.cpp">
+      <Filter>Contents\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayLevel1.cpp">
+      <Filter>Contents\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityTransferPlatform.cpp">
+      <Filter>Contents\Global\GravityTransferPlatform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -182,6 +194,9 @@
     </Filter>
     <Filter Include="Contents\Global\Fade">
       <UniqueIdentifier>{55c0c4fc-d8b1-4d66-a784-5dd52f7618db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Global\GravityTransferPlatform">
+      <UniqueIdentifier>{6e558a6d-7090-40ed-8af3-8843e1303cd0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

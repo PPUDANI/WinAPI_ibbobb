@@ -18,6 +18,11 @@ public:
 		ActivationValue = false;
 	}
 
+	inline void Activation()
+	{
+		ActivationValue = true;
+	}
+
 	inline void PlayerEnterInit()
 	{
 		PlayerEnter = false;

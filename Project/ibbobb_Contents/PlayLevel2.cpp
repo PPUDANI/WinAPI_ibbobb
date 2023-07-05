@@ -371,7 +371,7 @@ void PlayLevel2::LobbyStart(float _DeltaTime)
 void PlayLevel2::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	LevelPlayerInit();
-
+	
 	{
 		BGMPlayer = GameEngineSound::SoundPlay("Level2BGM.mp3");
 		BGMPlayer.SetLoop(10);
@@ -467,7 +467,8 @@ void PlayLevel2::LevelEnd(GameEngineLevel* _NextLevel)
 	Level2StartFade = nullptr;
 	Level2EndFade->Death();
 	Level2EndFade = nullptr;
-
+	GetMainCamera()->SetPos(float4::ZERO);
+	StackCameraPosX = 0.0f;
 	Level2SettingInit();
 }
 
@@ -475,7 +476,7 @@ void PlayLevel2::LevelPlayerInit()
 {
 	float DefaultPosX = 300.0f;
 	float DefaultPosY = 800.0f;
-
+	
 	// ibb
 	if (nullptr == ibb::GetMainibb())
 	{
@@ -645,5 +646,10 @@ void PlayLevel2::CharacterSpawn()
 	{
 		ibbPlayer->SetPos({ 5800.0f, 1000.0f });
 		obbPlayer->SetPos({ 5880.0f, 1000.0f });
+	}
+	else if (6000.0f <= StackCameraPosX)
+	{
+		ibbPlayer->SetPos({ 6750.0f, 700.0f });
+		obbPlayer->SetPos({ 6830.0f, 700.0f });
 	}
 }

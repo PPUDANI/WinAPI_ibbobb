@@ -336,8 +336,8 @@ void PlayLevel1::LobbyStart(float _DeltaTime)
 void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	LevelPlayerInit();
-	PlayLevelBGM();
 	
+	PlayLevelBGM();
 	// RoadMonster
 	{
 		RoadMonster* _RoadMonster = nullptr;
@@ -437,7 +437,7 @@ void PlayLevel1::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ibbPlayer->OverOn();
 	obbPlayer->OverOn();
-
+	
 	for (int i = 0; i < RoadMonsters.size(); i++)
 	{
 		if (RoadMonsters[i] == nullptr)
@@ -464,6 +464,9 @@ void PlayLevel1::LevelEnd(GameEngineLevel* _NextLevel)
 	Level1StartFade = nullptr;
 	Level1EndFade->Death();
 	Level1EndFade = nullptr;
+
+	GetMainCamera()->SetPos(float4::ZERO);
+	StackCameraPosX = 0.0f;
 
 	Level1SettingInit();
 }
@@ -640,7 +643,7 @@ void PlayLevel1::CharacterSpawn()
 	}
 	else if (5750.0f <= StackCameraPosX)
 	{
-		ibbPlayer->SetPos({ 6490.0f, 900.0f });
-		obbPlayer->SetPos({ 6550.0f, 900.0f });
+		ibbPlayer->SetPos({ 6490.0f, 800.0f });
+		obbPlayer->SetPos({ 6550.0f, 800.0f });
 	}
 }

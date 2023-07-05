@@ -21,7 +21,7 @@ RoadMonster::~RoadMonster()
 
 }
 
-void RoadMonster::Init()
+void RoadMonster::Init(const float4& _InitPos)
 {
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
@@ -69,6 +69,12 @@ void RoadMonster::Init()
 	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster.bmp", 2, 9, Frame, false);
 	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore_Reverse.bmp", 1, 8, Frame, false);
 
+	// Live
+	Frame = 0.02f;
+	MonsterRenderer->CreateAnimation("Left_Live", "Left_RoadMonster.bmp", 9, 2, Frame, false);
+	MonsterRenderer->CreateAnimation("Right_Live", "Right_RoadMonster.bmp", 9, 2, Frame, false);
+	CoreRenderer->CreateAnimation("Live", "RoadMonsterCore_Reverse.bmp", 8, 1, Frame, false);
+
 	// Turn
 	Frame = 0.05f;
 	MonsterRenderer->CreateAnimation("Left_Turn", "Turn_RoadMonster.bmp", 0, 4, Frame, false);
@@ -89,11 +95,12 @@ void RoadMonster::Init()
 	CoreRenderer->SetRenderPos({ 0.0f, 27.0f });
 
 	CurState = RoadMonsterState::Move;
-
+	SetPos(_InitPos);
+	StartVector = _InitPos;
 	ReverseValue = false;
 }
 
-void RoadMonster::ReverseInit()
+void RoadMonster::ReverseInit(const float4& _InitPos)
 {
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
@@ -140,10 +147,16 @@ void RoadMonster::ReverseInit()
 	MonsterRenderer->CreateAnimation("Right_Blink", "Right_RoadMonster_Reverse.bmp", 0, 1, Frame, false);
 
 	// Dead
-	Frame = 0.02f;
+	Frame = 0.04f;
 	MonsterRenderer->CreateAnimation("Left_Dead", "Left_RoadMonster_Reverse.bmp", 2, 9, Frame, false);
 	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster_Reverse.bmp", 2, 9, Frame, false);
 	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore.bmp", 1, 8, Frame, false);
+
+	// Live
+	Frame = 0.04f;
+	MonsterRenderer->CreateAnimation("Left_Live", "Left_RoadMonster_Reverse.bmp", 9, 2, Frame, false);
+	MonsterRenderer->CreateAnimation("Right_Live", "Right_RoadMonster_Reverse.bmp", 9, 2, Frame, false);
+	CoreRenderer->CreateAnimation("Live", "RoadMonsterCore.bmp", 8, 1, Frame, false);
 
 	// Turn
 	Frame = 0.05f;
@@ -164,7 +177,8 @@ void RoadMonster::ReverseInit()
 	CoreRenderer->SetRenderPos({ 0.0f, -27.0f });
 
 	CurState = RoadMonsterState::Move;
-
+	SetPos(_InitPos);
+	StartVector = _InitPos;
 	ReverseValue = true;
 }
 
@@ -190,6 +204,9 @@ void RoadMonster::Update(float _DeltaTime)
 		break;
 	case RoadMonsterState::Turn:
 		TurnUpdate(_DeltaTime);
+		break;
+	case RoadMonsterState::Live:
+		LiveUpdate(_DeltaTime);
 		break;
 	default:
 		break;
@@ -300,6 +317,27 @@ void RoadMonster::MoveUpdate(float _DeltaTime)
 
 void RoadMonster::TurnUpdate(float _DeltaTime)
 {
+	// Core 충돌 체크
+	std::vector<GameEngineCollision*> _Col;
+	if (CoreCollision->Collision(CollisionOrder::ibbBody,
+		_Col,
+		CollisionType::Rect,
+		CollisionType::Rect) ||
+		CoreCollision->Collision(CollisionOrder::obbBody,
+			_Col,
+			CollisionType::Rect,
+			CollisionType::Rect)
+		)
+	{
+		SetAnimation("Dead");
+		CoreRenderer->ChangeAnimation("Dead");
+		EffectPlayer = GameEngineSound::SoundPlay("MonsterDeath.mp3");
+		EffectPlayer.SetVolume(1.0f);
+
+		CurState = RoadMonsterState::Dead;
+		return;
+	}
+
 	if (MonsterRenderer->IsAnimationEnd())
 	{
 		CurDistance = 0.0f;
@@ -325,6 +363,18 @@ void RoadMonster::DeadUpdate(float _DeltaTime)
 	if (MonsterRenderer->IsAnimationEnd())
 	{
 		Off();
+		SetPos(StartVector);
+	}
+}
+
+void RoadMonster::LiveUpdate(float _DeltaTime)
+{
+	if (MonsterRenderer->IsAnimationEnd())
+	{
+		SetAnimation("Idle");
+		SetCoreAnimation("Idle");
+		
+		ChangeState(RoadMonsterState::Move);
 	}
 }
 
@@ -406,3 +456,9 @@ bool RoadMonster::MovePossibleCheck()
 
 	return true;
 }
+
+void RoadMonster::SetCoreAnimation(const std::string _State)
+{
+	CoreRenderer->ChangeAnimation(_State);
+}
+

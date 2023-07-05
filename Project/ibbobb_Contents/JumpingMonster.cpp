@@ -17,7 +17,7 @@ JumpingMonster::JumpingMonster()
 JumpingMonster::~JumpingMonster()
 {
 }
-void JumpingMonster::Init()
+void JumpingMonster::Init(const float4& _InitPos)
 {
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
@@ -46,7 +46,10 @@ void JumpingMonster::Init()
 		MonsterRenderer->CreateAnimation("Blink", "JumpingMonster.bmp", 0, 1, 0.1f, false);
 
 		// Dead
-		MonsterRenderer->CreateAnimation("Dead", "JumpingMonster.bmp", 2, 9, 0.02f, false);
+		MonsterRenderer->CreateAnimation("Dead", "JumpingMonster.bmp", 2, 9, 0.04f, false);
+
+		// Live
+		MonsterRenderer->CreateAnimation("Live", "JumpingMonster.bmp", 9, 2, 0.04f, false);
 
 	}
 	
@@ -58,7 +61,10 @@ void JumpingMonster::Init()
 		CoreRenderer->CreateAnimation("Idle", "JumpingMonsterCore.bmp", 0, 0, 10.0f, true);
 
 		// Dead
-		CoreRenderer->CreateAnimation("Dead", "JumpingMonsterCore.bmp", 1, 8, 0.02f, false);
+		CoreRenderer->CreateAnimation("Dead", "JumpingMonsterCore.bmp", 1, 8, 0.04f, false);
+
+		// Live
+		CoreRenderer->CreateAnimation("Live", "JumpingMonsterCore.bmp", 8, 1, 0.04f, false);
 
 		CoreRenderer->ChangeAnimation("Idle");
 	}
@@ -77,10 +83,12 @@ void JumpingMonster::Init()
 	GravityDir = float4::DOWN;
 	ReverseValue = false;
 	DownCheck = float4::DOWN * BodyHalf;
+	SetPos(_InitPos);
+	StartVector = _InitPos;
 	ChangeState(JumpingMonsterState::Fall);
 }
 
-void JumpingMonster::ReverseInit()
+void JumpingMonster::ReverseInit(const float4& _InitPos)
 {
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
@@ -109,7 +117,10 @@ void JumpingMonster::ReverseInit()
 		MonsterRenderer->CreateAnimation("Blink", "JumpingMonster_Reverse.bmp", 0, 1, 0.1f, false);
 
 		// Dead
-		MonsterRenderer->CreateAnimation("Dead", "JumpingMonster_Reverse.bmp", 2, 9, 0.02f, false);
+		MonsterRenderer->CreateAnimation("Dead", "JumpingMonster_Reverse.bmp", 2, 9, 0.04f, false);
+
+		// Live
+		MonsterRenderer->CreateAnimation("Live", "JumpingMonster_Reverse.bmp", 9, 2, 0.04f, false);
 	}
 	// Monster의 Core 렌더링 및 Core 애니메이션
 	{
@@ -119,7 +130,10 @@ void JumpingMonster::ReverseInit()
 		CoreRenderer->CreateAnimation("Idle", "JumpingMonsterCore.bmp", 0, 0, 10.0f, true);
 
 		// Dead
-		CoreRenderer->CreateAnimation("Dead", "JumpingMonsterCore.bmp", 1, 8, 0.02f, false);
+		CoreRenderer->CreateAnimation("Dead", "JumpingMonsterCore.bmp", 1, 8, 0.04f, false);
+
+		// Live
+		CoreRenderer->CreateAnimation("Live", "JumpingMonsterCore.bmp", 8, 1, 0.04f, false);
 
 		CoreRenderer->ChangeAnimation("Idle");
 	}
@@ -138,6 +152,8 @@ void JumpingMonster::ReverseInit()
 	GravityDir = float4::UP;
 	ReverseValue = true;
 	DownCheck = float4::UP * BodyHalf;
+	SetPos(_InitPos);
+	StartVector = _InitPos;
 	ChangeState(JumpingMonsterState::Fall);
 }
 
@@ -155,6 +171,9 @@ void JumpingMonster::Update(float _DeltaTime)
 		break;
 	case JumpingMonsterState::Dead:
 		DeadUpdate(_DeltaTime);
+		break;
+	case JumpingMonsterState::Live:
+		LiveUpdate(_DeltaTime);
 		break;
 	default:
 		break;
@@ -249,7 +268,18 @@ void JumpingMonster::DeadUpdate(float _DeltaTime)
 {
 	if (MonsterRenderer->IsAnimationEnd())
 	{
+		SetPos(StartVector);
 		Off();
+	}
+}
+void JumpingMonster::LiveUpdate(float _DeltaTime)
+{
+	if (MonsterRenderer->IsAnimationEnd())
+	{
+		SetAnimation("Idle");
+		SetCoreAnimation("Idle");
+		
+		ChangeState(JumpingMonsterState::Fall);
 	}
 }
 
@@ -257,4 +287,9 @@ void JumpingMonster::DeadUpdate(float _DeltaTime)
 void JumpingMonster::SetAnimation(const std::string _State)
 {
 	MonsterRenderer->ChangeAnimation(_State);
+}
+
+void JumpingMonster::SetCoreAnimation(const std::string _State)
+{
+	CoreRenderer->ChangeAnimation(_State);
 }

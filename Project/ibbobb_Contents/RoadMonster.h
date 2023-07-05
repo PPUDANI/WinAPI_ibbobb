@@ -15,7 +15,8 @@ enum class RoadMonsterState
 {
 	Move,
 	Turn,
-	Dead
+	Dead,
+	Live
 };
 
 class RoadMonster : public GravityActor
@@ -29,14 +30,21 @@ public:
 	RoadMonster& operator=(const RoadMonster& _Other) = delete;
 	RoadMonster& operator=(RoadMonster&& _Other) noexcept = delete;
 
-	void Init();
-	void ReverseInit();
+	void Init(const float4& _InitPos);
+	void ReverseInit(const float4& _InitPos);
 
 	inline void SetDir(RoadMonsterDir _Dir)
 	{
 		CurDir = _Dir;
 	}
-	
+
+	inline void ChangeState(RoadMonsterState _State)
+	{
+		CurState = _State;
+	}
+
+	void SetAnimation(const std::string _State, int _StartFrame = 0);
+	void SetCoreAnimation(const std::string _State);
 protected:
 	
 private:
@@ -46,13 +54,10 @@ private:
 	void MoveUpdate(float _DeltaTime);
 	void DeadUpdate(float _DeltaTime);
 	void TurnUpdate(float _DeltaTime);
-
-	void SetAnimation(const std::string _State, int _StartFrame = 0);
+	void LiveUpdate(float _DeltaTime);
+	
 	bool MovePossibleCheck();
-	inline void ChangeState(RoadMonsterState _State)
-	{
-		CurState = _State;
-	}
+
 
 	// RoadMonster 상태변수
 	bool ReverseValue = false;
@@ -60,9 +65,11 @@ private:
 	bool CheckPosOn = false;
 	RoadMonsterDir CurDir = RoadMonsterDir::Left;
 	RoadMonsterState CurState;
+
 	// RoadMonster 물리변수
 	float Speed = 100.0f;
 	float CurDistance = 0.0f;
+	float4 StartVector = float4::ZERO;
 
 	float4 LeftCheck = { -30.0f, 0.0f };
 	float4 RightCheck = { 30.0f, 0.0f };

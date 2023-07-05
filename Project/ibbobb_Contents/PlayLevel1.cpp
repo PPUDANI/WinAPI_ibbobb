@@ -145,6 +145,14 @@ void PlayLevel1::Start()
 
 void PlayLevel1::Update(float _DeltaTime)
 {
+	// 최고 지점 좌표 저장
+	if (GetMainCamera()->GetPos().X > StackCameraPosX)
+	{
+		StackCameraPosX = GetMainCamera()->GetPos().X;
+	}
+
+	GameOverCheck(_DeltaTime);
+
 	if (true == GameEngineInput::IsDown('B'))
 	{
 		EnterLobby = true;
@@ -160,7 +168,7 @@ void PlayLevel1::Update(float _DeltaTime)
 		if (false == ibbPlayer->IsUpdate() ||
 			false == obbPlayer->IsUpdate())
 		{
-			PlayLevelBGM();
+			
 		}
 
 		if (false == ibbPlayer->IsUpdate() &&
@@ -169,8 +177,8 @@ void PlayLevel1::Update(float _DeltaTime)
 			ReviveCharacter();
 		}
 
-		ibbPlayer->SetPos({ 1650.0f, 500.0f });
-		obbPlayer->SetPos({ 1720.0f, 500.0f });
+		ibbPlayer->SetPos({ 1650.0f, 700.0f });
+		obbPlayer->SetPos({ 1720.0f, 700.0f });
 	}
 	
 	if (true == GameEngineInput::IsDown('2'))
@@ -187,8 +195,8 @@ void PlayLevel1::Update(float _DeltaTime)
 			ReviveCharacter();
 		}
 
-		ibbPlayer->SetPos({ 3000.0f, 200.0f });
-		obbPlayer->SetPos({ 3100.0f, 200.0f });
+		ibbPlayer->SetPos({ 2600.0f, 700.0f });
+		obbPlayer->SetPos({ 2680.0f, 700.0f });
 	}
 	
 	if (true == GameEngineInput::IsDown('3'))
@@ -204,8 +212,8 @@ void PlayLevel1::Update(float _DeltaTime)
 		{
 			ReviveCharacter();
 		}
-		ibbPlayer->SetPos({ 4000.0f, 500.0f });
-		obbPlayer->SetPos({ 4100.0f, 500.0f });
+		ibbPlayer->SetPos({ 4000.0f, 700.0f });
+		obbPlayer->SetPos({ 4100.0f, 700.0f });
 	}
 
 	if(true == GameEngineInput::IsDown('4'))
@@ -221,8 +229,42 @@ void PlayLevel1::Update(float _DeltaTime)
 		{
 			ReviveCharacter();
 		}
-		ibbPlayer->SetPos({ 5550.0f, 500.0f });
-		obbPlayer->SetPos({ 5650.0f, 500.0f });
+		ibbPlayer->SetPos({ 5360.0f, 1000.0f });
+		obbPlayer->SetPos({ 5450.0f, 1000.0f });
+	}
+
+	if (true == GameEngineInput::IsDown('5'))
+	{
+		if (false == ibbPlayer->IsUpdate() ||
+			false == obbPlayer->IsUpdate())
+		{
+			PlayLevelBGM();
+		}
+
+		if (false == ibbPlayer->IsUpdate() &&
+			false == obbPlayer->IsUpdate())
+		{
+			ReviveCharacter();
+		}
+		ibbPlayer->SetPos({ 6490.0f, 900.0f });
+		obbPlayer->SetPos({ 6550.0f, 900.0f });
+	}
+
+	if (true == GameEngineInput::IsDown('6'))
+	{
+		if (false == ibbPlayer->IsUpdate() ||
+			false == obbPlayer->IsUpdate())
+		{
+			PlayLevelBGM();
+		}
+
+		if (false == ibbPlayer->IsUpdate() &&
+			false == obbPlayer->IsUpdate())
+		{
+			ReviveCharacter();
+		}
+		ibbPlayer->SetPos({ 7490.0f, 900.0f });
+		obbPlayer->SetPos({ 7580.0f, 900.0f });
 	}
 
 	SubLevel::Update(_DeltaTime);
@@ -291,42 +333,34 @@ void PlayLevel1::LobbyStart(float _DeltaTime)
 	}
 }
 
-
-
 void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	LevelPlayerInit();
-
 	PlayLevelBGM();
-
+	
 	// RoadMonster
 	{
 		RoadMonster* _RoadMonster = nullptr;
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
 		_RoadMonster->SetGroundTexture(ColName);
-		_RoadMonster->ReverseInit();
-		_RoadMonster->SetPos({ 3200.0f, 755.0f });
+		_RoadMonster->ReverseInit({ 3200.0f, 755.0f });
 		_RoadMonster->SetDir(RoadMonsterDir::Left);
 		RoadMonsters.push_back(_RoadMonster);
 
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
 		_RoadMonster->SetGroundTexture(ColName);
-		_RoadMonster->ReverseInit();
-		_RoadMonster->SetPos({ 3100.0f, 755.0f });;
+		_RoadMonster->ReverseInit({ 3100.0f, 755.0f });
 		_RoadMonster->SetDir(RoadMonsterDir::Right);
 		RoadMonsters.push_back(_RoadMonster);
 
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
-		_RoadMonster->Init();
+		_RoadMonster->Init({ 3400.0f, 649.0f });
 		_RoadMonster->SetGroundTexture(ColName);
-		_RoadMonster->SetPos({ 3400.0f, 649.0f });
-		_RoadMonster->SetDir(RoadMonsterDir::Right);
 		RoadMonsters.push_back(_RoadMonster);
 
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
-		_RoadMonster->Init();
+		_RoadMonster->Init({ 3600.0f, 649.0f });
 		_RoadMonster->SetGroundTexture(ColName);
-		_RoadMonster->SetPos({ 3600.0f, 649.0f });
 		_RoadMonster->SetDir(RoadMonsterDir::Left);
 		RoadMonsters.push_back(_RoadMonster);
 	}
@@ -336,16 +370,14 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		JumpingMonster* _JumpingMonster = nullptr;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ 2100.0f, 800.0f });
 		_JumpingMonster->SetJumpForce(500.0f);
-		_JumpingMonster->Init();
+		_JumpingMonster->Init({ 2100.0f, 800.0f });
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ 2500.0f, 1100.0f });
 		_JumpingMonster->SetJumpForce(500.0f);
-		_JumpingMonster->ReverseInit();
+		_JumpingMonster->ReverseInit({ 2500.0f, 1100.0f });
 		JumpingMonsters.push_back(_JumpingMonster);
 
 
@@ -356,49 +388,43 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, 1200.0f });
 		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->ReverseInit();
+		_JumpingMonster->ReverseInit({ DefaultPosX, 1200.0f });
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		DefaultPosX += UnitPosX;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, 1500.0f});
 		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->ReverseInit();
+		_JumpingMonster->ReverseInit({ DefaultPosX, 1300.0f });
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		DefaultPosX += UnitPosX;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, 1200.0f });
 		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->ReverseInit();
+		_JumpingMonster->ReverseInit({ DefaultPosX, 1200.0f });
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		DefaultPosX += UnitPosX * 2;
-		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster); 
+		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, 1010.0f});
 		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->Init();
+		_JumpingMonster->Init({ DefaultPosX, 1010.0f });
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		DefaultPosX += UnitPosX;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, 710.0f });
 		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->Init();
+		_JumpingMonster->Init({ DefaultPosX, 910.0f });
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		DefaultPosX += UnitPosX;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetPos({ DefaultPosX, 1010.0f });
 		_JumpingMonster->SetJumpForce(Jumpforce);
-		_JumpingMonster->Init();
+		_JumpingMonster->Init({ DefaultPosX, 1010.0f });
 		JumpingMonsters.push_back(_JumpingMonster);
 	}
 
@@ -411,6 +437,7 @@ void PlayLevel1::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ibbPlayer->OverOn();
 	obbPlayer->OverOn();
+
 	for (int i = 0; i < RoadMonsters.size(); i++)
 	{
 		if (RoadMonsters[i] == nullptr)
@@ -502,4 +529,118 @@ void PlayLevel1::Level1SettingInit()
 {
 	EndFadeInit = false;
 	EnterLobby = false;
+}
+
+void PlayLevel1::GameOverCheck(float _DeltaTime)
+{
+	static float ServiveTime = 0.0f;
+	static bool KillMonster = false;
+
+	if (false == ibbPlayer->IsUpdate() &&
+		false == obbPlayer->IsUpdate())
+	{
+		if (false == KillMonster)
+		{
+			KillMonster = true;
+			KillAllMonster();
+		}
+
+		if (ServiveTime >= 1.0f)
+		{
+			KillMonster = false;
+			ServiveTime = 0.0f;
+			ReviveCharacter();
+			CharacterSpawn();
+			SummonMonster();
+			PlayLevelBGM();
+		}
+		else
+		{
+			ServiveTime += _DeltaTime;
+		}
+	}
+}
+
+void PlayLevel1::KillAllMonster()
+{
+	for (int i = 0; i < RoadMonsters.size(); i++)
+	{
+		if (RoadMonsters[i] == nullptr)
+		{
+			MsgBoxAssert("null인 RoadMonster를 Release 하려 했습니다.")
+		}
+
+		RoadMonsters[i]->SetAnimation("Dead");
+		RoadMonsters[i]->SetCoreAnimation("Dead");
+		RoadMonsters[i]->ChangeState(RoadMonsterState::Dead);
+	}
+
+	for (int i = 0; i < JumpingMonsters.size(); i++)
+	{
+		if (JumpingMonsters[i] == nullptr)
+		{
+			MsgBoxAssert("null인 JumpingMonster를 Release 하려 했습니다.")
+		}
+		
+		JumpingMonsters[i]->SetAnimation("Dead");
+		JumpingMonsters[i]->SetCoreAnimation("Dead");
+		JumpingMonsters[i]->ChangeState(JumpingMonsterState::Dead);
+	}
+	EffectPlayer = GameEngineSound::SoundPlay("MonsterDeath.mp3");
+}
+
+void PlayLevel1::SummonMonster()
+{
+	for (int i = 0; i < RoadMonsters.size(); i++)
+	{
+		if (RoadMonsters[i] == nullptr)
+		{
+			MsgBoxAssert("null인 RoadMonster를 Release 하려 했습니다.")
+		}
+		RoadMonsters[i]->On();
+		RoadMonsters[i]->SetAnimation("Live");
+		RoadMonsters[i]->SetCoreAnimation("Live");
+		RoadMonsters[i]->ChangeState(RoadMonsterState::Live);
+	}
+
+	for (int i = 0; i < JumpingMonsters.size(); i++)
+	{
+		if (JumpingMonsters[i] == nullptr)
+		{
+			MsgBoxAssert("null인 JumpingMonster를 Release 하려 했습니다.")
+		}
+		JumpingMonsters[i]->On();
+		JumpingMonsters[i]->SetAnimation("Live");
+		JumpingMonsters[i]->SetCoreAnimation("Live");
+		JumpingMonsters[i]->ChangeState(JumpingMonsterState::Live);
+	}
+}
+
+void PlayLevel1::CharacterSpawn()
+{
+	if (1900.0f > StackCameraPosX)
+	{
+		ibbPlayer->SetPos({ 1650.0f, 700.0f });
+		obbPlayer->SetPos({ 1720.0f, 700.0f });
+	}
+	else if (3250.0f > StackCameraPosX)
+	{
+		ibbPlayer->SetPos({ 2600.0f, 700.0f });
+		obbPlayer->SetPos({ 2680.0f, 700.0f });
+	}
+	else if (4450.0f > StackCameraPosX)
+	{
+		ibbPlayer->SetPos({ 4000.0f, 700.0f });
+		obbPlayer->SetPos({ 4100.0f, 700.0f });
+	}
+	else if (5750.0f > StackCameraPosX)
+	{
+		ibbPlayer->SetPos({ 5360.0f, 1000.0f });
+		obbPlayer->SetPos({ 5450.0f, 1000.0f });
+	}
+	else if (5750.0f <= StackCameraPosX)
+	{
+		ibbPlayer->SetPos({ 6490.0f, 900.0f });
+		obbPlayer->SetPos({ 6550.0f, 900.0f });
+	}
 }

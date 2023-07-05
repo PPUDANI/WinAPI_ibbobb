@@ -368,7 +368,7 @@ void Lobby::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Lobby::LevelPlayerInit()
 {
-	float DefaultPosX = 720.0f;
+	float DefaultPosX = 640.0f;
 	float DefaultPosY = 300.0f;
 
 	// ibb
@@ -389,7 +389,7 @@ void Lobby::LevelPlayerInit()
 	}
 	obbPlayer = obb::GetMainobb();
 	obbPlayer->SetGroundTexture(ColName);
-	obbPlayer->SetPos({ DefaultPosX + 100.0f, DefaultPosY });
+	obbPlayer->SetPos({ DefaultPosX + 80.0f, DefaultPosY });
 	obbPlayer->ChangeState(PlayerState::Fall);
 	obbPlayer->SetDir(PlayerDir::Right);
 }

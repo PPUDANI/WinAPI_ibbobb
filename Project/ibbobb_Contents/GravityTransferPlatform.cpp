@@ -2,7 +2,7 @@
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
-
+#include <GameEnginePlatform/GameEngineInput.h>
 #include "SoundLoadManager.h"
 #include "ContentsEnum.h"
 #include "ibb.h"
@@ -34,9 +34,9 @@ void GravityTransferPlatform::Start()
 
 	PlatformRenderer->CreateAnimation("Idle", "GravityPlatform.bmp", 0, 0, 10.0f, true);
 
-	PlatformRenderer->CreateAnimation("CantJumpSignal", "GravityPlatform.bmp", 3, 2, 10.0f, true);
+	PlatformRenderer->CreateAnimation("CantJumpSignal", "GravityPlatform.bmp", 3, 3, 0.1f, true);
 
-	PlatformRenderer->CreateAnimation("TransferSignal", "GravityPlatform.bmp", 1, 0, 0.1f, false);
+	PlatformRenderer->CreateAnimation("TransferSignal", "GravityPlatform.bmp", 1, 0, 0.15f, false);
 	
 
 	PlatformCol = CreateCollision(CollisionOrder::GravityPlatform);
@@ -114,6 +114,24 @@ void GravityTransferPlatform::ibbOnThisPlatformUpdate(float _DeltaTime)
 	{
 		State = PlatformState::TransferobbToibb;
 	}
+
+	if (true == PlatformCol->Collision(CollisionOrder::ibbBody,
+		_Col,
+		CollisionType::Rect,
+		CollisionType::Rect) && true == GameEngineInput::IsDown('W') ||
+		true == PlatformCol->Collision(CollisionOrder::obbBody,
+			_Col,
+			CollisionType::Rect,
+			CollisionType::Rect) && true == GameEngineInput::IsDown(VK_UP))
+	{
+		EffectPlayer = GameEngineSound::SoundPlay("CantJumpSignal.mp3");
+		SetAnimation("CantJumpSignal");
+	}
+
+	if (true == PlatformRenderer->IsAnimationEnd())
+	{
+		SetAnimation("Idle");
+	}
 }
 
 void GravityTransferPlatform::obbOnThisPlatformUpdate(float _DeltaTime)
@@ -137,6 +155,24 @@ void GravityTransferPlatform::obbOnThisPlatformUpdate(float _DeltaTime)
 		obb::GetMainobb()->GetReverseValue() != ibb::GetMainibb()->GetReverseValue())
 	{
 		State = PlatformState::TransferibbToobb;
+	}
+
+	if (true == PlatformCol->Collision(CollisionOrder::ibbBody,
+		_Col,
+		CollisionType::Rect,
+		CollisionType::Rect) && true == GameEngineInput::IsDown('W') ||
+		true == PlatformCol->Collision(CollisionOrder::obbBody,
+			_Col,
+			CollisionType::Rect,
+			CollisionType::Rect) && true == GameEngineInput::IsDown(VK_UP))
+	{
+		EffectPlayer = GameEngineSound::SoundPlay("CantJumpSignal.mp3");
+		SetAnimation("CantJumpSignal");
+	}
+
+	if (true == PlatformRenderer->IsAnimationEnd())
+	{
+		SetAnimation("Idle");
 	}
 }
 
@@ -165,7 +201,6 @@ void GravityTransferPlatform::TransferibbToobbUpdate(float _DeltaTime)
 		obb::GetMainobb()->ChangeState(PlayerState::Jump);
 
 		EffectPlayer = GameEngineSound::SoundPlay("CantJumpSignal.mp3");
-		EffectPlayer.SetVolume(0.5f);
 	}
 
 	if (true == PlatformRenderer->IsAnimationEnd())
@@ -201,7 +236,6 @@ void GravityTransferPlatform::TransferobbToibbUpdate(float _DeltaTime)
 		ibb::GetMainibb()->ChangeState(PlayerState::Jump);
 
 		EffectPlayer = GameEngineSound::SoundPlay("CantJumpSignal.mp3");
-		EffectPlayer.SetVolume(0.5f);
 	}
 
 	if (true == PlatformRenderer->IsAnimationEnd())
@@ -221,4 +255,9 @@ float GravityTransferPlatform::GetAbsoluteValue(float _Value)
 	{
 		return _Value;
 	}
+}
+
+void GravityTransferPlatform::SetAnimation(const std::string _Name)
+{
+	PlatformRenderer->ChangeAnimation(_Name);
 }

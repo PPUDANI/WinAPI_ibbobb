@@ -99,6 +99,10 @@ void SubLevel::ReviveCharacter()
 {
 	ibbPlayer->On();
 	obbPlayer->On();
+
+	ibbPlayer->GravityReset();
+	obbPlayer->GravityReset();
+
 	ibbPlayer->ChangeState(PlayerState::Fall);
 	obbPlayer->ChangeState(PlayerState::Fall);
 	ZoomScale = 1.0f;

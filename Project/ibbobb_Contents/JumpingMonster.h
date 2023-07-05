@@ -5,7 +5,8 @@
 enum class JumpingMonsterState
 {
 	Fall,
-	Dead
+	Dead,
+	Live
 };
 
 enum class JumpingMonsterDir
@@ -32,9 +33,16 @@ public:
 		JumpForce = _JumpForce;
 	}
 
-	void Init();
-	void ReverseInit();
+	inline void ChangeState(JumpingMonsterState _State)
+	{
+		CurState = _State;
+	}
 
+	void Init(const float4& _InitPos);
+	void ReverseInit(const float4& _InitPos);
+
+	void SetAnimation(const std::string _State);
+	void SetCoreAnimation(const std::string _State);
 protected:
 
 private:
@@ -42,14 +50,10 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void FallUpdate(float _DeltaTime);
-
 	void DeadUpdate(float _DeltaTime);
-	void SetAnimation(const std::string _State);
+	void LiveUpdate(float _DeltaTime);
 
-	inline void ChangeState(JumpingMonsterState _State)
-	{
-		CurState = _State;
-	}
+
 
 	class GameEngineRenderer* MonsterRenderer = nullptr;
 	class GameEngineRenderer* CoreRenderer = nullptr;
@@ -69,6 +73,7 @@ private:
 	float BlockUnitHeight = 26.0f;
 	float4 GravityDir = float4::UP;
 	float4 DownCheck;
+	float4 StartVector = float4::ZERO;
 
 	// Core위치 연산에 필요한 변수
 	float PrevPos = 0.0f;

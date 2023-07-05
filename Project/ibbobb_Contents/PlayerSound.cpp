@@ -32,13 +32,13 @@ void Player::PlayerEffectSoundLoad()
 void Player::JumpSoundPlay()
 {
 	EffectPlayer = GameEngineSound::SoundPlay("PlayerJump.mp3");
-	EffectPlayer.SetVolume(0.07f);
+	EffectPlayer.SetVolume(0.1f);
 }
 
 void Player::CrouchSoundPlay()
 {
 	EffectPlayer = GameEngineSound::SoundPlay("PlayerCrouch.mp3");
-	EffectPlayer.SetVolume(0.3f);
+	EffectPlayer.SetVolume(0.2f);
 }
 
 void Player::DeadSoundPlay()

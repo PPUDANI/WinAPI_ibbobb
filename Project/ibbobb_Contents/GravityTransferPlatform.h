@@ -24,6 +24,7 @@ public:
 	GravityTransferPlatform& operator=(const GravityTransferPlatform& _Other) = delete;
 	GravityTransferPlatform& operator=(GravityTransferPlatform&& _Other) noexcept = delete;
 
+
 protected:
 
 private:
@@ -33,6 +34,7 @@ private:
 	void IdleUpdate(float _DeltaTime);
 
 	float GetAbsoluteValue(float _Value);
+	void SetAnimation(const std::string _Name);
 
 	void ibbOnThisPlatformUpdate(float _DeltaTime);
 	void obbOnThisPlatformUpdate(float _DeltaTime);

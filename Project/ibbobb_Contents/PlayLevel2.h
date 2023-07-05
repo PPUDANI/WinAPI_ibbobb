@@ -33,6 +33,10 @@ private:
 	void LobbyStart(float _DeltaTime);
 	void Level2SettingInit();
 
+	void KillAllMonster();
+	void SummonMonster();
+	void CharacterSpawn();
+	void GameOverCheck(float _DeltaTime);
 	const std::string ColName = "Level2_Collision.bmp";
 
 
@@ -53,7 +57,7 @@ private:
 	Fade* Level2EndFade = nullptr;
 	bool EnterLobby = false;
 	bool EndFadeInit = false;
-
+	float StackCameraPosX = 0.0f;
 	class LevelDoor* LobyDoor = nullptr;
 
 	GameEngineSoundPlayer BGMPlayer;

@@ -4,7 +4,7 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
-
+#include "GravityTransferPlatform.h"
 #include "ContentsEnum.h"
 
 
@@ -63,7 +63,9 @@ void Player::Update(float _DeltaTime)
 		if (DeathTurm >= 1.0f)
 		{
 			DeathTurm = 0.0f;
+			
 			SetAnimation("Dead");
+			SerialDeadSoundPlay();
 			ChangeState(PlayerState::Dead);
 		}
 	}
@@ -152,7 +154,7 @@ void Player::Update(float _DeltaTime)
 			CollisionType::Rect))
 		{
 			SetAnimation("Dead");
-			CrouchSoundPlay();
+			DeadSoundPlay();
 			ChangeState(PlayerState::Dead);
 		}
 	}
@@ -225,7 +227,7 @@ void Player::SetAnimation(const std::string _State, int _StartFrame)
 	MainRenderer->ChangeAnimation(AnimationName, _StartFrame);
 }
 
-void Player::OtherPlayerMoveCheck()
+void Player::OtherPlayerPushCheck()
 {
 	// 플레이어 Push에 인한 벽 충돌 체크
 	{
@@ -293,6 +295,7 @@ void Player::IdleInitFromFall()
 	if (PlayerState::Fall == CurState)
 	{
 		// 변환한 외부 설정 초기화
+		TransferVector = GetGravityVector();
 		GravityReset();
 		HorizontalWorpPass = false;
 		VerticalWorpPass = false;
@@ -452,7 +455,7 @@ bool Player::LeftMapColCheck()
 	if ((LeftUpColor == RGB(255, 0, 0) ||
 		LeftMiddleColor == RGB(255, 0, 0) ||
 		LeftDownColor == RGB(255, 0, 0)) ||
-		LeftToOtherColorWarpCheck())
+		true == LeftToOtherColorWarpCheck())
 	{
 		if (CurState == PlayerState::Run ||
 			CurState == PlayerState::RidingMode)
@@ -461,7 +464,7 @@ bool Player::LeftMapColCheck()
 			while (LeftUpColor == RGB(255, 0, 0) ||
 				LeftMiddleColor == RGB(255, 0, 0) ||
 				LeftDownColor == RGB(255, 0, 0) ||
-				LeftToOtherColorWarpCheck())
+				true == LeftToOtherColorWarpCheck())
 			{
 				LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::DOWN);
 				LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);
@@ -495,12 +498,11 @@ bool Player::RightMapColCheck()
 		if (CurState == PlayerState::Run || 
 			CurState == PlayerState::RidingMode)
 		{
-
 			// 벽에 박힘 제거
 			while (RightUpColor == RGB(255, 0, 0) ||
 				RightMiddleColor == RGB(255, 0, 0) ||
 				RightDownColor == RGB(255, 0, 0) ||
-				RightToOtherColorWarpCheck())
+				true == RightToOtherColorWarpCheck())
 			{
 				RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::DOWN);
 				RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
@@ -527,6 +529,7 @@ bool Player::UpMapColCheck()
 
 	if (true == ReverseValue)
 	{
+		std::vector<GameEngineCollision*> _PlatformCol;
 		LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::RIGHT * 2.0f);
 		MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
 		RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightDownCheck + float4::LEFT * 2.0f);
@@ -534,12 +537,12 @@ bool Player::UpMapColCheck()
 		if (LeftUpColor == RGB(255, 0, 0) ||
 			MiddleUpColor == RGB(255, 0, 0) ||
 			RightUpColor == RGB(255, 0, 0) ||
-			UpToOtherColorWarpCheck())
+			true == UpToOtherColorWarpCheck())
 		{
 			while (LeftUpColor == RGB(255, 0, 0) ||
 				MiddleUpColor == RGB(255, 0, 0) ||
 				RightUpColor == RGB(255, 0, 0) ||
-				UpToOtherColorWarpCheck())
+				true == UpToOtherColorWarpCheck())
 			{
 				LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::RIGHT * 2.0f);
 				MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
@@ -557,12 +560,14 @@ bool Player::UpMapColCheck()
 		if (LeftUpColor == RGB(255, 0, 0) ||
 			MiddleUpColor == RGB(255, 0, 0) ||
 			RightUpColor == RGB(255, 0, 0) ||
-			UpToOtherColorWarpCheck())
+			true == UpToOtherColorWarpCheck() ||
+			true == UpToGravityPlatformCheck())
 		{
 			while (LeftUpColor == RGB(255, 0, 0) ||
 				MiddleUpColor == RGB(255, 0, 0) ||
 				RightUpColor == RGB(255, 0, 0) ||
-				UpToOtherColorWarpCheck())
+				true == UpToOtherColorWarpCheck() ||
+				true == UpToGravityPlatformCheck())
 			{
 				LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::RIGHT * 2.0f);
 				MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck);
@@ -591,14 +596,16 @@ bool Player::DownMapColCheck()
 		if (LeftDownColor == RGB(255, 0, 0) ||
 			MiddleDownColor == RGB(255, 0, 0) ||
 			RightDownColor == RGB(255, 0, 0) ||
-			DownToOtherColorWarpCheck())
+			true == DownToOtherColorWarpCheck() ||
+			true == DownToGravityPlatformCheck())
 		{
 			if (PlayerState::Fall == CurState)
 			{
 				while (LeftDownColor == RGB(255, 0, 0) ||
 					MiddleDownColor == RGB(255, 0, 0) ||
 					RightDownColor == RGB(255, 0, 0) ||
-					DownToOtherColorWarpCheck())
+					true == DownToOtherColorWarpCheck() ||
+					true == DownToGravityPlatformCheck())
 				{
 					LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::RIGHT * 2.0f);
 					MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck);
@@ -621,7 +628,8 @@ bool Player::DownMapColCheck()
 		if (LeftDownColor == RGB(255, 0, 0) ||
 			MiddleDownColor == RGB(255, 0, 0) ||
 			RightDownColor == RGB(255, 0, 0) ||
-			DownToOtherColorWarpCheck())
+			true == DownToOtherColorWarpCheck() ||
+			true == DownToGravityPlatformCheck())
 		{
 
 			if (PlayerState::Fall == CurState)
@@ -629,7 +637,8 @@ bool Player::DownMapColCheck()
 				while (LeftDownColor == RGB(255, 0, 0) ||
 					MiddleDownColor == RGB(255, 0, 0) ||
 					RightDownColor == RGB(255, 0, 0) ||
-					DownToOtherColorWarpCheck())
+					true == DownToOtherColorWarpCheck() ||
+					true == DownToGravityPlatformCheck())
 				{
 					LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::RIGHT * 2.0f);
 					MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);

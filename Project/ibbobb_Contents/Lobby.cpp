@@ -185,15 +185,8 @@ void Lobby::Start()
 
 	// Sound
 	{
-		if (GameEngineSound::FindSound("LobbyBGM.mp3") == nullptr)
-		{
-			SoundLoadManager::LoadSound("BGM", "LobbyBGM.mp3");
-		}
-
-		if (GameEngineSound::FindSound("EnterLevel.mp3") == nullptr)
-		{
-			SoundLoadManager::LoadSound("LevelEffect", "EnterLevel.mp3");
-		}
+		SoundLoadManager::LoadSound("BGM", "LobbyBGM.mp3");
+		SoundLoadManager::LoadSound("LevelEffect", "EnterLevel.mp3");
 	}
 }
 
@@ -215,16 +208,16 @@ void Lobby::Update(float _DeltaTime)
 	{
 		EnterLevel2 = true;
 	}
-	if (true == GameEngineInput::IsDown('3') ||
-		true == Level3Door->IsPlayerEnter())
-	{
-		EnterLevel3 = true;
-	}
-	if (true == GameEngineInput::IsDown('4') ||
-		true == Level4Door->IsPlayerEnter())
-	{
-		EnterLevel4 = true;
-	}
+	//if (true == GameEngineInput::IsDown('3') ||
+	//	true == Level3Door->IsPlayerEnter())
+	//{
+	//	EnterLevel3 = true;
+	//}
+	//if (true == GameEngineInput::IsDown('4') ||
+	//	true == Level4Door->IsPlayerEnter())
+	//{
+	//	EnterLevel4 = true;
+	//}
 
 	if (true == EnterLevel1)
 	{
@@ -376,7 +369,7 @@ void Lobby::LevelEnd(GameEngineLevel* _NextLevel)
 void Lobby::LevelPlayerInit()
 {
 	float DefaultPosX = 720.0f;
-	float DefaultPosY = 0.0f;
+	float DefaultPosY = 300.0f;
 
 	// ibb
 	if (ibbPlayer == nullptr)

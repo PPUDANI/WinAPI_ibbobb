@@ -29,14 +29,11 @@ private:
 
 	void LevelPlayerInit();
 	void SetZoomScale(float _Ratio, float _DeltaTime);
-
+	void PlayLevelBGM();
 	void LobbyStart(float _DeltaTime);
 	void Level1SettingInit();
 
 	const std::string ColName = "Level1_Collision.bmp";
-
-	
-	
 
 	std::vector<class RoadMonster*> RoadMonsters;
 	std::vector<class JumpingMonster*> JumpingMonsters;
@@ -60,6 +57,5 @@ private:
 
 	GameEngineSoundPlayer BGMPlayer;
 	GameEngineSoundPlayer EffectPlayer;
-	
 };
 

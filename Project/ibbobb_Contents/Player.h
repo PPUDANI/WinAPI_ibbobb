@@ -87,6 +87,15 @@ public:
 		CurState = _State;
 	}
 
+	inline float4 GetTransferVector() const
+	{
+		return TransferVector;
+	}
+
+	inline void ResetTransferVector()
+	{
+		TransferVector = float4::ZERO;
+	}
 protected:
 
 	virtual void Init() {}
@@ -111,7 +120,10 @@ protected:
 	virtual bool UpToOtherColorWarpCheck() { return false; }
 	virtual bool DownToOtherColorWarpCheck() { return false; }
 
-
+	virtual bool UpToGravityPlatformCheck() { return false; }
+	virtual bool DownToGravityPlatformCheck() { return false; }
+	virtual bool UpToGravityPlatformCheck(std::vector<GameEngineCollision*> _ColVec) { return false; }
+	virtual bool DownToGravityPlatformCheck(std::vector<GameEngineCollision*> _ColVec) { return false; }
 
 	Player* OtherPlayer = nullptr;
 	GameEngineCollision* BodyCol = nullptr;
@@ -156,12 +168,13 @@ private:
 	void ReverseInit();
 	void ReverseCol();
 
-	void OtherPlayerMoveCheck();
+	void OtherPlayerPushCheck();
 
 	void PlayerEffectSoundLoad();
 	void JumpSoundPlay();
 	void CrouchSoundPlay();
 	void DeadSoundPlay();
+	void SerialDeadSoundPlay();
 	void WarpPassSoundPlay();
 	void LongWarpPassSoundPlay();
 	void SetAnimation(const std::string _State, int _StartFrame = 0);
@@ -176,6 +189,7 @@ private:
 	bool AnimIsBlink = false;
 	float DeathTurm = 0.0f;
 	float WarpSoundCriteria = 400.0f;
+
 	// 캐릭터 물리변수
 	float JumpForce = 1.0f;
 	float Speed = 1.0f;
@@ -193,6 +207,8 @@ private:
 
 	float4 MovePos = float4::ZERO;
 	float4 DistanceFromOtherPlayer = float4::ZERO;
+
+	float4 TransferVector = float4::ZERO;
 
 	// 맵 충돌 체크
 	bool CheckPosOn = false;

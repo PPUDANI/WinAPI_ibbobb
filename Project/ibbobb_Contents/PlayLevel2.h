@@ -29,7 +29,7 @@ private:
 
 	void LevelPlayerInit();
 	void SetZoomScale(float _Ratio, float _DeltaTime);
-
+	void PlayLevelBGM();
 	void LobbyStart(float _DeltaTime);
 	void Level2SettingInit();
 
@@ -40,7 +40,7 @@ private:
 	std::vector<class JumpingMonster*> JumpingMonsters;
 	std::vector<class Medal*> Medals;
 	std::vector<class Warp*> Warps;
-
+	std::vector<class GravityTransferPlatform*> GravityPlatforms;
 
 	RoadMonster* _RoadMonster = nullptr;
 	JumpingMonster* _JumpingMonster = nullptr;
@@ -58,5 +58,4 @@ private:
 
 	GameEngineSoundPlayer BGMPlayer;
 	GameEngineSoundPlayer EffectPlayer;
-
 };

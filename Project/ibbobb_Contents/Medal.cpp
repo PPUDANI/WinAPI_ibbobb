@@ -36,12 +36,12 @@ void Medal::Init()
 	Renderer->CreateAnimation("Idle", "LevelMedal.bmp", 0, 8, 0.1f, true);
 
 	// Get
-	Renderer->CreateAnimation("Get", "LevelMedal.bmp", 9, 12, 0.02f, true);
-	Renderer->CreateAnimation("Get1", "LevelMedal.bmp", 9, 12, 0.05f, true);
-	Renderer->CreateAnimation("Get2", "LevelMedal.bmp", 9, 12, 0.05f, true);
-	Renderer->CreateAnimation("Get3", "LevelMedal.bmp", 9, 12, 0.1f, true);
-	Renderer->CreateAnimation("Get4", "LevelMedal.bmp", 9, 9, 0.3f, true);
-	Renderer->CreateAnimation("Get5", "LevelMedal.bmp", 13, 13, 0.2f, true);
+	Renderer->CreateAnimation("Get", "LevelMedal.bmp", 9, 12, 0.02f, false);
+	Renderer->CreateAnimation("Get1", "LevelMedal.bmp", 9, 12, 0.05f, false);
+	Renderer->CreateAnimation("Get2", "LevelMedal.bmp", 9, 12, 0.05f, false);
+	Renderer->CreateAnimation("Get3", "LevelMedal.bmp", 9, 12, 0.1f, false);
+	Renderer->CreateAnimation("Get4", "LevelMedal.bmp", 9, 9, 0.3f, false);
+	Renderer->CreateAnimation("Get5", "LevelMedal.bmp", 13, 13, 0.2f, false);
 
 	// Collision
 	MedalCol = CreateCollision(CollisionOrder::Medal);
@@ -68,15 +68,15 @@ void Medal::ReverseInit()
 	Renderer = CreateRenderer(RenderOrder::Medal);
 
 	// Idle
-	Renderer->CreateAnimation("Idle", "LevelMedal_Reverse.bmp", 0, 8, 0.05f, true);
+	Renderer->CreateAnimation("Idle", "LevelMedal_Reverse.bmp", 0, 8, 0.1f, true);
 
 	// Get
-	Renderer->CreateAnimation("Get", "LevelMedal_Reverse.bmp", 9, 12, 0.02f, true);
-	Renderer->CreateAnimation("Get1", "LevelMedal_Reverse.bmp", 9, 12, 0.05f, true);
-	Renderer->CreateAnimation("Get2", "LevelMedal_Reverse.bmp", 9, 12, 0.07f, true);
-	Renderer->CreateAnimation("Get3", "LevelMedal_Reverse.bmp", 9, 12, 0.1f, true);
-	Renderer->CreateAnimation("Get4", "LevelMedal_Reverse.bmp", 9, 9, 0.5f, true);
-	Renderer->CreateAnimation("Get5", "LevelMedal_Reverse.bmp", 13, 13, 0.3f, true);
+	Renderer->CreateAnimation("Get", "LevelMedal_Reverse.bmp", 9, 12, 0.02f, false);
+	Renderer->CreateAnimation("Get1", "LevelMedal_Reverse.bmp", 9, 12, 0.05f, false);
+	Renderer->CreateAnimation("Get2", "LevelMedal_Reverse.bmp", 9, 12, 0.05f, false);
+	Renderer->CreateAnimation("Get3", "LevelMedal_Reverse.bmp", 9, 12, 0.1f, false);
+	Renderer->CreateAnimation("Get4", "LevelMedal_Reverse.bmp", 9, 9, 0.3f, false);
+	Renderer->CreateAnimation("Get5", "LevelMedal_Reverse.bmp", 13, 13, 0.2f, false);
 
 	// Collision
 	MedalCol = CreateCollision(CollisionOrder::Medal);
@@ -90,10 +90,7 @@ void Medal::ReverseInit()
 
 void Medal::Start()
 {
-	if (GameEngineSound::FindSound("GetMedal.mp3") == nullptr)
-	{
-		SoundLoadManager::LoadSound("Medal", "GetMedal.mp3");
-	}
+	SoundLoadManager::LoadSound("Medal", "GetMedal.mp3");
 }	
 
 void Medal::Update(float _DeltaTime)
@@ -133,7 +130,7 @@ void Medal::IdleUpdate(float _DeltaTime)
 		CurState = MedalState::Get;
 
 		EffectPlayer = GameEngineSound::SoundPlay("GetMedal.mp3");
-		EffectPlayer.SetVolume(0.5f);
+		EffectPlayer.SetVolume(0.2f);
 		SetAnimation("Get");
 		return;
 	}

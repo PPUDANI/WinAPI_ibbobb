@@ -36,9 +36,6 @@ void DoorStar::Init()
 
 	// Deactivation
 	Renderer->CreateAnimation("Deactivation", "DeactivationStar.bmp", 0, 0, 10.0f, true);
-
-
-	
 }
 
 void DoorStar::Update(float _DeltaTime)

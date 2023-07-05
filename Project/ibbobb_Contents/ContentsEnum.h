@@ -8,6 +8,7 @@ enum class UpdateOrder
 	Medal,
 	BackGround,
 	Warp,
+	GravityPlatform,
 	Map,
 	UI,
 };
@@ -25,7 +26,7 @@ enum class RenderOrder
 
 	ibb,
 	obb,
-
+	GravityPlatform,
 	Warp,
 	UI,
 };
@@ -49,6 +50,7 @@ enum class CollisionOrder
 
 	ibbOnlyWarp,
 	obbOnlyWarp,
+	GravityPlatform,
 	Medal,
 
 	LevelDoor,

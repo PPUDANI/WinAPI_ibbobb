@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
+#include <GameEnginePlatform/GameEngineSound.h>
 class ibb;
 class obb;
 class SubLevel : public GameEngineLevel
@@ -29,6 +30,7 @@ protected:
 	class ibb* ibbPlayer = nullptr;
 	class obb* obbPlayer = nullptr;
 	bool FirstDeathIsibb = false;
+
 private:
 	
 };

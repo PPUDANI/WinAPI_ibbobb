@@ -36,7 +36,7 @@ void Titleibb::Start()
 
 	// Blink Animation
 	Frame = 0.07f;
-	ibbRenderer->CreateAnimation("Blink", "Right_ibb.bmp", 0, 1, Frame, true);
+	ibbRenderer->CreateAnimation("Blink", "Right_ibb.bmp", 0, 1, Frame, false);
 
 	// Crouch Animation
 	Frame = 0.1f;

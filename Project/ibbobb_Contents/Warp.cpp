@@ -58,12 +58,12 @@ void Warp::Init(WarpType _Type)
 	{
 		if (WarpDir::Horizontal == Dir)
 		{
-			WarpCol->SetCollisionScale({ StarInterval * StarNum + (StarNum * 0.5f), 26.0f });
+			WarpCol->SetCollisionScale({ StarInterval * StarNum + (StarNum * 0.5f), 28.0f });
 			WarpCol->SetCollisionPos({ (StarInterval * StarNum - StarNum) * 0.5f, 0.0f });
 		}
 		else if (WarpDir::Vertical == Dir)
 		{
-			WarpCol->SetCollisionScale({ 26.0f, StarInterval * StarNum + (StarNum * 0.5f) });
+			WarpCol->SetCollisionScale({ 28.0f, StarInterval * StarNum + (StarNum * 0.5f) });
 			WarpCol->SetCollisionPos({ 0.0f, (StarInterval * StarNum - StarNum) * 0.5f });
 		}
 

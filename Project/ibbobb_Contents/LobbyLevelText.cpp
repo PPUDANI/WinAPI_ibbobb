@@ -27,7 +27,6 @@ void LobbyLevelText::Init(const std::string _FileName, float _BlinkFrameSpeed/* 
 
 	Renderer = CreateRenderer(RenderOrder::Image);
 
-	// Blink Animation
 	Renderer->CreateAnimation("Idle", _FileName, 0, 0, 10.0f, true);
 	Renderer->CreateAnimation("Blink", _FileName, 0, 1, _BlinkFrameSpeed, true);
 	Renderer->CreateAnimation("Deactivation", _FileName, 2, 2, 10.0f, true);

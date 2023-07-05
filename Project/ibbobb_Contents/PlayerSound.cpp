@@ -4,28 +4,20 @@
 #include <string>
 
 #include "SoundLoadManager.h"
+
 void Player::PlayerEffectSoundLoad()
 {
-	if (nullptr == GameEngineSound::FindSound("PlayerJump.mp3"))
-	{
-		SoundLoadManager::LoadSound("PlayerState", "PlayerJump.mp3");
-		
-	}
-
-	if (nullptr == GameEngineSound::FindSound("PlayerCrouch.mp3"))
-	{
-		SoundLoadManager::LoadSound("PlayerState", "PlayerCrouch.mp3");
-	}
+	SoundLoadManager::LoadSound("PlayerState", "PlayerJump.mp3");
+	SoundLoadManager::LoadSound("PlayerState", "PlayerCrouch.mp3");
+	SoundLoadManager::LoadSound("PlayerState", "PlayerDeathLow.mp3");
+	SoundLoadManager::LoadSound("PlayerState", "PlayerDeathHigh.mp3");
 
 	for (int i = 1; i <= 10; i++)
 	{
 		std::string _Name = "WarpPass";
 		_Name += std::to_string(i);
 		_Name += ".mp3";
-		if (nullptr == GameEngineSound::FindSound(_Name))
-		{
-			SoundLoadManager::LoadSound("Warp", _Name);
-		}
+		SoundLoadManager::LoadSound("Warp", _Name);
 	}
 
 	for (int i = 1; i <= 10; i++)
@@ -33,10 +25,7 @@ void Player::PlayerEffectSoundLoad()
 		std::string _Name = "LongWarpPass";
 		_Name += std::to_string(i);
 		_Name += ".mp3";
-		if (nullptr == GameEngineSound::FindSound(_Name))
-		{
-			SoundLoadManager::LoadSound("Warp", _Name);
-		}
+		SoundLoadManager::LoadSound("Warp", _Name);
 	}
 
 }
@@ -54,7 +43,14 @@ void Player::CrouchSoundPlay()
 
 void Player::DeadSoundPlay()
 {
+	EffectPlayer = GameEngineSound::SoundPlay("PlayerDeathHigh.mp3");
+	EffectPlayer.SetVolume(0.3f);
+}
 
+void Player::SerialDeadSoundPlay()
+{
+	EffectPlayer = GameEngineSound::SoundPlay("PlayerDeathLow.mp3");
+	EffectPlayer.SetVolume(0.3f);
 }
 
 void Player::WarpPassSoundPlay()

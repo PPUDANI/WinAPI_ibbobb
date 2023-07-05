@@ -139,15 +139,8 @@ void PlayLevel1::Start()
 
 	// Sound
 	{
-		if (nullptr == GameEngineSound::FindSound("Level1BGM.mp3"))
-		{
-			SoundLoadManager::LoadSound("BGM", "Level1BGM.mp3");
-		}
-		if (nullptr == GameEngineSound::FindSound("EnterLevel.mp3"))
-		{
-			SoundLoadManager::LoadSound("LevelEffect", "EnterLevel.mp3");
-		}
-	}		
+		SoundLoadManager::LoadSound("BGM", "Level1BGM.mp3");
+	}
 }
 
 void PlayLevel1::Update(float _DeltaTime)
@@ -164,29 +157,48 @@ void PlayLevel1::Update(float _DeltaTime)
 
 	if (true == GameEngineInput::IsDown('1'))
 	{
+		if (false == ibbPlayer->IsUpdate() ||
+			false == obbPlayer->IsUpdate())
+		{
+			PlayLevelBGM();
+		}
+
 		if (false == ibbPlayer->IsUpdate() &&
 			false == obbPlayer->IsUpdate())
 		{
 			ReviveCharacter();
 		}
-		
-		ibbPlayer->SetPos({ 1650.0f, 500.0f});
-		obbPlayer->SetPos({ 1720.0f, 500.0f});
+
+		ibbPlayer->SetPos({ 1650.0f, 500.0f });
+		obbPlayer->SetPos({ 1720.0f, 500.0f });
 	}
 	
 	if (true == GameEngineInput::IsDown('2'))
 	{
+		if (false == ibbPlayer->IsUpdate() ||
+			false == obbPlayer->IsUpdate())
+		{
+			PlayLevelBGM();
+		}
+		
 		if (false == ibbPlayer->IsUpdate() &&
 			false == obbPlayer->IsUpdate())
 		{
 			ReviveCharacter();
 		}
+
 		ibbPlayer->SetPos({ 3000.0f, 200.0f });
 		obbPlayer->SetPos({ 3100.0f, 200.0f });
 	}
 	
 	if (true == GameEngineInput::IsDown('3'))
 	{
+		if (false == ibbPlayer->IsUpdate() ||
+			false == obbPlayer->IsUpdate())
+		{
+			PlayLevelBGM();
+		}
+
 		if (false == ibbPlayer->IsUpdate() &&
 			false == obbPlayer->IsUpdate())
 		{
@@ -198,6 +210,12 @@ void PlayLevel1::Update(float _DeltaTime)
 
 	if(true == GameEngineInput::IsDown('4'))
 	{
+		if (false == ibbPlayer->IsUpdate() ||
+			false == obbPlayer->IsUpdate())
+		{
+			PlayLevelBGM();
+		}
+
 		if (false == ibbPlayer->IsUpdate() &&
 			false == obbPlayer->IsUpdate())
 		{
@@ -233,6 +251,13 @@ void PlayLevel1::Update(float _DeltaTime)
 
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(ZoomScale);
 	
+
+	if (false == ibbPlayer->IsUpdate() ||
+		false == obbPlayer->IsUpdate())
+	{
+		BGMPlayer.Stop();
+	}
+
 	if (true == EnterLobby)
 	{
 		LobbyStart(_DeltaTime);
@@ -271,12 +296,8 @@ void PlayLevel1::LobbyStart(float _DeltaTime)
 void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	LevelPlayerInit();
-	
-	{
-		BGMPlayer = GameEngineSound::SoundPlay("Level1BGM.mp3");
-		BGMPlayer.SetLoop(10);
-		BGMPlayer.SetVolume(0.3f);
-	}
+
+	PlayLevelBGM();
 
 	// RoadMonster
 	{
@@ -423,7 +444,7 @@ void PlayLevel1::LevelEnd(GameEngineLevel* _NextLevel)
 void PlayLevel1::LevelPlayerInit()
 {
 	float DefaultPosX = 200.0f;
-	float DefaultPosY = 380.0f;
+	float DefaultPosY = 600.0f;
 
 	// ibb
 	if (nullptr == ibb::GetMainibb())
@@ -468,6 +489,13 @@ void PlayLevel1::SetZoomScale(float _Ratio, float _DeltaTime)
 		}
 	}
 
+}
+
+void PlayLevel1::PlayLevelBGM()
+{
+	BGMPlayer = GameEngineSound::SoundPlay("Level1BGM.mp3");
+	BGMPlayer.SetLoop(10);
+	BGMPlayer.SetVolume(0.3f);
 }
 
 void PlayLevel1::Level1SettingInit()

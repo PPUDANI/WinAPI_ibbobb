@@ -63,10 +63,10 @@ void ibb::Init()
 
 	// Blink Animation
 	Frame = 0.07f;
-	MainRenderer->CreateAnimation("Left_Blink", "Left_ibb.bmp", 0, 1, Frame, true);
-	MainRenderer->CreateAnimation("Right_Blink", "Right_ibb.bmp", 0, 1, Frame, true);
-	MainRenderer->CreateAnimation("ReverseLeft_Blink", "Left_ibb_Reverse.bmp", 0, 1, Frame, true);
-	MainRenderer->CreateAnimation("ReverseRight_Blink", "Right_ibb_Reverse.bmp", 0, 1, Frame, true);
+	MainRenderer->CreateAnimation("Left_Blink", "Left_ibb.bmp", 0, 1, Frame, false);
+	MainRenderer->CreateAnimation("Right_Blink", "Right_ibb.bmp", 0, 1, Frame, false);
+	MainRenderer->CreateAnimation("ReverseLeft_Blink", "Left_ibb_Reverse.bmp", 0, 1, Frame, false);
+	MainRenderer->CreateAnimation("ReverseRight_Blink", "Right_ibb_Reverse.bmp", 0, 1, Frame, false);
 
 	// Crouch Animation
 	Frame = 10.0f;
@@ -76,7 +76,7 @@ void ibb::Init()
 	MainRenderer->CreateAnimation("ReverseRight_Crouch", "Right_ibb_Reverse.bmp", 11, 11, Frame, true);
 
 	// Run Animation
-	Frame = 0.08f;
+	Frame = 0.07f;
 	MainRenderer->CreateAnimation("Left_Run", "Left_ibb.bmp", 12, 21, Frame, true);
 	MainRenderer->CreateAnimation("Right_Run", "Right_ibb.bmp", 12, 21, Frame, true);
 	MainRenderer->CreateAnimation("ReverseLeft_Run", "Left_ibb_Reverse.bmp", 12, 21, Frame, true);
@@ -105,10 +105,10 @@ void ibb::Init()
 
 	// Dead Animation
 	Frame = 0.03f;
-	MainRenderer->CreateAnimation("Left_Dead", "Left_ibb.bmp", 39, 41, 0.04f, true);
-	MainRenderer->CreateAnimation("Right_Dead", "Right_ibb.bmp", 39, 41, 0.04f, true);
-	MainRenderer->CreateAnimation("ReverseLeft_Dead", "Left_ibb_Reverse.bmp", 39, 41, 0.04f, true);
-	MainRenderer->CreateAnimation("ReverseRight_Dead", "Right_ibb_Reverse.bmp", 39, 41, 0.04f, true);
+	MainRenderer->CreateAnimation("Left_Dead", "Left_ibb.bmp", 39, 41, 0.04f, false);
+	MainRenderer->CreateAnimation("Right_Dead", "Right_ibb.bmp", 39, 41, 0.04f, false);
+	MainRenderer->CreateAnimation("ReverseLeft_Dead", "Left_ibb_Reverse.bmp", 39, 41, 0.04f, false);
+	MainRenderer->CreateAnimation("ReverseRight_Dead", "Right_ibb_Reverse.bmp", 39, 41, 0.04f, false);
 
 	// 충돌체 설정
 
@@ -235,6 +235,41 @@ bool ibb::DownToOtherColorWarpCheck()
 {
 	std::vector<GameEngineCollision*> _ColVec;
 	return DownCol->Collision(OtherColorWarpCol,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+
+bool ibb::UpToGravityPlatformCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return UpCol->Collision(CollisionOrder::GravityPlatform,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+bool ibb::DownToGravityPlatformCheck()
+{
+	std::vector<GameEngineCollision*> _ColVec;
+	return DownCol->Collision(CollisionOrder::GravityPlatform,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+bool ibb::UpToGravityPlatformCheck(std::vector<GameEngineCollision*> _ColVec)
+{
+	return UpCol->Collision(CollisionOrder::GravityPlatform,
+		_ColVec,
+		CollisionType::Rect,
+		CollisionType::Rect);
+}
+
+bool ibb::DownToGravityPlatformCheck(std::vector<GameEngineCollision*> _ColVec)
+{
+	return DownCol->Collision(CollisionOrder::GravityPlatform,
 		_ColVec,
 		CollisionType::Rect,
 		CollisionType::Rect);

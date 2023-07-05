@@ -60,6 +60,7 @@ void Player::IdleUpdate(float _DeltaTime)
 		return;
 	}
 
+
 	// Run 상태 체크
 	if (true == GameEngineInput::IsPress(MoveLeftKey) ||
 		true == GameEngineInput::IsPress(MoveRightKey))
@@ -69,7 +70,8 @@ void Player::IdleUpdate(float _DeltaTime)
 	}
 	
 	// Jump 상태 체크
-	if (true == GameEngineInput::IsPress(JumpKey))
+	if (true == GameEngineInput::IsPress(JumpKey) &&
+		false == DownToGravityPlatformCheck())
 	{
 		if (true == ReverseValue)
 		{
@@ -84,7 +86,7 @@ void Player::IdleUpdate(float _DeltaTime)
 		return;
 	}
 
-	OtherPlayerMoveCheck();
+	OtherPlayerPushCheck();
 
 
 	// Crouch 상태 체크
@@ -172,7 +174,7 @@ void Player::CrouchUpdate(float _DeltaTime)
 		return;
 	}
 
-	OtherPlayerMoveCheck();
+	OtherPlayerPushCheck();
 
 	// 방향 전환
 	if (true == GameEngineInput::IsPress(MoveLeftKey))
@@ -211,7 +213,8 @@ void Player::RunUpdate(float _DeltaTime)
 	}
 
 	// Run의 Jump 상태 체크
-	if (true == GameEngineInput::IsDown(JumpKey))
+	if (true == GameEngineInput::IsDown(JumpKey) &&
+		false == DownToGravityPlatformCheck())
 	{
 		if (true == ReverseValue)
 		{
@@ -355,7 +358,6 @@ void Player::FallUpdate(float _DeltaTime)
 {
 	// Fall의 중력 반전 체크
 	ReverseInit();
-	
 	// Fall의 바닥 충돌 체크
 	{
 		if (true == DownMapColCheck())
@@ -414,7 +416,6 @@ void Player::FallUpdate(float _DeltaTime)
 				// 지글현상 제거
 				AddPos(float4::DOWN);
 			}
-
 
 			IdleInitFromFall();
 			ChangeState(PlayerState::Idle);
@@ -546,8 +547,7 @@ void Player::JumpUpdate(float _DeltaTime)
 		GravityReset();
 		ChangeState(PlayerState::Fall);
 	}
-	else if (
-		true == UpToOtherBodyCheck() &&
+	else if (true == UpToOtherBodyCheck() &&
 		PlayerState::RidingMode != OtherPlayer->GetState())
 	{
 		GravityReset();
@@ -558,32 +558,6 @@ void Player::JumpUpdate(float _DeltaTime)
 		Gravity(_DeltaTime);
 	}
 
-	// Jump의 하단 충돌 체크 (다른 플레이어가 아래에서 치고 올라올 수 있음)
-	{
-		if (true == DownToOtherUpCheck())
-		{
-			if (true == ReverseValue)
-			{
-				while (false != DownToOtherUpCheck())
-				{
-					AddPos(float4::DOWN);
-				}
-				AddPos(float4::UP);
-			}
-			else
-			{
-				while (false != DownToOtherUpCheck())
-				{
-					AddPos(float4::UP);
-				}
-				AddPos(float4::DOWN);
-			}
-
-			DistanceFromOtherPlayer = GetPos() - OtherPlayer->GetPos();
-			ChangeState(PlayerState::RidingMode);
-			return;
-		}
-	}
 	// 일정 높이 이상 도달 시 Tumbling 애니메이션으로 교체 및 Fall 상태로 변환
 	if (true == ReverseValue)
 	{
@@ -734,7 +708,6 @@ void Player::RidingModeUpdate(float _DeltaTime)
 		if (true == LeftMapColCheck())
 		{
 			AddPos(float4::RIGHT);
-
 			DistanceFromOtherPlayer.X = GetPos().X - OtherPlayer->GetPos().X;
 		}
 

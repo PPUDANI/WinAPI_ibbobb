@@ -60,19 +60,19 @@ void RoadMonster::Init()
 
 	// Blink
 	Frame = 0.1f;
-	MonsterRenderer->CreateAnimation("Left_Blink", "Left_RoadMonster.bmp", 0, 1, Frame, true);
-	MonsterRenderer->CreateAnimation("Right_Blink", "Right_RoadMonster.bmp", 0, 1, Frame, true);
+	MonsterRenderer->CreateAnimation("Left_Blink", "Left_RoadMonster.bmp", 0, 1, Frame, false);
+	MonsterRenderer->CreateAnimation("Right_Blink", "Right_RoadMonster.bmp", 0, 1, Frame, false);
 
 	// Dead
 	Frame = 0.02f;
-	MonsterRenderer->CreateAnimation("Left_Dead", "Left_RoadMonster.bmp", 2, 9, Frame, true);
-	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster.bmp", 2, 9, Frame, true);
-	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore_Reverse.bmp", 1, 8, Frame, true);
+	MonsterRenderer->CreateAnimation("Left_Dead", "Left_RoadMonster.bmp", 2, 9, Frame, false);
+	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster.bmp", 2, 9, Frame, false);
+	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore_Reverse.bmp", 1, 8, Frame, false);
 
 	// Turn
 	Frame = 0.05f;
-	MonsterRenderer->CreateAnimation("Left_Turn", "Turn_RoadMonster.bmp", 0, 4, Frame, true);
-	MonsterRenderer->CreateAnimation("Right_Turn", "Turn_RoadMonster.bmp", 4, 0, Frame, true);
+	MonsterRenderer->CreateAnimation("Left_Turn", "Turn_RoadMonster.bmp", 0, 4, Frame, false);
+	MonsterRenderer->CreateAnimation("Right_Turn", "Turn_RoadMonster.bmp", 4, 0, Frame, false);
 
 	BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
 	BodyCollision->SetCollisionScale({ 60.0f, 30.0f });
@@ -119,7 +119,10 @@ void RoadMonster::ReverseInit()
 	{
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RoadMonsterCore.bmp"), 3, 3);
 	}
-
+		if (ResourcesManager::GetInst().FindSprite("RoadMonsterCore.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RoadMonsterCore.bmp"), 3, 3);
+	}
 
 	MonsterRenderer = CreateRenderer(RenderOrder::RoadMonster);
 	CoreRenderer = CreateRenderer(RenderOrder::MonsterCore);
@@ -133,19 +136,19 @@ void RoadMonster::ReverseInit()
 
 	// Blink
 	Frame = 0.1f;
-	MonsterRenderer->CreateAnimation("Left_Blink", "Left_RoadMonster_Reverse.bmp", 0, 1, Frame, true);
-	MonsterRenderer->CreateAnimation("Right_Blink", "Right_RoadMonster_Reverse.bmp", 0, 1, Frame, true);
+	MonsterRenderer->CreateAnimation("Left_Blink", "Left_RoadMonster_Reverse.bmp", 0, 1, Frame, false);
+	MonsterRenderer->CreateAnimation("Right_Blink", "Right_RoadMonster_Reverse.bmp", 0, 1, Frame, false);
 
 	// Dead
 	Frame = 0.02f;
-	MonsterRenderer->CreateAnimation("Left_Dead", "Left_RoadMonster_Reverse.bmp", 2, 9, Frame, true);
-	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster_Reverse.bmp", 2, 9, Frame, true);
-	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore.bmp", 1, 8, Frame, true);
+	MonsterRenderer->CreateAnimation("Left_Dead", "Left_RoadMonster_Reverse.bmp", 2, 9, Frame, false);
+	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster_Reverse.bmp", 2, 9, Frame, false);
+	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore.bmp", 1, 8, Frame, false);
 
 	// Turn
 	Frame = 0.05f;
-	MonsterRenderer->CreateAnimation("Left_Turn", "Turn_RoadMonster_Reverse.bmp", 0, 4, Frame, true);
-	MonsterRenderer->CreateAnimation("Right_Turn", "Turn_RoadMonster_Reverse.bmp", 4, 0, Frame, true);
+	MonsterRenderer->CreateAnimation("Left_Turn", "Turn_RoadMonster_Reverse.bmp", 0, 4, Frame, false);
+	MonsterRenderer->CreateAnimation("Right_Turn", "Turn_RoadMonster_Reverse.bmp", 4, 0, Frame, false);
 
 	BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
 	BodyCollision->SetCollisionScale({ 60.0f, 30.0f });
@@ -167,10 +170,7 @@ void RoadMonster::ReverseInit()
 
 void RoadMonster::Start()
 {
-	if (GameEngineSound::FindSound("Death.mp3") == nullptr)
-	{
-		SoundLoadManager::LoadSound("Death", "Death.mp3");
-	}
+	SoundLoadManager::LoadSound("Monster", "MonsterDeath.mp3");
 }
 
 void RoadMonster::Update(float _DeltaTime)
@@ -241,8 +241,7 @@ void RoadMonster::MoveUpdate(float _DeltaTime)
 	{
 		SetAnimation("Dead");
 		CoreRenderer->ChangeAnimation("Dead");
-
-		EffectPlayer = GameEngineSound::SoundPlay("Death.mp3");
+		EffectPlayer = GameEngineSound::SoundPlay("MonsterDeath.mp3");
 		EffectPlayer.SetVolume(1.0f);
 
 		CurState = RoadMonsterState::Dead;

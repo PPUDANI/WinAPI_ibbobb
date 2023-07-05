@@ -177,9 +177,6 @@
     <Filter Include="Contents\Global">
       <UniqueIdentifier>{c24e4729-4c0c-443b-8b50-73ba2b0a6abc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Global\Warp">
-      <UniqueIdentifier>{0a2d6088-5382-48fd-a2b3-18aae3c8afbc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Contents\Global\Monster">
       <UniqueIdentifier>{a6575aa2-de71-44b8-97af-b905a301a971}</UniqueIdentifier>
     </Filter>
@@ -197,6 +194,9 @@
     </Filter>
     <Filter Include="Contents\Global\GravityTransferPlatform">
       <UniqueIdentifier>{6e558a6d-7090-40ed-8af3-8843e1303cd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Global\Warp">
+      <UniqueIdentifier>{0a2d6088-5382-48fd-a2b3-18aae3c8afbc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

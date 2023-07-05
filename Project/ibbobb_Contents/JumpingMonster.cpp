@@ -43,10 +43,11 @@ void JumpingMonster::Init()
 		MonsterRenderer->CreateAnimation("Idle", "JumpingMonster.bmp", 0, 0, 10.0f, true);
 
 		// Blink
-		MonsterRenderer->CreateAnimation("Blink", "JumpingMonster.bmp", 0, 1, 0.1f, true);
+		MonsterRenderer->CreateAnimation("Blink", "JumpingMonster.bmp", 0, 1, 0.1f, false);
 
 		// Dead
-		MonsterRenderer->CreateAnimation("Dead", "JumpingMonster.bmp", 2, 9, 0.03f, true);
+		MonsterRenderer->CreateAnimation("Dead", "JumpingMonster.bmp", 2, 9, 0.02f, false);
+
 	}
 	
 	// Monster의 Core 렌더링 및 Core 애니메이션
@@ -57,7 +58,7 @@ void JumpingMonster::Init()
 		CoreRenderer->CreateAnimation("Idle", "JumpingMonsterCore.bmp", 0, 0, 10.0f, true);
 
 		// Dead
-		CoreRenderer->CreateAnimation("Dead", "JumpingMonsterCore.bmp", 1, 8, 0.01f, true);
+		CoreRenderer->CreateAnimation("Dead", "JumpingMonsterCore.bmp", 1, 8, 0.02f, false);
 
 		CoreRenderer->ChangeAnimation("Idle");
 	}
@@ -105,10 +106,10 @@ void JumpingMonster::ReverseInit()
 		MonsterRenderer->CreateAnimation("Idle", "JumpingMonster_Reverse.bmp", 0, 0, 10.0f, true);
 
 		// Blink
-		MonsterRenderer->CreateAnimation("Blink", "JumpingMonster_Reverse.bmp", 0, 1, 0.1f, true);
+		MonsterRenderer->CreateAnimation("Blink", "JumpingMonster_Reverse.bmp", 0, 1, 0.1f, false);
 
 		// Dead
-		MonsterRenderer->CreateAnimation("Dead", "JumpingMonster_Reverse.bmp", 2, 9, 0.03f, true);
+		MonsterRenderer->CreateAnimation("Dead", "JumpingMonster_Reverse.bmp", 2, 9, 0.02f, false);
 	}
 	// Monster의 Core 렌더링 및 Core 애니메이션
 	{
@@ -118,7 +119,7 @@ void JumpingMonster::ReverseInit()
 		CoreRenderer->CreateAnimation("Idle", "JumpingMonsterCore.bmp", 0, 0, 10.0f, true);
 
 		// Dead
-		CoreRenderer->CreateAnimation("Dead", "JumpingMonsterCore.bmp", 1, 8, 0.01f, true);
+		CoreRenderer->CreateAnimation("Dead", "JumpingMonsterCore.bmp", 1, 8, 0.02f, false);
 
 		CoreRenderer->ChangeAnimation("Idle");
 	}
@@ -142,10 +143,7 @@ void JumpingMonster::ReverseInit()
 
 void JumpingMonster::Start()
 {	
-	if (GameEngineSound::FindSound("Death.mp3") == nullptr)
-	{
-		SoundLoadManager::LoadSound("Death", "Death.mp3");
-	}
+	SoundLoadManager::LoadSound("Monster", "MonsterDeath.mp3");
 }
 
 void JumpingMonster::Update(float _DeltaTime)
@@ -179,8 +177,7 @@ void JumpingMonster::FallUpdate(float _DeltaTime)
 	{
 		SetAnimation("Dead");
 		CoreRenderer->ChangeAnimation("Dead");
-
-		EffectPlayer = GameEngineSound::SoundPlay("Death.mp3");
+		EffectPlayer = GameEngineSound::SoundPlay("MonsterDeath.mp3");
 		EffectPlayer.SetVolume(1.0f);
 
 		ChangeState(JumpingMonsterState::Dead);

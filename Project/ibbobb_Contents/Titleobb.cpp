@@ -35,7 +35,7 @@ void Titleobb::Start()
 
 	// Blink Animation
 	Frame = 0.07f;
-	obbRenderer->CreateAnimation("Blink", "Left_obb.bmp", 0, 1, Frame, true);
+	obbRenderer->CreateAnimation("Blink", "Left_obb.bmp", 0, 1, Frame, false);
 
 	// Crouch Animation
 	Frame = 0.1f;

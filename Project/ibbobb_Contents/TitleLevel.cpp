@@ -49,23 +49,14 @@ void TitleLevel::Start()
 
 	// Sound
 	{
-		if (nullptr == GameEngineSound::FindSound("TitleBGM.mp3"))
-		{
-			SoundLoadManager::LoadSound("BGM", "TitleBGM.mp3");
-		}
-
-		if (nullptr == GameEngineSound::FindSound("PressP.mp3"))
-		{
-			SoundLoadManager::LoadSound("LevelEffect", "PressP.mp3");
-		}
+		SoundLoadManager::LoadSound("BGM", "TitleBGM.mp3");
+		SoundLoadManager::LoadSound("LevelEffect", "PressP.mp3");
 	}
-	
-
 }
 
 void TitleLevel::Update(float _DeltaTime)
 {
-	if (true == GameEngineInput::IsDown('P'))
+	if (true == GameEngineInput::IsDown('P') && false == GameStartValue)
 	{
 		EffectPlayer = GameEngineSound::SoundPlay("PressP.mp3");
 		EffectPlayer.SetVolume(0.4f);

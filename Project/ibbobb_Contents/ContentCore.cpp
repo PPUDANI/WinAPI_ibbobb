@@ -25,11 +25,9 @@ void ContentCore::Start()
 
 	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineCore::CreateLevel<Lobby>("Lobby");
-
 	GameEngineCore::CreateLevel<PlayLevel1>("PlayLevel1");
 	GameEngineCore::CreateLevel<PlayLevel2>("PlayLevel2");
-	//GameEngineCore::CreateLevel<PlayLevel3>("PlayLevel3");
-	//GameEngineCore::CreateLevel<PlayLevel4>("PlayLevel4");
+
 
 	GameEngineCore::ChangeLevel("TitleLevel");
 }

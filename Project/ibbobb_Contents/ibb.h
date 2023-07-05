@@ -35,6 +35,11 @@ private:
 	bool UpToOtherColorWarpCheck() override;
 	bool DownToOtherColorWarpCheck() override;
 
+	bool UpToGravityPlatformCheck() override;
+	bool DownToGravityPlatformCheck() override;
+	bool UpToGravityPlatformCheck(std::vector<GameEngineCollision*> _ColVec) override;
+	bool DownToGravityPlatformCheck(std::vector<GameEngineCollision*> _ColVec) override;
+
 	bool UpToOtherBodyCheck() override;
 	bool DownToOtherBodyCheck() override;
 

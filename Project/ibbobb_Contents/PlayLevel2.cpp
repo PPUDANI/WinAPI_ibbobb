@@ -55,26 +55,72 @@ void PlayLevel2::Start()
 
 	// Warp
 	{
+		// 1
 		Warp* _Warp = nullptr;
 		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
 		_Warp->SetStarNumber(10);
 		_Warp->SetWorpDir(WarpDir::Vertical);
-		_Warp->SetPos({ 948.0f, 864.0f });
+		_Warp->SetPos({ 1287.0f, 864.0f });
 		_Warp->Init(WarpType::ibbOnly);
 		Warps.push_back(_Warp);
 
 		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
 		_Warp->SetStarNumber(10);
 		_Warp->SetWorpDir(WarpDir::Vertical);
-		_Warp->SetPos({ 1183.0f, 864.0f });
+		_Warp->SetPos({ 1573.0f, 864.0f });
 		_Warp->Init(WarpType::obbOnly);
+		Warps.push_back(_Warp);
+
+		// 2
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(12);
+		_Warp->SetWorpDir(WarpDir::Vertical);
+		_Warp->SetPos({ 2327.0f, 838.0f });
+		_Warp->Init(WarpType::ibbOnly);
 		Warps.push_back(_Warp);
 
 		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
 		_Warp->SetStarNumber(12);
 		_Warp->SetWorpDir(WarpDir::Vertical);
-		_Warp->SetPos({ 1833.0f, 838.0f });
+		_Warp->SetPos({ 2509.0f, 655.0f });
 		_Warp->Init(WarpType::ibbOnly);
+		Warps.push_back(_Warp);
+
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(14);
+		_Warp->SetWorpDir(WarpDir::Horizontal);
+		_Warp->SetPos({ 2737.0f, 637.0f });
+		_Warp->Init(WarpType::obbOnly);
+		Warps.push_back(_Warp);
+
+		// 3
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(12);
+		_Warp->SetWorpDir(WarpDir::Vertical);
+		_Warp->SetPos({ 3627.0f, 682.0f });
+		_Warp->Init(WarpType::ibbOnly);
+		Warps.push_back(_Warp);
+
+		// 4
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(14);
+		_Warp->SetWorpDir(WarpDir::Horizontal);
+		_Warp->SetPos({ 4609.0f, 923.0f });
+		_Warp->Init(WarpType::ibbOnly);
+		Warps.push_back(_Warp);
+
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(14);
+		_Warp->SetWorpDir(WarpDir::Horizontal);
+		_Warp->SetPos({ 6143.0f, 1027.0f });
+		_Warp->Init(WarpType::ibbOnly);
+		Warps.push_back(_Warp);
+
+		_Warp = CreateActor<Warp>(UpdateOrder::Warp);
+		_Warp->SetStarNumber(14);
+		_Warp->SetWorpDir(WarpDir::Horizontal);
+		_Warp->SetPos({ 6637.0f, 559.0f });
+		_Warp->Init(WarpType::Common);
 		Warps.push_back(_Warp);
 	}
 
@@ -182,7 +228,7 @@ void PlayLevel2::Update(float _DeltaTime)
 	//{
 	//	SetZoomScale(1.4f, _DeltaTime);
 	//}
-	if (3000.0f > CameraPosX)
+	if (7000.0f > CameraPosX)
 	{
 		SetZoomScale(1.0f, _DeltaTime);
 	}
@@ -286,7 +332,7 @@ void PlayLevel2::LevelEnd(GameEngineLevel* _NextLevel)
 
 void PlayLevel2::LevelPlayerInit()
 {
-	float DefaultPosX = 3000.0f;
+	float DefaultPosX = 4000.0f;
 	float DefaultPosY = 380.0f;
 
 	// ibb
@@ -299,6 +345,7 @@ void PlayLevel2::LevelPlayerInit()
 	ibbPlayer->SetPos({ DefaultPosX, DefaultPosY });
 	ibbPlayer->ChangeState(PlayerState::Fall);
 	ibbPlayer->SetDir(PlayerDir::Right);
+	ibbPlayer->SetMaxGravityInHole(1300.0f);
 
 	// obb
 	if (nullptr == obb::GetMainobb())
@@ -310,6 +357,7 @@ void PlayLevel2::LevelPlayerInit()
 	obbPlayer->SetPos({ DefaultPosX + 100.0f, DefaultPosY });
 	obbPlayer->ChangeState(PlayerState::Fall);
 	obbPlayer->SetDir(PlayerDir::Right);
+	obbPlayer->SetMaxGravityInHole(1200.0f);
 }
 
 void PlayLevel2::SetZoomScale(float _Ratio, float _DeltaTime)

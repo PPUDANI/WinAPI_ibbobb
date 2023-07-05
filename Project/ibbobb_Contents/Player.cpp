@@ -37,7 +37,7 @@ void Player::Start()
 
 	// 워프홀 기본 중력값 설정 (중력값이 작아 못 빠져나올 가능성 제거)
 	MinGravityInHole = 350.0f;
-	MaxGravityInHole = 1100.0f;
+	MaxGravityInHole = 500.0f;
 	ErrorRangeOfGravity = 1.1f;
 	PushPowerInVirticalHole = 50.0f;
 
@@ -534,12 +534,12 @@ bool Player::UpMapColCheck()
 		if (LeftUpColor == RGB(255, 0, 0) ||
 			MiddleUpColor == RGB(255, 0, 0) ||
 			RightUpColor == RGB(255, 0, 0) ||
-			DownToOtherColorWarpCheck())
+			UpToOtherColorWarpCheck())
 		{
 			while (LeftUpColor == RGB(255, 0, 0) ||
 				MiddleUpColor == RGB(255, 0, 0) ||
 				RightUpColor == RGB(255, 0, 0) ||
-				DownToOtherColorWarpCheck())
+				UpToOtherColorWarpCheck())
 			{
 				LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftDownCheck + float4::RIGHT * 2.0f);
 				MiddleUpColor = GetGroundColor(RGB(255, 0, 0), MapMiddleDownCheck);
@@ -591,14 +591,14 @@ bool Player::DownMapColCheck()
 		if (LeftDownColor == RGB(255, 0, 0) ||
 			MiddleDownColor == RGB(255, 0, 0) ||
 			RightDownColor == RGB(255, 0, 0) ||
-			UpToOtherColorWarpCheck())
+			DownToOtherColorWarpCheck())
 		{
 			if (PlayerState::Fall == CurState)
 			{
 				while (LeftDownColor == RGB(255, 0, 0) ||
 					MiddleDownColor == RGB(255, 0, 0) ||
 					RightDownColor == RGB(255, 0, 0) ||
-					UpToOtherColorWarpCheck())
+					DownToOtherColorWarpCheck())
 				{
 					LeftDownColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::RIGHT * 2.0f);
 					MiddleDownColor = GetGroundColor(RGB(255, 0, 0), MapMiddleUpCheck);

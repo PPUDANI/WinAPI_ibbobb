@@ -375,7 +375,7 @@ void Lobby::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Lobby::LevelPlayerInit()
 {
-	float DefaultPosX = 100.0f;
+	float DefaultPosX = 720.0f;
 	float DefaultPosY = 0.0f;
 
 	// ibb

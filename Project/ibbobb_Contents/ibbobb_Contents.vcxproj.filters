@@ -48,9 +48,6 @@
     <ClInclude Include="Lobby.h">
       <Filter>Contents\Level\Lobby</Filter>
     </ClInclude>
-    <ClInclude Include="LobbyMedal.h">
-      <Filter>Contents\Level\Lobby</Filter>
-    </ClInclude>
     <ClInclude Include="DoorStar.h">
       <Filter>Contents\Level\Lobby</Filter>
     </ClInclude>
@@ -77,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="GravityTransferPlatform.h">
       <Filter>Contents\Global\GravityTransferPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyMedal.h">
+      <Filter>Contents\Level\Lobby</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

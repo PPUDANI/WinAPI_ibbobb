@@ -435,7 +435,7 @@ void PlayLevel1::LevelPlayerInit()
 	ibbPlayer->SetPos({ DefaultPosX, DefaultPosY });
 	ibbPlayer->ChangeState(PlayerState::Fall);
 	ibbPlayer->SetDir(PlayerDir::Right);
-
+	ibbPlayer->SetMaxGravityInHole(1100.0f);
 	// obb
 	if (nullptr == obb::GetMainobb())
 	{
@@ -446,6 +446,7 @@ void PlayLevel1::LevelPlayerInit()
 	obbPlayer->SetPos({ DefaultPosX + 100.0f, DefaultPosY });
 	obbPlayer->ChangeState(PlayerState::Fall);
 	obbPlayer->SetDir(PlayerDir::Right);
+	obbPlayer->SetMaxGravityInHole(1100.0f);
 }
 
 void PlayLevel1::SetZoomScale(float _Ratio, float _DeltaTime)

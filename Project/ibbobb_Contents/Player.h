@@ -77,6 +77,11 @@ public:
 		return OtherPlayer;
 	}
 
+	inline void SetMaxGravityInHole(float _Value)
+	{
+		MaxGravityInHole = _Value;
+	}
+
 	inline void ChangeState(PlayerState _State)
 	{
 		CurState = _State;

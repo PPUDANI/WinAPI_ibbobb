@@ -239,12 +239,14 @@ void Player::OtherPlayerPushCheck()
 
 			if (RightUpColor == RGB(255, 0, 0) ||
 				RightMiddleColor == RGB(255, 0, 0) ||
-				RightDownColor == RGB(255, 0, 0))
+				RightDownColor == RGB(255, 0, 0) ||
+				true == RightToOtherColorWarpCheck())
 			{
 				// 벽에 박힘 제거
 				while (RightUpColor == RGB(255, 0, 0) ||
 					RightMiddleColor == RGB(255, 0, 0) ||
-					RightDownColor == RGB(255, 0, 0))
+					RightDownColor == RGB(255, 0, 0) ||
+					true == RightToOtherColorWarpCheck())
 				{
 					RightUpColor = GetGroundColor(RGB(255, 0, 0), MapRightUpCheck + float4::DOWN);
 					RightMiddleColor = GetGroundColor(RGB(255, 0, 0), MapRightMiddleCheck);
@@ -265,10 +267,14 @@ void Player::OtherPlayerPushCheck()
 
 			if (LeftUpColor == RGB(255, 0, 0) ||
 				LeftMiddleColor == RGB(255, 0, 0) ||
-				LeftDownColor == RGB(255, 0, 0))
+				LeftDownColor == RGB(255, 0, 0) ||
+				true == LeftToOtherColorWarpCheck())
 			{
 				// 벽에 박힘 제거
-				while (LeftUpColor == RGB(255, 0, 0) || LeftMiddleColor == RGB(255, 0, 0) || LeftDownColor == RGB(255, 0, 0))
+				while (LeftUpColor == RGB(255, 0, 0) ||
+					LeftMiddleColor == RGB(255, 0, 0) ||
+					LeftDownColor == RGB(255, 0, 0) ||
+					true == LeftToOtherColorWarpCheck())
 				{
 					LeftUpColor = GetGroundColor(RGB(255, 0, 0), MapLeftUpCheck + float4::DOWN);
 					LeftMiddleColor = GetGroundColor(RGB(255, 0, 0), MapLeftMiddleCheck);

@@ -30,8 +30,8 @@ public:
 	RoadMonster& operator=(const RoadMonster& _Other) = delete;
 	RoadMonster& operator=(RoadMonster&& _Other) noexcept = delete;
 
-	void Init(const float4& _InitPos);
-	void ReverseInit(const float4& _InitPos);
+	void Init(const float4& _InitPos, RoadMonsterDir _Dir);
+	void ReverseInit(const float4& _InitPos, RoadMonsterDir _Dir);
 
 	inline void SetDir(RoadMonsterDir _Dir)
 	{
@@ -70,6 +70,7 @@ private:
 	float Speed = 100.0f;
 	float CurDistance = 0.0f;
 	float4 StartVector = float4::ZERO;
+	RoadMonsterDir StartDir;
 
 	float4 LeftCheck = { -30.0f, 0.0f };
 	float4 RightCheck = { 30.0f, 0.0f };

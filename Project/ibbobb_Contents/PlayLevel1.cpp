@@ -343,25 +343,22 @@ void PlayLevel1::LevelStart(GameEngineLevel* _PrevLevel)
 		RoadMonster* _RoadMonster = nullptr;
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
 		_RoadMonster->SetGroundTexture(ColName);
-		_RoadMonster->ReverseInit({ 3200.0f, 755.0f });
-		_RoadMonster->SetDir(RoadMonsterDir::Left);
+		_RoadMonster->ReverseInit({ 3200.0f, 755.0f }, RoadMonsterDir::Left);
 		RoadMonsters.push_back(_RoadMonster);
 
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
 		_RoadMonster->SetGroundTexture(ColName);
-		_RoadMonster->ReverseInit({ 3100.0f, 755.0f });
-		_RoadMonster->SetDir(RoadMonsterDir::Right);
+		_RoadMonster->ReverseInit({ 3100.0f, 755.0f }, RoadMonsterDir::Right);
 		RoadMonsters.push_back(_RoadMonster);
 
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
-		_RoadMonster->Init({ 3400.0f, 649.0f });
+		_RoadMonster->Init({ 3450.0f, 649.0f }, RoadMonsterDir::Left);
 		_RoadMonster->SetGroundTexture(ColName);
 		RoadMonsters.push_back(_RoadMonster);
 
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
-		_RoadMonster->Init({ 3600.0f, 649.0f });
+		_RoadMonster->Init({ 3550.0f, 649.0f }, RoadMonsterDir::Right);
 		_RoadMonster->SetGroundTexture(ColName);
-		_RoadMonster->SetDir(RoadMonsterDir::Left);
 		RoadMonsters.push_back(_RoadMonster);
 	}
 

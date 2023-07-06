@@ -21,7 +21,7 @@ RoadMonster::~RoadMonster()
 
 }
 
-void RoadMonster::Init(const float4& _InitPos)
+void RoadMonster::Init(const float4& _InitPos, RoadMonsterDir _Dir)
 {
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
@@ -95,12 +95,16 @@ void RoadMonster::Init(const float4& _InitPos)
 	CoreRenderer->SetRenderPos({ 0.0f, 27.0f });
 
 	CurState = RoadMonsterState::Move;
+
 	SetPos(_InitPos);
 	StartVector = _InitPos;
+	SetDir(_Dir);
+	StartDir = _Dir;
+	
 	ReverseValue = false;
 }
 
-void RoadMonster::ReverseInit(const float4& _InitPos)
+void RoadMonster::ReverseInit(const float4& _InitPos, RoadMonsterDir _Dir)
 {
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
@@ -177,8 +181,12 @@ void RoadMonster::ReverseInit(const float4& _InitPos)
 	CoreRenderer->SetRenderPos({ 0.0f, -27.0f });
 
 	CurState = RoadMonsterState::Move;
+
 	SetPos(_InitPos);
 	StartVector = _InitPos;
+	SetDir(_Dir);
+	StartDir = _Dir;
+
 	ReverseValue = true;
 }
 
@@ -364,6 +372,7 @@ void RoadMonster::DeadUpdate(float _DeltaTime)
 	{
 		Off();
 		SetPos(StartVector);
+		SetDir(StartDir);
 	}
 }
 

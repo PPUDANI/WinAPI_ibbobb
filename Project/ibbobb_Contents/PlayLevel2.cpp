@@ -384,20 +384,17 @@ void PlayLevel2::LevelStart(GameEngineLevel* _PrevLevel)
 		RoadMonster* _RoadMonster = nullptr;
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
 		_RoadMonster->SetGroundTexture(ColName);
-		_RoadMonster->Init({ 1650.0f, 1219.0f });
-		_RoadMonster->SetDir(RoadMonsterDir::Left);
+		_RoadMonster->Init({ 1650.0f, 1219.0f }, RoadMonsterDir::Left);
 		RoadMonsters.push_back(_RoadMonster);
 
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
 		_RoadMonster->SetGroundTexture(ColName);
-		_RoadMonster->Init({ 1950.0f, 1219.0f });
-		_RoadMonster->SetDir(RoadMonsterDir::Left);
+		_RoadMonster->Init({ 1950.0f, 1219.0f }, RoadMonsterDir::Left);
 		RoadMonsters.push_back(_RoadMonster);
 
 		_RoadMonster = CreateActor<RoadMonster>(UpdateOrder::RoadMonster);
 		_RoadMonster->SetGroundTexture(ColName);
-		_RoadMonster->Init({ 2200.0f, 1219.0f });
-		_RoadMonster->SetDir(RoadMonsterDir::Left);
+		_RoadMonster->Init({ 2200.0f, 1219.0f }, RoadMonsterDir::Left);
 		RoadMonsters.push_back(_RoadMonster);
 	}
 
@@ -407,20 +404,20 @@ void PlayLevel2::LevelStart(GameEngineLevel* _PrevLevel)
 		JumpingMonster* _JumpingMonster = nullptr;
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetJumpForce(500.0f);
-		_JumpingMonster->Init({ 3180.0f, 1000.0f });
+		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->Init({ 3200.0f, 1050.0f });
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetJumpForce(500.0f);
-		_JumpingMonster->Init({ 3330.0f, 700.0f });
+		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->Init({ 3330.0f, 850.0f });
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		_JumpingMonster = CreateActor<JumpingMonster>(UpdateOrder::JumpingMonster);
 		_JumpingMonster->SetGroundTexture(ColName);
-		_JumpingMonster->SetJumpForce(500.0f);
-		_JumpingMonster->Init({ 3480.0f, 1000.0f });
+		_JumpingMonster->SetJumpForce(600.0f);
+		_JumpingMonster->Init({ 3460.0f, 1050.0f });
 		JumpingMonsters.push_back(_JumpingMonster);
 
 		// 5

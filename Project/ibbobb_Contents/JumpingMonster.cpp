@@ -83,8 +83,10 @@ void JumpingMonster::Init(const float4& _InitPos)
 	GravityDir = float4::DOWN;
 	ReverseValue = false;
 	DownCheck = float4::DOWN * BodyHalf;
+
 	SetPos(_InitPos);
 	StartVector = _InitPos;
+
 	ChangeState(JumpingMonsterState::Fall);
 }
 
@@ -270,6 +272,7 @@ void JumpingMonster::DeadUpdate(float _DeltaTime)
 	{
 		SetPos(StartVector);
 		Off();
+
 	}
 }
 void JumpingMonster::LiveUpdate(float _DeltaTime)

@@ -304,6 +304,7 @@ void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		if (true == Medal::MedalsByLevelIsAcquired[i]->IsAcquired())
 		{
+			Medals[i]->SetAnimation("UnAcquired");
 			Medals[i]->SetAnimation("Acquired");
 		}
 	}

@@ -25,7 +25,6 @@ protected:
 private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
-	void Render(float _DeltaTime) override;
 
 	void LevelPlayerInit();
 	void SetZoomScale(float _Ratio, float _DeltaTime);

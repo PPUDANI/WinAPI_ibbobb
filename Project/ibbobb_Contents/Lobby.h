@@ -51,7 +51,6 @@ private:
 
 	void Start() override;
 	void Update(float _DeltaTime) override;
-	void Render(float _DeltaTime) override;
 
 	void Level1Start(float _DeltaTime);
 	void Level2Start(float _DeltaTime);

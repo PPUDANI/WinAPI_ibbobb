@@ -16,10 +16,6 @@ BackGround::~BackGround()
 
 }
 
-void BackGround::Start()
-{
-	
-}
 
 void BackGround::Init(const std::string& _FileName)
 {

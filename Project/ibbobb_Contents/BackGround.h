@@ -20,7 +20,5 @@ protected:
 
 private:
 	GameEngineRenderer* Renderer;
-
-	void Start() override;
 };
 

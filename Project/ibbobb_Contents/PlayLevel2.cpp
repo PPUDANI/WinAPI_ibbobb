@@ -178,9 +178,7 @@ void PlayLevel2::Start()
 	LobyDoor->SetPos({ 7448.0f, 801.0 });
 
 	// Sound
-	{
-		SoundLoadManager::LoadSound("BGM", "Level2BGM.mp3");
-	}
+	SoundLoadManager::LoadSound("BGM", "Level2BGM.mp3");
 }
 
 void PlayLevel2::Update(float _DeltaTime)
@@ -210,8 +208,6 @@ void PlayLevel2::Update(float _DeltaTime)
 			Lobby::Level1Clear();
 			EnterLobby = true;
 		}
-
-
 
 		if (true == GameEngineInput::IsDown('1'))
 		{
@@ -317,7 +313,6 @@ void PlayLevel2::Update(float _DeltaTime)
 		}
 	}
 	
-
 	SubLevel::Update(_DeltaTime);
 	float CameraPosX = GetMainCamera()->GetPos().X;
 
@@ -335,13 +330,6 @@ void PlayLevel2::Update(float _DeltaTime)
 	}
 
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(ZoomScale);
-
-
-}
-
-void PlayLevel2::Render(float _DeltaTime)
-{
-
 }
 
 void PlayLevel2::LobbyStart(float _DeltaTime)

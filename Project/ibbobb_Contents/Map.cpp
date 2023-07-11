@@ -26,20 +26,6 @@ void Map::Start()
 	DebugRenderer->Off();
 }
 
-void Map::Update(float _Delta)
-{
-}
-
-void Map::Render(float _DeltaTime)
-{
-
-}
-
-void Map::Release()
-{
-
-}
-
 void Map::Init(const std::string& _FileName, const std::string& _DebugFileName)
 {
 	GameEnginePath FilePath;

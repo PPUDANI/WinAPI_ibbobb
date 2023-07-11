@@ -22,14 +22,11 @@ public:
 protected:
 
 private:
+	void Start() override;
+
 	GameEngineRenderer* Renderer = nullptr;
 	GameEngineRenderer* DebugRenderer = nullptr;
 	bool SwitchRenderValue = true;
-	
 
-	void Start() override;
-	void Update(float _Delta) override;
-	void Render(float _DeltaTime) override;
-	void Release() override;
 };
 

@@ -138,9 +138,7 @@ void PlayLevel1::Start()
 	LobyDoor->SetPos({ 7813.0f, 984.0f });
 
 	// Sound
-	{
-		SoundLoadManager::LoadSound("BGM", "Level1BGM.mp3");
-	}
+	SoundLoadManager::LoadSound("BGM", "Level1BGM.mp3");
 }
 
 void PlayLevel1::Update(float _DeltaTime)
@@ -295,11 +293,6 @@ void PlayLevel1::Update(float _DeltaTime)
 	}
 
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(ZoomScale);
-}
-
-void PlayLevel1::Render(float _DeltaTime)
-{
-	
 }
 
 void PlayLevel1::LobbyStart(float _DeltaTime)

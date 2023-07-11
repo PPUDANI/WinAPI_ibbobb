@@ -259,11 +259,6 @@ void Lobby::Update(float _DeltaTime)
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(ZoomScale);
 }
 
-void Lobby::Render(float _DeltaTime)
-{
-
-}
-
 void Lobby::CreateCharacter()
 {
 	// ibb

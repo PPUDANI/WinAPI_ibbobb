@@ -198,26 +198,40 @@ void Lobby::Update(float _DeltaTime)
 		ZoomScale = 1.0f;
 	}
 
-	if (true == GameEngineInput::IsDown('1') ||
-		true == Level1Door->IsPlayerEnter())
+	if (true == Level1Door->IsPlayerEnter())
 	{
 		EnterLevel1 = true;
 	}
-	if (true == GameEngineInput::IsDown('2') ||
-		true == Level2Door->IsPlayerEnter())
+
+	if (true == Level2Door->IsPlayerEnter())
 	{
 		EnterLevel2 = true;
 	}
-	//if (true == GameEngineInput::IsDown('3') ||
-	//	true == Level3Door->IsPlayerEnter())
-	//{
-	//	EnterLevel3 = true;
-	//}
-	//if (true == GameEngineInput::IsDown('4') ||
-	//	true == Level4Door->IsPlayerEnter())
-	//{
-	//	EnterLevel4 = true;
-	//}
+
+	if (true == DevelopmentMode)
+	{
+		if (true == GameEngineInput::IsDown('1') ||
+			true == Level1Door->IsPlayerEnter())
+		{
+			EnterLevel1 = true;
+		}
+		if (true == GameEngineInput::IsDown('2') ||
+			true == Level2Door->IsPlayerEnter())
+		{
+			EnterLevel2 = true;
+		}
+		//if (true == GameEngineInput::IsDown('3') ||
+		//	true == Level3Door->IsPlayerEnter())
+		//{
+		//	EnterLevel3 = true;
+		//}
+		//if (true == GameEngineInput::IsDown('4') ||
+		//	true == Level4Door->IsPlayerEnter())
+		//{
+		//	EnterLevel4 = true;
+		//}
+	}
+	
 
 	if (true == EnterLevel1)
 	{
@@ -268,12 +282,10 @@ void Lobby::CreateCharacter()
 
 void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	{
-		BGMPlayer = GameEngineSound::SoundPlay("LobbyBGM.mp3");
-		BGMPlayer.SetLoop(10);
-		BGMPlayer.SetVolume(0.3f);
-
-	}
+	// Play BGM
+	BGMPlayer = GameEngineSound::SoundPlay("LobbyBGM.mp3");
+	BGMPlayer.SetLoop(10);
+	BGMPlayer.SetVolume(0.3f);
 
 	if (false == IsCharacterCreated)
 	{
@@ -283,11 +295,9 @@ void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 	LevelPlayerInit();
 
 	// Fade
-	{
-		LobbyStartFade = CreateActor<Fade>();
-		LobbyStartFade->Init("FadeBlack.bmp", FadeState::FadeIn);
-		LobbyStartFade->SetFadeSpeed(500.0f);
-	}
+	LobbyStartFade = CreateActor<Fade>();
+	LobbyStartFade->Init("FadeBlack.bmp", FadeState::FadeIn);
+	LobbyStartFade->SetFadeSpeed(500.0f);
 
 	// 메달 획득 여부 판단
 	for (int i = 0; i < Medal::MedalsByLevelIsAcquired.size(); i++)
@@ -319,6 +329,7 @@ void Lobby::LevelStart(GameEngineLevel* _PrevLevel)
 		ibbPlayer->SetPos({ 2277.0f ,540.0f });
 		obbPlayer->SetPos({ 2327.0f ,540.0f });
 	}
+
 	LobbySettingInit();
 
 	// LeveClear에 따른 Level 입장 상태 변경
@@ -363,7 +374,6 @@ void Lobby::LevelEnd(GameEngineLevel* _NextLevel)
 
 	LobbyEndFade->Death();
 	LobbyEndFade = nullptr;
-
 }
 
 void Lobby::LevelPlayerInit()
@@ -376,6 +386,7 @@ void Lobby::LevelPlayerInit()
 	{
 		MsgBoxAssert("ibbPlayer가 세팅되지 않았습니다.")
 	}
+
 	ibbPlayer = ibb::GetMainibb();
 	ibbPlayer->SetGroundTexture(ColName);
 	ibbPlayer->SetPos({ DefaultPosX, DefaultPosY });
@@ -387,6 +398,7 @@ void Lobby::LevelPlayerInit()
 	{
 		MsgBoxAssert("ibbPlayer가 세팅되지 않았습니다.")
 	}
+
 	obbPlayer = obb::GetMainobb();
 	obbPlayer->SetGroundTexture(ColName);
 	obbPlayer->SetPos({ DefaultPosX + 80.0f, DefaultPosY });
@@ -414,13 +426,17 @@ void Lobby::Level1Start(float _DeltaTime)
 	{
 		MsgBoxAssert("LobbyEndFade가 nullptr입니다.")
 	}
-
-	if (true == LobbyEndFade->FadeIsEnd())
+	else
 	{
-		Time = 0.0f;
-		BGMPlayer.Stop();
-		GameEngineCore::ChangeLevel("PlayLevel1");
+		if (true == LobbyEndFade->FadeIsEnd())
+		{
+			Time = 0.0f;
+			BGMPlayer.Stop();
+			GameEngineCore::ChangeLevel("PlayLevel1");
+		}
 	}
+
+	
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(Time + 1.0f);
 }
 
@@ -444,14 +460,17 @@ void Lobby::Level2Start(float _DeltaTime)
 	{
 		MsgBoxAssert("LobbyEndFade가 nullptr입니다.")
 	}
-
-	if (true == LobbyEndFade->FadeIsEnd())
+	else
 	{
-		Time = 0.0f;
-		BGMPlayer.Stop();
-		GameEngineCore::ChangeLevel("PlayLevel2");
+		if (true == LobbyEndFade->FadeIsEnd())
+		{
+			Time = 0.0f;
+			BGMPlayer.Stop();
+			GameEngineCore::ChangeLevel("PlayLevel2");
+		}
+		GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(Time + 1.0f);
 	}
-	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(Time + 1.0f);
+	
 	return;
 }
 

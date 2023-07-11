@@ -111,7 +111,6 @@ void ibb::Init()
 	MainRenderer->CreateAnimation("ReverseRight_Dead", "Right_ibb_Reverse.bmp", 39, 41, 0.04f, false);
 
 	// 충돌체 설정
-
 	BodyCol = CreateCollision(CollisionOrder::ibbBody);
 	BodyCol->SetCollisionScale({ 34.0f, 34.0f });
 	BodyCol->SetCollisionType(CollisionType::Rect);
@@ -135,7 +134,6 @@ void ibb::Init()
 	DownCol->SetCollisionScale({ 34.0f, 10.0f });
 	DownCol->SetCollisionPos({ 0.0f, 12.0f });
 	DownCol->SetCollisionType(CollisionType::Rect);
-
 
 	OtherPlayerBodyCol = static_cast<int>(CollisionOrder::obbBody);
 	OtherPlayerLeftCol = static_cast<int>(CollisionOrder::obbLeft);
@@ -177,6 +175,7 @@ bool ibb::UpToOtherDownCheck()
 		CollisionType::Rect,
 		CollisionType::Rect);
 }
+
 bool ibb::DownToOtherUpCheck()
 {
 	std::vector<GameEngineCollision*> _ColVec;
@@ -239,7 +238,6 @@ bool ibb::DownToOtherColorWarpCheck()
 		CollisionType::Rect,
 		CollisionType::Rect);
 }
-
 
 bool ibb::UpToGravityPlatformCheck()
 {

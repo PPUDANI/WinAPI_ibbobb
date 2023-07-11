@@ -4,6 +4,7 @@
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include <cmath>
+
 #include "ContentsEnum.h"
 #include "SoundLoadManager.h"
 
@@ -32,10 +33,10 @@ void Medal::Init()
 
 	Renderer = CreateRenderer(RenderOrder::Medal);
 
-	// Idle
+	// 'Idle' Animation
 	Renderer->CreateAnimation("Idle", "LevelMedal.bmp", 0, 8, 0.1f, true);
 
-	// Get
+	// 'Get' Animation
 	Renderer->CreateAnimation("Get", "LevelMedal.bmp", 9, 12, 0.02f, false);
 	Renderer->CreateAnimation("Get1", "LevelMedal.bmp", 9, 12, 0.05f, false);
 	Renderer->CreateAnimation("Get2", "LevelMedal.bmp", 9, 12, 0.05f, false);
@@ -43,11 +44,12 @@ void Medal::Init()
 	Renderer->CreateAnimation("Get4", "LevelMedal.bmp", 9, 9, 0.3f, false);
 	Renderer->CreateAnimation("Get5", "LevelMedal.bmp", 13, 13, 0.2f, false);
 
-	// Collision
+	// Medal Collision
 	MedalCol = CreateCollision(CollisionOrder::Medal);
 	MedalCol->SetCollisionType(CollisionType::CirCle);
 	MedalCol->SetCollisionScale({ 56, 56 });
 
+	// Default Setting
 	CurState = MedalState::Idle;
 	ReverseValue = false;
 	MedalsByLevelIsAcquired.push_back(this);
@@ -67,10 +69,10 @@ void Medal::ReverseInit()
 
 	Renderer = CreateRenderer(RenderOrder::Medal);
 
-	// Idle
+	// 'Idle' Animation
 	Renderer->CreateAnimation("Idle", "LevelMedal_Reverse.bmp", 0, 8, 0.1f, true);
 
-	// Get
+	// 'Get' Animation
 	Renderer->CreateAnimation("Get", "LevelMedal_Reverse.bmp", 9, 12, 0.02f, false);
 	Renderer->CreateAnimation("Get1", "LevelMedal_Reverse.bmp", 9, 12, 0.05f, false);
 	Renderer->CreateAnimation("Get2", "LevelMedal_Reverse.bmp", 9, 12, 0.05f, false);
@@ -78,11 +80,12 @@ void Medal::ReverseInit()
 	Renderer->CreateAnimation("Get4", "LevelMedal_Reverse.bmp", 9, 9, 0.3f, false);
 	Renderer->CreateAnimation("Get5", "LevelMedal_Reverse.bmp", 13, 13, 0.2f, false);
 
-	// Collision
+	// Medal Collision
 	MedalCol = CreateCollision(CollisionOrder::Medal);
 	MedalCol->SetCollisionType(CollisionType::CirCle);
 	MedalCol->SetCollisionScale({ 56, 56 });
 
+	// Default Setting
 	CurState = MedalState::Idle;
 	ReverseValue = true;
 	MedalsByLevelIsAcquired.push_back(this);
@@ -95,7 +98,6 @@ void Medal::Start()
 
 void Medal::Update(float _DeltaTime)
 {
-
 	switch (CurState)
 	{
 	case MedalState::Idle:

@@ -29,4 +29,9 @@ void GameEngineTime::Update()
 	DoubleDelta = static_cast<double>(Tick) / static_cast<double>(Count.QuadPart);
 	Prev.QuadPart = Cur.QuadPart;
 	FloatDelta = static_cast<float>(DoubleDelta);
+
+	if (FloatDelta > 0.2f)
+	{
+		FloatDelta = 0.0f;
+	}
 }

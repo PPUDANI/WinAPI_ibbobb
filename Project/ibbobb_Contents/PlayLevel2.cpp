@@ -193,119 +193,130 @@ void PlayLevel2::Update(float _DeltaTime)
 
 	GameOverCheck(_DeltaTime);
 
-	if (true == GameEngineInput::IsDown('B'))
-	{
-		Lobby::Level1Clear();
-		EnterLobby = true;
-	}
-
 	if (true == LobyDoor->IsPlayerEnter())
 	{
 		EnterLobby = true;
 	}
 
-	if (true == GameEngineInput::IsDown('1'))
+	if (true == EnterLobby)
 	{
-		if (false == ibbPlayer->IsUpdate() ||
-			false == obbPlayer->IsUpdate())
-		{
-			PlayLevelBGM();
-		}
-
-		if (false == ibbPlayer->IsUpdate() &&
-			false == obbPlayer->IsUpdate())
-		{
-			ReviveCharacter();
-		}
-		
-		ibbPlayer->SetPos({ 1000.0f, 1000.0f });
-		obbPlayer->SetPos({ 1100.0f, 1000.0f });
+		LobbyStart(_DeltaTime);
 	}
 
-	if (true == GameEngineInput::IsDown('2'))
+	if (true == DevelopmentMode)
 	{
-		if (false == ibbPlayer->IsUpdate() ||
-			false == obbPlayer->IsUpdate())
+		if (true == GameEngineInput::IsDown('B'))
 		{
-			PlayLevelBGM();
+			Lobby::Level1Clear();
+			EnterLobby = true;
 		}
 
-		if (false == ibbPlayer->IsUpdate() &&
-			false == obbPlayer->IsUpdate())
+
+
+		if (true == GameEngineInput::IsDown('1'))
 		{
-			ReviveCharacter();
+			if (false == ibbPlayer->IsUpdate() ||
+				false == obbPlayer->IsUpdate())
+			{
+				PlayLevelBGM();
+			}
+
+			if (false == ibbPlayer->IsUpdate() &&
+				false == obbPlayer->IsUpdate())
+			{
+				ReviveCharacter();
+			}
+
+			ibbPlayer->SetPos({ 1000.0f, 1000.0f });
+			obbPlayer->SetPos({ 1100.0f, 1000.0f });
 		}
-		ibbPlayer->SetPos({ 2385.0f, 900.0f });
-		obbPlayer->SetPos({ 2455.0f, 900.0f });
+
+		if (true == GameEngineInput::IsDown('2'))
+		{
+			if (false == ibbPlayer->IsUpdate() ||
+				false == obbPlayer->IsUpdate())
+			{
+				PlayLevelBGM();
+			}
+
+			if (false == ibbPlayer->IsUpdate() &&
+				false == obbPlayer->IsUpdate())
+			{
+				ReviveCharacter();
+			}
+			ibbPlayer->SetPos({ 2385.0f, 900.0f });
+			obbPlayer->SetPos({ 2455.0f, 900.0f });
+		}
+
+		if (true == GameEngineInput::IsDown('3'))
+		{
+			if (false == ibbPlayer->IsUpdate() ||
+				false == obbPlayer->IsUpdate())
+			{
+				PlayLevelBGM();
+			}
+
+			if (false == ibbPlayer->IsUpdate() &&
+				false == obbPlayer->IsUpdate())
+			{
+				ReviveCharacter();
+			}
+			ibbPlayer->SetPos({ 3550.0f, 1000.0f });
+			obbPlayer->SetPos({ 3590.0f, 1000.0f });
+		}
+
+		if (true == GameEngineInput::IsDown('4'))
+		{
+			if (false == ibbPlayer->IsUpdate() ||
+				false == obbPlayer->IsUpdate())
+			{
+				PlayLevelBGM();
+			}
+
+			if (false == ibbPlayer->IsUpdate() &&
+				false == obbPlayer->IsUpdate())
+			{
+				ReviveCharacter();
+			}
+			ibbPlayer->SetPos({ 4730.0f, 950.0f });
+			obbPlayer->SetPos({ 4790.0f, 950.0f });
+		}
+
+		if (true == GameEngineInput::IsDown('5'))
+		{
+			if (false == ibbPlayer->IsUpdate() ||
+				false == obbPlayer->IsUpdate())
+			{
+				PlayLevelBGM();
+			}
+
+			if (false == ibbPlayer->IsUpdate() &&
+				false == obbPlayer->IsUpdate())
+			{
+				ReviveCharacter();
+			}
+			ibbPlayer->SetPos({ 5800.0f, 1000.0f });
+			obbPlayer->SetPos({ 5880.0f, 1000.0f });
+		}
+
+		if (true == GameEngineInput::IsDown('6'))
+		{
+			if (false == ibbPlayer->IsUpdate() ||
+				false == obbPlayer->IsUpdate())
+			{
+				PlayLevelBGM();
+			}
+
+			if (false == ibbPlayer->IsUpdate() &&
+				false == obbPlayer->IsUpdate())
+			{
+				ReviveCharacter();
+			}
+			ibbPlayer->SetPos({ 7200.0f, 600.0f });
+			obbPlayer->SetPos({ 7280.0f, 600.0f });
+		}
 	}
-
-	if (true == GameEngineInput::IsDown('3'))
-	{
-		if (false == ibbPlayer->IsUpdate() ||
-			false == obbPlayer->IsUpdate())
-		{
-			PlayLevelBGM();
-		}
-
-		if (false == ibbPlayer->IsUpdate() &&
-			false == obbPlayer->IsUpdate())
-		{
-			ReviveCharacter();
-		}
-		ibbPlayer->SetPos({ 3550.0f, 1000.0f });
-		obbPlayer->SetPos({ 3590.0f, 1000.0f });
-	}
-
-	if (true == GameEngineInput::IsDown('4'))
-	{
-		if (false == ibbPlayer->IsUpdate() ||
-			false == obbPlayer->IsUpdate())
-		{
-			PlayLevelBGM();
-		}
-
-		if (false == ibbPlayer->IsUpdate() &&
-			false == obbPlayer->IsUpdate())
-		{
-			ReviveCharacter();
-		}
-		ibbPlayer->SetPos({ 4730.0f, 950.0f });
-		obbPlayer->SetPos({ 4790.0f, 950.0f });
-	}
-
-	if (true == GameEngineInput::IsDown('5'))
-	{
-		if (false == ibbPlayer->IsUpdate() ||
-			false == obbPlayer->IsUpdate())
-		{
-			PlayLevelBGM();
-		}
-
-		if (false == ibbPlayer->IsUpdate() &&
-			false == obbPlayer->IsUpdate())
-		{
-			ReviveCharacter();
-		}
-		ibbPlayer->SetPos({ 5800.0f, 1000.0f });
-		obbPlayer->SetPos({ 5880.0f, 1000.0f });
-	}
-
-	if (true == GameEngineInput::IsDown('6'))
-	{
-		if (false == ibbPlayer->IsUpdate() ||
-			false == obbPlayer->IsUpdate())
-		{
-			PlayLevelBGM();
-		}
-
-		if (false == ibbPlayer->IsUpdate() &&
-			false == obbPlayer->IsUpdate())
-		{
-			ReviveCharacter();
-		}
-		ibbPlayer->SetPos({ 7200.0f, 600.0f });
-		obbPlayer->SetPos({ 7280.0f, 600.0f });
-	}
+	
 
 	SubLevel::Update(_DeltaTime);
 	float CameraPosX = GetMainCamera()->GetPos().X;
@@ -325,16 +336,7 @@ void PlayLevel2::Update(float _DeltaTime)
 
 	GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(ZoomScale);
 
-	if (false == ibbPlayer->IsUpdate() ||
-		false == obbPlayer->IsUpdate())
-	{
-		BGMPlayer.Stop();
-	}
 
-	if (true == EnterLobby)
-	{
-		LobbyStart(_DeltaTime);
-	}
 }
 
 void PlayLevel2::Render(float _DeltaTime)
@@ -537,6 +539,13 @@ void PlayLevel2::GameOverCheck(float _DeltaTime)
 {
 	static float ServiveTime = 0.0f;
 	static bool KillMonster = false;
+
+	if (false == ibbPlayer->IsUpdate() ||
+		false == obbPlayer->IsUpdate())
+	{
+		BGMPlayer.Stop();
+	}
+
 	if (false == ibbPlayer->IsUpdate() &&
 		false == obbPlayer->IsUpdate())
 	{

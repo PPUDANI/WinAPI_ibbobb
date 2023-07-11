@@ -1,8 +1,10 @@
 #include "GravityTransferPlatform.h"
+
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEnginePlatform/GameEngineInput.h>
+
 #include "SoundLoadManager.h"
 #include "ContentsEnum.h"
 #include "ibb.h"
@@ -181,16 +183,17 @@ void GravityTransferPlatform::TransferibbToobbUpdate(float _DeltaTime)
 	PlatformRenderer->ChangeAnimation("TransferSignal");
 	if (false == TransferValue)
 	{
+		float4 ibbTransferVector = ibb::GetMainibb()->GetTransferVector();
 		TransferValue = true;
 		if (false == TransferVectorInit)
 		{
 			TransferVectorInit = true;
-			TransferVector = ibb::GetMainibb()->GetTransferVector();
+			TransferVector = ibbTransferVector;
 		}
-		else if (GetAbsoluteValue(ibb::GetMainibb()->GetTransferVector().Y) > GetAbsoluteValue(TransferVector.Y) * 1.1f ||
-			GetAbsoluteValue(ibb::GetMainibb()->GetTransferVector().Y) < GetAbsoluteValue(TransferVector.Y) * 0.9f)
+		else if (GetAbsoluteValue(ibbTransferVector.Y) > GetAbsoluteValue(TransferVector.Y) * 1.1f ||
+			GetAbsoluteValue(ibbTransferVector.Y) < GetAbsoluteValue(TransferVector.Y) * 0.9f)
 		{
-			TransferVector = ibb::GetMainibb()->GetTransferVector();
+			TransferVector = ibbTransferVector;
 		}
 		else
 		{
@@ -215,17 +218,18 @@ void GravityTransferPlatform::TransferobbToibbUpdate(float _DeltaTime)
 	PlatformRenderer->ChangeAnimation("TransferSignal");
 	if (false == TransferValue)
 	{
+		float4 obbTransferVector = obb::GetMainobb()->GetTransferVector();
 		TransferValue = true;
 
 		if (false == TransferVectorInit)
 		{
 			TransferVectorInit = true;
-			TransferVector = obb::GetMainobb()->GetTransferVector();
+			TransferVector = obbTransferVector;
 		}
-		else if (GetAbsoluteValue(obb::GetMainobb()->GetTransferVector().Y) > GetAbsoluteValue(TransferVector.Y) * 1.1f ||
-			GetAbsoluteValue(obb::GetMainobb()->GetTransferVector().Y) < GetAbsoluteValue(TransferVector.Y) * 0.9f)
+		else if (GetAbsoluteValue(obbTransferVector.Y) > GetAbsoluteValue(TransferVector.Y) * 1.1f ||
+			GetAbsoluteValue(obbTransferVector.Y) < GetAbsoluteValue(TransferVector.Y) * 0.9f)
 		{
-			TransferVector = obb::GetMainobb()->GetTransferVector();
+			TransferVector = obbTransferVector;
 		}
 		else
 		{

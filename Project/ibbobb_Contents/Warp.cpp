@@ -1,10 +1,11 @@
 #include "Warp.h"
+
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEngineBase/GameEngineMath.h>
-
 #include <GameEngineCore/ResourcesManager.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
+
 #include "ContentsEnum.h"
 
 Warp::Warp()
@@ -20,6 +21,7 @@ void Warp::Init(WarpType _Type)
 	std::string _FileName;
 	Type = _Type;
 
+	// 워프 타입 설정
 	if (WarpType::Common == Type)
 	{
 		_FileName = "WarpStar_Yellow.bmp";
@@ -35,6 +37,7 @@ void Warp::Init(WarpType _Type)
 		WarpCol = CreateCollision(CollisionOrder::obbOnlyWarp);
 	}
 
+	// 워프 별 애니메이션 추가
 	for (int i = 0; i < StarNum; i++)
 	{
 		GameEngineRenderer* Renderer = CreateRenderer(RenderOrder::Warp);
@@ -53,7 +56,7 @@ void Warp::Init(WarpType _Type)
 		StarRenderer.push_back(Renderer);
 	}
 
-
+	// Warp Collision
 	if (WarpType::Common != Type)
 	{
 		if (WarpDir::Horizontal == Dir)
@@ -96,7 +99,6 @@ void Warp::Start()
 
 void Warp::Update(float _DeltaTime)
 {
-
 	// 공중부양 연산
 	{
 		Radian += Speed * _DeltaTime;

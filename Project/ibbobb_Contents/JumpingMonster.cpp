@@ -2,12 +2,12 @@
 
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEngineCore/ResourcesManager.h>
-#include "ContentsEnum.h"
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineRandom.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEnginePlatform/GameEngineWindowTexture.h>
 
+#include "ContentsEnum.h"
 #include "SoundLoadManager.h"
 
 JumpingMonster::JumpingMonster()
@@ -19,21 +19,6 @@ JumpingMonster::~JumpingMonster()
 }
 void JumpingMonster::Init(const float4& _InitPos)
 {
-	GameEnginePath FilePath;
-	FilePath.SetCurrentPath();
-	FilePath.MoveParentToExistsChild("Resources");
-
-	FilePath.MoveChild("Resources\\Texture\\Monster\\JumpingMonster\\");
-
-	if (ResourcesManager::GetInst().FindSprite("JumpingMonster.bmp") == nullptr)
-	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("JumpingMonster.bmp"), 5, 2);
-	}
-
-	if (ResourcesManager::GetInst().FindSprite("JumpingMonsterCore.bmp") == nullptr)
-	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("JumpingMonsterCore.bmp"), 3, 3);
-	}
 
 	// Monster Animation
 	{
@@ -74,40 +59,24 @@ void JumpingMonster::Init(const float4& _InitPos)
 	BodyCollision->SetCollisionScale({ 60, 60 });
 	BodyCollision->SetCollisionType(CollisionType::CirCle);
 
-	// Monster Core Collision
+	// MonsterCore Collision
 	CoreCollision = CreateCollision(CollisionOrder::MonsterCore);
 	CoreCollision->SetCollisionScale({ 57, 57 });
 	CoreCollision->SetCollisionType(CollisionType::CirCle);
-
+	
+	// Default Setting
+	ChangeState(JumpingMonsterState::Fall);
 	SetGravityPower(1000.0f);
+	SetPos(_InitPos);
+
 	GravityDir = float4::DOWN;
 	ReverseValue = false;
 	DownCheck = float4::DOWN * BodyHalf;
-
-	SetPos(_InitPos);
 	StartVector = _InitPos;
-
-	ChangeState(JumpingMonsterState::Fall);
 }
 
 void JumpingMonster::ReverseInit(const float4& _InitPos)
 {
-	GameEnginePath FilePath;
-	FilePath.SetCurrentPath();
-	FilePath.MoveParentToExistsChild("Resources");
-
-	FilePath.MoveChild("Resources\\Texture\\Monster\\JumpingMonster\\");
-
-	if (ResourcesManager::GetInst().FindSprite("JumpingMonster_Reverse.bmp") == nullptr)
-	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("JumpingMonster_Reverse.bmp"), 5, 2);
-	}
-
-	if (ResourcesManager::GetInst().FindSprite("JumpingMonsterCore.bmp") == nullptr)
-	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("JumpingMonsterCore.bmp"), 3, 3);
-	}
-
 	// Monster Animation
 	{
 		MonsterRenderer = CreateRenderer(RenderOrder::JumpingMonster);
@@ -150,17 +119,45 @@ void JumpingMonster::ReverseInit(const float4& _InitPos)
 	CoreCollision->SetCollisionScale({ 57, 57 });
 	CoreCollision->SetCollisionType(CollisionType::CirCle);
 
+	// Default Setting
+	ChangeState(JumpingMonsterState::Fall);
 	SetGravityPower(-1000.0f);
+	SetPos(_InitPos);
+
 	GravityDir = float4::UP;
 	ReverseValue = true;
 	DownCheck = float4::UP * BodyHalf;
-	SetPos(_InitPos);
 	StartVector = _InitPos;
-	ChangeState(JumpingMonsterState::Fall);
+
+	
 }
 
 void JumpingMonster::Start()
-{	
+{
+	GameEnginePath FilePath;
+	FilePath.SetCurrentPath();
+	FilePath.MoveParentToExistsChild("Resources");
+
+	FilePath.MoveChild("Resources\\Texture\\Monster\\JumpingMonster\\");
+
+	// JumpingMonster Texture Load
+	if (ResourcesManager::GetInst().FindSprite("JumpingMonster.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("JumpingMonster.bmp"), 5, 2);
+	}
+
+	// JumpingMonster Reverse Texture Load
+	if (ResourcesManager::GetInst().FindSprite("JumpingMonster_Reverse.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("JumpingMonster_Reverse.bmp"), 5, 2);
+	}
+
+	// JumpingMonster Core Texture Load
+	if (ResourcesManager::GetInst().FindSprite("JumpingMonsterCore.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("JumpingMonsterCore.bmp"), 3, 3);
+	}
+
 	SoundLoadManager::LoadSound("Monster", "MonsterDeath.mp3");
 }
 
@@ -272,7 +269,6 @@ void JumpingMonster::DeadUpdate(float _DeltaTime)
 	{
 		SetPos(StartVector);
 		Off();
-
 	}
 }
 void JumpingMonster::LiveUpdate(float _DeltaTime)

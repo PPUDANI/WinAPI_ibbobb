@@ -4,10 +4,10 @@
 #include <GameEnginePlatform/GameEngineInput.h>
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
+
 #include "GravityTransferPlatform.h"
 #include "ContentsEnum.h"
-
-
+#include "SubLevel.h"
 Player::Player()
 {
 
@@ -26,9 +26,6 @@ void Player::Start()
 
 	// 첫 방향 설정
 	CurDir = PlayerDir::Right;
-
-	// 이건 무슨 함수?
-	//MainRenderer->SetRenderScaleToTexture();
 	MainRenderer->SetScaleRatio(Ratio);
 
 	// 중력값 설정
@@ -63,7 +60,6 @@ void Player::Update(float _DeltaTime)
 		if (DeathTurm >= 1.0f)
 		{
 			DeathTurm = 0.0f;
-			
 			SetAnimation("Dead");
 			SerialDeadSoundPlay();
 			ChangeState(PlayerState::Dead);
@@ -80,7 +76,6 @@ void Player::Update(float _DeltaTime)
 
 		if (LeftColor != RightColor)
 		{
-
 			HorizontalWorpPass = false;
 			VerticalWorpPass = true;
 			if (LeftColor == MiddleColor)
@@ -99,7 +94,6 @@ void Player::Update(float _DeltaTime)
 				}
 				AddPos(float4::RIGHT * PushPowerInVirticalHole * _DeltaTime);
 			}
-			
 		}
 		else if (UpColor != DownColor)
 		{
@@ -108,6 +102,7 @@ void Player::Update(float _DeltaTime)
 		}
 	}
 	
+	// 다른 플레이어의 Reverse 상태 체크
 	if (OtherPlayerReverseValue != OtherPlayer->GetReverseValue())
 	{
 		int Temp = OtherPlayerDownCol;
@@ -116,6 +111,20 @@ void Player::Update(float _DeltaTime)
 		OtherPlayerReverseValue = OtherPlayer->GetReverseValue();
 	}
 
+	// 플레이어의 몬스터 충돌 체크
+	if (PlayerState::Dead != CurState)
+	{
+		std::vector<GameEngineCollision*> _Col;
+		if (true == BodyCol->Collision(CollisionOrder::MonsterBody,
+			_Col,
+			CollisionType::Rect,
+			CollisionType::Rect))
+		{
+			SetAnimation("Dead");
+			DeadSoundPlay();
+			ChangeState(PlayerState::Dead);
+		}
+	}
 
 	// 상태에 따른 Update
 	switch (CurState)
@@ -144,50 +153,36 @@ void Player::Update(float _DeltaTime)
 	default:
 		break;
 	}
-
-	if (PlayerState::Dead != CurState)
-	{
-		std::vector<GameEngineCollision*> _Col;
-		if (true == BodyCol->Collision(CollisionOrder::MonsterBody,
-			_Col,
-			CollisionType::Rect,
-			CollisionType::Rect))
-		{
-			SetAnimation("Dead");
-			DeadSoundPlay();
-			ChangeState(PlayerState::Dead);
-		}
-	}
-
-	//임시 카메라 위치
-	// CameraFocus();
 }
 
 void Player::Render(float _DeltaTime)
 {
-	if (true == CheckPosOn)
+	if (true == SubLevel::IsDevelopmentMode())
 	{
-		CollisionData Data;
-		HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
-		Data.Scale = { 3,3 };
-		Data.Pos = ActorCameraPos() + MapLeftUpCheck;
-		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-		Data.Pos = ActorCameraPos() + MapRightUpCheck;
-		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-		Data.Pos = ActorCameraPos() + MapMiddleUpCheck;
-		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		if (true == CheckPosOn)
+		{
+			CollisionData Data;
+			HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
+			Data.Scale = { 3,3 };
+			Data.Pos = ActorCameraPos() + MapLeftUpCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+			Data.Pos = ActorCameraPos() + MapRightUpCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+			Data.Pos = ActorCameraPos() + MapMiddleUpCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-		Data.Pos = ActorCameraPos() + MapLeftDownCheck;
-		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-		Data.Pos = ActorCameraPos() + MapRightDownCheck;
-		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-		Data.Pos = ActorCameraPos() + MapMiddleDownCheck;
-		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+			Data.Pos = ActorCameraPos() + MapLeftDownCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+			Data.Pos = ActorCameraPos() + MapRightDownCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+			Data.Pos = ActorCameraPos() + MapMiddleDownCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
 
-		Data.Pos = ActorCameraPos() + MapLeftMiddleCheck;
-		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-		Data.Pos = ActorCameraPos() + MapRightMiddleCheck;
-		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+			Data.Pos = ActorCameraPos() + MapLeftMiddleCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+			Data.Pos = ActorCameraPos() + MapRightMiddleCheck;
+			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+		}
 	}
 }
 

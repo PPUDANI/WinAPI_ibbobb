@@ -1,7 +1,9 @@
 #pragma once
 #include "GravityActor.h"
+
 #include <GameEnginePlatform/GameEngineSound.h>
 #include <vector>
+
 enum class PlayerState
 {
 	Idle,

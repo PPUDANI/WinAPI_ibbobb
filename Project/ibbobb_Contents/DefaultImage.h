@@ -49,6 +49,16 @@ public:
 	{
 		BlinkValue = false;
 	}
+
+	inline void HideOn()
+	{
+		HideValue = true;
+	}
+
+	inline void HideOff()
+	{
+		HideValue = false;
+	}
  
 	void Init(const std::string& _FileName, float _BlinkFrameSpeed = 0.5f);
 
@@ -57,13 +67,12 @@ protected:
 	virtual void Update(float _DeltaTime) override;
 
 private:
-	
-	void BlinkUpdate(float _DeltaTime);
 	void LevitationUpdate(float _DeltaTime);
 	void LevelStart() override;
 	
 	bool BlinkValue = false;
 	bool LevitationValue = false;
+	bool HideValue = false;
 
 	// Image 물리변수
 	float Speed = 4.0f;

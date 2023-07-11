@@ -14,6 +14,7 @@
 #include "ibb.h"
 #include "obb.h"
 
+bool SubLevel::DevelopmentMode = false;
 
 SubLevel::SubLevel()
 {
@@ -37,7 +38,7 @@ void SubLevel::Update(float _DeltaTime)
 		MsgBoxAssert("OtherPlayer가 세팅되지 않았습니다.")
 	}
 
-	if (true == GameEngineInput::IsDown('I'))
+	if (true == GameEngineInput::IsDown('I') && true == DevelopmentMode)
 	{
 		LevelMap->SwitchRender();
 		CollisionDebugRenderSwitch();

@@ -17,8 +17,6 @@ GameEngineDirectory::GameEngineDirectory(const std::string& _path)
 	{
 		MsgBoxAssert("디렉토리 경로가 아닙니다." + _path);
 	}
-
-
 }
 
 // 자신의 디렉토리의 파일만 넣습니다.
@@ -64,12 +62,7 @@ std::vector<GameEngineFile> GameEngineDirectory::GetAllFile(std::vector<std::str
 		{
 			continue;
 		}
-
-
-		Result.push_back(GameEngineFile(Path.string()));
-
 	}
-
 
 	return Result;
 }

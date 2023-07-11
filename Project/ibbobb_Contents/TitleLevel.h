@@ -26,11 +26,12 @@ private:
 	bool GameStartValue = false;
 	class BackGround* TitleBack;
 	class DefaultImage* PressText;
+	class DefaultImage* DevelopmentModeText;
 	class Titleibb* TitleibbPlayer = nullptr;
 	class Titleobb* TitleobbPlayer = nullptr;
 	class Fade* TitleFade = nullptr;
-	GameEngineSoundPlayer BGMPlayer;
 
+	GameEngineSoundPlayer BGMPlayer;
 	GameEngineSoundPlayer EffectPlayer;
 };
 

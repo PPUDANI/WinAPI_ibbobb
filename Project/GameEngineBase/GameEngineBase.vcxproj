@@ -163,10 +163,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GameEngineFile.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
+    <ClCompile Include="GameEngineFile.cpp" />
     <ClCompile Include="GameEngineMath.cpp" />
     <ClCompile Include="GameEnginePath.cpp">
       <SubType>
@@ -194,10 +191,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameEngineFile.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
+    <ClInclude Include="GameEngineFile.h" />
     <ClInclude Include="GameEngineMath.h" />
     <ClInclude Include="GameEnginePath.h">
       <SubType>

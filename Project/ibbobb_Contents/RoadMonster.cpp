@@ -6,11 +6,11 @@
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineCollision.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
-
 #include <GameEnginePlatform/GameEngineInput.h>
+
 #include "SoundLoadManager.h"
 #include "ContentsEnum.h"
-
+#include "SubLevel.h"
 RoadMonster::RoadMonster()
 {
 
@@ -23,175 +23,168 @@ RoadMonster::~RoadMonster()
 
 void RoadMonster::Init(const float4& _InitPos, RoadMonsterDir _Dir)
 {
-	GameEnginePath FilePath;
-	FilePath.SetCurrentPath();
-	FilePath.MoveParentToExistsChild("Resources");
-	FilePath.MoveChild("Resources\\Texture\\Monster\\RoadMonster\\");
-
-	if (ResourcesManager::GetInst().FindSprite("Left_RoadMonster.bmp") == nullptr)
-	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_RoadMonster.bmp"), 5, 2);
-	}
-
-	if (ResourcesManager::GetInst().FindSprite("Right_RoadMonster.bmp") == nullptr)
-	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_RoadMonster.bmp"), 5, 2);
-	}
-
-	if (ResourcesManager::GetInst().FindSprite("Turn_RoadMonster.bmp") == nullptr)
-	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Turn_RoadMonster.bmp"), 5, 1);
-	}
-
-	if (ResourcesManager::GetInst().FindSprite("RoadMonsterCore_Reverse.bmp") == nullptr)
-	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RoadMonsterCore_Reverse.bmp"), 3, 3);
-	}
 
 	MonsterRenderer = CreateRenderer(RenderOrder::RoadMonster);
 	CoreRenderer = CreateRenderer(RenderOrder::MonsterCore);
 	float Frame;
 
-	// Idle
+	// Idle Animation
 	Frame = 10.0f;
 	MonsterRenderer->CreateAnimation("Left_Idle", "Left_RoadMonster.bmp", 0, 0, Frame, true);
 	MonsterRenderer->CreateAnimation("Right_Idle", "Right_RoadMonster.bmp", 0, 0, Frame, true);
 	CoreRenderer->CreateAnimation("Idle", "RoadMonsterCore_Reverse.bmp", 0, 0, Frame, true);
 
-	// Blink
+	// Blink Animation
 	Frame = 0.1f;
 	MonsterRenderer->CreateAnimation("Left_Blink", "Left_RoadMonster.bmp", 0, 1, Frame, false);
 	MonsterRenderer->CreateAnimation("Right_Blink", "Right_RoadMonster.bmp", 0, 1, Frame, false);
 
-	// Dead
+	// Dead Animation
 	Frame = 0.02f;
 	MonsterRenderer->CreateAnimation("Left_Dead", "Left_RoadMonster.bmp", 2, 9, Frame, false);
 	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster.bmp", 2, 9, Frame, false);
 	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore_Reverse.bmp", 1, 8, Frame, false);
 
-	// Live
+	// Live Animation
 	Frame = 0.02f;
 	MonsterRenderer->CreateAnimation("Left_Live", "Left_RoadMonster.bmp", 9, 2, Frame, false);
 	MonsterRenderer->CreateAnimation("Right_Live", "Right_RoadMonster.bmp", 9, 2, Frame, false);
 	CoreRenderer->CreateAnimation("Live", "RoadMonsterCore_Reverse.bmp", 8, 1, Frame, false);
 
-	// Turn
+	// Turn Animation
 	Frame = 0.05f;
 	MonsterRenderer->CreateAnimation("Left_Turn", "Turn_RoadMonster.bmp", 0, 4, Frame, false);
 	MonsterRenderer->CreateAnimation("Right_Turn", "Turn_RoadMonster.bmp", 4, 0, Frame, false);
 
+	// MonsterBody Collision
 	BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
-	BodyCollision->SetCollisionScale({ 60.0f, 30.0f });
 	BodyCollision->SetCollisionType(CollisionType::Rect);
+	BodyCollision->SetCollisionScale({ 60.0f, 30.0f });
 	BodyCollision->SetCollisionPos({ 0.0f, -14.0f });
 
-	
+	// MonsterCore Collision
 	CoreCollision = CreateCollision(CollisionOrder::MonsterCore);
-	CoreCollision->SetCollisionScale({ 60.0f, 30.0f });
 	CoreCollision->SetCollisionType(CollisionType::Rect);
+	CoreCollision->SetCollisionScale({ 60.0f, 30.0f });
 	CoreCollision->SetCollisionPos({ 0.0f, 42.0f });
+
+	// Default Setting
+	SetPos(_InitPos);
+	SetDir(_Dir);
+	
+	StartDir = _Dir;
+	ReverseValue = false;
+	StartVector = _InitPos;
+	CurState = RoadMonsterState::Move;
 
 	CoreRenderer->ChangeAnimation("Idle");
 	CoreRenderer->SetRenderPos({ 0.0f, 27.0f });
-
-	CurState = RoadMonsterState::Move;
-
-	SetPos(_InitPos);
-	StartVector = _InitPos;
-	SetDir(_Dir);
-	StartDir = _Dir;
-	
-	ReverseValue = false;
 }
 
 void RoadMonster::ReverseInit(const float4& _InitPos, RoadMonsterDir _Dir)
+{
+	MonsterRenderer = CreateRenderer(RenderOrder::RoadMonster);
+	CoreRenderer = CreateRenderer(RenderOrder::MonsterCore);
+	float Frame;
+
+	// Idle Animation
+	Frame = 10.0f;
+	MonsterRenderer->CreateAnimation("Left_Idle", "Left_RoadMonster_Reverse.bmp", 0, 0, Frame, true);
+	MonsterRenderer->CreateAnimation("Right_Idle", "Right_RoadMonster_Reverse.bmp", 0, 0, Frame, true);
+	CoreRenderer->CreateAnimation("Idle", "RoadMonsterCore.bmp", 0, 0, Frame, true);
+
+	// Blink Animation
+	Frame = 0.1f;
+	MonsterRenderer->CreateAnimation("Left_Blink", "Left_RoadMonster_Reverse.bmp", 0, 1, Frame, false);
+	MonsterRenderer->CreateAnimation("Right_Blink", "Right_RoadMonster_Reverse.bmp", 0, 1, Frame, false);
+
+	// Dead Animation
+	Frame = 0.04f;
+	MonsterRenderer->CreateAnimation("Left_Dead", "Left_RoadMonster_Reverse.bmp", 2, 9, Frame, false);
+	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster_Reverse.bmp", 2, 9, Frame, false);
+	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore.bmp", 1, 8, Frame, false);
+
+	// Live Animation
+	Frame = 0.04f;
+	MonsterRenderer->CreateAnimation("Left_Live", "Left_RoadMonster_Reverse.bmp", 9, 2, Frame, false);
+	MonsterRenderer->CreateAnimation("Right_Live", "Right_RoadMonster_Reverse.bmp", 9, 2, Frame, false);
+	CoreRenderer->CreateAnimation("Live", "RoadMonsterCore.bmp", 8, 1, Frame, false);
+
+	// Turn Animation
+	Frame = 0.05f;
+	MonsterRenderer->CreateAnimation("Left_Turn", "Turn_RoadMonster_Reverse.bmp", 0, 4, Frame, false);
+	MonsterRenderer->CreateAnimation("Right_Turn", "Turn_RoadMonster_Reverse.bmp", 4, 0, Frame, false);
+
+	// MonsterBody Collision
+	BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
+	BodyCollision->SetCollisionType(CollisionType::Rect);
+	BodyCollision->SetCollisionScale({ 60.0f, 30.0f });
+	BodyCollision->SetCollisionPos({ 0.0f, 14.0f });
+
+	// MonsterCore Collision
+	CoreCollision = CreateCollision(CollisionOrder::MonsterCore);
+	CoreCollision->SetCollisionType(CollisionType::Rect);
+	CoreCollision->SetCollisionScale({ 60.0f, 30.0f });
+	CoreCollision->SetCollisionPos({ 0.0f, -42.0f });
+
+	// Default Setting
+	SetPos(_InitPos);
+	SetDir(_Dir);
+
+	StartDir = _Dir;
+	ReverseValue = true;
+	StartVector = _InitPos;
+	CurState = RoadMonsterState::Move;
+
+	CoreRenderer->ChangeAnimation("Idle");
+	CoreRenderer->SetRenderPos({ 0.0f, -27.0f });
+}
+
+void RoadMonster::Start()
 {
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();
 	FilePath.MoveParentToExistsChild("Resources");
 	FilePath.MoveChild("Resources\\Texture\\Monster\\RoadMonster\\");
 
+	// RoadMonster Texture Load
+	if (ResourcesManager::GetInst().FindSprite("Left_RoadMonster.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_RoadMonster.bmp"), 5, 2);
+	}
+	if (ResourcesManager::GetInst().FindSprite("Right_RoadMonster.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_RoadMonster.bmp"), 5, 2);
+	}
+	if (ResourcesManager::GetInst().FindSprite("Turn_RoadMonster.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Turn_RoadMonster.bmp"), 5, 1);
+	}
+
+	// Reverse RoadMonster Texture Load
 	if (ResourcesManager::GetInst().FindSprite("Left_RoadMonster_Reverse.bmp") == nullptr)
 	{
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Left_RoadMonster_Reverse.bmp"), 5, 2);
 	}
-
 	if (ResourcesManager::GetInst().FindSprite("Right_RoadMonster_Reverse.bmp") == nullptr)
 	{
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Right_RoadMonster_Reverse.bmp"), 5, 2);
 	}
-
 	if (ResourcesManager::GetInst().FindSprite("Turn_RoadMonster_Reverse.bmp") == nullptr)
 	{
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("Turn_RoadMonster_Reverse.bmp"), 5, 1);
 	}
 
+	// RoadMonster Core Texture Load
+	if (ResourcesManager::GetInst().FindSprite("RoadMonsterCore_Reverse.bmp") == nullptr)
+	{
+		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RoadMonsterCore_Reverse.bmp"), 3, 3);
+	}
 	if (ResourcesManager::GetInst().FindSprite("RoadMonsterCore.bmp") == nullptr)
 	{
 		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RoadMonsterCore.bmp"), 3, 3);
 	}
-		if (ResourcesManager::GetInst().FindSprite("RoadMonsterCore.bmp") == nullptr)
-	{
-		ResourcesManager::GetInst().CreateSpriteSheet(FilePath.PlusFilePath("RoadMonsterCore.bmp"), 3, 3);
-	}
 
-	MonsterRenderer = CreateRenderer(RenderOrder::RoadMonster);
-	CoreRenderer = CreateRenderer(RenderOrder::MonsterCore);
-	float Frame;
-
-	// Idle
-	Frame = 10.0f;
-	MonsterRenderer->CreateAnimation("Left_Idle", "Left_RoadMonster_Reverse.bmp", 0, 0, Frame, true);
-	MonsterRenderer->CreateAnimation("Right_Idle", "Right_RoadMonster_Reverse.bmp", 0, 0, Frame, true);
-	CoreRenderer->CreateAnimation("Idle", "RoadMonsterCore.bmp", 0, 0, Frame, true);
-
-	// Blink
-	Frame = 0.1f;
-	MonsterRenderer->CreateAnimation("Left_Blink", "Left_RoadMonster_Reverse.bmp", 0, 1, Frame, false);
-	MonsterRenderer->CreateAnimation("Right_Blink", "Right_RoadMonster_Reverse.bmp", 0, 1, Frame, false);
-
-	// Dead
-	Frame = 0.04f;
-	MonsterRenderer->CreateAnimation("Left_Dead", "Left_RoadMonster_Reverse.bmp", 2, 9, Frame, false);
-	MonsterRenderer->CreateAnimation("Right_Dead", "Right_RoadMonster_Reverse.bmp", 2, 9, Frame, false);
-	CoreRenderer->CreateAnimation("Dead", "RoadMonsterCore.bmp", 1, 8, Frame, false);
-
-	// Live
-	Frame = 0.04f;
-	MonsterRenderer->CreateAnimation("Left_Live", "Left_RoadMonster_Reverse.bmp", 9, 2, Frame, false);
-	MonsterRenderer->CreateAnimation("Right_Live", "Right_RoadMonster_Reverse.bmp", 9, 2, Frame, false);
-	CoreRenderer->CreateAnimation("Live", "RoadMonsterCore.bmp", 8, 1, Frame, false);
-
-	// Turn
-	Frame = 0.05f;
-	MonsterRenderer->CreateAnimation("Left_Turn", "Turn_RoadMonster_Reverse.bmp", 0, 4, Frame, false);
-	MonsterRenderer->CreateAnimation("Right_Turn", "Turn_RoadMonster_Reverse.bmp", 4, 0, Frame, false);
-
-	BodyCollision = CreateCollision(CollisionOrder::MonsterBody);
-	BodyCollision->SetCollisionScale({ 60.0f, 30.0f });
-	BodyCollision->SetCollisionType(CollisionType::Rect);
-	BodyCollision->SetCollisionPos({ 0.0f, 14.0f });
-
-	CoreCollision = CreateCollision(CollisionOrder::MonsterCore);
-	CoreCollision->SetCollisionScale({ 60.0f, 30.0f });
-	CoreCollision->SetCollisionType(CollisionType::Rect);
-	CoreCollision->SetCollisionPos({ 0.0f, -42.0f });
-
-	CoreRenderer->ChangeAnimation("Idle");
-	CoreRenderer->SetRenderPos({ 0.0f, -27.0f });
-
-	CurState = RoadMonsterState::Move;
-
-	SetPos(_InitPos);
-	StartVector = _InitPos;
-	SetDir(_Dir);
-	StartDir = _Dir;
-
-	ReverseValue = true;
-}
-
-void RoadMonster::Start()
-{
 	SoundLoadManager::LoadSound("Monster", "MonsterDeath.mp3");
 }
 
@@ -223,29 +216,32 @@ void RoadMonster::Update(float _DeltaTime)
 
 void RoadMonster::Render(float _DeltaTime)
 {
-	if(true == CheckPosOn)
+	if (true == SubLevel::IsDevelopmentMode())
 	{
-		CollisionData Data;
-		HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
-		Data.Scale = { 3, 3 };
-		Data.Pos = ActorCameraPos() + LeftCheck;
-		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-		Data.Pos = ActorCameraPos() + RightCheck;
-		Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-		if (true == ReverseValue)
+		if (true == CheckPosOn)
 		{
-			Data.Pos = ActorCameraPos() + ReverseLeftDownCheck;
+			CollisionData Data;
+			HDC dc = GameEngineWindow::MainWindow.GetBackBuffer()->GetImageDC();
+			Data.Scale = { 3, 3 };
+			Data.Pos = ActorCameraPos() + LeftCheck;
 			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-			Data.Pos = ActorCameraPos() + ReverseRightDownCheck;
+			Data.Pos = ActorCameraPos() + RightCheck;
 			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-		}
-		else
-		{
-			Data.Pos = ActorCameraPos() + LeftDownCheck;
-			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-			Data.Pos = ActorCameraPos() + RightDownCheck;
-			Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
-			
+			if (true == ReverseValue)
+			{
+				Data.Pos = ActorCameraPos() + ReverseLeftDownCheck;
+				Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+				Data.Pos = ActorCameraPos() + ReverseRightDownCheck;
+				Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+			}
+			else
+			{
+				Data.Pos = ActorCameraPos() + LeftDownCheck;
+				Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+				Data.Pos = ActorCameraPos() + RightDownCheck;
+				Rectangle(dc, Data.iLeft(), Data.iTop(), Data.iRight(), Data.iBot());
+
+			}
 		}
 	}
 }

@@ -2,6 +2,7 @@
 #include <GameEngineCore/GameEngineActor.h>
 #include <GameEnginePlatform/GameEngineSound.h>
 #include <vector>
+
 enum class MedalState
 {
 	Idle,

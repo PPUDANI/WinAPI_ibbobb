@@ -16,6 +16,16 @@ public:
 	SubLevel& operator=(const SubLevel& _Other) = delete;
 	SubLevel& operator=(SubLevel&& _Other) noexcept = delete;
 
+	static void DevelopmentModeOn()
+	{
+		DevelopmentMode = true;
+	}
+
+	static bool IsDevelopmentMode()
+	{
+		return DevelopmentMode;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
@@ -31,6 +41,7 @@ protected:
 	class obb* obbPlayer = nullptr;
 	bool FirstDeathIsibb = false;
 
+	static bool DevelopmentMode;
 private:
 	
 };

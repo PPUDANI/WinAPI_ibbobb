@@ -8,11 +8,11 @@
 #include <GameEngineBase/GameEnginePath.h>
 #include <GameEngineCore/GameEngineCore.h>
 
-
 #include "ContentsEnum.h"
 #include "SoundLoadManager.h"
 #include "BackGround.h"
 #include "DefaultImage.h"
+#include "SubLevel.h"
 #include "Fade.h"
 #include "Titleibb.h"
 #include "Titleobb.h"
@@ -33,11 +33,17 @@ void TitleLevel::Start()
 	TitleBack = CreateActor<BackGround>(UpdateOrder::BackGround);
 	TitleBack->Init("Title_BackGround.bmp");
 
-	// PressText 持失
+	// Press'P' Text 持失
 	PressText = CreateActor<DefaultImage>(UpdateOrder::UI);
 	PressText->Init("Press_Text.bmp", 0.05f);
 	PressText->LevitationOn();
 	PressText->SetPos({750.0f, 370.0f});
+
+	// Development Mode Text 持失
+	DevelopmentModeText = CreateActor<DefaultImage>(UpdateOrder::UI);
+	DevelopmentModeText->Init("DevelopmentMode_Texture.bmp", 0.05f);
+	DevelopmentModeText->HideOn();
+	DevelopmentModeText->SetPos({ 750.0f, 370.0f });
 
 	// ibb
 	TitleibbPlayer = CreateActor<Titleibb>(UpdateOrder::Player);
@@ -48,20 +54,28 @@ void TitleLevel::Start()
 	TitleobbPlayer->SetPos({ 1000.0f, 650.0f });
 
 	// Sound
-	{
-		SoundLoadManager::LoadSound("BGM", "TitleBGM.mp3");
-		SoundLoadManager::LoadSound("LevelEffect", "PressP.mp3");
-	}
+	SoundLoadManager::LoadSound("BGM", "TitleBGM.mp3");
+	SoundLoadManager::LoadSound("LevelEffect", "PressKey.mp3");
 }
 
 void TitleLevel::Update(float _DeltaTime)
 {
 	if (true == GameEngineInput::IsDown('P') && false == GameStartValue)
 	{
-		EffectPlayer = GameEngineSound::SoundPlay("PressP.mp3");
+		EffectPlayer = GameEngineSound::SoundPlay("PressKey.mp3");
 		EffectPlayer.SetVolume(0.4f);
 		PressText->BlinkOn();
 		GameStartValue = true;
+	}
+	else if (true == GameEngineInput::IsDown(VK_F12) && false == GameStartValue)
+	{
+		PressText->HideOn();
+		EffectPlayer = GameEngineSound::SoundPlay("PressKey.mp3");
+		EffectPlayer.SetVolume(0.4f);
+		DevelopmentModeText->HideOff();
+		DevelopmentModeText->BlinkOn();
+		GameStartValue = true;
+		SubLevel::DevelopmentModeOn();
 	}
 
 	if (true == GameStartValue)
@@ -83,8 +97,17 @@ void TitleLevel::LobbyStart(float _DeltaTime)
 	}
 	else if (Time >= 0.5f)
 	{
-		PressText->BlinkOff();
-		PressText->Off();
+		if (true ==SubLevel::IsDevelopmentMode())
+		{
+			DevelopmentModeText->BlinkOff();
+			DevelopmentModeText->Off();
+		}
+		else
+		{
+			PressText->BlinkOff();
+			PressText->Off();
+		}
+		
 		if (false == FadeOn)
 		{
 			FadeOn = true;
@@ -94,7 +117,6 @@ void TitleLevel::LobbyStart(float _DeltaTime)
 		}
 		GameEngineWindow::MainWindow.SetDoubleBufferingCopyScaleRatio(Time + 0.5f);
 	}
-
 }
 
 void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -114,6 +136,9 @@ void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)
 
 	PressText->OverOff();
 	PressText = nullptr;
+
+	DevelopmentModeText->OverOff();
+	DevelopmentModeText = nullptr;
 
 	TitleBack->OverOff();
 	TitleBack = nullptr;

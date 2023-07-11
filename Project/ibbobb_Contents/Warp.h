@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 #include <vector>
+
 enum class WarpType
 {
 	ibbOnly,

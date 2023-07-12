@@ -264,7 +264,7 @@ void RoadMonster::MoveUpdate(float _DeltaTime)
 		CoreRenderer->ChangeAnimation("Dead");
 		EffectPlayer = GameEngineSound::SoundPlay("MonsterDeath.mp3");
 		EffectPlayer.SetVolume(1.0f);
-
+		BodyCollision->Off();
 		CurState = RoadMonsterState::Dead;
 		return;
 	}

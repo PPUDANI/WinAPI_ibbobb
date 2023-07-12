@@ -195,6 +195,7 @@ void JumpingMonster::FallUpdate(float _DeltaTime)
 	{
 		SetAnimation("Dead");
 		CoreRenderer->ChangeAnimation("Dead");
+		BodyCollision->Off();
 		EffectPlayer = GameEngineSound::SoundPlay("MonsterDeath.mp3");
 		EffectPlayer.SetVolume(1.0f);
 

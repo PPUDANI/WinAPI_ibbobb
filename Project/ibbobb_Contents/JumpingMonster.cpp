@@ -278,7 +278,7 @@ void JumpingMonster::LiveUpdate(float _DeltaTime)
 	{
 		SetAnimation("Idle");
 		SetCoreAnimation("Idle");
-		
+		BodyCollision->On();
 		ChangeState(JumpingMonsterState::Fall);
 	}
 }

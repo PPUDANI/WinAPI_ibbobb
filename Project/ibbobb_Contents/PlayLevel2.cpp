@@ -361,12 +361,7 @@ void PlayLevel2::LobbyStart(float _DeltaTime)
 void PlayLevel2::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	LevelPlayerInit();
-	
-	{
-		BGMPlayer = GameEngineSound::SoundPlay("Level2BGM.mp3");
-		BGMPlayer.SetLoop(10);
-		BGMPlayer.SetVolume(0.3f);
-	}
+	PlayLevelBGM();
 
 	// RoadMonster
 	{

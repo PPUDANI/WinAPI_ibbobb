@@ -11,7 +11,6 @@
     <ClInclude Include="Map.h">
       <Filter>Contents\Global</Filter>
     </ClInclude>
-    <ClInclude Include="GravityActor.h" />
     <ClInclude Include="RoadMonster.h">
       <Filter>Contents\Global\Monster</Filter>
     </ClInclude>
@@ -78,6 +77,9 @@
     <ClInclude Include="LobbyMedal.h">
       <Filter>Contents\Level\Lobby</Filter>
     </ClInclude>
+    <ClInclude Include="GravityActor.h">
+      <Filter>Contents\Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentCore.cpp" />
@@ -90,7 +92,6 @@
     <ClCompile Include="Map.cpp">
       <Filter>Contents\Global</Filter>
     </ClCompile>
-    <ClCompile Include="GravityActor.cpp" />
     <ClCompile Include="JumpingMonster.cpp">
       <Filter>Contents\Global\Monster</Filter>
     </ClCompile>
@@ -159,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="GravityTransferPlatform.cpp">
       <Filter>Contents\Global\GravityTransferPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityActor.cpp">
+      <Filter>Contents\Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

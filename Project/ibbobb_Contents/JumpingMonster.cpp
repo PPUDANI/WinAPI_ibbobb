@@ -196,6 +196,7 @@ void JumpingMonster::FallUpdate(float _DeltaTime)
 		SetAnimation("Dead");
 		CoreRenderer->ChangeAnimation("Dead");
 		BodyCollision->Off();
+		CoreCollision->Off();
 		EffectPlayer = GameEngineSound::SoundPlay("MonsterDeath.mp3");
 		EffectPlayer.SetVolume(1.0f);
 
@@ -272,6 +273,7 @@ void JumpingMonster::DeadUpdate(float _DeltaTime)
 		Off();
 	}
 }
+
 void JumpingMonster::LiveUpdate(float _DeltaTime)
 {
 	if (MonsterRenderer->IsAnimationEnd())
@@ -279,6 +281,7 @@ void JumpingMonster::LiveUpdate(float _DeltaTime)
 		SetAnimation("Idle");
 		SetCoreAnimation("Idle");
 		BodyCollision->On();
+		CoreCollision->On();
 		ChangeState(JumpingMonsterState::Fall);
 	}
 }

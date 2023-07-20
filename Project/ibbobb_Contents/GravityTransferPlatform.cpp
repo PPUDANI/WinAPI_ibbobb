@@ -261,7 +261,7 @@ float GravityTransferPlatform::GetAbsoluteValue(float _Value)
 	}
 }
 
-void GravityTransferPlatform::SetAnimation(const std::string _Name)
+void GravityTransferPlatform::SetAnimation(const std::string& _Name)
 {
 	PlatformRenderer->ChangeAnimation(_Name);
 }

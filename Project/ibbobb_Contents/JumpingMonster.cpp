@@ -287,12 +287,12 @@ void JumpingMonster::LiveUpdate(float _DeltaTime)
 }
 
 
-void JumpingMonster::SetAnimation(const std::string _State)
+void JumpingMonster::SetAnimation(const std::string& _State)
 {
 	MonsterRenderer->ChangeAnimation(_State);
 }
 
-void JumpingMonster::SetCoreAnimation(const std::string _State)
+void JumpingMonster::SetCoreAnimation(const std::string& _State)
 {
 	CoreRenderer->ChangeAnimation(_State);
 }

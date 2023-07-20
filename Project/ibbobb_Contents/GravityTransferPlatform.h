@@ -53,7 +53,7 @@ private:
 private:
 	// 편의 함수
 	float GetAbsoluteValue(float _Value);
-	void SetAnimation(const std::string _Name);
+	void SetAnimation(const std::string& _Name);
 
 
 private:

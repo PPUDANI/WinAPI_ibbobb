@@ -186,7 +186,7 @@ void Medal::Levitation(float _DeltaTime)
 	AddPos(AddPosY * _DeltaTime);
 }
 
-void Medal::SetAnimation(const std::string _Name)
+void Medal::SetAnimation(const std::string& _Name)
 {
 	Renderer->ChangeAnimation(_Name);
 }

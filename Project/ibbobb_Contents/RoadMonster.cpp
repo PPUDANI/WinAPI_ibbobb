@@ -387,7 +387,7 @@ void RoadMonster::LiveUpdate(float _DeltaTime)
 }
 
 
-void RoadMonster::SetAnimation(const std::string _State, int _StartFrame/* = 0*/)
+void RoadMonster::SetAnimation(const std::string& _State, int _StartFrame/* = 0*/)
 {
 	std::string AnimationName;
 
@@ -465,7 +465,7 @@ bool RoadMonster::MovePossibleCheck()
 	return true;
 }
 
-void RoadMonster::SetCoreAnimation(const std::string _State)
+void RoadMonster::SetCoreAnimation(const std::string& _State)
 {
 	CoreRenderer->ChangeAnimation(_State);
 }

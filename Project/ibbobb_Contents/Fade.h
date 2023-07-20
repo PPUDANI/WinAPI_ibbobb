@@ -40,7 +40,7 @@ public:
 		FadeEnd = true;
 	}
 
-	void Init(const std::string _FileName, FadeState _State);
+	void Init(const std::string& _FileName, FadeState _State);
 protected:
 
 private:

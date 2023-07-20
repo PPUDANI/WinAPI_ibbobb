@@ -43,8 +43,8 @@ public:
 		CurState = _State;
 	}
 
-	void SetAnimation(const std::string _State, int _StartFrame = 0);
-	void SetCoreAnimation(const std::string _State);
+	void SetAnimation(const std::string& _State, int _StartFrame = 0);
+	void SetCoreAnimation(const std::string& _State);
 protected:
 	
 private:

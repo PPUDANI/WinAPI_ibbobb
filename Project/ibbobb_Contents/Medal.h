@@ -38,7 +38,7 @@ private:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 	void LevelStart() override;
-	void SetAnimation(const std::string _Name);
+	void SetAnimation(const std::string& _Name);
 
 	void IdleUpdate(float _DeltaTime);
 	void GetUpdate(float _DeltaTime);

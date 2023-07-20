@@ -9,7 +9,7 @@ SoundLoadManager::~SoundLoadManager()
 {
 }
 
-void SoundLoadManager::LoadSound(const std::string _TypeName, const std::string _FileName)
+void SoundLoadManager::LoadSound(const std::string& _TypeName, const std::string _FileName)
 {
 	if (nullptr == GameEngineSound::FindSound(_FileName))
 	{

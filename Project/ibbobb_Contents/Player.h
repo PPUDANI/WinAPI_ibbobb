@@ -179,7 +179,7 @@ private:
 	void SerialDeadSoundPlay();
 	void WarpPassSoundPlay();
 	void LongWarpPassSoundPlay();
-	void SetAnimation(const std::string _State, int _StartFrame = 0);
+	void SetAnimation(const std::string& _State, int _StartFrame = 0);
 
 	
 

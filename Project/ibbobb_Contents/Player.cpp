@@ -186,7 +186,7 @@ void Player::Render(float _DeltaTime)
 	}
 }
 
-void Player::SetAnimation(const std::string _State, int _StartFrame)
+void Player::SetAnimation(const std::string& _State, int _StartFrame)
 {
 	std::string AnimationName;
 	if (ReverseValue == false)

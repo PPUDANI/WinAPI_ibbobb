@@ -13,7 +13,7 @@ public:
 	LobbyLevelText& operator=(const LobbyLevelText& _Other) = delete;
 	LobbyLevelText& operator=(LobbyLevelText&& _Other) noexcept = delete;
 
-	void Init(const std::string _FileName, float _BlinkFrameSpeed = 0.5f);
+	void Init(const std::string& _FileName, float _BlinkFrameSpeed = 0.5f);
 
 	void Activation()
 	{

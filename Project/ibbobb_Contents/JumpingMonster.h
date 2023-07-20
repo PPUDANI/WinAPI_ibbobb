@@ -41,8 +41,8 @@ public:
 	void Init(const float4& _InitPos);
 	void ReverseInit(const float4& _InitPos);
 
-	void SetAnimation(const std::string _State);
-	void SetCoreAnimation(const std::string _State);
+	void SetAnimation(const std::string& _State);
+	void SetCoreAnimation(const std::string& _State);
 protected:
 
 private:

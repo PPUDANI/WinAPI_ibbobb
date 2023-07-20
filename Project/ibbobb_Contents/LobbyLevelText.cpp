@@ -13,7 +13,7 @@ LobbyLevelText::~LobbyLevelText()
 {
 }
 
-void LobbyLevelText::Init(const std::string _FileName, float _BlinkFrameSpeed/* = 0*/)
+void LobbyLevelText::Init(const std::string& _FileName, float _BlinkFrameSpeed/* = 0*/)
 {
 	GameEnginePath FilePath;
 	FilePath.SetCurrentPath();

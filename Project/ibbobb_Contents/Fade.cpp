@@ -15,7 +15,7 @@ Fade::~Fade()
 {
 }
 
-void Fade::Init(const std::string _FileName, FadeState _State)
+void Fade::Init(const std::string& _FileName, FadeState _State)
 {
 	if (nullptr == ResourcesManager::GetInst().FindTexture(_FileName))
 	{

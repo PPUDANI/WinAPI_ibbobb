@@ -1,4 +1,7 @@
 # WinAPI_ibbobb
+YouTube : https://www.youtube.com/watch?v=FNfg2BDE3EE
+Tistory : 
+
 **WindowAPI로 만든 ibb&amp;obb 입니다!**
 - 게임 이름 : ibb & obb
 - 플랫폼 : Window

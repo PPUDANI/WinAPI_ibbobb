@@ -1,7 +1,7 @@
 # WinAPI_ibbobb
-WYouTube : https://www.youtube.com/watch?v=FNfg2BDE3EE
+YouTube : https://www.youtube.com/watch?v=FNfg2BDE3EE
 <br/>
-WTistory : 
+Tistory : 
 
 **WindowAPI로 만든 ibb&amp;obb 입니다!**
 - 게임 이름 : ibb & obb
